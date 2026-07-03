@@ -5,7 +5,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
-import yaml from "js-yaml";
+import * as yaml from "js-yaml";
 import { runCalc, runSizeCalc, type Question } from "../../engine/index.ts";
 
 const packDir = join(process.cwd(), "content-packs", "wa-electrician-01");
