@@ -42,8 +42,8 @@ export function Explanation({
 }: Props) {
   return (
     <div className="flex min-h-full flex-col">
-      {/* Home lives in the footer here, so the top bar shows only progress. */}
-      <TopBar progressLabel={progressLabel} />
+      {/* Home is small, at the top. */}
+      <TopBar onHome={onHome} progressLabel={progressLabel} />
 
       <div
         className={[
@@ -95,29 +95,22 @@ export function Explanation({
         </div>
       </div>
 
-      {/* Exactly three controls: Continue (primary), Previous question, Home. */}
-      <div className="mt-auto flex flex-col gap-2 pt-2">
+      {/* Previous on the LEFT, primary (Continue) on the RIGHT — same row.
+          Home is at the top, not here. */}
+      <div className="mt-auto flex gap-2 pt-2">
+        <button
+          onClick={onPrevious}
+          disabled={!canPrevious}
+          className="flex-1 rounded-xl border border-line px-4 py-4 text-base font-medium text-slate-200 active:bg-panel disabled:opacity-30"
+        >
+          ← Previous
+        </button>
         <button
           onClick={onContinue}
-          className="w-full rounded-xl bg-brand px-4 py-4 text-base font-semibold text-white"
+          className="flex-1 rounded-xl bg-brand px-4 py-4 text-base font-semibold text-white"
         >
           Continue
         </button>
-        <div className="flex gap-2">
-          <button
-            onClick={onPrevious}
-            disabled={!canPrevious}
-            className="flex-1 rounded-xl border border-line px-4 py-3 text-base font-medium text-slate-200 active:bg-panel disabled:opacity-30"
-          >
-            ← Previous question
-          </button>
-          <button
-            onClick={onHome}
-            className="flex-1 rounded-xl border border-line px-4 py-3 text-base font-medium text-slate-200 active:bg-panel"
-          >
-            Home
-          </button>
-        </div>
       </div>
     </div>
   );

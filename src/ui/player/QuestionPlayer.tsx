@@ -111,19 +111,19 @@ export function QuestionPlayer({
         </div>
       )}
 
-      <div className="mt-auto flex flex-col gap-2 pt-2">
-        {canPrevious && onPrevious && (
-          <button
-            onClick={onPrevious}
-            className="w-full rounded-xl border border-line px-4 py-3 text-base font-medium text-slate-300 active:bg-panel"
-          >
-            ← See previous questions
-          </button>
-        )}
+      {/* Previous on the LEFT, primary (Submit) on the RIGHT — same row. */}
+      <div className="mt-auto flex gap-2 pt-2">
+        <button
+          onClick={onPrevious}
+          disabled={!canPrevious || !onPrevious}
+          className="flex-1 rounded-xl border border-line px-4 py-4 text-base font-medium text-slate-200 active:bg-panel disabled:opacity-30"
+        >
+          ← Previous
+        </button>
         <button
           disabled={!canSubmit}
           onClick={handleSubmit}
-          className="w-full rounded-xl bg-brand px-4 py-4 text-base font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex-1 rounded-xl bg-brand px-4 py-4 text-base font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
         >
           Submit
         </button>

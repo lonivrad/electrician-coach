@@ -14,7 +14,7 @@ export function TopBar({ onHome, progressLabel }: Props) {
         <button
           onClick={onHome}
           aria-label="Go to the home screen"
-          className="flex items-center gap-2 rounded-xl border border-line bg-panel px-4 py-3 text-base font-semibold text-slate-100 active:bg-panel2"
+          className="flex items-center gap-1.5 rounded-lg border border-line bg-panel px-3 py-1.5 text-sm font-medium text-slate-200 active:bg-panel2"
         >
           <HomeIcon />
           Home
@@ -29,7 +29,7 @@ export function TopBar({ onHome, progressLabel }: Props) {
 
 function HomeIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
         d="M3 10.5 12 3l9 7.5M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"
         stroke="currentColor"
