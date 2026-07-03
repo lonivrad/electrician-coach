@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { domainMastery, weightFractionOfDomain } from "@engine/index.ts";
 import { loadPackOnce } from "../data/packLoader.ts";
 import { createLocalProgressRepo } from "../data/progressRepo.ts";
 
@@ -18,6 +19,23 @@ export function Home({ onStartDiagnostic, onStartBoard, onStartHardMode, onPract
     return repo.load(pack.examId).missedQuestionIds.filter((id) => inPack.has(id)).length;
   }, [repo, pack]);
 
+  // Weakest topics: exam weight × (1 − mastery), among domains with any evidence.
+  const weakest = useMemo(() => {
+    const mastery = repo.load(pack.examId).mastery;
+    return pack.domains
+      .map((d) => {
+        const est = domainMastery(mastery, d.id);
+        return {
+          name: d.name,
+          seen: est.seen,
+          priority: weightFractionOfDomain(pack.blueprint, d.id) * (1 - est.mastery),
+        };
+      })
+      .filter((x) => x.seen > 0)
+      .sort((a, b) => b.priority - a.priority)
+      .slice(0, 3);
+  }, [repo, pack]);
+
   return (
     <div className="flex min-h-full flex-col">
       <div className="mt-4">
@@ -27,6 +45,22 @@ export function Home({ onStartDiagnostic, onStartBoard, onStartHardMode, onPract
           Practice for the Washington journeyman electrician exam. Two parts: Electrical Code &amp; Theory and
           Washington Laws &amp; Rules. You need 70% on each part to pass.
         </p>
+
+        {weakest.length > 0 ? (
+          <p className="mt-4 rounded-xl border border-warn/40 bg-warn/10 px-4 py-3 text-sm text-slate-200">
+            Your weakest areas right now are{" "}
+            <span className="font-semibold text-white">{joinList(weakest.map((w) => w.name))}</span>. Start
+            there.
+          </p>
+        ) : (
+          <button
+            onClick={onStartDiagnostic}
+            className="mt-4 w-full rounded-xl border border-brand/50 bg-panel2 px-4 py-3 text-left text-sm text-slate-200 active:bg-panel"
+          >
+            New here? Start with <span className="font-semibold text-white">Find My Weak Spots</span> — it&apos;ll
+            show you which topics to focus on.
+          </button>
+        )}
       </div>
 
       <div className="mt-6 flex flex-col gap-3">
@@ -63,6 +97,13 @@ export function Home({ onStartDiagnostic, onStartBoard, onStartHardMode, onPract
       </div>
     </div>
   );
+}
+
+/** "A" / "A and B" / "A, B, and C" — plain-language list. */
+function joinList(items: string[]): string {
+  if (items.length <= 1) return items[0] ?? "";
+  if (items.length === 2) return `${items[0]} and ${items[1]}`;
+  return `${items.slice(0, -1).join(", ")}, and ${items[items.length - 1]}`;
 }
 
 function ModeCard({
