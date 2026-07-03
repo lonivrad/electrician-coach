@@ -14,6 +14,12 @@ export interface StoredProgress {
   mastery: MasteryState;
   /** Question ids the user has already answered (avoid immediate repeats). */
   seenQuestionIds: string[];
+  /**
+   * Question ids the user has answered WRONG and not since gotten right — the
+   * "practice the ones I missed" set. Self-maintaining: answering right removes
+   * the id; answering wrong adds it; leaving blank leaves it unchanged.
+   */
+  missedQuestionIds: string[];
   updatedAt: number;
 }
 
@@ -27,7 +33,7 @@ const PREFIX = "ec:";
 const KEY = (examId: string) => `${PREFIX}progress:${examId}`;
 
 export function freshProgress(examId: string): StoredProgress {
-  return { examId, mastery: emptyMastery(), seenQuestionIds: [], updatedAt: 0 };
+  return { examId, mastery: emptyMastery(), seenQuestionIds: [], missedQuestionIds: [], updatedAt: 0 };
 }
 
 /** True only if the object looks like a real MasteryState (guards corrupt data). */
@@ -88,6 +94,7 @@ export function createLocalProgressRepo(): ProgressRepo {
           examId,
           mastery: isMasteryShaped(o.mastery) ? o.mastery : emptyMastery(),
           seenQuestionIds: Array.isArray(o.seenQuestionIds) ? o.seenQuestionIds : [],
+          missedQuestionIds: Array.isArray(o.missedQuestionIds) ? o.missedQuestionIds : [],
           updatedAt: typeof o.updatedAt === "number" ? o.updatedAt : 0,
         };
       } catch {

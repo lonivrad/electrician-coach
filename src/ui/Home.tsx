@@ -1,14 +1,22 @@
 import { useMemo } from "react";
 import { loadPackOnce } from "../data/packLoader.ts";
+import { createLocalProgressRepo } from "../data/progressRepo.ts";
 
 interface Props {
   onStartDiagnostic: () => void;
   onStartBoard: () => void;
   onStartHardMode: () => void;
+  onPracticeMissed: () => void;
 }
 
-export function Home({ onStartDiagnostic, onStartBoard, onStartHardMode }: Props) {
+export function Home({ onStartDiagnostic, onStartBoard, onStartHardMode, onPracticeMissed }: Props) {
   const { pack } = useMemo(() => loadPackOnce(), []);
+  const repo = useMemo(() => createLocalProgressRepo(), []);
+
+  const missedCount = useMemo(() => {
+    const inPack = new Set(pack.questions.map((q) => q.id));
+    return repo.load(pack.examId).missedQuestionIds.filter((id) => inPack.has(id)).length;
+  }, [repo, pack]);
 
   return (
     <div className="flex min-h-full flex-col">
@@ -40,6 +48,14 @@ export function Home({ onStartDiagnostic, onStartBoard, onStartHardMode }: Props
           active
           onClick={onStartHardMode}
         />
+        {missedCount > 0 && (
+          <ModeCard
+            title="Practice the ones I missed"
+            desc={`Go back over the ${missedCount} question${missedCount === 1 ? "" : "s"} you got wrong recently.`}
+            active
+            onClick={onPracticeMissed}
+          />
+        )}
       </div>
 
       <div className="mt-auto pt-6 text-xs text-slate-400">

@@ -55,7 +55,13 @@ export function ExamFlow({ mode, onExit }: Props) {
       )}
 
       {e.phase === "results" && e.report && (
-        <ExamResults report={e.report} onAgain={e.restart} onHome={onExit} />
+        <ExamResults
+          report={e.report}
+          onAgain={e.restart}
+          onHome={onExit}
+          onRetryMissed={e.startRetry}
+          missedCount={e.missedCount}
+        />
       )}
 
       {exitOpen && (

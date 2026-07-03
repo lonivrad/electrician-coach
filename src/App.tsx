@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Home } from "./ui/Home.tsx";
 import { DiagnosticFlow } from "./ui/DiagnosticFlow.tsx";
 import { ExamFlow } from "./ui/exam/ExamFlow.tsx";
+import { RetryFlow } from "./ui/exam/RetryFlow.tsx";
 
-type Screen = "home" | "diagnostic" | "board" | "overtrain";
+type Screen = "home" | "diagnostic" | "board" | "overtrain" | "retry";
 
 export function App() {
   const [screen, setScreen] = useState<Screen>("home");
@@ -20,11 +21,13 @@ export function App() {
           onStartDiagnostic={() => setScreen("diagnostic")}
           onStartBoard={() => setScreen("board")}
           onStartHardMode={() => setScreen("overtrain")}
+          onPracticeMissed={() => setScreen("retry")}
         />
       )}
       {screen === "diagnostic" && <DiagnosticFlow onExit={goHome} />}
       {screen === "board" && <ExamFlow mode="board" onExit={goHome} />}
       {screen === "overtrain" && <ExamFlow mode="overtrain" onExit={goHome} />}
+      {screen === "retry" && <RetryFlow onExit={goHome} />}
     </div>
   );
 }

@@ -7,6 +7,10 @@ interface Props {
   report: ExamReport;
   onAgain: () => void;
   onHome: () => void;
+  againLabel?: string;
+  /** When provided and there are missed questions, shows a retry-missed button. */
+  onRetryMissed?: () => void;
+  missedCount?: number;
 }
 
 function fmt(sec: number): string {
@@ -15,7 +19,7 @@ function fmt(sec: number): string {
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
-export function ExamResults({ report, onAgain, onHome }: Props) {
+export function ExamResults({ report, onAgain, onHome, againLabel, onRetryMissed, missedCount }: Props) {
   return (
     <div className="flex min-h-full flex-col">
       <TopBar onHome={onHome} />
@@ -86,8 +90,16 @@ export function ExamResults({ report, onAgain, onHome }: Props) {
           onClick={onAgain}
           className="w-full rounded-xl bg-brand px-4 py-4 text-base font-semibold text-white"
         >
-          Take another practice exam
+          {againLabel ?? "Take another practice exam"}
         </button>
+        {onRetryMissed && (missedCount ?? 0) > 0 && (
+          <button
+            onClick={onRetryMissed}
+            className="w-full rounded-xl border border-brand bg-panel2 px-4 py-4 text-base font-semibold text-slate-100 active:bg-panel"
+          >
+            Practice the ones I missed ({missedCount})
+          </button>
+        )}
         <button
           onClick={onHome}
           className="w-full rounded-xl border border-line px-4 py-3 text-sm text-slate-400 active:bg-panel"

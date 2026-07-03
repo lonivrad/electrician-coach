@@ -96,10 +96,16 @@ export function useDiagnostic() {
       runMastery.current = nextMastery;
       usedThisRun.current.add(current.id);
 
+      // Keep the "missed" retry set current here too: wrong adds, right removes.
+      const missed = new Set(progress.missedQuestionIds);
+      if (correct) missed.delete(current.id);
+      else missed.add(current.id);
+
       const persisted: StoredProgress = {
         examId: pack.examId,
         mastery: nextMastery,
         seenQuestionIds: Array.from(new Set([...progress.seenQuestionIds, current.id])),
+        missedQuestionIds: Array.from(missed),
         updatedAt: Date.now(),
       };
       repo.save(persisted);
@@ -113,7 +119,7 @@ export function useDiagnostic() {
       setAnsweredThisRun((n) => n + 1);
       setPhase("explanation");
     },
-    [current, history.length, pack.examId, progress.seenQuestionIds, repo],
+    [current, history.length, pack.examId, progress.seenQuestionIds, progress.missedQuestionIds, repo],
   );
 
   // Advance to a brand-new question (or results if the diagnostic is done).

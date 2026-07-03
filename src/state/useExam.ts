@@ -80,9 +80,14 @@ export interface SectionOption {
 export function useExam(mode: ExamMode) {
   const { pack } = useMemo(() => loadPackOnce(), []);
   const repo = useMemo(() => createLocalProgressRepo(), []);
+  const questionById = useMemo(() => new Map(pack.questions.map((q) => [q.id, q])), [pack]);
 
   const [phase, setPhase] = useState<ExamPhase>("config");
   const [section, setSection] = useState<Section | null>(null);
+  const [runLabel, setRunLabel] = useState("");
+  const [missedCount, setMissedCount] = useState(
+    () => repo.load(pack.examId).missedQuestionIds.filter((id) => questionById.has(id)).length,
+  );
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<Record<string, Response>>({});
   const [numericRaw, setNumericRaw] = useState<Record<string, string>>({});
@@ -182,12 +187,23 @@ export function useExam(mode: ExamMode) {
       }
 
       const prev = repo.load(pack.examId);
+      // Maintain the "missed" set: a wrong answer adds the id, a right answer
+      // removes it, a blank leaves it unchanged. This is the retry pool.
+      const missedSet = new Set(prev.missedQuestionIds);
+      for (const item of reviewItems) {
+        if (item.response === undefined) continue;
+        if (item.correct) missedSet.delete(item.question.id);
+        else missedSet.add(item.question.id);
+      }
+      const missedIds = Array.from(missedSet);
       repo.save({
         examId: pack.examId,
         mastery,
         seenQuestionIds: Array.from(new Set([...prev.seenQuestionIds, ...questions.map((q) => q.id)])),
+        missedQuestionIds: missedIds,
         updatedAt: Date.now(),
       });
+      setMissedCount(missedIds.filter((id) => questionById.has(id)).length);
 
       const cutPct = section?.cutScorePct ?? 0.7;
       const scorePct = questions.length ? correct / questions.length : 0;
@@ -207,7 +223,7 @@ export function useExam(mode: ExamMode) {
         .sort((a, b) => b.priority - a.priority);
 
       setReport({
-        sectionName: section?.name ?? "",
+        sectionName: runLabel,
         total: questions.length,
         answered,
         correct,
@@ -222,7 +238,19 @@ export function useExam(mode: ExamMode) {
       });
       setPhase("results");
     },
-    [questions, answers, flagged, repo, pack, section, allottedSec, remainingSec, domainName],
+    [
+      questions,
+      answers,
+      flagged,
+      repo,
+      pack,
+      section,
+      runLabel,
+      questionById,
+      allottedSec,
+      remainingSec,
+      domainName,
+    ],
   );
 
   // Keep a fresh finish for the interval to call on timeout.
@@ -242,6 +270,25 @@ export function useExam(mode: ExamMode) {
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, [phase]);
+
+  // Shared run setup — used by both a blueprint/section run and a retry run.
+  const beginRun = useCallback(
+    (set: Question[], perQuestionSec: number, sec: Section | null, label: string) => {
+      const allotted = set.length * perQuestionSec;
+      setSection(sec);
+      setRunLabel(label);
+      setQuestions(set);
+      setAnswers({});
+      setNumericRaw({});
+      setFlagged({});
+      setIndex(0);
+      setAllottedSec(allotted);
+      setRemainingSec(allotted);
+      deadlineRef.current = Date.now() + allotted * 1000;
+      setPhase("running");
+    },
+    [],
+  );
 
   const start = useCallback(
     (sectionId: string) => {
@@ -266,20 +313,21 @@ export function useExam(mode: ExamMode) {
               count: cfg.count,
               policy: cfg.policy,
             });
-      const allotted = set.length * cfg.perQuestionSec;
-      setSection(s);
-      setQuestions(set);
-      setAnswers({});
-      setNumericRaw({});
-      setFlagged({});
-      setIndex(0);
-      setAllottedSec(allotted);
-      setRemainingSec(allotted);
-      deadlineRef.current = Date.now() + allotted * 1000;
-      setPhase("running");
+      beginRun(set, cfg.perQuestionSec, s, s.name);
     },
-    [pack, buildConfig],
+    [pack, buildConfig, beginRun],
   );
+
+  // Retry-only run: just the questions the user has missed and not since fixed.
+  // Generous per-question time — it's practice, not a timed exam.
+  const startRetry = useCallback(() => {
+    const missed = repo
+      .load(pack.examId)
+      .missedQuestionIds.map((id) => questionById.get(id))
+      .filter((q): q is Question => q !== undefined);
+    if (missed.length === 0) return;
+    beginRun(missed, 90, null, "Questions you missed");
+  }, [repo, pack, questionById, beginRun]);
 
   const setSingle = useCallback((qid: string, optionId: string) => {
     setAnswers((a) => ({ ...a, [qid]: { kind: "single", optionId } }));
@@ -329,9 +377,11 @@ export function useExam(mode: ExamMode) {
     answers,
     numericRaw,
     flagged,
+    missedCount,
     report,
     domainName,
     start,
+    startRetry,
     setSingle,
     setNumeric,
     toggleFlag,
