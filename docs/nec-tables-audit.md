@@ -86,13 +86,15 @@ ranges, ≤12 kW; the >12 kW footnote and Columns A/B are not implemented.
   remainder @25%. ✅ verified (EC&M / ECMag / expertce references).
 - **220.82(B) optional method** — first 10,000 VA @100%, remainder @40%.
   ✅ verified.
-- **450.3(B) transformer primary-only OCP** — 125% of primary FLC for ≥9 A,
-  round **up** to next standard size (Note 1). ✅ verified (electrical-engineering-portal,
-  fasttraxsystem, Mike Holt forum). **Not implemented:** the <9 A cases (167% for
-  2–9 A, 300% below 2 A) — add before authoring transformer questions in that range.
-- **Motor factors** — conductor 125% (430.22), overload 125% for SF ≥1.15
-  (430.32(A)(1); the 115% case is not modeled), feeder 125% of largest (430.24),
-  branch protection % passed per question (430.52). ✅ standard.
+- **450.3(B) transformer primary-only OCP** — ≥9 A → 125% of primary FLC rounded
+  **up** to next standard size (Note 1); **2–9 A → 167%** and **<2 A → 300%** as hard
+  ceilings. ✅ verified (electrical-engineering-portal, fasttraxsystem, ecmag,
+  Eaton/Bussmann). Now implemented: `transformerPrimaryFactor` + `transformerPrimaryMaxOCP`
+  auto-select the factor from the primary FLC (q-xf-121/122/123).
+- **Motor factors** — conductor 125% (430.22), overload **125% for SF ≥1.15 / rise
+  ≤40 °C, else 115%** (430.32(A)(1)) ✅ verified (ecmweb, ecmag) — the 115% case is now
+  exercised via `motorOverload` factor 1.15 (q-mt-151/152/153), feeder 125% of largest
+  (430.24), branch protection % passed per question (430.52). ✅ standard.
 - **Continuous load 125%** (210.19/210.20/215) ✅; **√3** for 3φ ✅; voltage-drop
   **K = 12.9** Cu is an accepted estimate, passed per question.
 
@@ -196,7 +198,7 @@ and factor-derivation paths. These fail the build on a future mis-key.
 ## Remaining before / during Phase 1 (data completeness, not corrections)
 
 - ✅ Done: aluminum ampacity, extra raceways (RMC/IMC/PVC 40/80), temperature-
-  correction and adjustment factor tables.
-- Still open: transformer <9 A OCP cases (167% / 300%); the motor 115% overload
-  case (SF <1.15); non-THHN conductor areas (XHHW/RHW) if a question needs them;
+  correction and adjustment factor tables; transformer <9 A OCP cases
+  (167% / 300%); the motor 115% overload case (SF <1.15).
+- Still open: non-THHN conductor areas (XHHW/RHW) if a question needs them;
   200/208/575 V motor columns and HP >50.

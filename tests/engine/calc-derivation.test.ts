@@ -78,6 +78,25 @@ describe("burial depth (Table 300.5)", () => {
     expect(() => runCalc("burialDepth", { method: "nope" })).toThrow());
 });
 
+describe("transformer primary-only OCP factor auto-select (450.3(B))", () => {
+  // <2 A → 300% (ceiling): 0.5 kVA / 480 V / 1φ → FLC 1.04 A → 3.13 A.
+  it("<2 A primary → 300%", () =>
+    approx(runCalc("transformerPrimaryMaxOCP", { kva: 0.5, volts: 480, phase: 1 }), 3.13, 0.05));
+  // 2–9 A → 167% (ceiling): 3 kVA / 480 V / 1φ → FLC 6.25 A → 10.44 A.
+  it("2–9 A primary → 167%", () =>
+    approx(runCalc("transformerPrimaryMaxOCP", { kva: 3, volts: 480, phase: 1 }), 10.44, 0.05));
+  // ≥9 A → 125% rounded up to a standard size (Note 1): 45 kVA / 480 V / 3φ → 70 A.
+  it("≥9 A primary → 125% → next standard", () =>
+    expect(runCalc("transformerPrimaryMaxOCP", { kva: 45, volts: 480, phase: 3 })).toBe(70));
+});
+
+describe("motor overload at 115% for SF < 1.15 (430.32(A)(1))", () => {
+  it("20 A nameplate × 115% = 23 A", () =>
+    approx(runCalc("motorOverload", { nameplateFLA: 20, factor: 1.15 }), 23, 0.01));
+  it("34 A nameplate × 115% = 39.1 A", () =>
+    approx(runCalc("motorOverload", { nameplateFLA: 34, factor: 1.15 }), 39.1, 0.01));
+});
+
 describe("conduit fill uses the new raceway types", () => {
   it("max 12 THHN in 3/4 RMC", () =>
     expect(
