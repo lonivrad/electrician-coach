@@ -35,8 +35,8 @@ jobs:
       - name: Validate content pack
         run: npm run validate:pack
 
-      - name: Test
-        run: npm test
+      - name: Test (with coverage gate)
+        run: npm run test:coverage
 
       - name: Build
         run: npm run build
