@@ -49,6 +49,24 @@ describe("grounding size calculators (250.122 / 250.66)", () => {
   it("throws on unknown size calculator", () => expect(() => runSizeCalc("nope", {})).toThrow());
 });
 
+describe("overcurrent calculators (240.6 / 240.4)", () => {
+  it("next standard size ≥ 83 A → 90 A (240.4(B))", () =>
+    expect(runCalc("nextStandardSize", { value: 83 })).toBe(90));
+  it("next standard size ≥ 115 A → 125 A", () =>
+    expect(runCalc("nextStandardSize", { value: 115 })).toBe(125));
+  it("next standard size ≥ 46 A → 50 A", () => expect(runCalc("nextStandardSize", { value: 46 })).toBe(50));
+  it("small conductor: 12 AWG Cu → 20 A", () =>
+    expect(runCalc("smallConductorMaxOCPD", { size: "12" })).toBe(20));
+  it("small conductor: 10 AWG Cu → 30 A", () =>
+    expect(runCalc("smallConductorMaxOCPD", { size: "10" })).toBe(30));
+  it("small conductor: 12 AWG Al → 15 A", () =>
+    expect(runCalc("smallConductorMaxOCPD", { size: "12", material: "al" })).toBe(15));
+  it("small conductor: 10 AWG Al → 25 A", () =>
+    expect(runCalc("smallConductorMaxOCPD", { size: "10", material: "al" })).toBe(25));
+  it("throws when a size has no rule for that material", () =>
+    expect(() => runCalc("smallConductorMaxOCPD", { size: "14", material: "al" })).toThrow());
+});
+
 describe("conduit fill uses the new raceway types", () => {
   it("max 12 THHN in 3/4 RMC", () =>
     expect(

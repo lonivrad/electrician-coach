@@ -148,6 +148,17 @@ extended: a single-choice question may carry a `recompute` naming a size calcula
 calculator's size. Consistency checks: EGC size never shrinks as the OCPD rating
 rises; GEC size never shrinks as the service conductor grows.
 
+## Fourth pass (2026-07): overcurrent — 240.4(D) small-conductor rule
+
+- **240.4(D) — maximum OCPD by small-conductor size:** ✅ verified (nassaunationalcable,
+  ecmag, eepower/SparkShift). Copper 18→7, 16→10, 14→15, 12→20, 10→30; aluminum
+  12→15, 10→25. `SMALL_CONDUCTOR_OCPD` + `smallConductorMaxOCPD()`. Consistency
+  check: the Cu limit grows with size, and Al is always more restrictive than Cu
+  at the same size.
+- **Next-standard-size (240.6 / 240.4(B)):** `nextStandardSize()` wraps the already
+  -verified `STANDARD_OCPD` list — no new data, just exposed as a calculator for
+  next-size-up questions.
+
 ## Corrections made
 
 None to previously-committed data — every value already in `tables.ts` matched an

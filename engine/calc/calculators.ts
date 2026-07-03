@@ -19,6 +19,7 @@ import {
   MOTOR_FLC_3PH,
   RACEWAY_AREA,
   RANGE_DEMAND_C,
+  SMALL_CONDUCTOR_OCPD,
   STANDARD_OCPD,
   TEMP_CORRECTION,
   THHN_AREA,
@@ -238,6 +239,20 @@ function ocpdMixedLoad(i: Inputs): number {
   return optNum(i, "standardize", 0) ? nextStandardOCPD(v) : round(v, 2);
 }
 
+/** Smallest standard OCPD rating ≥ value (240.6 / next-size-up per 240.4(B)). */
+function nextStandardSize(i: Inputs): number {
+  return nextStandardOCPD(num(i, "value"));
+}
+
+/** 240.4(D) small-conductor rule: maximum OCPD (A) for a size + material. */
+function smallConductorMaxOCPD(i: Inputs): number {
+  const size = str(i, "size");
+  const material = (optStr(i, "material") ?? "cu").toLowerCase();
+  const row = need(SMALL_CONDUCTOR_OCPD[size], `no small-conductor rule for AWG ${size}`);
+  const limit = material === "al" ? row.al : row.cu;
+  return need(limit, `no ${material} 240.4(D) limit for AWG ${size}`);
+}
+
 /** Ohm's law current: V / R. */
 function ohmsCurrent(i: Inputs): number {
   return round(num(i, "volts") / num(i, "ohms"), 2);
@@ -290,6 +305,8 @@ export const CALCULATORS: Record<string, (i: Inputs) => number> = {
   transformerPrimaryOCP,
   voltageDrop,
   ocpdMixedLoad,
+  nextStandardSize,
+  smallConductorMaxOCPD,
   ohmsCurrent,
   power1ph,
   power3ph,

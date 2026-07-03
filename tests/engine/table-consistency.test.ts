@@ -11,6 +11,7 @@ import {
   CIRCULAR_MILS,
   EGC_BY_OCPD,
   GEC_BY_SERVICE,
+  SMALL_CONDUCTOR_OCPD,
   MOTOR_FLC_1PH,
   MOTOR_FLC_3PH,
   RACEWAY_AREA,
@@ -116,6 +117,20 @@ describe("grounding tables (250.122 / 250.66) grow monotonically", () => {
       expect(c, `GEC ${r.size}`).toBeGreaterThanOrEqual(prevCmil);
       prevMax = r.maxCmil;
       prevCmil = c;
+    }
+  });
+  it("240.4(D): the small-conductor OCPD limit grows with conductor size", () => {
+    const order = ["18", "16", "14", "12", "10"];
+    let prev = 0;
+    for (const s of order) {
+      const cu = SMALL_CONDUCTOR_OCPD[s].cu;
+      expect(cu, `Cu ${s}`).toBeDefined();
+      expect(cu as number, `Cu ${s} vs prev`).toBeGreaterThan(prev);
+      prev = cu as number;
+    }
+    // Aluminum is always more restrictive than copper at the same size.
+    for (const s of ["12", "10"]) {
+      expect(SMALL_CONDUCTOR_OCPD[s].al as number).toBeLessThan(SMALL_CONDUCTOR_OCPD[s].cu as number);
     }
   });
 });

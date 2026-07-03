@@ -227,3 +227,12 @@ export const GEC_BY_SERVICE: { maxCmil: number; size: string }[] = [
   { maxCmil: 1100000, size: "2/0" }, // over 600 through 1100 kcmil
   { maxCmil: Infinity, size: "3/0" }, // over 1100 kcmil
 ];
+
+/** 240.4(D) — small-conductor rule: maximum OCPD (A) by size and material. */
+export const SMALL_CONDUCTOR_OCPD: Record<string, { cu?: number; al?: number }> = {
+  "18": { cu: 7 },
+  "16": { cu: 10 },
+  "14": { cu: 15 },
+  "12": { cu: 20, al: 15 },
+  "10": { cu: 30, al: 25 },
+};
