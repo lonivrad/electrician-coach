@@ -14,6 +14,7 @@ import {
   overtrainPolicy,
   grade,
   selectSectionSet,
+  selectBlueprintExam,
   sectionIdOfDomain,
   type Question,
   type Response,
@@ -56,6 +57,8 @@ interface RunConfig {
   count: number;
   perQuestionSec: number;
   poolFilter: (q: Question) => boolean;
+  /** "blueprint" = full exam proportioned by domain weight; "subset" = hardest N. */
+  draw: "blueprint" | "subset";
 }
 
 export interface SectionOption {
@@ -93,6 +96,7 @@ export function useExam(mode: ExamMode) {
           count: s.totalQuestions,
           perQuestionSec: Math.round(realPace),
           poolFilter: () => true,
+          draw: "blueprint",
         };
       }
       const hardCount = pack.questions.filter(
@@ -108,6 +112,7 @@ export function useExam(mode: ExamMode) {
         count: 30,
         perQuestionSec: Math.round(realPace * 0.7), // tighter: ~2.1 min NEC, ~2.5 min law
         poolFilter: (q) => q.difficulty >= minDifficulty,
+        draw: "subset",
       };
     },
     [mode, pack],
@@ -230,14 +235,24 @@ export function useExam(mode: ExamMode) {
       const s = pack.blueprint.sections.find((x) => x.id === sectionId);
       if (!s) return;
       const cfg = buildConfig(s);
-      const set = selectSectionSet({
-        section: s,
-        domains: pack.domains,
-        questions: pack.questions.filter(cfg.poolFilter),
-        mode: cfg.eligibility,
-        count: cfg.count,
-        policy: cfg.policy,
-      });
+      const set =
+        cfg.draw === "blueprint"
+          ? selectBlueprintExam({
+              section: s,
+              domains: pack.domains,
+              questions: pack.questions,
+              mode: cfg.eligibility,
+              policy: cfg.policy,
+              poolFilter: cfg.poolFilter,
+            })
+          : selectSectionSet({
+              section: s,
+              domains: pack.domains,
+              questions: pack.questions.filter(cfg.poolFilter),
+              mode: cfg.eligibility,
+              count: cfg.count,
+              policy: cfg.policy,
+            });
       const allotted = set.length * cfg.perQuestionSec;
       setSection(s);
       setQuestions(set);

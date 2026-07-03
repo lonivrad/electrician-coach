@@ -2,7 +2,14 @@ import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import yaml from "js-yaml";
-import { validatePack, packErrors, type ContentPack, type Question } from "../../engine/index.ts";
+import {
+  validatePack,
+  packErrors,
+  selectBlueprintExam,
+  boardPolicy,
+  type ContentPack,
+  type Question,
+} from "../../engine/index.ts";
 
 const packDir = join(process.cwd(), "content-packs", "wa-electrician-01");
 
@@ -66,29 +73,52 @@ describe("wa-electrician-01 pack", () => {
     expect(pack.questions.every((q) => q.status !== "live")).toBe(true);
   });
 
-  it("NEC & Theory bank is the full 60, one per domain-weight", () => {
+  // The question bank is a POOL that grows past the exam size; each domain must
+  // hold at least its exam weight so a full blueprint exam can be drawn without
+  // repeats, and the NEC bank must be at least the exam length.
+  it("NEC & Theory bank ≥ 60 with each domain ≥ its exam weight", () => {
     const sectionOf = (id: string) => pack.domains.find((d) => d.id === id)?.sectionId;
     const nec = pack.questions.filter((q) => sectionOf(q.domainId) === "nec-theory");
-    expect(nec.length).toBe(60);
+    expect(nec.length).toBeGreaterThanOrEqual(60);
 
-    // Each domain's authored count mirrors its OfficialExamWeight.
     const secA = pack.blueprint.sections.find((s) => s.id === "nec-theory")!;
     for (const w of secA.domainWeights) {
       const count = nec.filter((q) => q.domainId === w.domainId).length;
-      expect({ domain: w.domainId, count }).toEqual({ domain: w.domainId, count: w.officialExamWeight });
+      expect(count, `${w.domainId} has ${count}, needs ≥ ${w.officialExamWeight}`).toBeGreaterThanOrEqual(
+        w.officialExamWeight,
+      );
     }
   });
 
-  it("NEC & Theory difficulty distribution is 10 L1 / 20 L2 / 20 L3 / 10 L4", () => {
+  it("NEC & Theory bank has questions at every difficulty and real L3/L4 depth", () => {
     const sectionOf = (id: string) => pack.domains.find((d) => d.id === id)?.sectionId;
     const nec = pack.questions.filter((q) => sectionOf(q.domainId) === "nec-theory");
     const dist = { 1: 0, 2: 0, 3: 0, 4: 0 } as Record<number, number>;
     for (const q of nec) dist[q.difficulty]++;
-    expect(dist).toEqual({ 1: 10, 2: 20, 3: 20, 4: 10 });
+    for (const level of [1, 2, 3, 4]) expect(dist[level], `L${level}`).toBeGreaterThan(0);
+    // Enough hard items to fill Hard Mode from a meaningful pool.
+    expect(dist[3] + dist[4]).toBeGreaterThanOrEqual(20);
   });
 
   it("wa.admin-rules gap is filled (every domain has ≥1 question)", () => {
     const withQuestions = new Set(pack.questions.map((q) => q.domainId));
     for (const d of pack.domains) expect(withQuestions.has(d.id)).toBe(true);
+  });
+
+  it("a blueprint exam draws exactly the section total, proportioned by weight", () => {
+    const secA = pack.blueprint.sections.find((s) => s.id === "nec-theory")!;
+    const exam = selectBlueprintExam({
+      section: secA,
+      domains: pack.domains,
+      questions: pack.questions,
+      mode: "board",
+      policy: boardPolicy().selection,
+    });
+    expect(exam.length).toBe(secA.totalQuestions);
+    expect(new Set(exam.map((q) => q.id)).size).toBe(exam.length); // no repeats
+    for (const w of secA.domainWeights) {
+      const n = exam.filter((q) => q.domainId === w.domainId).length;
+      expect({ d: w.domainId, n }).toEqual({ d: w.domainId, n: w.officialExamWeight });
+    }
   });
 });

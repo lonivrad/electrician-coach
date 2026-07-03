@@ -209,6 +209,55 @@ export function selectSectionSet(args: SectionSetArgs): Question[] {
   return out;
 }
 
+export interface BlueprintExamArgs {
+  section: Section;
+  domains: Domain[];
+  questions: Question[];
+  mode: Mode;
+  policy: SelectionPolicy;
+  mastery?: MasteryState;
+  prior?: MasteryPrior;
+  /** Optional pool restriction (e.g. Hard Mode difficulty floor). */
+  poolFilter?: (q: Question) => boolean;
+}
+
+/**
+ * Draw a blueprint-proportioned exam: exactly officialExamWeight questions from
+ * each domain in the section (or fewer if that domain's pool is short). Keeps a
+ * full practice exam matching the real exam's domain composition even when the
+ * question bank is much larger than the exam.
+ */
+export function selectBlueprintExam(args: BlueprintExamArgs): Question[] {
+  const mastery = args.mastery ?? emptyMastery();
+  const out: Question[] = [];
+  const used = new Set<string>();
+  for (const w of args.section.domainWeights) {
+    const pool = args.questions.filter(
+      (q) =>
+        q.modes.includes(args.mode) &&
+        q.domainId === w.domainId &&
+        sectionIdOfDomain(args.domains, q.domainId) === args.section.id &&
+        (args.poolFilter ? args.poolFilter(q) : true),
+    );
+    let drawn = 0;
+    while (drawn < w.officialExamWeight) {
+      const q = selectNext({
+        section: args.section,
+        pool,
+        mastery,
+        usedQuestionIds: used,
+        policy: args.policy,
+        prior: args.prior,
+      });
+      if (!q) break;
+      used.add(q.id);
+      out.push(q);
+      drawn++;
+    }
+  }
+  return out;
+}
+
 /** Whether the diagnostic has measured every domain confidently enough. */
 export function diagnosticShouldStop(args: {
   blueprint: Blueprint;
