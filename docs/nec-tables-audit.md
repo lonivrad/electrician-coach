@@ -118,6 +118,16 @@ All web-verified against authoritative 2020 NEC reproductions before encoding.
   electricallicenserenewal). 4–6→0.80, 7–9→**0.70**, 10–20→0.50, 21–30→0.45,
   31–40→0.40, 41+→0.35. `CCC_ADJUSTMENT` + `adjustmentFactor()`. **Edition note:**
   2026 NEC changes 7–9 to 0.65 — we intentionally encode the **2020** value (0.70).
+
+**Derating questions now derive these factors from the tables.** Every
+ampacity-derating question passes `ambientC` / `ccc` (not hand-typed factors), so
+`ampacityDerating` looks the factor up in the verified `TEMP_CORRECTION` /
+`CCC_ADJUSTMENT` tables — the derating answers are correct by construction. This
+includes the four original questions (q-amp-002/003/004/007) that previously
+hand-typed `ambientCorrection` / `adjustment`. Strengthened consistency checks:
+all three correction columns strictly decrease with ambient, every factor is > 1
+below the 30 °C base and < 1 above it, and the adjustment factor is 1.00 at ≤ 3
+conductors and never exceeds 1.00.
 - **Extra raceways — Table 4 total areas:** ✅ verified.
   RMC 0.314/0.549/0.887/1.526/2.071/3.408 and IMC 0.342/0.586/0.959/1.647/2.225/3.630
   (conduit.site ?option=RMC/IMC); PVC Sch 40 0.285/0.508/0.832/1.453/1.986/3.291 and

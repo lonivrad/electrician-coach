@@ -1,7 +1,7 @@
 # Phase 2 expansion — ampacity / box fill / conduit fill. 2020 NEC. All DRAFT.
 
 - id: q-amp-007
-  recompute: { calc: ampacityDerating, inputs: { size: "3", tempColumn: 90, ambientCorrection: 0.91, adjustment: 0.8, terminationColumn: 75 } }
+  recompute: { calc: ampacityDerating, inputs: { size: "3", tempColumn: 90, ambientC: 38, ccc: 4, terminationColumn: 75 } }
   domainId: nec.ampacity
   commonMistake: "If you got a higher number, you forgot to apply both the temperature correction and the adjustment factor together."
   skillIds: [nec.ampacity.combined, nec.ampacity.termination-limit]

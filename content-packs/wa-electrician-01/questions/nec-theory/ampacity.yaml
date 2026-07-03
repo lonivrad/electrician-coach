@@ -26,7 +26,7 @@
   note: "Draft: SME-verify 2020 NEC Table 310.16 value before promoting to live."
 
 - id: q-amp-002
-  recompute: { calc: ampacityDerating, inputs: { size: "8", tempColumn: 90, ambientCorrection: 0.82 } }
+  recompute: { calc: ampacityDerating, inputs: { size: "8", tempColumn: 90, ambientC: 50 } }
   domainId: nec.ampacity
   commonMistake: "If you got 55, you used the base ampacity and forgot to multiply by the 0.82 temperature correction."
   skillIds: [nec.ampacity.temp-correction]
@@ -49,7 +49,7 @@
   note: "NEEDS_VERIFICATION: confirm base ampacity and correction factor for adopted edition."
 
 - id: q-amp-003
-  recompute: { calc: ampacityDerating, inputs: { size: "12", tempColumn: 90, adjustment: 0.8 } }
+  recompute: { calc: ampacityDerating, inputs: { size: "12", tempColumn: 90, ccc: 6 } }
   domainId: nec.ampacity
   commonMistake: "If you got 30, you forgot the 80% adjustment required for more than three current-carrying conductors."
   skillIds: [nec.ampacity.fill-adjustment]
@@ -72,7 +72,7 @@
   note: "NEEDS_VERIFICATION."
 
 - id: q-amp-004
-  recompute: { calc: ampacityDerating, inputs: { size: "6", tempColumn: 90, ambientCorrection: 0.82, adjustment: 0.8 } }
+  recompute: { calc: ampacityDerating, inputs: { size: "6", tempColumn: 90, ambientC: 46, ccc: 6 } }
   domainId: nec.ampacity
   commonMistake: "If you got a higher number, you applied only one factor — the temperature correction and the fill adjustment must both be multiplied together."
   skillIds: [nec.ampacity.combined]

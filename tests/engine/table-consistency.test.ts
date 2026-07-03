@@ -76,9 +76,12 @@ describe("raceway area (Ch.9 Table 4) increases with trade size", () => {
 });
 
 describe("temperature correction (Table 310.15(B)(1)) consistency", () => {
-  it("90°C column strictly decreases as ambient rises", () => {
-    const f90 = TEMP_CORRECTION.map((r) => r.f90).filter((x): x is number => x !== null);
-    for (let i = 1; i < f90.length; i++) expect(f90[i]).toBeLessThan(f90[i - 1]);
+  it("every column strictly decreases as ambient rises (non-null cells)", () => {
+    for (const col of ["f60", "f75", "f90"] as const) {
+      const factors = TEMP_CORRECTION.map((r) => r[col]).filter((x): x is number => x !== null);
+      for (let i = 1; i < factors.length; i++)
+        expect(factors[i], `${col} row ${i}`).toBeLessThan(factors[i - 1]);
+    }
   });
   it("30°C row is exactly 1.00 in every column", () => {
     const base = TEMP_CORRECTION.find((r) => r.maxAmbientC === 30);
@@ -86,12 +89,26 @@ describe("temperature correction (Table 310.15(B)(1)) consistency", () => {
     expect(base?.f75).toBe(1);
     expect(base?.f90).toBe(1);
   });
+  it("factors are > 1 below the 30°C base and < 1 above it", () => {
+    for (const r of TEMP_CORRECTION) {
+      for (const f of [r.f60, r.f75, r.f90]) {
+        if (f === null) continue;
+        if (r.maxAmbientC < 30) expect(f, `≤${r.maxAmbientC}°C`).toBeGreaterThan(1);
+        if (r.maxAmbientC > 30) expect(f, `≤${r.maxAmbientC}°C`).toBeLessThan(1);
+      }
+    }
+  });
 });
 
 describe("adjustment factors (Table 310.15(C)(1)) decrease with count", () => {
   it("factor strictly decreases as conductor count rises", () => {
     for (let i = 1; i < CCC_ADJUSTMENT.length; i++)
       expect(CCC_ADJUSTMENT[i].factor).toBeLessThan(CCC_ADJUSTMENT[i - 1].factor);
+  });
+  it("≤3 conductors is 1.00 and no factor exceeds 1.00", () => {
+    const base = CCC_ADJUSTMENT.find((r) => r.maxCount === 3);
+    expect(base?.factor).toBe(1);
+    for (const r of CCC_ADJUSTMENT) expect(r.factor).toBeLessThanOrEqual(1);
   });
 });
 
