@@ -282,7 +282,7 @@ computer.)
 ```bash
 npm run build          # tsc -b + Vite production bundle → dist/
 npm run preview        # serve the production build locally
-npm test               # engine, pack, data, and state-hook tests (Vitest)
+npm test               # engine, pack, data, state-hook, UI-flow, and a11y tests (Vitest)
 npm run test:coverage  # tests with a V8 coverage report (enforced thresholds)
 npm run lint           # ESLint (strict typescript-eslint, type-checked rules)
 npm run typecheck      # tsc -b --noEmit
@@ -329,7 +329,7 @@ electrician-coach/
 ├─ scripts/
 │  ├─ validate-pack.ts             CI content-pack gate
 │  └─ smoke-diagnostic.ts          Headless diagnostic smoke run
-├─ tests/                          engine/ · packs/ · data/ · state/ · a11y/  (Vitest)
+├─ tests/                          engine/ · packs/ · data/ · state/ · ui/ · a11y/  (Vitest)
 ├─ docs/screenshots/               Images used in this README
 └─ .github/workflows/ci.yml        lint · typecheck · validate:pack · test+coverage · build
 ```
