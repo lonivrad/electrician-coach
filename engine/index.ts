@@ -12,4 +12,4 @@ export * from "./adaptive/mastery.ts";
 export * from "./adaptive/itemSelection.ts";
 export * from "./scoring/scoring.ts";
 export * from "./modes/policies.ts";
-export { grade } from "./grade.ts";
+export { grade, parseNumericInput } from "./grade.ts";

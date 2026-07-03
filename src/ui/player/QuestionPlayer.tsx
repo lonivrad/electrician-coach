@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { Question, Response, Section } from "@engine/index.ts";
+import { parseNumericInput, type Question, type Response, type Section } from "@engine/index.ts";
 import { TopBar } from "../components/TopBar.tsx";
 
 interface Props {
@@ -34,12 +34,13 @@ export function QuestionPlayer({
     setNumeric("");
   }, [question.id]);
 
-  const canSubmit =
-    question.type === "numeric" ? numeric.trim() !== "" && !Number.isNaN(Number(numeric)) : choice !== null;
+  // Parse the number out of whatever the user typed, ignoring any unit text.
+  const parsedNumeric = question.type === "numeric" ? parseNumericInput(numeric) : null;
+  const canSubmit = question.type === "numeric" ? parsedNumeric !== null : choice !== null;
 
   function handleSubmit() {
     if (question.type === "numeric") {
-      onSubmit({ kind: "numeric", value: Number(numeric) });
+      if (parsedNumeric !== null) onSubmit({ kind: "numeric", value: parsedNumeric });
     } else if (choice) {
       onSubmit({ kind: "single", optionId: choice });
     }
@@ -82,7 +83,9 @@ export function QuestionPlayer({
             className="w-full rounded-xl border border-line bg-panel px-4 py-4 text-xl text-slate-100 outline-none focus:border-brand"
           />
           {question.answer.kind === "numeric" && (
-            <p className="mt-2 text-xs text-slate-500">Units: {question.answer.unit}</p>
+            <p className="mt-2 text-xs text-slate-500">
+              Answer in {question.answer.unit} — just type the number, no units needed.
+            </p>
           )}
         </div>
       ) : (
