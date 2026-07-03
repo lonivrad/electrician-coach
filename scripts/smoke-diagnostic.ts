@@ -4,7 +4,7 @@
 // together and the weakness map converges. Run: npx tsx scripts/smoke-diagnostic.ts
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
-import yaml from "js-yaml";
+import * as yaml from "js-yaml";
 import {
   applyResponse,
   diagnosticPolicy,

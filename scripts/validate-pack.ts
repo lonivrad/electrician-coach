@@ -14,7 +14,7 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import yaml from "js-yaml";
+import * as yaml from "js-yaml";
 import { validatePack, type ContentPack, type Question } from "../engine/index.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
