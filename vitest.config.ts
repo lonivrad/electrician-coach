@@ -16,6 +16,14 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text-summary", "text"],
       include: ["engine/**", "src/data/**", "src/state/**"],
+      // Floors set just below current coverage (rounded down to the nearest 5)
+      // so the gate passes today and guards against regressions.
+      thresholds: {
+        statements: 55,
+        branches: 75,
+        functions: 85,
+        lines: 55,
+      },
     },
   },
 });

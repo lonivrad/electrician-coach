@@ -4,6 +4,15 @@
   "version": "0.1.0",
   "type": "module",
   "description": "Adaptive diagnostic tutor for licensing exams. Exam-agnostic engine + pluggable content packs. First pack: WA 01 General Journeyman.",
+  "author": "lonivrad",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lonivrad/electrician-coach.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

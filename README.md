@@ -1,17 +1,16 @@
 # Electrician Coach
 
+[![CI](https://github.com/lonivrad/electrician-coach/actions/workflows/ci.yml/badge.svg)](https://github.com/lonivrad/electrician-coach/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 A mobile-first study app for the **Washington 01 General Journeyman** electrician
 licensing exam. It finds a candidate's weak spots, drills them, and runs realistic
 timed practice exams — so the real test feels easier.
 
 **Live demo → https://electrician-coach.vercel.app/**
 
-> Built for one specific person: my dad, who had failed the Washington journeyman
-> exam more than once and kept getting close on the Washington Laws & Rules part
-> while losing on the NEC calculations. The single job of this app is to turn "I
-> keep failing and don't know why" into "here are your three weakest NEC topics —
-> practice those." It's a study tool, not a question dump: it measures what he
-> actually knows and spends his time where it moves the score.
+> Built for my father — a working electrician preparing for the Washington 01
+> General Journeyman license — to turn scattered studying into a focused,
+> exam-realistic practice loop that targets his weakest topics first.
 
 ---
 
@@ -26,7 +25,7 @@ to pass **each one** to get licensed:
 - **Washington Laws & Rules** — 17 questions, 1 hour. State licensing/permit rules.
 
 You need **70% on each part, on its own.** Acing the laws part does not make up for
-failing the code part. Most of the difficulty — and most of this app — is the NEC
+a weak code part. Most of the difficulty — and most of this app — is the NEC
 calculations: ampacity derating, load calcs, conduit and box fill, motors,
 transformers, overcurrent, grounding.
 
@@ -43,7 +42,7 @@ or account. See [§4 Setup and usage](#4-setup-and-usage) to open it.
 ### For developers (why the design is non-trivial)
 
 The naive version of this app is a randomized flashcard deck. That doesn't help
-someone who keeps failing, because it can't answer the only question that matters:
+someone who's stuck, because it can't answer the only question that matters:
 *what should I study next?* Getting that right requires:
 
 - **A learning model, not a running percentage.** A raw score treats every miss
@@ -52,7 +51,7 @@ someone who keeps failing, because it can't answer the only question that matter
   queue. The app implements a weighted priority over a **shrinkage mastery
   estimate** so the "study next" list tracks what actually moves the exam score.
 - **Two independently-graded sections.** Pass/fail is computed **per section**, so
-  a strong section can never mask a failing one — mirroring the real exam.
+  a strong section can never mask a weak one — mirroring the real exam.
 - **Trustworthy content.** These are original, authored questions (real PSI items
   are copyrighted). For the numeric ones, a wrong answer is a real risk to a
   studying user, so the build **re-derives every numeric answer from encoded NEC
@@ -162,9 +161,11 @@ malformed pack fails loudly instead of silently degrading the model.
   guessed by position. A pack test fails the build if any position exceeds 30%.
 
 - **The diagnostic over-weights NEC.** The candidate is already close on WA law and
-  needs code prep, so **Find My Weak Spots draws ~85% of its questions from NEC &
-  Theory** and prefers questions not seen in previous runs, cycling back only once a
-  section's unseen pool is spent (`src/state/useDiagnostic.ts`).
+  needs code prep, so **Find My Weak Spots** leans hard on the NEC section. The exam
+  blueprint targets ~85% NEC & Theory questions (`TARGET_NEC_SHARE = 0.85`); a
+  full-bank simulation lands around 83% due to per-section rounding. It also prefers
+  questions not seen in previous runs, cycling back only once a section's unseen pool
+  is spent (`src/state/useDiagnostic.ts`).
 
 - **Provisional data is flagged, and `live` is gated.** The pack edition is set to
   2020 NEC, but **every question is still `status: draft`** pending subject-matter
@@ -205,9 +206,9 @@ shortcut appears with the count of questions to redo.
 
 ![The Home control and a "Leave?" confirmation over a timed run](docs/screenshots/navigation.png)
 
-A persistent **Home** control and a question counter sit at the top of every screen.
-Leaving a timed run first asks to confirm ("Leave the practice exam? This run won't
-be scored."), so a stray tap can't silently throw away an in-progress attempt.
+**Never lose a run by accident.** A confirm-before-you-leave guard sits over every
+timed exam, alongside a live question counter — so a mis-tap mid-test can't wipe
+progress. Built for a non-technical user taking the exam on a phone.
 
 ### Practice Exam — a full timed section
 
@@ -237,14 +238,13 @@ one sentence ("…you applied only one factor…"). Then a **Key idea**, a numbe
 worked solution, and **where to find it in the code book** (here: Table 310.16,
 Table 310.15(B)(1), 310.15(C)(1)).
 
-### Results — pass projection and what to practice next
+### Diagnostic results — "How You're Doing"
 
-![The weakness-map results screen with per-section pass estimates and worst-first topics](docs/screenshots/results.png)
+![Diagnostic results: per-section pass projection and a ranked weakness map](docs/screenshots/diagnostic-results.png)
 
-The results screen after a Find My Weak Spots run: a per-part **pass projection**
-(`ExpectedSectionScore` vs. the 70% cut — NEC & Theory 34%, WA Laws & Rules 60%
-here) and a worst-first **"What to practice next"** list per section. These come
-from the weighted-mastery model, not a raw percent.
+**Diagnostic results — "How You're Doing."** After the untimed Find My Weak Spots
+run, a per-section pass projection and a ranked weakness map show which topics to
+drill next. From here you can practice again or erase practice history.
 
 ### My progress — mastery by topic, over time
 
