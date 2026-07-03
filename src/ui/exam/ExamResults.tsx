@@ -1,5 +1,7 @@
-import type { ExamReport } from "../../state/useExam.ts";
+import { useState } from "react";
+import type { ExamReport, ReviewItem } from "../../state/useExam.ts";
 import { TopBar } from "../components/TopBar.tsx";
+import { QuestionReview } from "./QuestionReview.tsx";
 
 interface Props {
   report: ExamReport;
@@ -63,6 +65,18 @@ export function ExamResults({ report, onAgain, onHome }: Props) {
         </div>
       </div>
 
+      {/* Review sections — like marking questions on the real exam. */}
+      <ReviewSection
+        title="Questions you flagged"
+        empty="You didn't flag any questions this time."
+        items={report.reviewItems.filter((r) => r.flagged)}
+      />
+      <ReviewSection
+        title="Questions you missed"
+        empty="You didn't miss any — nice work."
+        items={report.reviewItems.filter((r) => !r.correct)}
+      />
+
       <p className="mt-4 rounded-lg border border-line bg-panel px-3 py-2 text-xs text-slate-400">
         These are practice questions to help you study. They are not the official exam.
       </p>
@@ -81,6 +95,51 @@ export function ExamResults({ report, onAgain, onHome }: Props) {
           Back to home
         </button>
       </div>
+    </div>
+  );
+}
+
+/** A tappable list of reviewed questions; each row opens its full explanation. */
+function ReviewSection({ title, empty, items }: { title: string; empty: string; items: ReviewItem[] }) {
+  const [openId, setOpenId] = useState<string | null>(null);
+  return (
+    <div className="mt-5">
+      <div className="mb-2 text-[11px] uppercase tracking-wide text-slate-500">
+        {title}
+        {items.length > 0 ? ` (${items.length})` : ""}
+      </div>
+      {items.length === 0 ? (
+        <p className="text-sm text-slate-500">{empty}</p>
+      ) : (
+        <div className="flex flex-col gap-2">
+          {items.map((item) => {
+            const q = item.question;
+            const open = openId === q.id;
+            return (
+              <div key={q.id}>
+                <button
+                  onClick={() => setOpenId(open ? null : q.id)}
+                  className="flex w-full items-center gap-2 rounded-lg border border-line bg-panel px-3 py-3 text-left active:bg-panel2"
+                >
+                  <span
+                    className={`shrink-0 text-sm font-bold ${item.correct ? "text-good" : "text-bad"}`}
+                    aria-hidden
+                  >
+                    {item.correct ? "✓" : "✕"}
+                  </span>
+                  <span className="min-w-0 flex-1 truncate text-sm text-slate-200">{q.stem}</span>
+                  <span className="shrink-0 text-xs text-slate-500">{open ? "Hide" : "View"}</span>
+                </button>
+                {open && (
+                  <div className="mt-2">
+                    <QuestionReview item={item} />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

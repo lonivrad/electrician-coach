@@ -37,6 +37,14 @@ export interface DomainResult {
   priority: number; // exam weight × miss-rate, for worst-first sorting
 }
 
+/** One question's end-of-run review record (for the flagged / missed lists). */
+export interface ReviewItem {
+  question: Question;
+  response: Response | undefined;
+  correct: boolean;
+  flagged: boolean;
+}
+
 export interface ExamReport {
   sectionName: string;
   total: number;
@@ -49,6 +57,7 @@ export interface ExamReport {
   timeUsedSec: number;
   timedOut: boolean;
   domains: DomainResult[];
+  reviewItems: ReviewItem[];
 }
 
 interface RunConfig {
@@ -77,6 +86,7 @@ export function useExam(mode: ExamMode) {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<Record<string, Response>>({});
   const [numericRaw, setNumericRaw] = useState<Record<string, string>>({});
+  const [flagged, setFlagged] = useState<Record<string, boolean>>({});
   const [index, setIndex] = useState(0);
   const [allottedSec, setAllottedSec] = useState(0);
   const [remainingSec, setRemainingSec] = useState(0);
@@ -146,6 +156,7 @@ export function useExam(mode: ExamMode) {
       let correct = 0;
       let answered = 0;
       const perDomain = new Map<string, { total: number; correct: number }>();
+      const reviewItems: ReviewItem[] = [];
       let mastery = repo.load(pack.examId).mastery;
 
       for (const q of questions) {
@@ -153,6 +164,7 @@ export function useExam(mode: ExamMode) {
         const isRight = resp ? grade(q, resp) : false;
         if (resp) answered++;
         if (isRight) correct++;
+        reviewItems.push({ question: q, response: resp, correct: isRight, flagged: !!flagged[q.id] });
         const d = perDomain.get(q.domainId) ?? { total: 0, correct: 0 };
         d.total++;
         if (isRight) d.correct++;
@@ -206,10 +218,11 @@ export function useExam(mode: ExamMode) {
         timeUsedSec: timedOut ? allottedSec : allottedSec - remainingSec,
         timedOut,
         domains,
+        reviewItems,
       });
       setPhase("results");
     },
-    [questions, answers, repo, pack, section, allottedSec, remainingSec, domainName],
+    [questions, answers, flagged, repo, pack, section, allottedSec, remainingSec, domainName],
   );
 
   // Keep a fresh finish for the interval to call on timeout.
@@ -258,6 +271,7 @@ export function useExam(mode: ExamMode) {
       setQuestions(set);
       setAnswers({});
       setNumericRaw({});
+      setFlagged({});
       setIndex(0);
       setAllottedSec(allotted);
       setRemainingSec(allotted);
@@ -269,6 +283,11 @@ export function useExam(mode: ExamMode) {
 
   const setSingle = useCallback((qid: string, optionId: string) => {
     setAnswers((a) => ({ ...a, [qid]: { kind: "single", optionId } }));
+  }, []);
+
+  // Flagging is review-only: it never touches answers, grading, or mastery.
+  const toggleFlag = useCallback((qid: string) => {
+    setFlagged((f) => ({ ...f, [qid]: !f[qid] }));
   }, []);
 
   const setNumeric = useCallback((qid: string, raw: string, value: number | null) => {
@@ -291,6 +310,7 @@ export function useExam(mode: ExamMode) {
     setReport(null);
     setSection(null);
     setQuestions([]);
+    setFlagged({});
     deadlineRef.current = null;
   }, []);
 
@@ -308,11 +328,13 @@ export function useExam(mode: ExamMode) {
     allottedSec,
     answers,
     numericRaw,
+    flagged,
     report,
     domainName,
     start,
     setSingle,
     setNumeric,
+    toggleFlag,
     goNext,
     goPrev,
     finish,

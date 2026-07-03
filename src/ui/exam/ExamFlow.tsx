@@ -41,6 +41,8 @@ export function ExamFlow({ mode, onExit }: Props) {
           allottedSec={e.allottedSec}
           response={e.answers[e.current.id]}
           rawNumeric={e.numericRaw[e.current.id] ?? ""}
+          flagged={!!e.flagged[e.current.id]}
+          onToggleFlag={() => e.current && e.toggleFlag(e.current.id)}
           onSingle={(oid) => e.current && e.setSingle(e.current.id, oid)}
           onNumeric={(raw, val) => e.current && e.setNumeric(e.current.id, raw, val)}
           onPrev={e.goPrev}

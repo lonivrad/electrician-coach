@@ -10,6 +10,8 @@ interface Props {
   allottedSec: number;
   response: Response | undefined;
   rawNumeric: string;
+  flagged: boolean;
+  onToggleFlag: () => void;
   onSingle: (optionId: string) => void;
   onNumeric: (raw: string, value: number | null) => void;
   onPrev: () => void;
@@ -35,6 +37,8 @@ export function ExamRunner({
   allottedSec,
   response,
   rawNumeric,
+  flagged,
+  onToggleFlag,
   onSingle,
   onNumeric,
   onPrev,
@@ -60,6 +64,21 @@ export function ExamRunner({
           {fmt(remainingSec)}
         </span>
       </div>
+
+      {/* Mark-for-review — mirrors the real exam. Never affects the score. */}
+      <button
+        onClick={onToggleFlag}
+        aria-pressed={flagged}
+        className={[
+          "mb-4 flex w-full items-center justify-center gap-2 rounded-xl border px-4 py-3 text-base font-semibold transition-colors",
+          flagged
+            ? "border-warn bg-warn/15 text-warn"
+            : "border-line bg-panel text-slate-300 active:bg-panel2",
+        ].join(" ")}
+      >
+        <span aria-hidden>🚩</span>
+        {flagged ? "Flagged — tap to remove" : "Flag this to review later"}
+      </button>
 
       <h1 className="mb-5 text-lg font-semibold leading-snug text-slate-100">{question.stem}</h1>
 
