@@ -2,6 +2,7 @@
 
 - id: q-mt-001
   domainId: nec.motors
+  commonMistake: "If you got a different value, make sure you read the three-phase table (430.250), not the single-phase table (430.248)."
   skillIds: [nec.motor.flc-table]
   type: numeric
   difficulty: 2
@@ -21,6 +22,7 @@
 
 - id: q-mt-002
   domainId: nec.motors
+  commonMistake: "If you got 28, you forgot to multiply the FLC by 125%."
   skillIds: [nec.motor.conductor-125]
   type: numeric
   difficulty: 2

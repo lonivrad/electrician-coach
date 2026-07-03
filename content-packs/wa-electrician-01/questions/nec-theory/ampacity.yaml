@@ -27,6 +27,7 @@
 
 - id: q-amp-002
   domainId: nec.ampacity
+  commonMistake: "If you got 55, you used the base ampacity and forgot to multiply by the 0.82 temperature correction."
   skillIds: [nec.ampacity.temp-correction]
   type: numeric
   difficulty: 2
@@ -48,6 +49,7 @@
 
 - id: q-amp-003
   domainId: nec.ampacity
+  commonMistake: "If you got 30, you forgot the 80% adjustment required for more than three current-carrying conductors."
   skillIds: [nec.ampacity.fill-adjustment]
   type: numeric
   difficulty: 2
@@ -69,6 +71,7 @@
 
 - id: q-amp-004
   domainId: nec.ampacity
+  commonMistake: "If you got a higher number, you applied only one factor — the temperature correction and the fill adjustment must both be multiplied together."
   skillIds: [nec.ampacity.combined]
   type: numeric
   difficulty: 3

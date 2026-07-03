@@ -139,6 +139,7 @@
 
 - id: q-th-004
   domainId: nec.theory-general
+  commonMistake: "If your answer was about half, you forgot to double the one-way length (the 2 in the formula)."
   skillIds: [nec.theory.ohms-law]
   type: numeric
   difficulty: 2

@@ -2,6 +2,7 @@
 
 - id: q-amp-007
   domainId: nec.ampacity
+  commonMistake: "If you got a higher number, you forgot to apply both the temperature correction and the adjustment factor together."
   skillIds: [nec.ampacity.combined, nec.ampacity.termination-limit]
   type: numeric
   difficulty: 3
@@ -23,6 +24,7 @@
 
 - id: q-amp-008
   domainId: nec.ampacity
+  commonMistake: "If you got 44, you used the meter reading directly and forgot the 125% continuous-load factor."
   skillIds: [nec.ampacity.table-lookup]
   type: numeric
   difficulty: 4
@@ -43,6 +45,7 @@
 
 - id: q-box-005
   domainId: nec.box-fill
+  commonMistake: "If you got a lower number, you sized the clamp and device on the 14 AWG instead of the largest conductor (12 AWG)."
   skillIds: [nec.box.conductor-count, nec.box.device-clamp-allowance, nec.box.largest-conductor]
   type: numeric
   difficulty: 4
@@ -84,6 +87,7 @@
 
 - id: q-cf-005
   domainId: nec.conduit-fill
+  commonMistake: "If you were off, make sure you used each conductor's Table 5 area and summed all five conductors."
   skillIds: [nec.conduit.mixed-size]
   type: numeric
   difficulty: 3

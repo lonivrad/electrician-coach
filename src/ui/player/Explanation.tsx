@@ -45,6 +45,12 @@ export function Explanation({
       {/* Home is small, at the top. */}
       <TopBar onHome={onHome} progressLabel={progressLabel} />
 
+      {/* The original question, so the explanation reads alongside what was asked. */}
+      <div className="mb-4 rounded-xl border border-line bg-panel2 px-4 py-3">
+        <div className="mb-1 text-xs uppercase tracking-wide text-slate-500">Question</div>
+        <p className="text-sm text-slate-200">{question.stem}</p>
+      </div>
+
       <div
         className={[
           "mb-4 rounded-xl border px-4 py-3",
@@ -61,6 +67,14 @@ export function Explanation({
           </div>
         )}
       </div>
+
+      {/* On a wrong numeric answer, name the likely wrong path in one sentence. */}
+      {!correct && question.type === "numeric" && question.commonMistake && (
+        <div className="mb-4 rounded-xl border border-warn/40 bg-warn/5 px-4 py-3">
+          <div className="text-xs uppercase tracking-wide text-warn">Common mistake</div>
+          <p className="mt-1 text-sm text-slate-200">{question.commonMistake}</p>
+        </div>
+      )}
 
       <div className="mb-4 rounded-xl border border-line bg-panel p-4">
         <div className="mb-1 text-xs uppercase tracking-wide text-slate-500">Key idea</div>

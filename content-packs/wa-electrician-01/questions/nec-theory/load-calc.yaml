@@ -43,6 +43,7 @@
 
 - id: q-lc-003
   domainId: nec.load-calc
+  commonMistake: "If you got 3,150, you applied 35% to the whole load — the first 3,000 VA is counted at 100%."
   skillIds: [nec.load.demand-factor]
   type: numeric
   difficulty: 3

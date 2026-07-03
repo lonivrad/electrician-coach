@@ -25,6 +25,7 @@
 
 - id: q-lc-006
   domainId: nec.load-calc
+  commonMistake: "If you got 12, you used the nameplate rating instead of the Column C demand value."
   skillIds: [nec.load.demand-factor]
   type: numeric
   difficulty: 2
@@ -43,6 +44,7 @@
 
 - id: q-lc-007
   domainId: nec.load-calc
+  commonMistake: "If you were off, add the general-lighting, small-appliance, and laundry loads together BEFORE applying the demand factors."
   skillIds: [nec.load.demand-factor]
   type: numeric
   difficulty: 3
@@ -64,6 +66,7 @@
 
 - id: q-lc-008
   domainId: nec.load-calc
+  commonMistake: "If you got 16, you applied 40% to the whole load — the first 10 kVA is taken at 100%."
   skillIds: [nec.load.dwelling-optional]
   type: numeric
   difficulty: 4
@@ -157,6 +160,7 @@
 
 - id: q-gb-007
   domainId: nec.grounding-bonding
+  commonMistake: "If you got a factor below 1, you divided the smaller area by the larger — divide the new area by the original (26,240 ÷ 16,510)."
   skillIds: [nec.gnd.egc-sizing]
   type: numeric
   difficulty: 4

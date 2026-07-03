@@ -26,6 +26,7 @@
 
 - id: q-xf-002
   domainId: nec.transformers
+  commonMistake: "If you got a much larger number, you left out the √3 factor for three-phase."
   skillIds: [nec.xfmr.secondary]
   type: numeric
   difficulty: 3
@@ -112,6 +113,7 @@
 
 - id: q-th-002
   domainId: nec.theory-general
+  commonMistake: "If you got 9,600, you left out the √3 factor for three-phase power."
   skillIds: [nec.theory.three-phase, nec.theory.power]
   type: numeric
   difficulty: 3

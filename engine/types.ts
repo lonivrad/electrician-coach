@@ -73,6 +73,8 @@ export interface Question {
   options?: Option[];
   answer: AnswerKey;
   solution: { steps: SolutionStep[]; codePath: string[]; keyIdea: string };
+  /** One plain sentence naming the likely wrong path — shown on a wrong answer. */
+  commonMistake?: string;
   trapIds?: TrapId[];
   timeTargetSec: number;
   modes: Mode[];
