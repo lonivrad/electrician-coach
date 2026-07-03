@@ -11,7 +11,11 @@ export function App() {
   const askExit = () => setExitOpen(true);
 
   return (
-    <div className="mx-auto flex min-h-full w-full max-w-md flex-col px-4 py-5">
+    <div
+      className="mx-auto flex min-h-full w-full max-w-md flex-col px-4 pb-5"
+      // Clear the iOS status bar / notch: base 1.25rem plus the top safe-area inset.
+      style={{ paddingTop: "calc(env(safe-area-inset-top) + 1.25rem)" }}
+    >
       {d.phase === "intro" && <Intro pack={d.pack} onStart={d.start} />}
 
       {d.phase === "question" && d.current && (

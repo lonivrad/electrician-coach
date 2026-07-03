@@ -17,9 +17,10 @@ body {
   background: theme("colors.ink");
   color: #e5ecf7;
   -webkit-font-smoothing: antialiased;
-  /* honor iOS safe areas for a true mobile-first feel */
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
-    env(safe-area-inset-left);
+  /* Honor iOS side/bottom safe areas. The TOP inset is applied on the app
+     container instead (see App.tsx) so the top bar reliably clears the notch
+     even in full-screen / standalone mode. */
+  padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 /* Big, thumb-friendly tap targets everywhere. */
