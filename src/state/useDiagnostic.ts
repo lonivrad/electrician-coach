@@ -13,6 +13,7 @@ import {
   diagnosticPolicy,
   diagnosticShouldStop,
   grade,
+  selectNext,
   selectNextAcrossSections,
   sectionIdOfDomain,
   type ContentPack,
@@ -34,17 +35,88 @@ export interface FeedbackState {
 
 const POLICY = diagnosticPolicy(30);
 
-/** Thin adapter over the engine's cross-section selection for this pack + mode. */
-function pickNext(pack: ContentPack, mastery: MasteryState, used: Set<string>): Question | null {
-  return selectNextAcrossSections({
-    blueprint: pack.blueprint,
-    domains: pack.domains,
-    questions: pack.questions,
-    mode: "diagnostic",
+// The diagnostic deliberately over-weights the NEC section: the candidate is
+// already close on WA Laws & Rules and needs Electrical Code & Theory prep.
+const NEC_SECTION_ID = "nec-theory";
+const TARGET_NEC_SHARE = 0.85;
+
+function diagnosticPool(pack: ContentPack, section: Section): Question[] {
+  return pack.questions.filter(
+    (q) => q.modes.includes("diagnostic") && sectionIdOfDomain(pack.domains, q.domainId) === section.id,
+  );
+}
+
+function pickInSection(
+  pack: ContentPack,
+  section: Section,
+  mastery: MasteryState,
+  avoid: Set<string>,
+): Question | null {
+  return selectNext({
+    section,
+    pool: diagnosticPool(pack, section),
     mastery,
-    usedQuestionIds: used,
+    usedQuestionIds: avoid,
     policy: POLICY.selection,
   });
+}
+
+/**
+ * Pick the next diagnostic question. Two deliberate behaviors:
+ *  1. NEC emphasis — a proportional scheduler draws ~85% of items from the NEC
+ *     section (the candidate needs Code & Theory prep more than WA law).
+ *  2. Fresh questions — prefer items not seen in past runs; only cycle back to
+ *     already-seen ones once a section's unseen pool is spent.
+ */
+function pickNext(
+  pack: ContentPack,
+  mastery: MasteryState,
+  drawnThisRun: Set<string>,
+  seenBefore: Set<string>,
+  qById: Map<string, Question>,
+): Question | null {
+  const nec = pack.blueprint.sections.find((s) => s.id === NEC_SECTION_ID);
+  const law = pack.blueprint.sections.find((s) => s.id !== NEC_SECTION_ID);
+  // Pack without the expected two sections: fall back to plain cross-section.
+  if (!nec) {
+    return selectNextAcrossSections({
+      blueprint: pack.blueprint,
+      domains: pack.domains,
+      questions: pack.questions,
+      mode: "diagnostic",
+      mastery,
+      usedQuestionIds: drawnThisRun,
+      policy: POLICY.selection,
+    });
+  }
+
+  // Count this run's draws per section, then draw from whichever section is
+  // furthest below its target share (largest-remainder scheduler).
+  let necDrawn = 0;
+  let lawDrawn = 0;
+  for (const id of drawnThisRun) {
+    const sec = sectionIdOfDomain(pack.domains, qById.get(id)?.domainId ?? "");
+    if (sec === NEC_SECTION_ID) necDrawn++;
+    else lawDrawn++;
+  }
+  const necStarve = necDrawn / TARGET_NEC_SHARE;
+  const lawStarve = law ? lawDrawn / (1 - TARGET_NEC_SHARE) : Infinity;
+  const order = necStarve <= lawStarve ? [nec, law] : [law, nec];
+
+  // Phase 1: prefer unseen (avoid this run's draws AND everything seen before).
+  const avoidUnseen = new Set([...drawnThisRun, ...seenBefore]);
+  for (const s of order) {
+    if (!s) continue;
+    const q = pickInSection(pack, s, mastery, avoidUnseen);
+    if (q) return q;
+  }
+  // Phase 2: unseen pool spent — allow repeats (avoid only this run's draws).
+  for (const s of order) {
+    if (!s) continue;
+    const q = pickInSection(pack, s, mastery, drawnThisRun);
+    if (q) return q;
+  }
+  return null;
 }
 
 export function useDiagnostic() {
@@ -66,20 +138,24 @@ export function useDiagnostic() {
 
   // Questions used within THIS diagnostic run (independent of long-term history).
   const usedThisRun = useRef<Set<string>>(new Set());
+  // Snapshot of everything seen in PAST runs, taken at run start — lets a new run
+  // prefer fresh questions instead of repeating the same ones each time.
+  const seenBefore = useRef<Set<string>>(new Set());
   // Working mastery for the run starts from persisted state (live-only history).
   const runMastery = useRef<MasteryState>(progress.mastery);
 
   const start = useCallback(() => {
     usedThisRun.current = new Set();
+    seenBefore.current = new Set(progress.seenQuestionIds);
     runMastery.current = progress.mastery;
     liveQuestionPending.current = false;
     setAnsweredThisRun(0);
     setHistory([]);
     setViewIndex(null);
-    const q = pickNext(pack, runMastery.current, usedThisRun.current);
+    const q = pickNext(pack, runMastery.current, usedThisRun.current, seenBefore.current, idx.questionById);
     setCurrent(q);
     setPhase(q ? "question" : "results");
-  }, [pack, progress.mastery]);
+  }, [pack, idx, progress.mastery, progress.seenQuestionIds]);
 
   const submit = useCallback(
     (response: Response) => {
@@ -139,7 +215,9 @@ export function useDiagnostic() {
       answered: answeredThisRun,
       stop: POLICY.stop,
     });
-    const q = done ? null : pickNext(pack, runMastery.current, usedThisRun.current);
+    const q = done
+      ? null
+      : pickNext(pack, runMastery.current, usedThisRun.current, seenBefore.current, idx.questionById);
     setViewIndex(null);
     if (!q) {
       setCurrent(null);
@@ -148,7 +226,7 @@ export function useDiagnostic() {
       setCurrent(q);
       setPhase("question");
     }
-  }, [answeredThisRun, pack]);
+  }, [answeredThisRun, pack, idx]);
 
   // ---- Linear navigation on the explanation screen -------------------------
   // "Continue": step forward through any reviewed history, then either resume a
