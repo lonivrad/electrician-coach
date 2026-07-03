@@ -67,6 +67,17 @@ describe("overcurrent calculators (240.6 / 240.4)", () => {
     expect(() => runCalc("smallConductorMaxOCPD", { size: "14", material: "al" })).toThrow());
 });
 
+describe("burial depth (Table 300.5)", () => {
+  it("direct burial → 24 in", () => expect(runCalc("burialDepth", { method: "directBurial" })).toBe(24));
+  it("RMC/IMC → 6 in", () => expect(runCalc("burialDepth", { method: "rmcImc" })).toBe(6));
+  it("nonmetallic raceway → 18 in", () =>
+    expect(runCalc("burialDepth", { method: "nonmetallicRaceway" })).toBe(18));
+  it("residential GFCI branch → 12 in", () =>
+    expect(runCalc("burialDepth", { method: "residentialGFCI" })).toBe(12));
+  it("throws on unknown method", () =>
+    expect(() => runCalc("burialDepth", { method: "nope" })).toThrow());
+});
+
 describe("conduit fill uses the new raceway types", () => {
   it("max 12 THHN in 3/4 RMC", () =>
     expect(

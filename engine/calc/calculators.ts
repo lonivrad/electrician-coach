@@ -11,6 +11,7 @@ import {
   AMPACITY_AL,
   AMPACITY_CU,
   BOX_VOLUME_ALLOWANCE,
+  BURIAL_DEPTH,
   CCC_ADJUSTMENT,
   CIRCULAR_MILS,
   EGC_BY_OCPD,
@@ -253,6 +254,12 @@ function smallConductorMaxOCPD(i: Inputs): number {
   return need(limit, `no ${material} 240.4(D) limit for AWG ${size}`);
 }
 
+/** Table 300.5 minimum cover (in.) by wiring-method column. */
+function burialDepth(i: Inputs): number {
+  const method = str(i, "method");
+  return need(BURIAL_DEPTH[method], `no Table 300.5 depth for "${method}"`);
+}
+
 /** Ohm's law current: V / R. */
 function ohmsCurrent(i: Inputs): number {
   return round(num(i, "volts") / num(i, "ohms"), 2);
@@ -307,6 +314,7 @@ export const CALCULATORS: Record<string, (i: Inputs) => number> = {
   ocpdMixedLoad,
   nextStandardSize,
   smallConductorMaxOCPD,
+  burialDepth,
   ohmsCurrent,
   power1ph,
   power3ph,

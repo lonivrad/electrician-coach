@@ -236,3 +236,14 @@ export const SMALL_CONDUCTOR_OCPD: Record<string, { cu?: number; al?: number }> 
   "12": { cu: 20, al: 15 },
   "10": { cu: 30, al: 25 },
 };
+
+/**
+ * Table 300.5 — minimum cover (in.) for underground installs, 0–600 V, Row 1
+ * ("locations not specified"). Keyed by wiring-method column.
+ */
+export const BURIAL_DEPTH: Record<string, number> = {
+  directBurial: 24, // Column 1: direct-buried cables/conductors
+  rmcImc: 6, // Column 2: rigid metal / intermediate metal conduit
+  nonmetallicRaceway: 18, // Column 3: nonmetallic raceway (e.g. PVC)
+  residentialGFCI: 12, // Column 4: ≤120 V, ≤20 A, GFCI-protected residential branch
+};

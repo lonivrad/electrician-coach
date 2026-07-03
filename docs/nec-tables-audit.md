@@ -159,6 +159,14 @@ rises; GEC size never shrinks as the service conductor grows.
   -verified `STANDARD_OCPD` list — no new data, just exposed as a calculator for
   next-size-up questions.
 
+## Fifth pass (2026-07): wiring methods — Table 300.5 burial depth
+
+- **Table 300.5 — minimum cover (Row 1, 0–600 V):** ✅ verified (electricallicenserenewal,
+  expertce, zing2). Direct burial 24 in, RMC/IMC 6 in, nonmetallic raceway 18 in,
+  ≤120 V/≤20 A GFCI residential branch 12 in. `BURIAL_DEPTH` + `burialDepth()`;
+  backs the numeric burial-depth questions. (Only Row 1 columns 1–4 are encoded;
+  the driveway/slab/street rows are handled as single-choice items.)
+
 ## Corrections made
 
 None to previously-committed data — every value already in `tables.ts` matched an
