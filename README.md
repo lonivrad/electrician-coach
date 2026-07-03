@@ -8,9 +8,9 @@ timed practice exams — so the real test feels easier.
 
 **Live demo → https://electrician-coach.vercel.app/**
 
-> Built for my father — a working electrician preparing for the Washington 01
-> General Journeyman license — to turn scattered studying into a focused,
-> exam-realistic practice loop that targets his weakest topics first.
+> Built for a working electrician preparing for the Washington 01 General
+> Journeyman license — turning scattered studying into a focused, exam-realistic
+> practice loop that targets the candidate's weakest topics first.
 
 ---
 
@@ -331,7 +331,7 @@ electrician-coach/
 │  └─ smoke-diagnostic.ts          Headless diagnostic smoke run
 ├─ tests/                          engine/ · packs/ · data/ · state/  (Vitest)
 ├─ docs/screenshots/               Images used in this README
-└─ .github/workflows/ci.yml        lint · typecheck · validate:pack · test · build
+└─ .github/workflows/ci.yml        lint · typecheck · validate:pack · test+coverage · build
 ```
 
 ---

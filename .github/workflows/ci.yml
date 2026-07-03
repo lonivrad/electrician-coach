@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   verify:
-    name: typecheck · lint · test · validate
+    name: lint · typecheck · validate · test+coverage · build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
