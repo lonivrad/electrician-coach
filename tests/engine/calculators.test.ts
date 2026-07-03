@@ -87,6 +87,8 @@ describe("load calc (Art. 220)", () => {
   it("standard demand on 9000 VA", () => approx(runCalc("demandFactorStandard", { totalVA: 9000 }), 5100));
   it("standard demand on 10500 VA", () => approx(runCalc("demandFactorStandard", { totalVA: 10500 }), 5625));
   it("optional method 40 kVA", () => approx(runCalc("optionalMethod", { totalKVA: 40 }), 22));
+  it("sum components then standard demand", () =>
+    approx(runCalc("sumThenStandardDemand", { components: [6000, 1500, 1500, 1500] }), 5625));
   it("range demand, one range", () => expect(runCalc("rangeDemandC", { count: 1 })).toBe(8));
 });
 

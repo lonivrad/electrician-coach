@@ -144,13 +144,23 @@ function generalLighting(i: Inputs): number {
   return round(num(i, "areaFt2") * optNum(i, "vaPerFt2", 3), 2);
 }
 
-/** Standard general-lighting demand (Table 220.42): tiered 100/35/25%. */
+/** Table 220.42 tiered demand: first 3,000 VA @100%, 3,001–120,000 @35%, rest @25%. */
+function standardDemandOf(total: number): number {
+  let demand = Math.min(total, 3000);
+  if (total > 3000) demand += Math.min(total - 3000, 117000) * 0.35;
+  if (total > 120000) demand += (total - 120000) * 0.25;
+  return demand;
+}
+
+/** Standard general-lighting demand (Table 220.42) on a stated total VA. */
 function demandFactorStandard(i: Inputs): number {
-  const va = num(i, "totalVA");
-  let demand = Math.min(va, 3000);
-  if (va > 3000) demand += Math.min(va - 3000, 117000) * 0.35;
-  if (va > 120000) demand += (va - 120000) * 0.25;
-  return round(demand, 2);
+  return round(standardDemandOf(num(i, "totalVA")), 2);
+}
+
+/** Sum component loads (VA), then apply the standard demand factors (220.42). */
+function sumThenStandardDemand(i: Inputs): number {
+  const comps = need(i.components as number[] | undefined, "sumThenStandardDemand needs components");
+  return round(standardDemandOf(comps.reduce((a, b) => a + b, 0)), 2);
 }
 
 /** Optional dwelling method (220.82(B)): first 10 kVA @100%, remainder @40%, + HVAC. */
@@ -266,6 +276,7 @@ export const CALCULATORS: Record<string, (i: Inputs) => number> = {
   continuousLoad,
   generalLighting,
   demandFactorStandard,
+  sumThenStandardDemand,
   optionalMethod,
   rangeDemandC,
   motorFLC,
