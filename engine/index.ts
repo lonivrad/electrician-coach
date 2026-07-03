@@ -16,6 +16,8 @@ export { grade, parseNumericInput } from "./grade.ts";
 export {
   runCalc,
   isKnownCalc,
+  runSizeCalc,
+  isKnownSizeCalc,
   nextStandardOCPD,
   correctionFactor,
   adjustmentFactor,

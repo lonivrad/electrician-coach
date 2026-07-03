@@ -13,6 +13,8 @@ import {
   BOX_VOLUME_ALLOWANCE,
   CCC_ADJUSTMENT,
   CIRCULAR_MILS,
+  EGC_BY_OCPD,
+  GEC_BY_SERVICE,
   MOTOR_FLC_1PH,
   MOTOR_FLC_3PH,
   RACEWAY_AREA,
@@ -302,4 +304,34 @@ export function runCalc(calc: string, inputs: Inputs): number {
 
 export function isKnownCalc(calc: string): boolean {
   return calc in CALCULATORS;
+}
+
+// ---- size-returning calculators (table lookups → conductor-size string) ----
+
+/** Table 250.122: minimum copper EGC size for an overcurrent-device rating. */
+function egcSize(i: Inputs): string {
+  const ocpd = num(i, "ocpd");
+  for (const r of EGC_BY_OCPD) if (ocpd <= r.maxRating) return r.size;
+  return EGC_BY_OCPD[EGC_BY_OCPD.length - 1].size;
+}
+
+/** Table 250.66: copper GEC size for the largest service-entrance conductor. */
+function gecSize(i: Inputs): string {
+  const cmil = optStr(i, "serviceSize")
+    ? need(CIRCULAR_MILS[str(i, "serviceSize")], `unknown service size "${str(i, "serviceSize")}"`)
+    : num(i, "serviceKcmil") * 1000;
+  for (const r of GEC_BY_SERVICE) if (cmil <= r.maxCmil) return r.size;
+  return GEC_BY_SERVICE[GEC_BY_SERVICE.length - 1].size;
+}
+
+export const SIZE_CALCULATORS: Record<string, (i: Inputs) => string> = { egcSize, gecSize };
+
+export function runSizeCalc(calc: string, inputs: Inputs): string {
+  const fn = SIZE_CALCULATORS[calc];
+  if (!fn) throw new Error(`unknown size calculator "${calc}"`);
+  return fn(inputs);
+}
+
+export function isKnownSizeCalc(calc: string): boolean {
+  return calc in SIZE_CALCULATORS;
 }

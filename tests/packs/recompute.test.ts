@@ -6,7 +6,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import yaml from "js-yaml";
-import { runCalc, type Question } from "../../engine/index.ts";
+import { runCalc, runSizeCalc, type Question } from "../../engine/index.ts";
 
 const packDir = join(process.cwd(), "content-packs", "wa-electrician-01");
 
@@ -29,7 +29,10 @@ function loadQuestions(): Question[] {
   return questions;
 }
 
-const numericQuestions = loadQuestions().filter((q) => q.type === "numeric");
+const allQuestions = loadQuestions();
+const numericQuestions = allQuestions.filter((q) => q.type === "numeric");
+// Single-choice questions whose answer is a table-looked-up conductor size.
+const sizeQuestions = allQuestions.filter((q) => q.type === "single" && q.recompute);
 
 describe("numeric answer recompute guardrail", () => {
   it("there are numeric questions to check", () => {
@@ -51,4 +54,21 @@ describe("numeric answer recompute guardrail", () => {
       ).toBeLessThanOrEqual(q.answer.tolerance);
     });
   }
+});
+
+describe("single-choice size recompute guardrail (EGC/GEC sizing)", () => {
+  // One looped test so the suite is valid even before any size-backed questions
+  // exist. Each such question's keyed correct option must match its size calc.
+  it("every size-backed single-choice question's keyed option matches the calculator", () => {
+    for (const q of sizeQuestions) {
+      if (!q.recompute) continue;
+      const size = runSizeCalc(q.recompute.calc, q.recompute.inputs);
+      const correct = (q.options ?? []).find((o) => o.isCorrect);
+      expect(correct, `${q.id} has no correct option`).toBeDefined();
+      expect(
+        correct?.text.trim().startsWith(size),
+        `${q.id}: calc(${q.recompute.calc}) = "${size}", but correct option is "${correct?.text}"`,
+      ).toBe(true);
+    }
+  });
 });

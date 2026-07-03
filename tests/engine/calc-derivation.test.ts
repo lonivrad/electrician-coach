@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { runCalc, correctionFactor, adjustmentFactor } from "../../engine/index.ts";
+import { runCalc, runSizeCalc, correctionFactor, adjustmentFactor } from "../../engine/index.ts";
 
 const approx = (v: number, e: number, tol = 0.01) => expect(Math.abs(v - e)).toBeLessThanOrEqual(tol);
 
@@ -33,6 +33,20 @@ describe("ampacityDerating — factors derived from ambient/ccc", () => {
     approx(runCalc("ampacityDerating", { size: "6", tempColumn: 90, ambientC: 46, ccc: 6 }), 49.2, 0.1));
   it("still honors explicit factors when given", () =>
     approx(runCalc("ampacityDerating", { size: "8", tempColumn: 90, ambientCorrection: 0.82 }), 45.1, 0.1));
+});
+
+describe("grounding size calculators (250.122 / 250.66)", () => {
+  it("EGC: 30 A → 10 AWG (uses the 'not exceeding 60' row)", () =>
+    expect(runSizeCalc("egcSize", { ocpd: 30 })).toBe("10"));
+  it("EGC: 100 A → 8 AWG", () => expect(runSizeCalc("egcSize", { ocpd: 100 })).toBe("8"));
+  it("EGC: 400 A → 3 AWG", () => expect(runSizeCalc("egcSize", { ocpd: 400 })).toBe("3"));
+  it("GEC: 2 AWG service → 8 AWG", () => expect(runSizeCalc("gecSize", { serviceSize: "2" })).toBe("8"));
+  it("GEC: 3/0 service → 4 AWG (not 2 — verified)", () =>
+    expect(runSizeCalc("gecSize", { serviceSize: "3/0" })).toBe("4"));
+  it("GEC: 4/0 service → 2 AWG", () => expect(runSizeCalc("gecSize", { serviceSize: "4/0" })).toBe("2"));
+  it("GEC: 250 kcmil service → 2 AWG", () => expect(runSizeCalc("gecSize", { serviceKcmil: 250 })).toBe("2"));
+  it("GEC: 500 kcmil service → 1/0", () => expect(runSizeCalc("gecSize", { serviceKcmil: 500 })).toBe("1/0"));
+  it("throws on unknown size calculator", () => expect(() => runSizeCalc("nope", {})).toThrow());
 });
 
 describe("conduit fill uses the new raceway types", () => {

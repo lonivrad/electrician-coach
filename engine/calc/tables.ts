@@ -189,3 +189,41 @@ export const CCC_ADJUSTMENT: { maxCount: number; factor: number }[] = [
   { maxCount: 40, factor: 0.4 },
   { maxCount: Infinity, factor: 0.35 },
 ];
+
+/**
+ * Table 250.122 — minimum copper equipment grounding conductor by the rating of
+ * the overcurrent device (not exceeding maxRating). Each row is the EGC size for
+ * an OCPD rating ≤ maxRating.
+ */
+export const EGC_BY_OCPD: { maxRating: number; size: string }[] = [
+  { maxRating: 15, size: "14" },
+  { maxRating: 20, size: "12" },
+  { maxRating: 60, size: "10" },
+  { maxRating: 100, size: "8" },
+  { maxRating: 200, size: "6" },
+  { maxRating: 300, size: "4" },
+  { maxRating: 400, size: "3" },
+  { maxRating: 500, size: "2" },
+  { maxRating: 600, size: "1" },
+  { maxRating: 800, size: "1/0" },
+  { maxRating: 1000, size: "2/0" },
+  { maxRating: 1200, size: "3/0" },
+  { maxRating: 1600, size: "4/0" },
+  { maxRating: 2000, size: "250 kcmil" },
+];
+
+/**
+ * Table 250.66 — copper grounding electrode conductor by the largest ungrounded
+ * service-entrance conductor (compared in circular mils). Each row is the GEC
+ * size for a service conductor ≤ maxCmil. (Does not model the 6 AWG cap for a
+ * connection solely to a ground rod — 250.66(A).)
+ */
+export const GEC_BY_SERVICE: { maxCmil: number; size: string }[] = [
+  { maxCmil: CIRCULAR_MILS["2"], size: "8" }, // 2 AWG or smaller
+  { maxCmil: CIRCULAR_MILS["1/0"], size: "6" }, // 1 or 1/0
+  { maxCmil: CIRCULAR_MILS["3/0"], size: "4" }, // 2/0 or 3/0
+  { maxCmil: 350000, size: "2" }, // over 3/0 through 350 kcmil
+  { maxCmil: 600000, size: "1/0" }, // over 350 through 600 kcmil
+  { maxCmil: 1100000, size: "2/0" }, // over 600 through 1100 kcmil
+  { maxCmil: Infinity, size: "3/0" }, // over 1100 kcmil
+];

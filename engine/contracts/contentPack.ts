@@ -17,7 +17,7 @@ import type {
   SkillId,
   TrapId,
 } from "../types.ts";
-import { isKnownCalc } from "../calc/calculators.ts";
+import { isKnownCalc, isKnownSizeCalc } from "../calc/calculators.ts";
 
 export interface PackEdition {
   /** e.g. "NEC-2023". */
@@ -203,6 +203,15 @@ function checkHygiene(q: Question, err: (c: string, m: string) => void) {
     } else if (!isKnownCalc(q.recompute.calc)) {
       err("hy.calc", `Question "${id}" recompute references unknown calculator "${q.recompute.calc}".`);
     }
+  }
+
+  // A single-choice question MAY carry a recompute that names a size calculator
+  // (e.g. EGC/GEC sizing) whose result is checked against the keyed option.
+  if (q.type === "single" && q.recompute && !isKnownSizeCalc(q.recompute.calc)) {
+    err(
+      "hy.sizecalc",
+      `Question "${id}" recompute references unknown size calculator "${q.recompute.calc}".`,
+    );
   }
 }
 

@@ -9,6 +9,8 @@ import {
   BOX_VOLUME_ALLOWANCE,
   CCC_ADJUSTMENT,
   CIRCULAR_MILS,
+  EGC_BY_OCPD,
+  GEC_BY_SERVICE,
   MOTOR_FLC_1PH,
   MOTOR_FLC_3PH,
   RACEWAY_AREA,
@@ -89,6 +91,32 @@ describe("adjustment factors (Table 310.15(C)(1)) decrease with count", () => {
   it("factor strictly decreases as conductor count rises", () => {
     for (let i = 1; i < CCC_ADJUSTMENT.length; i++)
       expect(CCC_ADJUSTMENT[i].factor).toBeLessThan(CCC_ADJUSTMENT[i - 1].factor);
+  });
+});
+
+describe("grounding tables (250.122 / 250.66) grow monotonically", () => {
+  const cmilOf = (s: string) => (s.includes("kcmil") ? parseInt(s, 10) * 1000 : CIRCULAR_MILS[s]);
+  it("EGC: OCPD ratings ascend and the EGC size never shrinks", () => {
+    let prevRating = 0;
+    let prevCmil = 0;
+    for (const r of EGC_BY_OCPD) {
+      expect(r.maxRating, `rating ${r.maxRating}`).toBeGreaterThan(prevRating);
+      const c = cmilOf(r.size);
+      expect(c, `EGC ${r.size}`).toBeGreaterThanOrEqual(prevCmil);
+      prevRating = r.maxRating;
+      prevCmil = c;
+    }
+  });
+  it("GEC: service-size boundaries ascend and the GEC size never shrinks", () => {
+    let prevMax = 0;
+    let prevCmil = 0;
+    for (const r of GEC_BY_SERVICE) {
+      expect(r.maxCmil, `maxCmil ${r.maxCmil}`).toBeGreaterThan(prevMax);
+      const c = cmilOf(r.size);
+      expect(c, `GEC ${r.size}`).toBeGreaterThanOrEqual(prevCmil);
+      prevMax = r.maxCmil;
+      prevCmil = c;
+    }
   });
 });
 

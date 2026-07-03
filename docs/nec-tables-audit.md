@@ -126,11 +126,33 @@ All web-verified against authoritative 2020 NEC reproductions before encoding.
   (≈0.217/0.409/…); verification replaced them with the table values above — exactly
   the failure this pass exists to catch.
 
+## Third pass (2026-07): grounding tables — 250.122 & 250.66
+
+Encoded for calculator-backed EGC/GEC questions and web-verified.
+
+- **Table 250.122 — copper EGC by OCPD rating:** ✅ verified (zing2). 15→14,
+  20→12, 60→10, 100→8, 200→6, 300→4, 400→3, 500→2, 600→1, 800→1/0, 1000→2/0,
+  1200→3/0, 1600→4/0, 2000→250 kcmil. `EGC_BY_OCPD` + `egcSize()` (returns the
+  size for the smallest listed rating ≥ the OCPD, e.g. 30 A → the 60 A row → 10).
+- **Table 250.66 — copper GEC by service-entrance conductor:** ✅ verified (zing2).
+  ≤2 AWG→8, 1–1/0→6, 2/0–3/0→**4**, >3/0–350 kcmil→2, >350–600→1/0, >600–1100→2/0,
+  > 1100→3/0. `GEC_BY_SERVICE` + `gecSize()`. Does not model the 6 AWG ground-rod
+  > cap (250.66(A)).
+  > **Caught a bad source:** one search result claimed 3/0 → 2 AWG; the authoritative
+  > table (and our existing questions) is 3/0 → **4 AWG**. Verified against zing2's
+  > full table.
+
+These are conductor-size lookups (string answers), so the recompute guardrail was
+extended: a single-choice question may carry a `recompute` naming a size calculator
+(`egcSize`/`gecSize`), and the test asserts the keyed correct option matches the
+calculator's size. Consistency checks: EGC size never shrinks as the OCPD rating
+rises; GEC size never shrinks as the service conductor grows.
+
 ## Corrections made
 
 None to previously-committed data — every value already in `tables.ts` matched an
-authoritative source. (The PVC Sch 80 mis-remembering was caught during this pass,
-before it was committed.)
+authoritative source. (The PVC Sch 80 mis-remembering was caught during the second
+pass, before it was committed.)
 
 ## Consistency guardrails added
 
