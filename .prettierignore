@@ -1,0 +1,5 @@
+dist
+node_modules
+coverage
+# Content pack YAML is hand-formatted (aligned tables, multi-line stems) — leave it be.
+content-packs
