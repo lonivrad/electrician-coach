@@ -19,10 +19,10 @@ export default defineConfig({
       // Floors set just below current coverage (rounded down to the nearest 5)
       // so the gate passes today and guards against regressions.
       thresholds: {
-        statements: 55,
-        branches: 75,
-        functions: 85,
-        lines: 55,
+        statements: 90,
+        branches: 80,
+        functions: 95,
+        lines: 90,
       },
     },
   },

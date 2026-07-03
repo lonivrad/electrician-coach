@@ -18,5 +18,5 @@
       "@packs/*": ["content-packs/*"]
     }
   },
-  "include": ["vite.config.ts", "vitest.config.ts", "eslint.config.js", "scripts", "tests"]
+  "include": ["vite.config.ts", "vitest.config.ts", "eslint.config.js", "scripts", "tests", "src/vite-env.d.ts"]
 }
