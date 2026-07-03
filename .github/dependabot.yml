@@ -4,9 +4,10 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    # Deferred major migrations: React 19 and Tailwind v4 are breaking upgrades
-    # we're intentionally holding off on. Minor, patch, and security updates for
-    # these (and everything else) still flow.
+    # Deferred major migrations — breaking upgrades we're intentionally holding
+    # off on (React 19, Tailwind v4, Vitest 4, @vitejs/plugin-react 6,
+    # eslint-plugin-react-hooks 7, js-yaml 5). Minor, patch, and security updates
+    # for these (and everything else) still flow.
     ignore:
       - dependency-name: "react"
         update-types: ["version-update:semver-major"]
@@ -17,6 +18,14 @@ updates:
       - dependency-name: "@types/react-dom"
         update-types: ["version-update:semver-major"]
       - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@vitejs/plugin-react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint-plugin-react-hooks"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "vitest"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "js-yaml"
         update-types: ["version-update:semver-major"]
   - package-ecosystem: "github-actions"
     directory: "/"
