@@ -1,0 +1,322 @@
+# Grounding & bonding — EGC/GEC sizing variants. 2020 NEC. All DRAFT.
+# Single-choice; each carries a size-calc recompute (egcSize / gecSize) so the
+# keyed correct option is verified against the encoded, web-verified Tables
+# 250.122 and 250.66 by the recompute guardrail.
+
+# ---- Equipment grounding conductor — Table 250.122 (by OCPD rating) --------
+- id: q-gb-101
+  recompute: { calc: egcSize, inputs: { ocpd: 30 } }
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 1
+  stem: "Per Table 250.122, what is the minimum copper equipment grounding conductor for a circuit protected by a 30 A overcurrent device?"
+  options:
+    - { id: a, text: "14 AWG" }
+    - { id: b, text: "12 AWG" }
+    - { id: c, text: "10 AWG", isCorrect: true }
+    - { id: d, text: "8 AWG" }
+  answer: { kind: single, optionId: c }
+  solution:
+    keyIdea: "EGC is sized by the OCPD rating (Table 250.122), not the conductor ampacity."
+    codePath: ["Table 250.122 → not exceeding 60 A → 10 AWG Cu"]
+    steps:
+      - { text: "A 30 A OCPD falls in the 'not exceeding 60 A' row → 10 AWG copper.", ref: "Table 250.122" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Calculator-backed (egcSize); value from verified Table 250.122."
+
+- id: q-gb-102
+  recompute: { calc: egcSize, inputs: { ocpd: 50 } }
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 2
+  stem: "Per Table 250.122, what is the minimum copper equipment grounding conductor for a 50 A overcurrent device?"
+  options:
+    - { id: a, text: "12 AWG" }
+    - { id: b, text: "10 AWG", isCorrect: true }
+    - { id: c, text: "8 AWG" }
+    - { id: d, text: "6 AWG" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "50 A is within the 'not exceeding 60 A' row."
+    codePath: ["Table 250.122 → ≤60 A → 10 AWG Cu"]
+    steps:
+      - { text: "50 A OCPD → 10 AWG copper EGC.", ref: "Table 250.122" }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Calculator-backed (egcSize); value from verified Table 250.122."
+
+- id: q-gb-103
+  recompute: { calc: egcSize, inputs: { ocpd: 200 } }
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 2
+  stem: "Per Table 250.122, what is the minimum copper equipment grounding conductor for a 200 A overcurrent device?"
+  options:
+    - { id: a, text: "8 AWG" }
+    - { id: b, text: "6 AWG", isCorrect: true }
+    - { id: c, text: "4 AWG" }
+    - { id: d, text: "3 AWG" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Read Table 250.122 by OCPD rating."
+    codePath: ["Table 250.122 → 200 A → 6 AWG Cu"]
+    steps:
+      - { text: "200 A OCPD → 6 AWG copper EGC.", ref: "Table 250.122" }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Calculator-backed (egcSize); value from verified Table 250.122."
+
+- id: q-gb-104
+  recompute: { calc: egcSize, inputs: { ocpd: 300 } }
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 2
+  stem: "Per Table 250.122, what is the minimum copper equipment grounding conductor for a 300 A overcurrent device?"
+  options:
+    - { id: a, text: "6 AWG" }
+    - { id: b, text: "4 AWG", isCorrect: true }
+    - { id: c, text: "3 AWG" }
+    - { id: d, text: "2 AWG" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Read Table 250.122 by OCPD rating."
+    codePath: ["Table 250.122 → 300 A → 4 AWG Cu"]
+    steps:
+      - { text: "300 A OCPD → 4 AWG copper EGC.", ref: "Table 250.122" }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Calculator-backed (egcSize); value from verified Table 250.122."
+
+- id: q-gb-105
+  recompute: { calc: egcSize, inputs: { ocpd: 400 } }
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 3
+  stem: "A feeder is protected by a 400 A overcurrent device. Per Table 250.122, what is the minimum copper equipment grounding conductor?"
+  options:
+    - { id: a, text: "4 AWG" }
+    - { id: b, text: "3 AWG", isCorrect: true }
+    - { id: c, text: "2 AWG" }
+    - { id: d, text: "1 AWG" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Read Table 250.122 by OCPD rating."
+    codePath: ["Table 250.122 → 400 A → 3 AWG Cu"]
+    steps:
+      - { text: "400 A OCPD → 3 AWG copper EGC.", ref: "Table 250.122" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Calculator-backed (egcSize); value from verified Table 250.122."
+
+- id: q-gb-106
+  recompute: { calc: egcSize, inputs: { ocpd: 20 } }
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 1
+  stem: "Per Table 250.122, what is the minimum copper equipment grounding conductor for a 20 A overcurrent device?"
+  options:
+    - { id: a, text: "14 AWG" }
+    - { id: b, text: "12 AWG", isCorrect: true }
+    - { id: c, text: "10 AWG" }
+    - { id: d, text: "8 AWG" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Read Table 250.122 by OCPD rating."
+    codePath: ["Table 250.122 → 20 A → 12 AWG Cu"]
+    steps:
+      - { text: "20 A OCPD → 12 AWG copper EGC.", ref: "Table 250.122" }
+  timeTargetSec: 40
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Calculator-backed (egcSize); value from verified Table 250.122."
+
+- id: q-gb-107
+  recompute: { calc: egcSize, inputs: { ocpd: 500 } }
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 3
+  stem: "Per Table 250.122, what is the minimum copper equipment grounding conductor for a 500 A overcurrent device?"
+  options:
+    - { id: a, text: "3 AWG" }
+    - { id: b, text: "2 AWG", isCorrect: true }
+    - { id: c, text: "1 AWG" }
+    - { id: d, text: "1/0 AWG" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Read Table 250.122 by OCPD rating."
+    codePath: ["Table 250.122 → 500 A → 2 AWG Cu"]
+    steps:
+      - { text: "500 A OCPD → 2 AWG copper EGC.", ref: "Table 250.122" }
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Calculator-backed (egcSize); value from verified Table 250.122."
+
+# ---- Grounding electrode conductor — Table 250.66 (by service size) ---------
+- id: q-gb-111
+  recompute: { calc: gecSize, inputs: { serviceSize: "4/0" } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you used Table 250.122, that's for the EGC — the GEC uses Table 250.66 by service size."
+  skillIds: [nec.gnd.gec-sizing]
+  type: single
+  difficulty: 2
+  stem: "A service uses 4/0 AWG copper service-entrance conductors. Per Table 250.66, what is the minimum copper grounding electrode conductor (to an electrode other than a ground rod)?"
+  options:
+    - { id: a, text: "4 AWG" }
+    - { id: b, text: "2 AWG", isCorrect: true }
+    - { id: c, text: "1 AWG" }
+    - { id: d, text: "1/0 AWG" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "GEC is sized from the service-conductor size (Table 250.66), a different table than the EGC."
+    codePath: ["Table 250.66 → over 3/0 through 350 kcmil → 2 AWG Cu"]
+    steps:
+      - { text: "4/0 Cu service falls in 'over 3/0 through 350 kcmil' → 2 AWG copper GEC.", ref: "Table 250.66" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Calculator-backed (gecSize); value from verified Table 250.66."
+
+- id: q-gb-112
+  recompute: { calc: gecSize, inputs: { serviceKcmil: 250 } }
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.gec-sizing]
+  type: single
+  difficulty: 3
+  stem: "A service uses 250 kcmil copper service-entrance conductors. Per Table 250.66, what is the minimum copper grounding electrode conductor?"
+  options:
+    - { id: a, text: "4 AWG" }
+    - { id: b, text: "2 AWG", isCorrect: true }
+    - { id: c, text: "1/0 AWG" }
+    - { id: d, text: "2/0 AWG" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "250 kcmil is within 'over 3/0 through 350 kcmil'."
+    codePath: ["Table 250.66 → over 3/0 through 350 kcmil → 2 AWG Cu"]
+    steps:
+      - { text: "250 kcmil Cu service → 2 AWG copper GEC.", ref: "Table 250.66" }
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Calculator-backed (gecSize); value from verified Table 250.66."
+
+- id: q-gb-113
+  recompute: { calc: gecSize, inputs: { serviceSize: "1" } }
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.gec-sizing]
+  type: single
+  difficulty: 2
+  stem: "A service uses 1 AWG copper service-entrance conductors. Per Table 250.66, what is the minimum copper grounding electrode conductor?"
+  options:
+    - { id: a, text: "8 AWG" }
+    - { id: b, text: "6 AWG", isCorrect: true }
+    - { id: c, text: "4 AWG" }
+    - { id: d, text: "2 AWG" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "1 AWG service is in the '1 or 1/0' row."
+    codePath: ["Table 250.66 → 1 or 1/0 → 6 AWG Cu"]
+    steps:
+      - { text: "1 AWG Cu service → 6 AWG copper GEC.", ref: "Table 250.66" }
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Calculator-backed (gecSize); value from verified Table 250.66."
+
+- id: q-gb-114
+  recompute: { calc: gecSize, inputs: { serviceSize: "2" } }
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.gec-sizing]
+  type: single
+  difficulty: 1
+  stem: "A service uses 2 AWG copper service-entrance conductors. Per Table 250.66, what is the minimum copper grounding electrode conductor?"
+  options:
+    - { id: a, text: "8 AWG", isCorrect: true }
+    - { id: b, text: "6 AWG" }
+    - { id: c, text: "4 AWG" }
+    - { id: d, text: "10 AWG" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "2 AWG (or smaller) service → 8 AWG GEC."
+    codePath: ["Table 250.66 → 2 or smaller → 8 AWG Cu"]
+    steps:
+      - { text: "2 AWG Cu service → 8 AWG copper GEC.", ref: "Table 250.66" }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Calculator-backed (gecSize); value from verified Table 250.66."
+
+- id: q-gb-115
+  recompute: { calc: gecSize, inputs: { serviceKcmil: 500 } }
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.gec-sizing]
+  type: single
+  difficulty: 3
+  stem: "A service uses 500 kcmil copper service-entrance conductors. Per Table 250.66, what is the minimum copper grounding electrode conductor?"
+  options:
+    - { id: a, text: "2 AWG" }
+    - { id: b, text: "1/0 AWG", isCorrect: true }
+    - { id: c, text: "2/0 AWG" }
+    - { id: d, text: "3/0 AWG" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "500 kcmil is within 'over 350 through 600 kcmil'."
+    codePath: ["Table 250.66 → over 350 through 600 kcmil → 1/0 Cu"]
+    steps:
+      - { text: "500 kcmil Cu service → 1/0 copper GEC.", ref: "Table 250.66" }
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Calculator-backed (gecSize); value from verified Table 250.66."
+
+- id: q-gb-116
+  recompute: { calc: gecSize, inputs: { serviceSize: "4" } }
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.gec-sizing]
+  type: single
+  difficulty: 1
+  stem: "A small service uses 4 AWG copper service-entrance conductors. Per Table 250.66, what is the minimum copper grounding electrode conductor?"
+  options:
+    - { id: a, text: "8 AWG", isCorrect: true }
+    - { id: b, text: "6 AWG" }
+    - { id: c, text: "4 AWG" }
+    - { id: d, text: "10 AWG" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "4 AWG service is '2 AWG or smaller' → 8 AWG GEC."
+    codePath: ["Table 250.66 → 2 or smaller → 8 AWG Cu"]
+    steps:
+      - { text: "4 AWG Cu service → 8 AWG copper GEC.", ref: "Table 250.66" }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Calculator-backed (gecSize); value from verified Table 250.66."

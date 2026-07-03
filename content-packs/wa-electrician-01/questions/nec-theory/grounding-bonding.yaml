@@ -2,6 +2,7 @@
 
 - id: q-gb-001
   domainId: nec.grounding-bonding
+  recompute: { calc: egcSize, inputs: { ocpd: 60 } }
   skillIds: [nec.gnd.egc-sizing]
   type: single
   difficulty: 2
@@ -26,6 +27,7 @@
 
 - id: q-gb-002
   domainId: nec.grounding-bonding
+  recompute: { calc: gecSize, inputs: { serviceSize: "2/0" } }
   skillIds: [nec.gnd.gec-sizing]
   type: single
   difficulty: 3
