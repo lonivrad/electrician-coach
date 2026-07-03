@@ -21,7 +21,7 @@ import {
   type Response,
   type Section,
 } from "@engine/index.ts";
-import { loadWaElectrician01, indexPack } from "../data/packLoader.ts";
+import { loadPackOnce, indexPack } from "../data/packLoader.ts";
 import { createLocalProgressRepo, type StoredProgress } from "../data/progressRepo.ts";
 
 export type Phase = "intro" | "question" | "explanation" | "results";
@@ -48,7 +48,7 @@ function pickNext(pack: ContentPack, mastery: MasteryState, used: Set<string>): 
 }
 
 export function useDiagnostic() {
-  const { pack, issues } = useMemo(() => loadWaElectrician01(), []);
+  const { pack, issues } = useMemo(() => loadPackOnce(), []);
   const idx = useMemo(() => indexPack(pack), [pack]);
   const repo = useMemo(() => createLocalProgressRepo(), []);
 

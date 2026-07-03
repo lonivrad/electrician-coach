@@ -60,6 +60,14 @@ export function loadWaElectrician01(): LoadedPack {
   return { pack, issues };
 }
 
+// The pack is static content — parse & validate it once and share it across
+// every mode/flow instead of re-parsing on each hook mount.
+let cachedPack: LoadedPack | null = null;
+export function loadPackOnce(): LoadedPack {
+  if (!cachedPack) cachedPack = loadWaElectrician01();
+  return cachedPack;
+}
+
 // Convenience lookups built once per pack.
 export function indexPack(pack: ContentPack) {
   const domainById = new Map(pack.domains.map((d) => [d.id, d]));

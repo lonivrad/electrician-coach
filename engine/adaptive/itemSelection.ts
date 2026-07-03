@@ -19,7 +19,7 @@ import type {
   Section,
   SectionId,
 } from "../types.ts";
-import { domainMastery, DEFAULT_PRIOR, type MasteryPrior } from "./mastery.ts";
+import { domainMastery, emptyMastery, DEFAULT_PRIOR, type MasteryPrior } from "./mastery.ts";
 
 export interface SelectionPolicy {
   /** Extra difficulty applied on top of the ability-matched target (−? .. +?). */
@@ -163,6 +163,50 @@ export function selectNextAcrossSections(args: AcrossSectionsArgs): Question | n
     }
   }
   return best;
+}
+
+export interface SectionSetArgs {
+  section: Section;
+  domains: Domain[];
+  questions: Question[];
+  mode: Mode;
+  /** Desired number of items; capped at the number actually available. */
+  count: number;
+  policy: SelectionPolicy;
+  /** Held constant during the draw (defaults to neutral) — a set, not a live quiz. */
+  mastery?: MasteryState;
+  prior?: MasteryPrior;
+}
+
+/**
+ * Build a fixed, ordered set of items for one section (used by the Board
+ * Simulator and Overtraining). Reuses selectNext repeatedly against a growing
+ * used-set, so ordering follows the same policy the diagnostic uses. When the
+ * available pool is smaller than `count`, returns the whole pool.
+ */
+export function selectSectionSet(args: SectionSetArgs): Question[] {
+  const mastery = args.mastery ?? emptyMastery();
+  const prior = args.prior ?? DEFAULT_PRIOR;
+  const pool = args.questions.filter(
+    (q) => q.modes.includes(args.mode) && sectionIdOfDomain(args.domains, q.domainId) === args.section.id,
+  );
+  const used = new Set<string>();
+  const out: Question[] = [];
+  const target = Math.min(args.count, pool.length);
+  while (out.length < target) {
+    const q = selectNext({
+      section: args.section,
+      pool,
+      mastery,
+      usedQuestionIds: used,
+      policy: args.policy,
+      prior,
+    });
+    if (!q) break;
+    used.add(q.id);
+    out.push(q);
+  }
+  return out;
 }
 
 /** Whether the diagnostic has measured every domain confidently enough. */
