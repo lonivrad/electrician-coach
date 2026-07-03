@@ -5,10 +5,10 @@ updates:
     schedule:
       interval: "weekly"
     # Deferred major migrations — breaking upgrades we're intentionally holding
-    # off on (React 19, Tailwind v4, and the Vite cluster: Vite 6+, Vitest 4,
-    # @vitejs/plugin-react 6, eslint-plugin-react-hooks 7). Minor, patch, and
-    # security updates for these (and everything else) still flow. (js-yaml is
-    # kept current — migrated to v5.)
+    # off on: React 19, Tailwind v4, ESLint 10 (+ @eslint/js), TypeScript 6, and
+    # the Vite cluster (Vite 6+, Vitest 4 + @vitest/coverage-v8, @vitejs/plugin-react 6,
+    # eslint-plugin-react-hooks 7). Minor, patch, and security updates for these
+    # (and everything else) still flow. (js-yaml is kept current — migrated to v5.)
     ignore:
       - dependency-name: "react"
         update-types: ["version-update:semver-major"]
@@ -27,6 +27,14 @@ updates:
       - dependency-name: "vitest"
         update-types: ["version-update:semver-major"]
       - dependency-name: "vite"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@vitest/coverage-v8"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@eslint/js"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
   - package-ecosystem: "github-actions"
     directory: "/"
