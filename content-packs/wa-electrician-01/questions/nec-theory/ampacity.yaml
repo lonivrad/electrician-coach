@@ -1,0 +1,138 @@
+# Conductor ampacity — correction & adjustment. All DRAFT.
+# Values authored to 2020 NEC Table 310.16 / 310.15 factors; SME-verify before `live`.
+
+- id: q-amp-001
+  domainId: nec.ampacity
+  skillIds: [nec.ampacity.table-lookup]
+  type: single
+  difficulty: 1
+  stem: "Using Table 310.16, what is the allowable ampacity of a 6 AWG THHN copper conductor at the 75°C column?"
+  options:
+    - { id: a, text: "55 A" }
+    - { id: b, text: "65 A", isCorrect: true }
+    - { id: c, text: "75 A", distractorRationale: "That is the 90°C column — used only for derating, not for a 75°C termination." }
+    - { id: d, text: "95 A" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Read the correct temperature column for the termination rating."
+    codePath: ["Table 310.16 → 6 AWG Cu → 75°C column"]
+    steps:
+      - { text: "6 AWG copper at 75°C = 65 A.", ref: "Table 310.16" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify 2020 NEC Table 310.16 value before promoting to live."
+
+- id: q-amp-002
+  domainId: nec.ampacity
+  skillIds: [nec.ampacity.temp-correction]
+  type: numeric
+  difficulty: 2
+  stem: "An 8 AWG THHN copper conductor (90°C insulation) is in an ambient of 50°C. Using the 90°C column base ampacity of 55 A and the 0.82 correction factor, what is the temperature-corrected ampacity? (amps)"
+  answer: { kind: numeric, value: 45.1, unit: "A", tolerance: 1.0 }
+  solution:
+    keyIdea: "Ambient correction multiplies the 90°C base ampacity."
+    codePath: ["Table 310.16 → 8 AWG 90°C = 55 A", "Table 310.15(B)(1) → 50°C → 0.82"]
+    steps:
+      - { text: "Base (90°C) ampacity of 8 AWG = 55 A.", ref: "Table 310.16" }
+      - { text: "Correction for 50°C ambient = 0.82.", ref: "Table 310.15(B)(1)" }
+      - { text: "55 A × 0.82 = 45.1 A." }
+  trapIds: [adjusted-vs-corrected-ampacity]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION: confirm base ampacity and correction factor for adopted edition."
+
+- id: q-amp-003
+  domainId: nec.ampacity
+  skillIds: [nec.ampacity.fill-adjustment]
+  type: numeric
+  difficulty: 2
+  stem: "Six current-carrying 12 AWG THHN copper conductors share one raceway. Using the 90°C base ampacity of 30 A and the >3-conductor adjustment factor, what is the adjusted ampacity? (amps)"
+  answer: { kind: numeric, value: 24, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "4–6 current-carrying conductors → 80% adjustment."
+    codePath: ["Table 310.16 → 12 AWG 90°C = 30 A", "Table 310.15(C)(1) → 4–6 CCC = 80%"]
+    steps:
+      - { text: "Base (90°C) ampacity of 12 AWG = 30 A.", ref: "Table 310.16" }
+      - { text: "Six CCC → adjustment factor 0.80.", ref: "310.15(C)(1)" }
+      - { text: "30 A × 0.80 = 24 A." }
+  trapIds: [adjusted-vs-corrected-ampacity]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-amp-004
+  domainId: nec.ampacity
+  skillIds: [nec.ampacity.combined]
+  type: numeric
+  difficulty: 3
+  stem: "A 6 AWG THHN copper conductor (90°C) runs with 6 current-carrying conductors in a raceway at 46°C ambient. Base 90°C ampacity is 75 A, temperature correction is 0.82, adjustment is 0.80. What is the derated ampacity? (amps)"
+  answer: { kind: numeric, value: 49.2, unit: "A", tolerance: 1.5 }
+  solution:
+    keyIdea: "Correction and adjustment are BOTH applied — multiply them together."
+    codePath: ["Table 310.16 → 6 AWG 90°C = 75 A", "Table 310.15(B)(1) → 46°C → 0.82", "310.15(C)(1) → 6 CCC → 0.80"]
+    steps:
+      - { text: "75 A × 0.82 (ambient) = 61.5 A." }
+      - { text: "61.5 A × 0.80 (fill) = 49.2 A." }
+  trapIds: [adjusted-vs-corrected-ampacity]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-amp-005
+  domainId: nec.ampacity
+  skillIds: [nec.ampacity.termination-limit]
+  type: single
+  difficulty: 4
+  stem: "A 3 AWG THHN copper conductor (90°C insulation) terminates on equipment rated 75°C, ambient normal, not more than 3 conductors. The 90°C column shows 115 A and the 75°C column shows 100 A. What ampacity governs for sizing overcurrent protection?"
+  options:
+    - { id: a, text: "115 A", distractorRationale: "The 90°C column is only for derating math, never as the final rated ampacity at a 75°C termination." }
+    - { id: b, text: "100 A", isCorrect: true }
+    - { id: c, text: "85 A" }
+    - { id: d, text: "110 A" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "110.14(C) caps the final ampacity at the lowest-rated termination (75°C here)."
+    codePath: ["110.14(C)(1)", "Table 310.16 → 3 AWG 75°C = 100 A"]
+    steps:
+      - { text: "No derating applies, so the 90°C column isn't needed here." }
+      - { text: "Termination temperature limit → use the 75°C column = 100 A.", ref: "110.14(C)" }
+  trapIds: [termination-temp-limit, table-column-selection]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-amp-006
+  domainId: nec.ampacity
+  skillIds: [nec.ampacity.table-lookup]
+  type: single
+  difficulty: 4
+  stem: "In the field, a clamp meter reads 48 A on a 6 AWG THHN copper feeder with 75°C terminations. What is the conductor's ampacity?"
+  options:
+    - { id: a, text: "48 A", distractorRationale: "That is the measured current flowing — not the conductor's rated ampacity." }
+    - { id: b, text: "65 A", isCorrect: true }
+    - { id: c, text: "75 A", distractorRationale: "90°C column; not valid at a 75°C termination." }
+    - { id: d, text: "60 A" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "A meter reading is the actual current, NOT the conductor's ampacity. Ampacity comes from the table."
+    codePath: ["Table 310.16 → 6 AWG Cu → 75°C column = 65 A"]
+    steps:
+      - { text: "The 48 A is what the load draws right now — a measurement." }
+      - { text: "Ampacity is the table-rated capacity: 6 AWG at 75°C = 65 A.", ref: "Table 310.16" }
+  trapIds: [meter-reading-vs-ampacity, table-column-selection]
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."

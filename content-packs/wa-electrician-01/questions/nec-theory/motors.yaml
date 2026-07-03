@@ -1,0 +1,64 @@
+# Motors (Article 430). DRAFT — verify table FLC values on adoption.
+
+- id: q-mt-001
+  domainId: nec.motors
+  skillIds: [nec.motor.flc-table]
+  type: numeric
+  difficulty: 2
+  stem: "What full-load current (A) is used for a 10 HP, 230 V, three-phase motor per Table 430.250?"
+  answer: { kind: numeric, value: 28, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Use the TABLE FLC for conductor sizing, not the nameplate current."
+    codePath: ["Table 430.250 → 10 HP, 230 V, 3φ = 28 A"]
+    steps:
+      - { text: "10 HP at 230 V three-phase → 28 A.", ref: "Table 430.250" }
+  trapIds: [actual-current-vs-table, table-column-selection]
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-mt-002
+  domainId: nec.motors
+  skillIds: [nec.motor.conductor-125]
+  type: numeric
+  difficulty: 2
+  stem: "For a single continuous-duty motor with a table FLC of 28 A, what minimum branch-circuit conductor ampacity (A) is required at 125%?"
+  answer: { kind: numeric, value: 35, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Motor branch conductors = 125% of the table FLC."
+    codePath: ["430.22 → 125% of FLC", "Table 430.250 FLC = 28 A"]
+    steps:
+      - { text: "28 A × 1.25 = 35 A minimum conductor ampacity.", ref: "430.22" }
+  trapIds: [continuous-load-125]
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-mt-003
+  domainId: nec.motors
+  skillIds: [nec.motor.flc-table, nec.motor.conductor-125]
+  type: single
+  difficulty: 3
+  stem: "A motor nameplate reads 26 A, but Table 430.250 lists 28 A for its HP/voltage. Which value is used to size the branch-circuit conductors?"
+  options:
+    - { id: a, text: "26 A (nameplate)", distractorRationale: "Nameplate current is used for overload sizing, not for conductor/branch sizing." }
+    - { id: b, text: "28 A (table value)", isCorrect: true }
+    - { id: c, text: "The average, 27 A" }
+    - { id: d, text: "Either may be used" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Conductor sizing uses the TABLE FLC (430.6(A)); the nameplate FLA is for overload protection."
+    codePath: ["430.6(A)(1) → use table values for conductors", "Table 430.250"]
+    steps:
+      - { text: "430.6(A)(1): use Table 430.250 value (28 A) for conductor/ampacity sizing.", ref: "430.6(A)" }
+      - { text: "The 26 A nameplate is reserved for overload device sizing (430.32)." }
+  trapIds: [actual-current-vs-table, table-column-selection]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."

@@ -1,0 +1,25 @@
+# =============================================================================
+# Content pack manifest — Washington 01 General Journeyman electrician exam.
+#
+# The engine is exam-agnostic; everything specific to this exam lives in this
+# pack. Adding a future exam = a new pack folder, zero engine changes.
+# =============================================================================
+id: wa-electrician-01
+examId: wa-electrician-01
+name: "Washington 01 — General Journeyman"
+version: 1
+
+# ---- Code edition -----------------------------------------------------------
+# Content is authored to the 2020 NEC (edition confirmed by the project owner).
+# Edition is a config field, NOT baked into questions. The validator still
+# refuses to promote any question to `status: live` while remaining pre-live
+# review (per-value SME check + WAC amendment reconciliation) is outstanding.
+edition:
+  code: "NEC-2020"
+  status: "verified"
+  note: >-
+    Edition confirmed as 2020 NEC by the project owner. Table/article numbering
+    used (Table 310.16, Table 310.15(B)(1) correction, 310.15(C)(1) adjustment)
+    matches the 2020 reorganization. Still reconcile WAC 296-46B Washington
+    amendments and complete per-item SME review before flipping any question
+    from `draft` to `live`.

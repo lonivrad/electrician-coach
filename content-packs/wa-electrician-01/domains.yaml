@@ -1,0 +1,154 @@
+# =============================================================================
+# Domains + skills for wa-electrician-01.
+# `refs` are code LOCATIONS only (article/table numbers) — never reproduced text.
+# NEC&Theory domain split is provisional (see blueprint.yaml) so domains are
+# flagged; the pedagogical taxonomy itself is stable.
+# =============================================================================
+
+# ---- Section A: NEC & Theory ------------------------------------------------
+- id: nec.ampacity
+  sectionId: nec-theory
+  name: "Conductor Ampacity: correction & adjustment"
+  refs: ["310.16", "310.15(B)", "310.15(C)(1)", "Table 310.16", "110.14(C)"]
+  skillIds:
+    - nec.ampacity.table-lookup
+    - nec.ampacity.temp-correction
+    - nec.ampacity.fill-adjustment
+    - nec.ampacity.combined
+    - nec.ampacity.termination-limit
+
+- id: nec.load-calc
+  sectionId: nec-theory
+  name: "Service & Load Calculations"
+  refs: ["Article 220", "220.12", "220.42", "220.82", "230.42"]
+  skillIds:
+    - nec.load.general-lighting
+    - nec.load.demand-factor
+    - nec.load.dwelling-optional
+    - nec.load.service-size
+
+- id: nec.grounding-bonding
+  sectionId: nec-theory
+  name: "Grounding & Bonding"
+  refs: ["Article 250", "250.66", "250.122", "Table 250.66", "Table 250.122"]
+  skillIds:
+    - nec.gnd.gec-sizing
+    - nec.gnd.egc-sizing
+    - nec.gnd.bonding
+
+- id: nec.wiring-methods
+  sectionId: nec-theory
+  name: "Wiring Methods"
+  refs: ["Chapter 3", "300.5", "334", "358", "352"]
+  skillIds:
+    - nec.wm.burial-depth
+    - nec.wm.support
+    - nec.wm.method-rules
+
+- id: nec.overcurrent
+  sectionId: nec-theory
+  name: "Overcurrent Protection"
+  refs: ["Article 240", "240.4", "240.6", "240.4(B)", "240.21"]
+  skillIds:
+    - nec.ocp.standard-ratings
+    - nec.ocp.next-size-up
+    - nec.ocp.small-conductor
+    - nec.ocp.tap-rules
+
+- id: nec.motors
+  sectionId: nec-theory
+  name: "Motors"
+  refs: ["Article 430", "430.6", "430.22", "430.32", "430.52", "Table 430.248", "Table 430.250"]
+  skillIds:
+    - nec.motor.flc-table
+    - nec.motor.conductor-125
+    - nec.motor.overload
+    - nec.motor.branch-protection
+
+- id: nec.box-fill
+  sectionId: nec-theory
+  name: "Box Fill"
+  refs: ["314.16", "314.16(B)", "Table 314.16(A)", "Table 314.16(B)"]
+  skillIds:
+    - nec.box.conductor-count
+    - nec.box.device-clamp-allowance
+    - nec.box.egc-allowance
+    - nec.box.largest-conductor
+
+- id: nec.conduit-fill
+  sectionId: nec-theory
+  name: "Conduit Fill"
+  refs: ["Chapter 9 Table 1", "Chapter 9 Table 4", "Chapter 9 Table 5", "Annex C"]
+  skillIds:
+    - nec.conduit.percent-fill
+    - nec.conduit.same-size
+    - nec.conduit.mixed-size
+
+- id: nec.transformers
+  sectionId: nec-theory
+  name: "Transformers"
+  refs: ["Article 450", "450.3", "Table 450.3(B)"]
+  skillIds:
+    - nec.xfmr.ocp-sizing
+    - nec.xfmr.secondary
+
+- id: nec.theory-general
+  sectionId: nec-theory
+  name: "Electrical Theory"
+  refs: ["Ohm's law", "power", "3-phase relationships"]
+  skillIds:
+    - nec.theory.ohms-law
+    - nec.theory.power
+    - nec.theory.three-phase
+
+# ---- Section B: WA Laws & Rules (weights provisional; see blueprint.yaml) ----
+- id: wa.licensing
+  sectionId: wa-laws
+  name: "Licensing & Certification"
+  refs: ["RCW 19.28", "WAC 296-46B-940", "WAC 296-46B-965"]
+  needsVerification: true
+  verificationNote: "Provisional subdomain — confirm scope/weight against PSI bulletin and current WAC."
+  skillIds:
+    - wa.lic.certificate-types
+    - wa.lic.renewal-ce
+    - wa.lic.supervision-ratio
+
+- id: wa.permits
+  sectionId: wa-laws
+  name: "Electrical Permits"
+  refs: ["RCW 19.28.101", "WAC 296-46B-901"]
+  needsVerification: true
+  verificationNote: "Provisional subdomain — confirm scope/weight against PSI bulletin and current WAC."
+  skillIds:
+    - wa.permit.when-required
+    - wa.permit.responsibilities
+
+- id: wa.inspections
+  sectionId: wa-laws
+  name: "Inspections"
+  refs: ["WAC 296-46B-906", "RCW 19.28.161"]
+  needsVerification: true
+  verificationNote: "Provisional subdomain — confirm scope/weight against PSI bulletin and current WAC."
+  skillIds:
+    - wa.insp.process
+    - wa.insp.corrections
+
+- id: wa.admin-rules
+  sectionId: wa-laws
+  name: "Administrative Rules & Scope"
+  refs: ["WAC 296-46B", "RCW 19.28.006"]
+  needsVerification: true
+  verificationNote: "Provisional subdomain — confirm scope/weight against PSI bulletin and current WAC."
+  skillIds:
+    - wa.admin.definitions
+    - wa.admin.scope-of-work
+
+- id: wa.enforcement
+  sectionId: wa-laws
+  name: "L&I Enforcement & Penalties"
+  refs: ["RCW 19.28.271", "RCW 19.28.131"]
+  needsVerification: true
+  verificationNote: "Provisional subdomain — confirm scope/weight against PSI bulletin and current WAC."
+  skillIds:
+    - wa.enf.infractions
+    - wa.enf.penalties

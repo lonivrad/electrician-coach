@@ -1,0 +1,74 @@
+# Overcurrent protection (Article 240). DRAFT — verify on adoption.
+
+- id: q-oc-001
+  domainId: nec.overcurrent
+  skillIds: [nec.ocp.standard-ratings]
+  type: single
+  difficulty: 1
+  stem: "Per 240.6(A), what is the next standard overcurrent device rating above 60 A?"
+  options:
+    - { id: a, text: "65 A", distractorRationale: "65 A is not a standard rating listed in 240.6(A)." }
+    - { id: b, text: "70 A", isCorrect: true }
+    - { id: c, text: "75 A" }
+    - { id: d, text: "80 A" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Standard ratings are a fixed list; 70 A follows 60 A."
+    codePath: ["240.6(A)"]
+    steps:
+      - { text: "…50, 60, 70, 80… → next standard after 60 A is 70 A.", ref: "240.6(A)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 40
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-oc-002
+  domainId: nec.overcurrent
+  skillIds: [nec.ocp.next-size-up]
+  type: single
+  difficulty: 2
+  stem: "A conductor has an allowable ampacity of 83 A (not a standard OCPD size) and does not supply receptacles. Under 240.4(B), what is the maximum standard overcurrent device permitted?"
+  options:
+    - { id: a, text: "80 A", distractorRationale: "Rounding down is not required here; 240.4(B) permits the next size up." }
+    - { id: b, text: "90 A", isCorrect: true }
+    - { id: c, text: "100 A" }
+    - { id: d, text: "83 A" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "When ampacity doesn't match a standard size, 240.4(B) allows the NEXT size up (≤800 A, conditions met)."
+    codePath: ["240.4(B)", "240.6(A) → next standard above 83 A = 90 A"]
+    steps:
+      - { text: "83 A is between standard sizes 80 and 90." }
+      - { text: "240.4(B) permits rounding up to 90 A.", ref: "240.4(B)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-oc-003
+  domainId: nec.overcurrent
+  skillIds: [nec.ocp.small-conductor]
+  type: single
+  difficulty: 2
+  stem: "Ignoring the next-size-up rule, what is the maximum overcurrent device permitted to protect a 12 AWG copper conductor under the small-conductor rule?"
+  options:
+    - { id: a, text: "15 A" }
+    - { id: b, text: "20 A", isCorrect: true }
+    - { id: c, text: "25 A" }
+    - { id: d, text: "30 A", distractorRationale: "30 A is the 90°C ampacity, but 240.4(D) overrides it for 12 AWG Cu." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "240.4(D) caps 12 AWG copper at 20 A regardless of its higher table ampacity."
+    codePath: ["240.4(D)(5) → 12 AWG Cu = 20 A"]
+    steps:
+      - { text: "Small-conductor rule limits 12 AWG copper to a 20 A OCPD.", ref: "240.4(D)" }
+  trapIds: [next-size-up-rounding, adjusted-vs-corrected-ampacity]
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."

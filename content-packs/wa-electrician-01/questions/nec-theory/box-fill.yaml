@@ -1,0 +1,88 @@
+# Box fill (314.16). DRAFT — verify volume allowances for adopted edition.
+
+- id: q-box-001
+  domainId: nec.box-fill
+  skillIds: [nec.box.largest-conductor]
+  type: single
+  difficulty: 1
+  stem: "Per Table 314.16(B), what free-space volume allowance is required for each 12 AWG conductor?"
+  options:
+    - { id: a, text: "2.00 in³" }
+    - { id: b, text: "2.25 in³", isCorrect: true }
+    - { id: c, text: "2.50 in³" }
+    - { id: d, text: "3.00 in³" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Each conductor's allowance is set by its size in Table 314.16(B)."
+    codePath: ["Table 314.16(B) → 12 AWG = 2.25 in³"]
+    steps:
+      - { text: "12 AWG volume allowance = 2.25 in³.", ref: "Table 314.16(B)" }
+  timeTargetSec: 40
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-box-002
+  domainId: nec.box-fill
+  skillIds: [nec.box.conductor-count]
+  type: numeric
+  difficulty: 2
+  stem: "A box contains six 12 AWG THHN conductors and no devices, clamps, or fittings. Using 2.25 in³ per conductor, what total box volume (in³) is required for these conductors?"
+  answer: { kind: numeric, value: 13.5, unit: "in³", tolerance: 0.01 }
+  solution:
+    keyIdea: "Each conductor counts as one volume allowance."
+    codePath: ["314.16(B)(1)", "Table 314.16(B) → 12 AWG = 2.25 in³"]
+    steps:
+      - { text: "6 conductors × 2.25 in³ = 13.5 in³." }
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-box-003
+  domainId: nec.box-fill
+  skillIds: [nec.box.conductor-count, nec.box.device-clamp-allowance, nec.box.egc-allowance]
+  type: numeric
+  difficulty: 3
+  stem: "A device box has eight 14 AWG insulated circuit conductors, internal cable clamps, one duplex receptacle, and three 14 AWG equipment grounding conductors. Using 2.00 in³ per 14 AWG allowance, what minimum box volume (in³) is required?"
+  answer: { kind: numeric, value: 24, unit: "in³", tolerance: 0.01 }
+  solution:
+    keyIdea: "Clamps = 1 allowance total; a yoke/device = 2; all EGCs together = 1 — each based on the largest conductor involved."
+    codePath: ["314.16(B)(1) conductors", "314.16(B)(2) clamps", "314.16(B)(4) device", "314.16(B)(5) EGC"]
+    steps:
+      - { text: "8 conductors = 8 allowances." }
+      - { text: "Cable clamps (any number) = 1 allowance." }
+      - { text: "One duplex receptacle (yoke) = 2 allowances." }
+      - { text: "All EGCs together = 1 allowance." }
+      - { text: "Total = 12 allowances × 2.00 in³ = 24 in³." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-box-004
+  domainId: nec.box-fill
+  skillIds: [nec.box.device-clamp-allowance]
+  type: single
+  difficulty: 2
+  stem: "In a box-fill calculation, how many conductor volume allowances does a single strap supporting one duplex receptacle count as?"
+  options:
+    - { id: a, text: "1" }
+    - { id: b, text: "2", isCorrect: true }
+    - { id: c, text: "3" }
+    - { id: d, text: "0" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "A device on a yoke/strap counts as two allowances of the largest conductor connected to it."
+    codePath: ["314.16(B)(4)"]
+    steps:
+      - { text: "Each yoke/strap = double volume allowance of the largest conductor connected.", ref: "314.16(B)(4)" }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."

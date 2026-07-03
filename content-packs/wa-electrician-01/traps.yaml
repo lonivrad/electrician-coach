@@ -1,0 +1,54 @@
+# =============================================================================
+# Trap catalog — the wording/conceptual pitfalls this exam punishes.
+# Questions reference these by id (trapIds). Overtraining Mode selects on them.
+# The signature family is the current/reading/ampacity distinction.
+# =============================================================================
+- id: meter-reading-vs-ampacity
+  name: "Meter reading vs. ampacity"
+  description: >-
+    A measured/meter current is not the conductor's table ampacity nor the
+    required OCPD rating. Candidates conflate "what the clamp meter reads" with
+    "what the wire is rated to carry."
+
+- id: actual-current-vs-table
+  name: "Actual load current vs. table value"
+  description: >-
+    Computed/actual load current (from VA and voltage) vs. a table FLC or a
+    nameplate value — motor problems especially require the TABLE value, not
+    nameplate, for conductor sizing.
+
+- id: adjusted-vs-corrected-ampacity
+  name: "Adjusted vs. corrected ampacity"
+  description: >-
+    Ambient temperature CORRECTION and >3 current-carrying-conductor ADJUSTMENT
+    are two distinct multipliers; both may apply and are multiplied together.
+
+- id: termination-temp-limit
+  name: "Termination temperature limit (110.14(C))"
+  description: >-
+    Even with 90°C insulation, the final ampacity is limited by the lowest-rated
+    termination (often 75°C). The 90°C column is used only for the derating math.
+
+- id: continuous-load-125
+  name: "Continuous load 125% factor"
+  description: >-
+    Continuous loads require conductors/OCPD sized at 125% of the continuous
+    load. Easy to forget or to apply to the wrong quantity.
+
+- id: next-size-up-rounding
+  name: "OCPD next-size-up vs. round-down"
+  description: >-
+    240.4(B) permits the next standard size up (240.6) under conditions, but
+    small-conductor rules (240.4(D)) and other cases require rounding down.
+
+- id: table-column-selection
+  name: "Wrong table / column"
+  description: >-
+    Choosing the wrong ampacity column, wrong conduit-fill table, or wrong motor
+    table (430.248 single-phase vs 430.250 three-phase).
+
+- id: unit-or-phase-confusion
+  name: "Unit / phase confusion"
+  description: >-
+    Single-phase vs three-phase (√3) factor, VA vs W, or per-phase vs line
+    quantities mixed up mid-calculation.

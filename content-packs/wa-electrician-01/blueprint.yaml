@@ -1,0 +1,59 @@
+# =============================================================================
+# Blueprint — exam structure + OfficialExamWeight per domain.
+#
+# Passing is PER SECTION at 70%. Both sections must clear independently.
+#
+# OfficialExamWeight is expressed as the NUMBER OF EXAM QUESTIONS a domain
+# contributes; per section the weights sum to totalQuestions (CI-enforced).
+#
+# ⚠ ONE PLACE TO EDIT WEIGHTS: this file. Change a number and re-run
+#   `npm run validate:pack`. Nothing else needs to change.
+# =============================================================================
+examId: wa-electrician-01
+passPolicy: per-section
+
+sections:
+  # ---------------------------------------------------------------------------
+  # SECTION A — NEC & Theory: 60 questions, 3 hours (180 min), open book.
+  # Per-domain split is PROVISIONAL (no per-topic PSI breakdown in hand) and
+  # every weight is flagged for verification.
+  # ---------------------------------------------------------------------------
+  - id: nec-theory
+    name: "NEC & Theory"
+    totalQuestions: 60
+    totalTimeSec: 10800        # 180 min
+    cutScorePct: 0.70
+    domainWeights:
+      - { domainId: nec.ampacity,          officialExamWeight: 8, needsVerification: true, verificationNote: "Provisional NEC&Theory split — confirm with PSI bulletin." }
+      - { domainId: nec.load-calc,         officialExamWeight: 8, needsVerification: true, verificationNote: "Provisional NEC&Theory split — confirm with PSI bulletin." }
+      - { domainId: nec.grounding-bonding, officialExamWeight: 7, needsVerification: true, verificationNote: "Provisional NEC&Theory split — confirm with PSI bulletin." }
+      - { domainId: nec.wiring-methods,    officialExamWeight: 7, needsVerification: true, verificationNote: "Provisional NEC&Theory split — confirm with PSI bulletin." }
+      - { domainId: nec.overcurrent,       officialExamWeight: 6, needsVerification: true, verificationNote: "Provisional NEC&Theory split — confirm with PSI bulletin." }
+      - { domainId: nec.motors,            officialExamWeight: 6, needsVerification: true, verificationNote: "Provisional NEC&Theory split — confirm with PSI bulletin." }
+      - { domainId: nec.box-fill,          officialExamWeight: 5, needsVerification: true, verificationNote: "Provisional NEC&Theory split — confirm with PSI bulletin." }
+      - { domainId: nec.conduit-fill,      officialExamWeight: 5, needsVerification: true, verificationNote: "Provisional NEC&Theory split — confirm with PSI bulletin." }
+      - { domainId: nec.transformers,      officialExamWeight: 4, needsVerification: true, verificationNote: "Provisional NEC&Theory split — confirm with PSI bulletin." }
+      - { domainId: nec.theory-general,    officialExamWeight: 4, needsVerification: true, verificationNote: "Provisional NEC&Theory split — confirm with PSI bulletin." }
+      # Σ = 60
+
+  # ---------------------------------------------------------------------------
+  # SECTION B — WA Laws & Rules: 17 questions, 1 hour (60 min), open book.
+  #
+  # ⚠ PROVISIONAL WEIGHTING — the candidate's PSI bulletin gives no per-topic
+  # breakdown. The 17 questions are split across the five subdomains below using
+  # a best-estimate. EACH subdomain is individually flagged NEEDS_VERIFICATION.
+  # To correct: edit the officialExamWeight numbers here (must still sum to 17)
+  # and clear the flag on any subdomain you've verified.
+  # ---------------------------------------------------------------------------
+  - id: wa-laws
+    name: "WA Laws & Rules"
+    totalQuestions: 17
+    totalTimeSec: 3600         # 60 min
+    cutScorePct: 0.70
+    domainWeights:
+      - { domainId: wa.licensing,   officialExamWeight: 5, needsVerification: true, verificationNote: "PROVISIONAL estimate — no PSI per-topic breakdown. Licensing/certification (RCW 19.28, WAC 296-46B licensing). Verify & adjust." }
+      - { domainId: wa.permits,     officialExamWeight: 4, needsVerification: true, verificationNote: "PROVISIONAL estimate — no PSI per-topic breakdown. Electrical work permits. Verify & adjust." }
+      - { domainId: wa.inspections, officialExamWeight: 3, needsVerification: true, verificationNote: "PROVISIONAL estimate — no PSI per-topic breakdown. Inspection process/requirements. Verify & adjust." }
+      - { domainId: wa.admin-rules, officialExamWeight: 3, needsVerification: true, verificationNote: "PROVISIONAL estimate — no PSI per-topic breakdown. Administrative rules / supervision ratios / scope. Verify & adjust." }
+      - { domainId: wa.enforcement, officialExamWeight: 2, needsVerification: true, verificationNote: "PROVISIONAL estimate — no PSI per-topic breakdown. L&I enforcement, penalties, infractions. Verify & adjust." }
+      # Σ = 17

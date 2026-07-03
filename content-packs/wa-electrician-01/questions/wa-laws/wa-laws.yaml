@@ -1,0 +1,118 @@
+# WA Laws & Rules — DRAFT. Legal specifics MUST be verified against the current
+# RCW 19.28 / WAC 296-46B text and the PSI bulletin before promotion to `live`.
+# These seed items are conceptual and intentionally conservative.
+
+- id: q-wa-lic-001
+  domainId: wa.licensing
+  skillIds: [wa.lic.supervision-ratio]
+  type: single
+  difficulty: 2
+  stem: "In Washington, a person performing electrical work generally must either hold the appropriate certificate of competency OR be doing so under what condition?"
+  options:
+    - { id: a, text: "Under the direct supervision of a properly certified electrician, as a registered trainee", isCorrect: true }
+    - { id: b, text: "After passing a written safety quiz only" }
+    - { id: c, text: "As long as a permit is displayed on site" }
+    - { id: d, text: "Any homeowner may supervise the work" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Electrical work requires certification or supervised trainee status."
+    codePath: ["RCW 19.28.161", "WAC 296-46B-940"]
+    steps:
+      - { text: "Work is done by a certified electrician or a registered electrical trainee under supervision.", ref: "RCW 19.28.161" }
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION: confirm exact supervision language and ratios in current RCW/WAC."
+
+- id: q-wa-lic-002
+  domainId: wa.licensing
+  skillIds: [wa.lic.renewal-ce]
+  type: single
+  difficulty: 2
+  stem: "Continuing education is generally required to renew a Washington electrician certificate of competency. What is the primary purpose of that requirement?"
+  options:
+    - { id: a, text: "To keep certificate holders current on code and safety updates", isCorrect: true }
+    - { id: b, text: "To increase state revenue only" }
+    - { id: c, text: "To replace the need for inspections" }
+    - { id: d, text: "It is optional in all cases" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "CE keeps certificate holders current on NEC/WAC changes."
+    codePath: ["WAC 296-46B-965"]
+    steps:
+      - { text: "Renewal CE ensures ongoing competency with current code.", ref: "WAC 296-46B-965" }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION: confirm CE hours and cycle."
+
+- id: q-wa-permit-001
+  domainId: wa.permits
+  skillIds: [wa.permit.when-required]
+  type: single
+  difficulty: 1
+  stem: "In Washington, when must an electrical work permit generally be obtained?"
+  options:
+    - { id: a, text: "After the work passes inspection" }
+    - { id: b, text: "Before the electrical work begins", isCorrect: true }
+    - { id: c, text: "Only for commercial work" }
+    - { id: d, text: "Only if the utility requests it" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Permits are obtained before beginning the electrical work."
+    codePath: ["RCW 19.28.101", "WAC 296-46B-901"]
+    steps:
+      - { text: "An electrical work permit is required before work starts.", ref: "RCW 19.28.101" }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION: confirm permit timing/exemptions."
+
+- id: q-wa-insp-001
+  domainId: wa.inspections
+  skillIds: [wa.insp.process]
+  type: single
+  difficulty: 2
+  stem: "In jurisdictions where L&I is the electrical inspection authority, who is primarily responsible for requesting the electrical inspection?"
+  options:
+    - { id: a, text: "The permit holder / installer", isCorrect: true }
+    - { id: b, text: "The electric utility" }
+    - { id: c, text: "The equipment manufacturer" }
+    - { id: d, text: "The local fire marshal" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "The permit holder requests inspection of the completed/rough work."
+    codePath: ["WAC 296-46B-906"]
+    steps:
+      - { text: "The party who took the permit requests the inspection.", ref: "WAC 296-46B-906" }
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION: confirm inspection request process and AHJ scope."
+
+- id: q-wa-enf-001
+  domainId: wa.enforcement
+  skillIds: [wa.enf.penalties]
+  type: single
+  difficulty: 2
+  stem: "Performing electrical work in Washington without the required certification or permit can subject a person to what?"
+  options:
+    - { id: a, text: "No consequence if the work passes inspection" }
+    - { id: b, text: "Civil penalties / infractions issued by L&I", isCorrect: true }
+    - { id: c, text: "Automatic issuance of a certificate" }
+    - { id: d, text: "A refund of permit fees" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "L&I enforces certification/permit requirements through penalties and infractions."
+    codePath: ["RCW 19.28.271", "RCW 19.28.131"]
+    steps:
+      - { text: "Unlicensed/unpermitted work is subject to L&I civil penalties.", ref: "RCW 19.28.271" }
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION: confirm penalty amounts/classification in current RCW."

@@ -1,0 +1,72 @@
+# Grounding & bonding (Article 250). DRAFT — verify table values on adoption.
+
+- id: q-gb-001
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 2
+  stem: "Per Table 250.122, what is the minimum size copper equipment grounding conductor for a circuit protected by a 60 A overcurrent device?"
+  options:
+    - { id: a, text: "12 AWG" }
+    - { id: b, text: "10 AWG", isCorrect: true }
+    - { id: c, text: "8 AWG" }
+    - { id: d, text: "6 AWG" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "EGC size is driven by the OCPD rating, from Table 250.122."
+    codePath: ["Table 250.122 → 60 A → 10 AWG Cu"]
+    steps:
+      - { text: "Up to 60 A OCPD → 10 AWG copper EGC.", ref: "Table 250.122" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-gb-002
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.gec-sizing]
+  type: single
+  difficulty: 3
+  stem: "Per Table 250.66, what is the minimum copper grounding electrode conductor for a service with 2/0 AWG copper service-entrance conductors?"
+  options:
+    - { id: a, text: "8 AWG" }
+    - { id: b, text: "6 AWG" }
+    - { id: c, text: "4 AWG", isCorrect: true }
+    - { id: d, text: "2 AWG" }
+  answer: { kind: single, optionId: c }
+  solution:
+    keyIdea: "GEC is sized from the service-entrance conductor size via Table 250.66 (different table than the EGC)."
+    codePath: ["Table 250.66 → 2/0 Cu service → 4 AWG Cu GEC"]
+    steps:
+      - { text: "1/0–2/0 Cu service-entrance → 4 AWG copper GEC.", ref: "Table 250.66" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-gb-003
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 3
+  stem: "If ungrounded conductors are increased in size to compensate for voltage drop, what must happen to the equipment grounding conductor?"
+  options:
+    - { id: a, text: "It stays the same size based on the OCPD." }
+    - { id: b, text: "It must be increased proportionally to the ungrounded conductor increase.", isCorrect: true }
+    - { id: c, text: "It may be reduced one size." }
+    - { id: d, text: "It is no longer required." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Upsizing the phase conductors requires proportional upsizing of the EGC."
+    codePath: ["250.122(B)"]
+    steps:
+      - { text: "EGC increased in proportion to the circular-mil increase of the ungrounded conductors.", ref: "250.122(B)" }
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."

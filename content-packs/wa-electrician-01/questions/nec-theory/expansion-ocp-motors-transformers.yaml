@@ -1,0 +1,165 @@
+# Phase 2 expansion — overcurrent / motors / transformers. 2020 NEC. All DRAFT.
+
+- id: q-oc-004
+  domainId: nec.overcurrent
+  skillIds: [nec.ocp.next-size-up]
+  type: numeric
+  difficulty: 3
+  stem: "A branch circuit supplies a 40 A continuous load plus a 20 A noncontinuous load. What minimum overcurrent device rating (A) is required (125% of continuous + 100% of noncontinuous)?"
+  answer: { kind: numeric, value: 70, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "OCPD ≥ 125% of continuous load + 100% of noncontinuous load."
+    codePath: ["210.20(A)"]
+    steps:
+      - { text: "40 A × 1.25 = 50 A (continuous)." }
+      - { text: "50 A + 20 A (noncontinuous) = 70 A (a standard size)." }
+  trapIds: [continuous-load-125]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify 2020 NEC 210.20(A)."
+
+- id: q-oc-005
+  domainId: nec.overcurrent
+  skillIds: [nec.ocp.tap-rules]
+  type: single
+  difficulty: 3
+  stem: "Under the 10-ft feeder tap rule (240.21(B)(1)), the tap conductors must have an ampacity not less than the load served and not less than what percentage of the rating of the overcurrent device protecting the feeder?"
+  options:
+    - { id: a, text: "10%", isCorrect: true }
+    - { id: b, text: "33%" }
+    - { id: c, text: "100%" }
+    - { id: d, text: "There is no minimum" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "10-ft tap: tap ampacity ≥ 10% of the feeder OCPD (plus the other listed conditions)."
+    codePath: ["240.21(B)(1)"]
+    steps:
+      - { text: "Tap conductor ampacity ≥ 10% of the protecting feeder OCPD.", ref: "240.21(B)(1)" }
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify 2020 NEC 240.21(B)(1) conditions."
+
+- id: q-oc-006
+  domainId: nec.overcurrent
+  skillIds: [nec.ocp.next-size-up]
+  type: numeric
+  difficulty: 4
+  stem: "A 64 A continuous load terminates on 75°C lugs. What minimum standard overcurrent device rating (A) is required at 125% of the continuous load?"
+  answer: { kind: numeric, value: 80, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Size the OCPD at 125% of a continuous load, then use a standard 240.6 rating."
+    codePath: ["210.20(A)", "240.6(A)"]
+    steps:
+      - { text: "64 A × 1.25 = 80 A." }
+      - { text: "80 A is a standard size → 80 A OCPD." }
+  trapIds: [continuous-load-125, next-size-up-rounding]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify."
+
+- id: q-mt-004
+  domainId: nec.motors
+  skillIds: [nec.motor.branch-protection]
+  type: numeric
+  difficulty: 3
+  stem: "A three-phase motor has a 28 A table FLC. Using an inverse-time circuit breaker at 250% of FLC (Table 430.52), then applying a standard size, what breaker rating (A) is used for branch-circuit short-circuit and ground-fault protection?"
+  answer: { kind: numeric, value: 70, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Branch short-circuit/ground-fault protection = table FLC × Table 430.52 % (250% for an inverse-time breaker)."
+    codePath: ["Table 430.52 (inverse-time breaker 250%)", "430.52(C)(1)", "240.6(A)"]
+    steps:
+      - { text: "28 A × 2.50 = 70 A." }
+      - { text: "70 A is a standard size → 70 A inverse-time breaker." }
+  trapIds: [actual-current-vs-table]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify 2020 Table 430.52 percentage."
+
+- id: q-mt-005
+  domainId: nec.motors
+  skillIds: [nec.motor.overload]
+  type: numeric
+  difficulty: 3
+  stem: "A continuous-duty motor has a nameplate full-load current of 26 A and a service factor of 1.15. Per 430.32(A)(1), what is the maximum separate overload protection rating (A) at 125% of the nameplate FLA?"
+  answer: { kind: numeric, value: 32.5, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Overload protection uses the NAMEPLATE FLA (not the table FLC); 125% for a service factor ≥ 1.15."
+    codePath: ["430.32(A)(1)"]
+    steps:
+      - { text: "26 A (nameplate) × 1.25 = 32.5 A." }
+      - { text: "Contrast: conductor sizing uses the Table 430.250 FLC, overload uses the nameplate." }
+  trapIds: [actual-current-vs-table]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify 2020 NEC 430.32(A)(1)."
+
+- id: q-mt-006
+  domainId: nec.motors
+  skillIds: [nec.motor.conductor-125]
+  type: numeric
+  difficulty: 4
+  stem: "A feeder supplies two three-phase motors with table FLCs of 28 A and 16 A. Per 430.24, the feeder conductor ampacity must be at least 125% of the largest motor FLC plus the sum of the other FLCs. What minimum feeder ampacity (A) is required?"
+  answer: { kind: numeric, value: 51, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "430.24: 125% of the largest motor FLC + 100% of the remaining motor FLCs."
+    codePath: ["430.24"]
+    steps:
+      - { text: "Largest: 28 A × 1.25 = 35 A." }
+      - { text: "Plus other: 35 + 16 = 51 A minimum feeder ampacity." }
+  trapIds: [continuous-load-125]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify 2020 NEC 430.24."
+
+- id: q-xf-003
+  domainId: nec.transformers
+  skillIds: [nec.xfmr.secondary]
+  type: numeric
+  difficulty: 3
+  stem: "What is the full-load primary current (A) of a 30 kVA, three-phase transformer with a 480 V primary? Use I = VA / (√3 × V)."
+  answer: { kind: numeric, value: 36.1, unit: "A", tolerance: 1 }
+  solution:
+    keyIdea: "Three-phase current uses the √3 factor."
+    codePath: ["I = VA / (√3 × V_line)"]
+    steps:
+      - { text: "30,000 ÷ (1.732 × 480) = 30,000 ÷ 831.4 ≈ 36.1 A." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify."
+
+- id: q-xf-004
+  domainId: nec.transformers
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: numeric
+  difficulty: 4
+  stem: "A 45 kVA, three-phase transformer (600 V or less) has a 480 V primary (primary FLC ≈ 54.1 A) with ONLY primary-side overcurrent protection. Table 450.3(B) permits up to 125% of primary current, and where that value isn't a standard rating the next higher standard size is allowed. What is the maximum standard primary overcurrent device (A)?"
+  answer: { kind: numeric, value: 70, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "125% of primary FLC, then round UP to a standard size (per the 450.3(B) allowance)."
+    codePath: ["Table 450.3(B) (primary ≥9 A, primary-only → 125%)", "450.3(B) Note", "240.6(A)"]
+    steps:
+      - { text: "Primary FLC ≈ 45,000 ÷ (1.732 × 480) = 54.1 A." }
+      - { text: "54.1 A × 1.25 = 67.6 A." }
+      - { text: "67.6 A is not standard → next standard size = 70 A." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "Draft/needsReview: confirm 2020 Table 450.3(B) primary-only 125% row and the next-size-up note."

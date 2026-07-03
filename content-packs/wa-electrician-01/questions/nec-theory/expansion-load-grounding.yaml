@@ -1,0 +1,176 @@
+# Phase 2 expansion — load calc / grounding & bonding. 2020 NEC. All DRAFT.
+
+- id: q-lc-005
+  domainId: nec.load-calc
+  skillIds: [nec.load.general-lighting]
+  type: single
+  difficulty: 1
+  stem: "In a dwelling service calculation, each small-appliance branch circuit and the laundry branch circuit is counted at what minimum volt-ampere value?"
+  options:
+    - { id: a, text: "1,000 VA" }
+    - { id: b, text: "1,200 VA" }
+    - { id: c, text: "1,500 VA", isCorrect: true }
+    - { id: d, text: "1,800 VA" }
+  answer: { kind: single, optionId: c }
+  solution:
+    keyIdea: "1,500 VA per small-appliance circuit and per laundry circuit."
+    codePath: ["220.52(A)", "220.52(B)"]
+    steps:
+      - { text: "Each small-appliance and laundry circuit = 1,500 VA.", ref: "220.52" }
+  timeTargetSec: 40
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify 2020 NEC 220.52."
+
+- id: q-lc-006
+  domainId: nec.load-calc
+  skillIds: [nec.load.demand-factor]
+  type: numeric
+  difficulty: 2
+  stem: "Using Table 220.55 Column C, what demand load (kW) is used for a single household electric range rated 12 kW?"
+  answer: { kind: numeric, value: 8, unit: "kW", tolerance: 0 }
+  solution:
+    keyIdea: "Table 220.55 Column C: one appliance not over 12 kW → 8 kW demand."
+    codePath: ["Table 220.55, Column C → 1 appliance = 8 kW"]
+    steps:
+      - { text: "One range ≤ 12 kW → 8 kW demand.", ref: "Table 220.55" }
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify 2020 Table 220.55 Column C."
+
+- id: q-lc-007
+  domainId: nec.load-calc
+  skillIds: [nec.load.demand-factor]
+  type: numeric
+  difficulty: 3
+  stem: "A dwelling has 6,000 VA general lighting, two 1,500 VA small-appliance circuits, and one 1,500 VA laundry circuit. Applying the standard demand factors (first 3,000 VA at 100%, remainder at 35%), what is the demand subtotal (VA)?"
+  answer: { kind: numeric, value: 5625, unit: "VA", tolerance: 0 }
+  solution:
+    keyIdea: "Add general lighting + small-appliance + laundry, THEN apply the demand factors."
+    codePath: ["220.52 (SA/laundry at 1,500 VA)", "Table 220.42 demand factors"]
+    steps:
+      - { text: "Total connected = 6,000 + (2 × 1,500) + 1,500 = 10,500 VA." }
+      - { text: "First 3,000 VA × 100% = 3,000 VA." }
+      - { text: "Remaining 7,500 VA × 35% = 2,625 VA." }
+      - { text: "3,000 + 2,625 = 5,625 VA." }
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: general-lighting/SA/laundry demand subtotal only, not a full service calc."
+
+- id: q-lc-008
+  domainId: nec.load-calc
+  skillIds: [nec.load.dwelling-optional]
+  type: numeric
+  difficulty: 4
+  stem: "Using the optional calculation method for a dwelling (220.82), the total connected load other than heating/air-conditioning is 40 kVA. Applying the optional demand (first 10 kVA at 100%, remainder at 40%), what is the demand (kVA) for this portion?"
+  answer: { kind: numeric, value: 22, unit: "kVA", tolerance: 0 }
+  solution:
+    keyIdea: "Optional method (220.82(B)): first 10 kVA at 100%, remainder at 40% (HVAC added separately per 220.82(C))."
+    codePath: ["220.82(B)"]
+    steps:
+      - { text: "First 10 kVA × 100% = 10 kVA." }
+      - { text: "Remaining 30 kVA × 40% = 12 kVA." }
+      - { text: "10 + 12 = 22 kVA (HVAC load added separately)." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "Draft/needsReview: confirm 2020 NEC 220.82(B) thresholds (10 kVA @100%, remainder @40%)."
+
+- id: q-gb-004
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 1
+  stem: "Which table sizes the equipment grounding conductor (EGC) based on the overcurrent device rating?"
+  options:
+    - { id: a, text: "Table 250.66" }
+    - { id: b, text: "Table 250.122", isCorrect: true }
+    - { id: c, text: "Table 310.16" }
+    - { id: d, text: "Table 220.55" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "EGC → Table 250.122 (by OCPD); GEC → Table 250.66 (by service conductor). Don't swap them."
+    codePath: ["Table 250.122"]
+    steps:
+      - { text: "EGC size comes from Table 250.122, indexed by OCPD rating.", ref: "Table 250.122" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 40
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify."
+
+- id: q-gb-005
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 2
+  stem: "Per Table 250.122, what is the minimum copper equipment grounding conductor for a circuit protected at 100 A?"
+  options:
+    - { id: a, text: "10 AWG" }
+    - { id: b, text: "8 AWG", isCorrect: true }
+    - { id: c, text: "6 AWG" }
+    - { id: d, text: "4 AWG" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "EGC is indexed by the OCPD rating."
+    codePath: ["Table 250.122 → 100 A → 8 AWG Cu"]
+    steps:
+      - { text: "100 A OCPD → 8 AWG copper EGC.", ref: "Table 250.122" }
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify 2020 Table 250.122."
+
+- id: q-gb-006
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.gec-sizing]
+  type: single
+  difficulty: 3
+  stem: "A 200 A service uses 3/0 AWG copper service-entrance conductors. Per Table 250.66, what is the minimum copper grounding electrode conductor (to an electrode other than a ground rod or concrete-encased electrode)?"
+  options:
+    - { id: a, text: "6 AWG", distractorRationale: "6 AWG is the cap for a connection to a ground rod (250.66(A)), not the general Table 250.66 value here." }
+    - { id: b, text: "4 AWG", isCorrect: true }
+    - { id: c, text: "2 AWG" }
+    - { id: d, text: "1/0 AWG" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "GEC is sized from the service-conductor size; note the 6 AWG cap to a rod (250.66(A)) and 4 AWG cap to a concrete-encased electrode (250.66(B))."
+    codePath: ["Table 250.66 → 2/0–3/0 Cu → 4 AWG", "250.66(A)/(B) electrode caps"]
+    steps:
+      - { text: "3/0 Cu service conductors → 4 AWG copper GEC.", ref: "Table 250.66" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify 2020 Table 250.66 row and electrode caps."
+
+- id: q-gb-007
+  domainId: nec.grounding-bonding
+  skillIds: [nec.gnd.egc-sizing]
+  type: numeric
+  difficulty: 4
+  stem: "A 40 A branch circuit normally uses 8 AWG (16,510 cmil) ungrounded conductors with a 10 AWG copper EGC. The ungrounded conductors are increased to 6 AWG (26,240 cmil) for voltage drop. Per 250.122(B), by what factor must the EGC circular-mil area be increased? (round to 2 decimals)"
+  answer: { kind: numeric, value: 1.59, unit: "ratio", tolerance: 0.05 }
+  solution:
+    keyIdea: "250.122(B): upsize the EGC in the same proportion as the ungrounded conductors' circular-mil increase."
+    codePath: ["250.122(B)", "Chapter 9 Table 8 (circular mils)"]
+    steps:
+      - { text: "Ratio = 26,240 cmil ÷ 16,510 cmil = 1.59." }
+      - { text: "The EGC's circular-mil area is multiplied by 1.59 (10 AWG → 8 AWG)." }
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "Draft/needsReview: confirm circular-mil values (Chapter 9 Table 8) and 250.122(B) proportional method."

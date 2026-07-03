@@ -1,0 +1,86 @@
+# Service & load calculations (Article 220). DRAFT — verify factors on adoption.
+
+- id: q-lc-001
+  domainId: nec.load-calc
+  skillIds: [nec.load.general-lighting]
+  type: numeric
+  difficulty: 2
+  stem: "For a dwelling of 2,000 ft², what general lighting load (VA) is used, at 3 VA/ft²?"
+  answer: { kind: numeric, value: 6000, unit: "VA", tolerance: 0 }
+  solution:
+    keyIdea: "Dwelling general lighting = 3 VA per ft² of area."
+    codePath: ["220.12", "Table 220.12 → dwelling 3 VA/ft²"]
+    steps:
+      - { text: "2,000 ft² × 3 VA/ft² = 6,000 VA." }
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-lc-002
+  domainId: nec.load-calc
+  skillIds: [nec.load.general-lighting]
+  type: single
+  difficulty: 1
+  stem: "What is the minimum number of 20 A small-appliance branch circuits required in a dwelling unit?"
+  options:
+    - { id: a, text: "1" }
+    - { id: b, text: "2", isCorrect: true }
+    - { id: c, text: "3" }
+    - { id: d, text: "4" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "At least two small-appliance branch circuits serve the kitchen/dining areas."
+    codePath: ["210.11(C)(1)", "220.52"]
+    steps:
+      - { text: "Minimum of two 20 A small-appliance circuits required.", ref: "210.11(C)(1)" }
+  timeTargetSec: 40
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-lc-003
+  domainId: nec.load-calc
+  skillIds: [nec.load.demand-factor]
+  type: numeric
+  difficulty: 3
+  stem: "Standard method: a dwelling has 9,000 VA of combined general-lighting and small-appliance load. Applying the demand factors (first 3,000 VA at 100%, remainder at 35%), what is the general-lighting/small-appliance demand SUBTOTAL in VA? (This is only that subtotal — not a complete service calculation, which would then add fixed appliances, range, dryer, HVAC, etc.)"
+  answer: { kind: numeric, value: 5100, unit: "VA", tolerance: 0 }
+  solution:
+    keyIdea: "Apply the 3,000 VA at 100%, the rest at 35%."
+    codePath: ["Table 220.42 (general lighting demand factors)"]
+    steps:
+      - { text: "First 3,000 VA × 100% = 3,000 VA." }
+      - { text: "Remaining 6,000 VA × 35% = 2,100 VA." }
+      - { text: "3,000 + 2,100 = 5,100 VA." }
+  trapIds: [continuous-load-125]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-lc-004
+  domainId: nec.load-calc
+  skillIds: [nec.load.service-size]
+  type: single
+  difficulty: 2
+  stem: "What is the minimum service disconnect/service size for a one-family dwelling?"
+  options:
+    - { id: a, text: "60 A" }
+    - { id: b, text: "100 A", isCorrect: true }
+    - { id: c, text: "125 A" }
+    - { id: d, text: "200 A" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "A one-family dwelling service is not less than 100 A, 3-wire."
+    codePath: ["230.79(C)"]
+    steps:
+      - { text: "One-family dwelling minimum service = 100 A.", ref: "230.79(C)" }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."

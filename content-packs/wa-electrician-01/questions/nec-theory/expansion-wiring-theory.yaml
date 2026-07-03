@@ -1,0 +1,157 @@
+# Phase 2 expansion — wiring methods / electrical theory. 2020 NEC. All DRAFT.
+
+- id: q-wm-003
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.burial-depth]
+  type: single
+  difficulty: 1
+  stem: "Per Table 300.5 (Column 1, general), what is the minimum cover for direct-buried rigid metal conduit (RMC)?"
+  options:
+    - { id: a, text: "6 in", isCorrect: true }
+    - { id: b, text: "12 in" }
+    - { id: c, text: "18 in" }
+    - { id: d, text: "24 in" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "RMC/IMC has the shallowest general cover requirement (6 in)."
+    codePath: ["Table 300.5, Column 1 (RMC/IMC)"]
+    steps:
+      - { text: "Direct-buried RMC general cover = 6 in.", ref: "Table 300.5" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify 2020 Table 300.5 Column 1."
+
+- id: q-wm-004
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.support]
+  type: single
+  difficulty: 2
+  stem: "Per Table 352.30, what is the maximum support spacing for trade size 1 rigid PVC (Schedule 40) conduit?"
+  options:
+    - { id: a, text: "3 ft", isCorrect: true }
+    - { id: b, text: "5 ft" }
+    - { id: c, text: "6 ft" }
+    - { id: d, text: "8 ft" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Smaller PVC (½–1 in) requires closer support — at least every 3 ft."
+    codePath: ["Table 352.30(B)"]
+    steps:
+      - { text: "½–1 in PVC → support spacing 3 ft.", ref: "Table 352.30" }
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "Draft/needsReview: confirm 2020 Table 352.30 support intervals by trade size."
+
+- id: q-wm-005
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 3
+  stem: "Per 358.26, what is the maximum total degrees of bends permitted between pull points (e.g., between an outlet and a fitting) in an EMT run?"
+  options:
+    - { id: a, text: "180°" }
+    - { id: b, text: "270°" }
+    - { id: c, text: "360°", isCorrect: true }
+    - { id: d, text: "720°" }
+  answer: { kind: single, optionId: c }
+  solution:
+    keyIdea: "No more than 360° total (equivalent to four quarter bends) between pull points."
+    codePath: ["358.26"]
+    steps:
+      - { text: "EMT: ≤ 360° total bends between pull points.", ref: "358.26" }
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify 2020 NEC 358.26."
+
+- id: q-wm-006
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.support]
+  type: single
+  difficulty: 3
+  stem: "Type MC cable (four or fewer conductors, No. 10 or smaller) must be secured within 12 in of terminations and supported at intervals not exceeding what distance?"
+  options:
+    - { id: a, text: "4.5 ft" }
+    - { id: b, text: "6 ft", isCorrect: true }
+    - { id: c, text: "8 ft" }
+    - { id: d, text: "10 ft" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "MC: secured within 12 in of a box and supported at least every 6 ft."
+    codePath: ["330.30(B)", "330.30(C)"]
+    steps:
+      - { text: "MC support interval ≤ 6 ft; secured within 12 in of terminations.", ref: "330.30" }
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "Draft/needsReview: confirm 2020 NEC 330.30 intervals/conditions."
+
+- id: q-wm-007
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 4
+  stem: "In a metal wireway, the total cross-sectional area of all contained conductors at any cross section must not exceed what percentage of the interior cross-sectional area of the wireway?"
+  options:
+    - { id: a, text: "20%", isCorrect: true }
+    - { id: b, text: "31%" }
+    - { id: c, text: "40%" }
+    - { id: d, text: "53%" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Wireway conductor fill is limited to 20% of the interior area (distinct from the 40% conduit rule)."
+    codePath: ["376.22(A)"]
+    steps:
+      - { text: "Metal wireway max conductor fill = 20% of interior area.", ref: "376.22(A)" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify 2020 NEC 376.22(A)."
+
+- id: q-th-003
+  domainId: nec.theory-general
+  skillIds: [nec.theory.power]
+  type: numeric
+  difficulty: 1
+  stem: "What real power (W) is dissipated by a purely resistive load drawing 10 A at 120 V?"
+  answer: { kind: numeric, value: 1200, unit: "W", tolerance: 0 }
+  solution:
+    keyIdea: "For a resistive (unity power factor) load, P = V × I."
+    codePath: ["P = V × I"]
+    steps:
+      - { text: "120 V × 10 A = 1,200 W." }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft: SME-verify."
+
+- id: q-th-004
+  domainId: nec.theory-general
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 2
+  stem: "Estimate the voltage drop (V) on a single-phase, 2-wire copper circuit using VD = 2 × K × I × D / cmil, with K = 12.9, I = 20 A, one-way length D = 100 ft, and a 12 AWG conductor (6,530 cmil)."
+  answer: { kind: numeric, value: 7.9, unit: "V", tolerance: 0.3 }
+  solution:
+    keyIdea: "Single-phase VD uses 2× the one-way length; K ≈ 12.9 for copper."
+    codePath: ["VD = 2·K·I·D / cmil (Cu K≈12.9)", "Chapter 9 Table 8 → 12 AWG = 6,530 cmil"]
+    steps:
+      - { text: "VD = (2 × 12.9 × 20 × 100) / 6,530 = 51,600 / 6,530 ≈ 7.9 V." }
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "Draft/needsReview: K is an approximation; confirm cmil (Chapter 9 Table 8) and method for exam context."

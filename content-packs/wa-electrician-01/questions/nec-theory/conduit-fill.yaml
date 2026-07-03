@@ -1,0 +1,68 @@
+# Conduit fill (Chapter 9). DRAFT — verify against adopted edition tables.
+
+- id: q-cf-001
+  domainId: nec.conduit-fill
+  skillIds: [nec.conduit.percent-fill]
+  type: single
+  difficulty: 1
+  stem: "Per Chapter 9, Table 1, what is the maximum raceway fill for more than two conductors?"
+  options:
+    - { id: a, text: "31%" }
+    - { id: b, text: "40%", isCorrect: true }
+    - { id: c, text: "53%" }
+    - { id: d, text: "60%" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "1 conductor 53%, 2 conductors 31%, over 2 conductors 40%."
+    codePath: ["Chapter 9, Table 1"]
+    steps:
+      - { text: "More than two conductors → 40% fill.", ref: "Chapter 9 Table 1" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 40
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-cf-002
+  domainId: nec.conduit-fill
+  skillIds: [nec.conduit.same-size]
+  type: numeric
+  difficulty: 2
+  stem: "Using Annex C (Table C.1), what is the maximum number of 12 AWG THHN conductors permitted in trade size 3/4 EMT?"
+  answer: { kind: numeric, value: 16, unit: "conductors", tolerance: 0 }
+  solution:
+    keyIdea: "Annex C gives the count directly for same-size conductors."
+    codePath: ["Annex C, Table C.1 → 3/4 EMT, 12 AWG THHN = 16"]
+    steps:
+      - { text: "Look up 12 AWG THHN in 3/4 EMT → 16 conductors.", ref: "Annex C Table C.1" }
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
+
+- id: q-cf-003
+  domainId: nec.conduit-fill
+  skillIds: [nec.conduit.mixed-size]
+  type: single
+  difficulty: 3
+  stem: "When a raceway contains conductors of DIFFERENT sizes, which tables are used to compute fill?"
+  options:
+    - { id: a, text: "Annex C only" }
+    - { id: b, text: "Chapter 9 Table 4 (raceway area) and Table 5 (conductor area)", isCorrect: true }
+    - { id: c, text: "Table 310.16 and Table 314.16(B)" }
+    - { id: d, text: "Table 250.66 and Table 250.122" }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Annex C shortcuts apply only to same-size conductors; mixed sizes require the area method."
+    codePath: ["Chapter 9 Table 5 (conductor area)", "Chapter 9 Table 4 (raceway 40% area)"]
+    steps:
+      - { text: "Sum each conductor's area from Table 5." }
+      - { text: "Compare to the 40% column of Table 4 for the raceway.", ref: "Chapter 9 Table 4" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "NEEDS_VERIFICATION."
