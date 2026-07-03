@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { parseNumericInput, type Question, type Response, type Section } from "@engine/index.ts";
 import { TopBar } from "../components/TopBar.tsx";
+import { radioKeyHandler } from "../a11y.ts";
 
 interface Props {
   question: Question;
@@ -27,6 +28,7 @@ export function QuestionPlayer({
 }: Props) {
   const [choice, setChoice] = useState<string | null>(null);
   const [numeric, setNumeric] = useState("");
+  const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   // Reset inputs whenever the question changes.
   useEffect(() => {
@@ -63,7 +65,7 @@ export function QuestionPlayer({
       </div>
 
       <div className="mb-2">
-        <span className="rounded-full border border-brand/40 bg-panel2 px-2.5 py-0.5 text-[11px] font-medium text-brand">
+        <span className="rounded-full border border-brand/40 bg-panel2 px-2.5 py-0.5 text-[11px] font-medium text-blue-300">
           {domainName}
         </span>
       </div>
@@ -72,8 +74,11 @@ export function QuestionPlayer({
 
       {question.type === "numeric" ? (
         <div className="mb-6">
-          <label className="mb-2 block text-sm text-slate-400">Enter your answer</label>
+          <label htmlFor="numeric-answer" className="mb-2 block text-sm text-slate-400">
+            Enter your answer
+          </label>
           <input
+            id="numeric-answer"
             inputMode="decimal"
             autoFocus
             value={numeric}
@@ -83,19 +88,25 @@ export function QuestionPlayer({
             className="w-full rounded-xl border border-line bg-panel px-4 py-4 text-xl text-slate-100 outline-none focus:border-brand"
           />
           {question.answer.kind === "numeric" && (
-            <p className="mt-2 text-xs text-slate-500">
+            <p className="mt-2 text-xs text-slate-400">
               Answer in {question.answer.unit} — just type the number, no units needed.
             </p>
           )}
         </div>
       ) : (
-        <div className="mb-6 flex flex-col gap-3">
+        <div role="radiogroup" aria-label="Answer choices" className="mb-6 flex flex-col gap-3">
           {question.options?.map((o, i) => {
             const selected = choice === o.id;
+            const opts = question.options ?? [];
             return (
               <button
                 key={o.id}
+                ref={(el) => (optionRefs.current[i] = el)}
+                role="radio"
+                aria-checked={selected}
+                tabIndex={selected || (choice === null && i === 0) ? 0 : -1}
                 onClick={() => setChoice(o.id)}
+                onKeyDown={(e) => radioKeyHandler(e, i, opts.length, optionRefs, (n) => setChoice(opts[n].id))}
                 className={[
                   "w-full rounded-xl border px-4 py-4 text-left text-base transition-colors",
                   selected

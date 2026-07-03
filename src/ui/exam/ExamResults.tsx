@@ -26,6 +26,14 @@ export function ExamResults({ report, onAgain, onHome, againLabel, onRetryMissed
 
       <h1 className="text-xl font-bold text-white">{report.sectionName} — Results</h1>
 
+      {/* Announce the outcome to screen readers when results render. */}
+      <div role="status" className="sr-only">
+        {report.passed
+          ? `You passed. Your score is ${(report.scorePct * 100).toFixed(0)} percent.`
+          : `You did not pass. Your score is ${(report.scorePct * 100).toFixed(0)} percent; ` +
+            `${(report.cutPct * 100).toFixed(0)} percent is needed.`}
+      </div>
+
       {/* Pass / fail — the actual score, not a projection. */}
       <div
         className={[
@@ -48,7 +56,7 @@ export function ExamResults({ report, onAgain, onHome, againLabel, onRetryMissed
 
       {/* Weighted weakness map for this exam, worst-first. */}
       <div className="mt-5">
-        <div className="mb-2 text-[11px] uppercase tracking-wide text-slate-500">What to practice next</div>
+        <div className="mb-2 text-[11px] uppercase tracking-wide text-slate-400">What to practice next</div>
         <div className="flex flex-col gap-2">
           {report.domains.map((d) => (
             <div key={d.domainId} className="flex items-center gap-3">
@@ -116,12 +124,12 @@ function ReviewSection({ title, empty, items }: { title: string; empty: string; 
   const [openId, setOpenId] = useState<string | null>(null);
   return (
     <div className="mt-5">
-      <div className="mb-2 text-[11px] uppercase tracking-wide text-slate-500">
+      <div className="mb-2 text-[11px] uppercase tracking-wide text-slate-400">
         {title}
         {items.length > 0 ? ` (${items.length})` : ""}
       </div>
       {items.length === 0 ? (
-        <p className="text-sm text-slate-500">{empty}</p>
+        <p className="text-sm text-slate-400">{empty}</p>
       ) : (
         <div className="flex flex-col gap-2">
           {items.map((item) => {
@@ -140,7 +148,7 @@ function ReviewSection({ title, empty, items }: { title: string; empty: string; 
                     {item.correct ? "✓" : "✕"}
                   </span>
                   <span className="min-w-0 flex-1 truncate text-sm text-slate-200">{q.stem}</span>
-                  <span className="shrink-0 text-xs text-slate-500">{open ? "Hide" : "View"}</span>
+                  <span className="shrink-0 text-xs text-slate-400">{open ? "Hide" : "View"}</span>
                 </button>
                 {open && (
                   <div className="mt-2">

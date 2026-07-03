@@ -75,7 +75,7 @@ export function ProgressView({ onHome }: { onHome: () => void }) {
           {/* By-topic breakdown from mastery — shows after any practice, not just exams. */}
           {areas.length > 0 && (
             <div className="mt-5">
-              <div className="mb-1 text-[11px] uppercase tracking-wide text-slate-500">
+              <div className="mb-1 text-[11px] uppercase tracking-wide text-slate-400">
                 How you're doing by topic
               </div>
               <p className="mb-3 text-xs text-slate-400">
@@ -104,7 +104,7 @@ export function ProgressView({ onHome }: { onHome: () => void }) {
 
           {/* Timed practice-exam history. */}
           <div className="mt-6 pb-2">
-            <div className="mb-2 text-[11px] uppercase tracking-wide text-slate-500">Your practice exams</div>
+            <div className="mb-2 text-[11px] uppercase tracking-wide text-slate-400">Your practice exams</div>
 
             {attempts.length === 0 ? (
               <p className="text-sm text-slate-400">
@@ -137,7 +137,7 @@ export function ProgressView({ onHome }: { onHome: () => void }) {
                         <div className="truncate text-sm text-slate-200">
                           {KIND_LABEL[a.kind]} · {a.section}
                         </div>
-                        <div className="text-xs text-slate-500">
+                        <div className="text-xs text-slate-400">
                           {fmtWhen(a.at)} · {a.correct}/{a.total}
                         </div>
                       </div>

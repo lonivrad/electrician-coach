@@ -329,7 +329,7 @@ electrician-coach/
 ├─ scripts/
 │  ├─ validate-pack.ts             CI content-pack gate
 │  └─ smoke-diagnostic.ts          Headless diagnostic smoke run
-├─ tests/                          engine/ · packs/ · data/ · state/  (Vitest)
+├─ tests/                          engine/ · packs/ · data/ · state/ · a11y/  (Vitest)
 ├─ docs/screenshots/               Images used in this README
 └─ .github/workflows/ci.yml        lint · typecheck · validate:pack · test+coverage · build
 ```

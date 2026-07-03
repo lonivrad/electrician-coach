@@ -56,7 +56,7 @@ export class ErrorBoundary extends Component<Props, State> {
             Reset my data and start fresh
           </button>
         </div>
-        <p className="mt-4 text-xs text-slate-500">
+        <p className="mt-4 text-xs text-slate-400">
           "Reset my data" erases your saved practice history on this device. Use it if "Try again" doesn't
           help.
         </p>

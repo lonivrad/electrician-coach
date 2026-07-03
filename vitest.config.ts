@@ -10,7 +10,7 @@ export default defineConfig({
     },
   },
   test: {
-    include: ["tests/**/*.test.ts"],
+    include: ["tests/**/*.test.{ts,tsx}"],
     environment: "node", // per-file override to jsdom via `// @vitest-environment jsdom`
     coverage: {
       provider: "v8",

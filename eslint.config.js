@@ -34,7 +34,7 @@ export default tseslint.config(
   },
   // Tests and scripts: allow non-null assertions and console for ergonomics.
   {
-    files: ["tests/**/*.ts", "scripts/**/*.ts"],
+    files: ["tests/**/*.{ts,tsx}", "scripts/**/*.ts"],
     rules: {
       "@typescript-eslint/no-non-null-assertion": "off",
     },

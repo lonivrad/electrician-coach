@@ -14,7 +14,7 @@ export function TopBar({ onHome, progressLabel }: Props) {
         <button
           onClick={onHome}
           aria-label="Go to the home screen"
-          className="flex items-center gap-1.5 rounded-lg border border-line bg-panel px-3 py-1.5 text-sm font-medium text-slate-200 active:bg-panel2"
+          className="flex min-h-11 items-center gap-1.5 rounded-lg border border-line bg-panel px-3 py-1.5 text-sm font-medium text-slate-200 active:bg-panel2"
         >
           <HomeIcon />
           Home

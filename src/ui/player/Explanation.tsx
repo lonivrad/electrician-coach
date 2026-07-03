@@ -47,7 +47,7 @@ export function Explanation({
 
       {/* The original question, so the explanation reads alongside what was asked. */}
       <div className="mb-4 rounded-xl border border-line bg-panel2 px-4 py-3">
-        <div className="mb-1 text-xs uppercase tracking-wide text-slate-500">Question</div>
+        <div className="mb-1 text-xs uppercase tracking-wide text-slate-400">Question</div>
         <p className="text-sm text-slate-200">{question.stem}</p>
       </div>
 
@@ -77,19 +77,19 @@ export function Explanation({
       )}
 
       <div className="mb-4 rounded-xl border border-line bg-panel p-4">
-        <div className="mb-1 text-xs uppercase tracking-wide text-slate-500">Key idea</div>
+        <div className="mb-1 text-xs uppercase tracking-wide text-slate-400">Key idea</div>
         <p className="text-sm text-slate-200">{question.solution.keyIdea}</p>
       </div>
 
       <div className="mb-4">
-        <div className="mb-2 text-xs uppercase tracking-wide text-slate-500">Step by step</div>
+        <div className="mb-2 text-xs uppercase tracking-wide text-slate-400">Step by step</div>
         <ol className="flex flex-col gap-2">
           {question.solution.steps.map((s, i) => (
             <li key={i} className="rounded-lg border border-line bg-panel px-3 py-2 text-sm text-slate-200">
-              <span className="mr-2 font-mono text-slate-500">{i + 1}.</span>
+              <span className="mr-2 font-mono text-slate-400">{i + 1}.</span>
               {s.text}
               {s.ref && (
-                <span className="ml-2 rounded bg-panel2 px-1.5 py-0.5 text-[11px] text-brand">{s.ref}</span>
+                <span className="ml-2 rounded bg-panel2 px-1.5 py-0.5 text-[11px] text-blue-300">{s.ref}</span>
               )}
             </li>
           ))}
@@ -97,7 +97,7 @@ export function Explanation({
       </div>
 
       <div className="mb-4">
-        <div className="mb-2 text-xs uppercase tracking-wide text-slate-500">
+        <div className="mb-2 text-xs uppercase tracking-wide text-slate-400">
           Where to find it in the code book
         </div>
         <div className="flex flex-wrap gap-1.5">

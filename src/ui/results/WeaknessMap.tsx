@@ -23,6 +23,13 @@ export function WeaknessMap({ pack, mastery, answered, onRestart, onReset, onHom
         Based on the {answered} question{answered === 1 ? "" : "s"} you just answered.
       </p>
 
+      {/* Announce the pass outlook to screen readers when the results render. */}
+      <div role="status" className="sr-only">
+        {projection.passesAllSections
+          ? "You're on track to pass both parts."
+          : "Not on track to pass yet. Keep practicing. You need 70 percent on each part."}
+      </div>
+
       {/* Pass outlook banner */}
       <div
         className={[
@@ -50,7 +57,7 @@ export function WeaknessMap({ pack, mastery, answered, onRestart, onReset, onHom
                 {(s.expectedScore * 100).toFixed(0)}%
               </span>
             </div>
-            <div className="mb-1 text-xs text-slate-500">
+            <div className="mb-1 text-xs text-slate-400">
               About {Math.round(s.expectedQuestionsCorrect)} out of {s.totalQuestions} right · need 70%
             </div>
 
@@ -59,7 +66,7 @@ export function WeaknessMap({ pack, mastery, answered, onRestart, onReset, onHom
 
             {/* what to focus on next */}
             <div className="mt-3">
-              <div className="mb-2 text-[11px] uppercase tracking-wide text-slate-500">
+              <div className="mb-2 text-[11px] uppercase tracking-wide text-slate-400">
                 What to practice next
               </div>
               <div className="flex flex-col gap-2">
