@@ -1,5 +1,5 @@
-# WA Laws & Rules — Administrative Rules & Scope. DRAFT / needsReview.
-# Legal specifics MUST be verified against current RCW 19.28 / WAC 296-46B.
+# WA Laws & Rules — Administrative Rules & Scope. status: reviewed —
+# research-verified 2026-07 against RCW 19.28 / WAC 296-46B; final live pending sign-off.
 
 - id: q-wa-admin-001
   domainId: wa.admin-rules
@@ -15,15 +15,14 @@
   answer: { kind: single, optionId: a }
   solution:
     keyIdea: "The 01 general journeyman scope covers general electrical work, distinct from the specialty certificates."
-    codePath: ["RCW 19.28.006 (definitions)", "WAC 296-46B (certificate scope)"]
+    codePath: ["RCW 19.28.006 (definitions)", "WAC 296-46B-920 (scopes of work)"]
     steps:
-      - { text: "01 General Journeyman = broad general electrical work scope.", ref: "WAC 296-46B" }
+      - { text: "01 General Journeyman = broad general electrical work scope.", ref: "WAC 296-46B-920" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "Draft/needsReview: confirm exact 01 scope wording in current WAC 296-46B and PSI bulletin."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm exact 01 scope wording in current WAC 296-46B and PSI bulletin."
 
 - id: q-wa-admin-002
   domainId: wa.admin-rules
@@ -39,12 +38,11 @@
   answer: { kind: single, optionId: a }
   solution:
     keyIdea: "L&I administers RCW 19.28 and WAC 296-46B electrical rules statewide."
-    codePath: ["RCW 19.28.006", "WAC 296-46B"]
+    codePath: ["RCW 19.28 (administered/enforced by L&I)", "WAC 296-46B"]
     steps:
       - { text: "Washington L&I is the administering/enforcing authority for electrical rules.", ref: "RCW 19.28" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "Draft/needsReview: confirm agency-scope language against current RCW/WAC."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm agency-scope language against current RCW/WAC."

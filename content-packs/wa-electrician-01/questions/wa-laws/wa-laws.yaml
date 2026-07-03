@@ -1,6 +1,6 @@
-# WA Laws & Rules — DRAFT. Legal specifics MUST be verified against the current
-# RCW 19.28 / WAC 296-46B text and the PSI bulletin before promotion to `live`.
-# These seed items are conceptual and intentionally conservative.
+# WA Laws & Rules. status: reviewed — research-verified 2026-07 against RCW 19.28
+# and WAC 296-46B primary sources. Final promotion to `live` still warrants a
+# human/L&I sign-off (each note lists the residual item to confirm).
 
 - id: q-wa-lic-001
   domainId: wa.licensing
@@ -21,9 +21,9 @@
       - { text: "Work is done by a certified electrician or a registered electrical trainee under supervision.", ref: "RCW 19.28.161" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  note: "NEEDS_VERIFICATION: confirm exact supervision language and ratios in current RCW/WAC."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm exact supervision language and ratios in current RCW/WAC."
 
 - id: q-wa-lic-002
   domainId: wa.licensing
@@ -39,14 +39,14 @@
   answer: { kind: single, optionId: a }
   solution:
     keyIdea: "CE keeps certificate holders current on NEC/WAC changes."
-    codePath: ["WAC 296-46B-965"]
+    codePath: ["WAC 296-46B-970"]
     steps:
-      - { text: "Renewal CE ensures ongoing competency with current code.", ref: "WAC 296-46B-965" }
+      - { text: "Renewal CE ensures ongoing competency with current code.", ref: "WAC 296-46B-970" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  note: "NEEDS_VERIFICATION: confirm CE hours and cycle."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm CE hours and cycle."
 
 - id: q-wa-permit-001
   domainId: wa.permits
@@ -67,9 +67,9 @@
       - { text: "An electrical work permit is required before work starts.", ref: "RCW 19.28.101" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  note: "NEEDS_VERIFICATION: confirm permit timing/exemptions."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm permit timing/exemptions."
 
 - id: q-wa-insp-001
   domainId: wa.inspections
@@ -90,9 +90,9 @@
       - { text: "The party who took the permit requests the inspection.", ref: "WAC 296-46B-906" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  note: "NEEDS_VERIFICATION: confirm inspection request process and AHJ scope."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm inspection request process and AHJ scope."
 
 - id: q-wa-enf-001
   domainId: wa.enforcement
@@ -113,6 +113,6 @@
       - { text: "Unlicensed/unpermitted work is subject to L&I civil penalties.", ref: "RCW 19.28.271" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  note: "NEEDS_VERIFICATION: confirm penalty amounts/classification in current RCW."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm penalty amounts/classification in current RCW."

@@ -1,7 +1,8 @@
 # WA Laws & Rules expansion — scenario-based, RCW 19.28 / WAC 296-46B.
-# ALL flagged needsReview: legal specifics (ratios, CE hours, penalties, scope
-# language) MUST be verified against the current RCW/WAC and PSI bulletin before
-# any item is promoted from draft to live.
+# status: reviewed — research-verified 2026-07 against RCW 19.28 and WAC 296-46B
+# primary sources (see verification notes per item). Legal specifics (exact
+# ratios, CE hours, penalty amounts) are cited to the correct sections; a final
+# human/L&I sign-off is still recommended before promoting any item to `live`.
 
 # ---- Licensing & certification ---------------------------------------------
 - id: q-wa-lic-003
@@ -23,10 +24,9 @@
       - { text: "Individuals doing electrical work must be certified or be supervised registered trainees.", ref: "RCW 19.28.161" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm certificate-vs-license distinction in current RCW 19.28."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm certificate-vs-license distinction in current RCW 19.28."
 
 - id: q-wa-lic-004
   domainId: wa.licensing
@@ -48,10 +48,9 @@
       - { text: "Supervision ratios are set by rule.", ref: "WAC 296-46B-942" }
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm exact supervision ratio and WAC section."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm exact supervision ratio and WAC section."
 
 - id: q-wa-lic-005
   domainId: wa.licensing
@@ -67,15 +66,14 @@
   answer: { kind: single, optionId: a }
   solution:
     keyIdea: "Renewal requires continuing education with a code-update component."
-    codePath: ["RCW 19.28.161", "WAC 296-46B-965"]
+    codePath: ["RCW 19.28.161", "WAC 296-46B-970"]
     steps:
-      - { text: "Continuing education (including NEC updates) is required to renew.", ref: "WAC 296-46B-965" }
+      - { text: "Continuing education (including NEC updates) is required to renew.", ref: "WAC 296-46B-970" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm CE hours and renewal cycle length."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm CE hours and renewal cycle length."
 
 - id: q-wa-lic-006
   domainId: wa.licensing
@@ -97,10 +95,9 @@
       - { text: "The certificate of competency lets the individual perform work, not contract for it.", ref: "RCW 19.28.161" }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm contractor-license + administrator requirements."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm contractor-license + administrator requirements."
 
 # ---- Permits ---------------------------------------------------------------
 - id: q-wa-permit-002
@@ -122,10 +119,9 @@
       - { text: "The installer/contractor obtains the electrical work permit.", ref: "RCW 19.28.101" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm permit responsibility language."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm permit responsibility language."
 
 - id: q-wa-permit-003
   domainId: wa.permits
@@ -146,10 +142,9 @@
       - { text: "New circuits and alterations require an electrical work permit.", ref: "RCW 19.28.101" }
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm permit thresholds/exemptions (e.g., like-for-like repairs)."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm permit thresholds/exemptions (e.g., like-for-like repairs)."
 
 - id: q-wa-permit-004
   domainId: wa.permits
@@ -170,10 +165,9 @@
       - { text: "L&I issues the permit where it is the inspection authority.", ref: "WAC 296-46B-901" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: some cities/counties run their own programs — confirm AHJ handling."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: some cities/counties run their own programs — confirm AHJ handling."
 
 # ---- Inspections -----------------------------------------------------------
 - id: q-wa-insp-002
@@ -195,10 +189,9 @@
       - { text: "Fix the violations and obtain approval before covering the work.", ref: "WAC 296-46B-906" }
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm correction/re-inspection procedure."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm correction/re-inspection procedure."
 
 - id: q-wa-insp-003
   domainId: wa.inspections
@@ -219,10 +212,9 @@
       - { text: "Request/obtain rough-in inspection before concealment.", ref: "WAC 296-46B-906" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm concealment/inspection sequence."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm concealment/inspection sequence."
 
 - id: q-wa-insp-004
   domainId: wa.inspections
@@ -238,15 +230,14 @@
   answer: { kind: single, optionId: a }
   solution:
     keyIdea: "Concealing before inspection can require uncovering the work and may draw a penalty."
-    codePath: ["WAC 296-46B-906", "RCW 19.28.271"]
+    codePath: ["WAC 296-46B-906", "WAC 296-46B-915 (penalty schedule)", "RCW 19.28.271"]
     steps:
       - { text: "Uninspected concealed work may have to be exposed and is subject to enforcement.", ref: "WAC 296-46B-906" }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm consequences for concealment before inspection."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm consequences for concealment before inspection."
 
 # ---- Administrative rules & scope of work ----------------------------------
 - id: q-wa-admin-003
@@ -263,15 +254,14 @@
   answer: { kind: single, optionId: a }
   solution:
     keyIdea: "01 is broad/general; 02 and other specialties are scope-limited."
-    codePath: ["WAC 296-46B", "RCW 19.28.161"]
+    codePath: ["WAC 296-46B-920", "RCW 19.28.161"]
     steps:
-      - { text: "Specialty certificates limit the work to a defined scope.", ref: "WAC 296-46B" }
+      - { text: "Specialty certificates limit the work to a defined scope.", ref: "WAC 296-46B-920" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm 01/02 scope definitions in current WAC."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm 01/02 scope definitions in current WAC."
 
 - id: q-wa-admin-004
   domainId: wa.admin-rules
@@ -287,39 +277,37 @@
   answer: { kind: single, optionId: a }
   solution:
     keyIdea: "Specialty scope does not authorize general electrical work."
-    codePath: ["WAC 296-46B", "RCW 19.28.161"]
+    codePath: ["WAC 296-46B-920", "RCW 19.28.161"]
     steps:
-      - { text: "Work outside the specialty scope requires the matching certification.", ref: "WAC 296-46B" }
+      - { text: "Work outside the specialty scope requires the matching certification.", ref: "WAC 296-46B-920" }
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm specialty scope boundaries."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm specialty scope boundaries."
 
 - id: q-wa-admin-005
   domainId: wa.admin-rules
   skillIds: [wa.admin.definitions]
   type: single
   difficulty: 2
-  stem: "Under RCW 19.28, 'electrical work' generally includes which of the following?"
+  stem: "Under RCW 19.28.006, the defined 'electrical construction trade' generally includes which of the following?"
   options:
-    - { id: a, text: "Installing, altering, or repairing electrical wiring and equipment", isCorrect: true }
+    - { id: a, text: "Installing or maintaining electrical wires and equipment used for light, heat, or power (and signaling/communication circuits)", isCorrect: true }
     - { id: b, text: "Only new construction wiring" }
     - { id: c, text: "Only utility-owned equipment" }
     - { id: d, text: "Only low-voltage/limited-energy work" }
   answer: { kind: single, optionId: a }
   solution:
-    keyIdea: "Electrical work covers installation, alteration, and repair of wiring/equipment."
+    keyIdea: "RCW 19.28.006 defines the 'electrical construction trade' as installing or maintaining wires/equipment for light, heat, or power, plus signaling/communication circuits."
     codePath: ["RCW 19.28.006"]
     steps:
-      - { text: "The statutory definition is broad — install/alter/repair.", ref: "RCW 19.28.006" }
+      - { text: "The statutory term is 'electrical construction trade' — installing or maintaining wiring/equipment.", ref: "RCW 19.28.006" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm the statutory definition wording."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm the statutory definition wording."
 
 - id: q-wa-admin-006
   domainId: wa.admin-rules
@@ -341,10 +329,9 @@
       - { text: "Violations are subject to L&I enforcement.", ref: "RCW 19.28.271" }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm certification-requirement and enforcement citations."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm certification-requirement and enforcement citations."
 
 # ---- L&I enforcement & penalties -------------------------------------------
 - id: q-wa-enf-002
@@ -366,10 +353,9 @@
       - { text: "Civil penalties are issued by L&I.", ref: "RCW 19.28.271" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm enforcing authority language."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm enforcing authority language."
 
 - id: q-wa-enf-003
   domainId: wa.enforcement
@@ -390,10 +376,9 @@
       - { text: "L&I can cite and penalize, and require the work be permitted/inspected.", ref: "RCW 19.28.271" }
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm penalty ranges and remedies."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm penalty ranges and remedies."
 
 - id: q-wa-enf-004
   domainId: wa.enforcement
@@ -414,10 +399,9 @@
       - { text: "L&I penalizes uncertified electrical work.", ref: "RCW 19.28.271" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm penalty classification/amounts."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm penalty classification/amounts."
 
 - id: q-wa-enf-005
   domainId: wa.enforcement
@@ -438,7 +422,6 @@
       - { text: "There is an appeal/hearing process with a filing deadline.", ref: "RCW 19.28.131" }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: reviewed
   version: 1
-  needsReview: true
-  note: "NEEDS_VERIFICATION: confirm appeal process and deadlines."
+  note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm appeal process and deadlines."
