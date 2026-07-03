@@ -4,14 +4,17 @@
 // that holds for the standard motor rows).
 import { describe, it, expect } from "vitest";
 import {
+  AMPACITY_AL,
   AMPACITY_CU,
   BOX_VOLUME_ALLOWANCE,
+  CCC_ADJUSTMENT,
   CIRCULAR_MILS,
   MOTOR_FLC_1PH,
   MOTOR_FLC_3PH,
   RACEWAY_AREA,
   RANGE_DEMAND_C,
   STANDARD_OCPD,
+  TEMP_CORRECTION,
   THHN_AREA,
 } from "../../engine/calc/tables.ts";
 
@@ -22,19 +25,28 @@ function strictlyIncreasing(values: number[]): boolean {
   return true;
 }
 
-describe("ampacity table (310.16) consistency", () => {
-  it("each size increases 60 < 75 < 90 °C", () => {
-    for (const [size, row] of Object.entries(AMPACITY_CU)) {
-      expect(row[60], `${size}`).toBeLessThan(row[75]);
-      expect(row[75], `${size}`).toBeLessThan(row[90]);
+describe("ampacity tables (310.16) consistency", () => {
+  const check = (
+    table: Record<string, { 60: number; 75: number; 90: number }>,
+    order: string[],
+    name: string,
+  ) => {
+    for (const size of order) {
+      const row = table[size];
+      expect(row[60], `${name} ${size}`).toBeLessThan(row[75]);
+      expect(row[75], `${name} ${size}`).toBeLessThan(row[90]);
     }
-  });
-  it("ampacity increases with conductor size in every column", () => {
     for (const col of [60, 75, 90] as const) {
-      const seq = AWG_ORDER.map((s) => AMPACITY_CU[s][col]);
-      expect(strictlyIncreasing(seq), `column ${col}`).toBe(true);
+      expect(strictlyIncreasing(order.map((s) => table[s][col])), `${name} column ${col}`).toBe(true);
     }
-  });
+  };
+  it("copper: columns 60<75<90 and ampacity rises with size", () => check(AMPACITY_CU, AWG_ORDER, "Cu"));
+  it("aluminum: columns 60<75<90 and ampacity rises with size", () =>
+    check(
+      AMPACITY_AL,
+      AWG_ORDER.filter((s) => s !== "14"),
+      "Al",
+    ));
 });
 
 describe("conductor-property tables increase with size", () => {
@@ -51,11 +63,33 @@ describe("box allowance (314.16(B)) increases with size", () => {
     ).toBe(true));
 });
 
-describe("EMT raceway area (Ch.9 Table 4) increases with trade size", () => {
-  it("1/2 → 2 in strictly increases", () =>
-    expect(
-      strictlyIncreasing(["1/2", "3/4", "1", "1-1/4", "1-1/2", "2"].map((s) => RACEWAY_AREA.EMT[s])),
-    ).toBe(true));
+describe("raceway area (Ch.9 Table 4) increases with trade size", () => {
+  it("every raceway type increases 1/2 → 2 in", () => {
+    const sizes = ["1/2", "3/4", "1", "1-1/4", "1-1/2", "2"];
+    for (const [type, areas] of Object.entries(RACEWAY_AREA)) {
+      expect(strictlyIncreasing(sizes.map((s) => areas[s])), type).toBe(true);
+    }
+  });
+});
+
+describe("temperature correction (Table 310.15(B)(1)) consistency", () => {
+  it("90°C column strictly decreases as ambient rises", () => {
+    const f90 = TEMP_CORRECTION.map((r) => r.f90).filter((x): x is number => x !== null);
+    for (let i = 1; i < f90.length; i++) expect(f90[i]).toBeLessThan(f90[i - 1]);
+  });
+  it("30°C row is exactly 1.00 in every column", () => {
+    const base = TEMP_CORRECTION.find((r) => r.maxAmbientC === 30);
+    expect(base?.f60).toBe(1);
+    expect(base?.f75).toBe(1);
+    expect(base?.f90).toBe(1);
+  });
+});
+
+describe("adjustment factors (Table 310.15(C)(1)) decrease with count", () => {
+  it("factor strictly decreases as conductor count rises", () => {
+    for (let i = 1; i < CCC_ADJUSTMENT.length; i++)
+      expect(CCC_ADJUSTMENT[i].factor).toBeLessThan(CCC_ADJUSTMENT[i - 1].factor);
+  });
 });
 
 describe("motor FLC tables (430.248/250) consistency", () => {

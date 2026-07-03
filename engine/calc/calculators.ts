@@ -8,14 +8,17 @@
 // =============================================================================
 
 import {
+  AMPACITY_AL,
   AMPACITY_CU,
   BOX_VOLUME_ALLOWANCE,
+  CCC_ADJUSTMENT,
   CIRCULAR_MILS,
   MOTOR_FLC_1PH,
   MOTOR_FLC_3PH,
   RACEWAY_AREA,
   RANGE_DEMAND_C,
   STANDARD_OCPD,
+  TEMP_CORRECTION,
   THHN_AREA,
 } from "./tables.ts";
 
@@ -57,6 +60,24 @@ export function nextStandardOCPD(value: number): number {
   return STANDARD_OCPD[STANDARD_OCPD.length - 1];
 }
 
+/** Ambient-temperature correction factor (Table 310.15(B)(1)). */
+export function correctionFactor(ambientC: number, tempColumn: 60 | 75 | 90): number {
+  for (const r of TEMP_CORRECTION) {
+    if (ambientC <= r.maxAmbientC) {
+      const f = tempColumn === 60 ? r.f60 : tempColumn === 75 ? r.f75 : r.f90;
+      if (f === null) throw new Error(`${tempColumn}°C conductor not permitted at ${ambientC}°C ambient`);
+      return f;
+    }
+  }
+  throw new Error(`ambient ${ambientC}°C exceeds Table 310.15(B)(1)`);
+}
+
+/** >3 current-carrying conductor adjustment factor (Table 310.15(C)(1)). */
+export function adjustmentFactor(ccc: number): number {
+  for (const r of CCC_ADJUSTMENT) if (ccc <= r.maxCount) return r.factor;
+  return CCC_ADJUSTMENT[CCC_ADJUSTMENT.length - 1].factor;
+}
+
 // ---- calculators -----------------------------------------------------------
 
 /** Box fill (314.16): conductors by size + clamp/device/EGC allowances → in³. */
@@ -95,10 +116,19 @@ function conduitAreaUsed(i: Inputs): number {
 
 /** Ampacity (310.16 + 310.15): base × correction × adjustment, capped at termination. */
 function ampacityDerating(i: Inputs): number {
+  const material = (optStr(i, "material") ?? "cu").toLowerCase();
+  const table = material === "al" ? AMPACITY_AL : AMPACITY_CU;
   const size = str(i, "size");
-  const row = need(AMPACITY_CU[size], `no ampacity for AWG ${size}`);
-  const base = row[ampColumn(i, "tempColumn")];
-  const derated = base * optNum(i, "ambientCorrection", 1) * optNum(i, "adjustment", 1);
+  const row = need(table[size], `no ${material} ampacity for AWG ${size}`);
+  const tempCol = ampColumn(i, "tempColumn");
+  // Correction/adjustment: use the explicit factor if given, else derive it from
+  // the ambient temperature / conductor count via the encoded tables.
+  const correction =
+    i.ambientC !== undefined
+      ? correctionFactor(num(i, "ambientC"), tempCol)
+      : optNum(i, "ambientCorrection", 1);
+  const adjustment = i.ccc !== undefined ? adjustmentFactor(num(i, "ccc")) : optNum(i, "adjustment", 1);
+  const derated = row[tempCol] * correction * adjustment;
   const termCol = i.terminationColumn === undefined ? undefined : ampColumn(i, "terminationColumn");
   const final = termCol === undefined ? derated : Math.min(derated, row[termCol]);
   return round(final, 2);

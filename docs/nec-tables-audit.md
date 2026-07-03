@@ -102,21 +102,50 @@ If Phase 1 derives these instead of stating them, encode + audit them first.
 
 ---
 
+## Second pass (2026-07): added tables — aluminum, factors, extra raceways
+
+All web-verified against authoritative 2020 NEC reproductions before encoding.
+
+- **Aluminum ampacity — Table 310.16 (Al), 12 AWG–4/0:** ✅ verified (lugsdirect
+  full table). 12→15/20/25 … 2→75/90/100 … 4/0→150/180/205. `AMPACITY_AL`;
+  `ampacityDerating` now accepts `material: "al"`.
+- **Ambient correction — Table 310.15(B)(1) (30 °C base):** ✅ verified
+  (conduit.site full table). Rows 10–85 °C for 60/75/90 columns; "not permitted"
+  cells encoded as null. `TEMP_CORRECTION` + `correctionFactor()`. Cross-check:
+  `correctionFactor(46, 90) = 0.82` and `(38, 90) = 0.91` match the factors already
+  stated in the ampacity questions.
+- **>3-conductor adjustment — Table 310.15(C)(1) (2020):** ✅ verified (ecalpro,
+  electricallicenserenewal). 4–6→0.80, 7–9→**0.70**, 10–20→0.50, 21–30→0.45,
+  31–40→0.40, 41+→0.35. `CCC_ADJUSTMENT` + `adjustmentFactor()`. **Edition note:**
+  2026 NEC changes 7–9 to 0.65 — we intentionally encode the **2020** value (0.70).
+- **Extra raceways — Table 4 total areas:** ✅ verified.
+  RMC 0.314/0.549/0.887/1.526/2.071/3.408 and IMC 0.342/0.586/0.959/1.647/2.225/3.630
+  (conduit.site ?option=RMC/IMC); PVC Sch 40 0.285/0.508/0.832/1.453/1.986/3.291 and
+  PVC Sch 80 0.170/0.297/0.495/0.852/1.168/1.905 (zing2).
+  **Caught before encoding:** my first-draft mental PVC Sch 80 values were wrong
+  (≈0.217/0.409/…); verification replaced them with the table values above — exactly
+  the failure this pass exists to catch.
+
 ## Corrections made
 
-None. Every flagged value matched an authoritative 2020 NEC source.
+None to previously-committed data — every value already in `tables.ts` matched an
+authoritative source. (The PVC Sch 80 mis-remembering was caught during this pass,
+before it was committed.)
 
 ## Consistency guardrails added
 
-`tests/engine/table-consistency.test.ts` (12 checks): ampacity column/size
-monotonicity, THHN-area & circular-mil & box-allowance & EMT-area monotonicity,
-motor-FLC half-relationship (3φ & 1φ) and HP monotonicity, range-demand and
-OCPD ordering. These fail the build on a future mis-key.
+`tests/engine/table-consistency.test.ts` (now 15 checks): ampacity column/size
+monotonicity (copper **and aluminum**), THHN-area / circular-mil / box-allowance /
+raceway-area monotonicity (**all raceway types**), motor-FLC half-relationship
+(3φ & 1φ) and HP monotonicity, range-demand and OCPD ordering, **310.15(B)(1) 90 °C
+column strictly decreasing with a 30 °C = 1.00 baseline, and 310.15(C)(1) factors
+strictly decreasing**. Plus `tests/engine/calc-derivation.test.ts` for the aluminum
+and factor-derivation paths. These fail the build on a future mis-key.
 
-## Recommended before Phase 1 (data completeness, not corrections)
+## Remaining before / during Phase 1 (data completeness, not corrections)
 
-1. Aluminum ampacity columns (Table 310.16 Al).
-2. More raceway types in Table 4 (RMC/PVC/IMC) for conduit-fill variety.
-3. Temperature-correction (310.15(B)(1)) and adjustment (310.15(C)(1)) factor
-   tables, if we want the calculators to derive them.
-4. Transformer <9 A OCP cases (167%/300%) and the motor 115% overload case.
+- ✅ Done: aluminum ampacity, extra raceways (RMC/IMC/PVC 40/80), temperature-
+  correction and adjustment factor tables.
+- Still open: transformer <9 A OCP cases (167% / 300%); the motor 115% overload
+  case (SF <1.15); non-THHN conductor areas (XHHW/RHW) if a question needs them;
+  200/208/575 V motor columns and HP >50.

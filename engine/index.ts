@@ -13,4 +13,11 @@ export * from "./adaptive/itemSelection.ts";
 export * from "./scoring/scoring.ts";
 export * from "./modes/policies.ts";
 export { grade, parseNumericInput } from "./grade.ts";
-export { runCalc, isKnownCalc, nextStandardOCPD, CALCULATORS } from "./calc/calculators.ts";
+export {
+  runCalc,
+  isKnownCalc,
+  nextStandardOCPD,
+  correctionFactor,
+  adjustmentFactor,
+  CALCULATORS,
+} from "./calc/calculators.ts";
