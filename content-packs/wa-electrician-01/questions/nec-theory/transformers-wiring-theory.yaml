@@ -51,24 +51,24 @@
   skillIds: [nec.wm.burial-depth]
   type: single
   difficulty: 2
-  stem: "Per Table 300.5, what is the minimum cover for a UF cable installed by direct burial (residential branch circuit ≤120 V, GFCI-protected, ≤20 A) — general column?"
+  stem: "Per Table 300.5, what minimum cover is permitted for a direct-buried residential branch circuit rated 120 V or less and 20 A, protected by GFCI?"
   options:
     - { id: a, text: "6 in" }
     - { id: b, text: "12 in", isCorrect: true }
     - { id: c, text: "18 in" }
-    - { id: d, text: "24 in", distractorRationale: "24 in is the general direct-burial depth; the residential 120 V/20 A GFCI provision reduces it." }
+    - { id: d, text: "24 in", distractorRationale: "24 in is the general direct-burial depth; the residential 120 V/20 A GFCI provision (Column 4) reduces it to 12 in." }
   answer: { kind: single, optionId: b }
   solution:
-    keyIdea: "Column selection in Table 300.5 changes the required cover — read the correct condition."
-    codePath: ["Table 300.5 → residential 120 V, 20 A, GFCI → 12 in"]
+    keyIdea: "The ≤120 V, ≤20 A, GFCI-protected residential provision (Column 4) reduces the required cover to 12 in."
+    codePath: ["Table 300.5, Column 4 → residential 120 V, 20 A, GFCI → 12 in"]
     steps:
-      - { text: "The 120 V/≤20 A GFCI-protected residential column allows 12 in cover.", ref: "Table 300.5" }
+      - { text: "GFCI-protected 120 V/≤20 A residential branch → 12 in cover.", ref: "Table 300.5" }
   trapIds: [table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
   status: draft
   version: 1
-  note: "NEEDS_VERIFICATION."
+  note: "SME-reviewed 2026-07: Table 300.5 Column 4 = 12 in. Clarified stem wording."
 
 - id: q-wm-002
   domainId: nec.wiring-methods

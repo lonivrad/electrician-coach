@@ -134,69 +134,69 @@
   skillIds: [nec.wm.support]
   type: single
   difficulty: 3
-  stem: "Per Table 352.30, rigid PVC conduit of 1 in. trade size must be supported at intervals not exceeding what distance?"
+  stem: "Per Table 352.30, rigid PVC conduit of 2 in. trade size must be supported at intervals not exceeding what distance?"
   options:
-    - { id: a, text: "3 ft", isCorrect: true }
-    - { id: b, text: "5 ft" }
+    - { id: a, text: "3 ft" }
+    - { id: b, text: "5 ft", isCorrect: true }
     - { id: c, text: "6 ft" }
     - { id: d, text: "8 ft" }
-  answer: { kind: single, optionId: a }
+  answer: { kind: single, optionId: b }
   solution:
-    keyIdea: "PVC support spacing grows with trade size; ½–1 in. → 3 ft."
+    keyIdea: "PVC support spacing grows with trade size; 1¼–2 in. → 5 ft (½–1 in. is 3 ft)."
     codePath: ["Table 352.30"]
     steps:
-      - { text: "1 in. PVC → 3 ft support interval.", ref: "Table 352.30" }
+      - { text: "2 in. PVC → 5 ft support interval.", ref: "Table 352.30" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
   status: draft
   version: 1
-  note: "Draft: Table 352.30 value; SME-confirm."
+  note: "SME-reviewed 2026-07: Table 352.30, 1¼–2 in → 5 ft."
 
 - id: q-wm-114
   domainId: nec.wiring-methods
   skillIds: [nec.wm.support]
   type: single
   difficulty: 2
-  stem: "Type MC cable must be secured at intervals not exceeding what distance?"
+  stem: "Type AC (armored) cable must be secured at intervals not exceeding what distance?"
   options:
-    - { id: a, text: "4.5 ft" }
-    - { id: b, text: "6 ft", isCorrect: true }
-    - { id: c, text: "10 ft" }
-    - { id: d, text: "3 ft" }
+    - { id: a, text: "3 ft" }
+    - { id: b, text: "4.5 ft", isCorrect: true }
+    - { id: c, text: "6 ft" }
+    - { id: d, text: "10 ft" }
   answer: { kind: single, optionId: b }
   solution:
-    keyIdea: "MC cable: secured within 12 in of terminations and at intervals not exceeding 6 ft."
-    codePath: ["330.30(B)"]
+    keyIdea: "Type AC: secured within 12 in of each box and at intervals not exceeding 4½ ft."
+    codePath: ["320.30(B)"]
     steps:
-      - { text: "MC cable support interval = 6 ft (1.8 m).", ref: "330.30(B)" }
+      - { text: "Type AC cable support interval = 4½ ft (1.4 m).", ref: "320.30(B)" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
   status: draft
   version: 1
-  note: "Draft: standard 330.30 value; SME-confirm."
+  note: "SME-reviewed 2026-07: 320.30(B), Type AC support ≤ 4½ ft."
 
 - id: q-wm-115
   domainId: nec.wiring-methods
-  skillIds: [nec.wm.support]
+  skillIds: [nec.wm.method-rules]
   type: single
-  difficulty: 1
-  stem: "Type NM cable must be secured within what distance of every outlet box or fitting?"
+  difficulty: 2
+  stem: "Where a cable or raceway passes through a bored hole in a wood stud, the edge of the hole must be at least what distance from the nearest edge of the stud (or a steel plate must be used)?"
   options:
-    - { id: a, text: "8 in" }
-    - { id: b, text: "12 in", isCorrect: true }
-    - { id: c, text: "18 in" }
-    - { id: d, text: "24 in" }
+    - { id: a, text: "1 in" }
+    - { id: b, text: "1-1/4 in", isCorrect: true }
+    - { id: c, text: "1-1/2 in" }
+    - { id: d, text: "2 in" }
   answer: { kind: single, optionId: b }
   solution:
-    keyIdea: "NM cable must be secured within 12 in of each box/fitting."
-    codePath: ["334.30"]
+    keyIdea: "Bored holes: keep the hole edge ≥ 1¼ in from the stud edge, or protect with a steel plate."
+    codePath: ["300.4(A)(1)"]
     steps:
-      - { text: "NM cable: secured within 12 in of the box.", ref: "334.30" }
-  timeTargetSec: 40
+      - { text: "Edge of bored hole ≥ 1¼ in from the nearest edge of the wood member.", ref: "300.4(A)(1)" }
+  timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
   status: draft
   version: 1
-  note: "Draft: standard 334.30 value; SME-confirm."
+  note: "SME-reviewed 2026-07: 300.4(A)(1), 1¼ in bored-hole clearance."
 
 # ---- Method rules (single-choice) ------------------------------------------
 - id: q-wm-116
@@ -204,23 +204,23 @@
   skillIds: [nec.wm.method-rules]
   type: single
   difficulty: 2
-  stem: "Between pull points, a raceway run may contain no more than the equivalent of how many degrees of bends?"
+  stem: "Per 110.26, the minimum width of the working space in front of electrical equipment is the width of the equipment or what value, whichever is greater?"
   options:
-    - { id: a, text: "180°" }
-    - { id: b, text: "270°" }
-    - { id: c, text: "360°", isCorrect: true }
-    - { id: d, text: "450°" }
-  answer: { kind: single, optionId: c }
+    - { id: a, text: "24 in" }
+    - { id: b, text: "30 in", isCorrect: true }
+    - { id: c, text: "36 in" }
+    - { id: d, text: "42 in" }
+  answer: { kind: single, optionId: b }
   solution:
-    keyIdea: "Maximum of four quarter bends (360° total) between pull points."
-    codePath: ["358.26 (EMT)", "344.26 (RMC)", "352.26 (PVC)"]
+    keyIdea: "110.26(A)(2): working-space width = 30 in, or the width of the equipment if wider."
+    codePath: ["110.26(A)(2)"]
     steps:
-      - { text: "No more than 360° of bends total between pull points." }
+      - { text: "Minimum working-space width = 30 in (or equipment width if greater)." }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
   status: draft
   version: 1
-  note: "Draft: standard 300-series bend limit; SME-confirm."
+  note: "SME-reviewed 2026-07: 110.26(A)(2), 30 in minimum width."
 
 - id: q-wm-117
   domainId: nec.wiring-methods
