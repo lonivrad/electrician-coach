@@ -3,7 +3,7 @@ import { Home } from "./ui/Home.tsx";
 import { DiagnosticFlow } from "./ui/DiagnosticFlow.tsx";
 import { ExamFlow } from "./ui/exam/ExamFlow.tsx";
 
-type Screen = "home" | "diagnostic" | "board";
+type Screen = "home" | "diagnostic" | "board" | "overtrain";
 
 export function App() {
   const [screen, setScreen] = useState<Screen>("home");
@@ -16,10 +16,15 @@ export function App() {
       style={{ paddingTop: "calc(env(safe-area-inset-top) + 1.25rem)" }}
     >
       {screen === "home" && (
-        <Home onStartDiagnostic={() => setScreen("diagnostic")} onStartBoard={() => setScreen("board")} />
+        <Home
+          onStartDiagnostic={() => setScreen("diagnostic")}
+          onStartBoard={() => setScreen("board")}
+          onStartHardMode={() => setScreen("overtrain")}
+        />
       )}
       {screen === "diagnostic" && <DiagnosticFlow onExit={goHome} />}
       {screen === "board" && <ExamFlow mode="board" onExit={goHome} />}
+      {screen === "overtrain" && <ExamFlow mode="overtrain" onExit={goHome} />}
     </div>
   );
 }

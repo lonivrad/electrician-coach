@@ -17,7 +17,19 @@ export function ExamFlow({ mode, onExit }: Props) {
 
   return (
     <>
-      {e.phase === "config" && <ExamConfig options={e.sectionOptions} onStart={e.start} onHome={onExit} />}
+      {e.phase === "config" && (
+        <ExamConfig
+          title={mode === "overtrain" ? "Hard Mode" : "Practice Exam"}
+          subtitle={
+            mode === "overtrain"
+              ? "Tougher questions and a tighter clock than the real exam. You won't see answers until you finish."
+              : "Pick a part to take under real exam time. You won't see answers until you finish."
+          }
+          options={e.sectionOptions}
+          onStart={e.start}
+          onHome={onExit}
+        />
+      )}
 
       {e.phase === "running" && e.current && (
         <ExamRunner
@@ -59,10 +71,14 @@ export function ExamFlow({ mode, onExit }: Props) {
 }
 
 function ExamConfig({
+  title,
+  subtitle,
   options,
   onStart,
   onHome,
 }: {
+  title: string;
+  subtitle: string;
   options: SectionOption[];
   onStart: (sectionId: string) => void;
   onHome: () => void;
@@ -70,10 +86,8 @@ function ExamConfig({
   return (
     <div className="flex min-h-full flex-col">
       <TopBar onHome={onHome} />
-      <h1 className="text-xl font-bold text-white">Practice Exam</h1>
-      <p className="mt-1 text-sm text-slate-300">
-        Pick a part to take under real exam time. You won't see answers until you finish.
-      </p>
+      <h1 className="text-xl font-bold text-white">{title}</h1>
+      <p className="mt-1 text-sm text-slate-300">{subtitle}</p>
 
       <div className="mt-6 flex flex-col gap-3">
         {options.map((o) => {

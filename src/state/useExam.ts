@@ -11,6 +11,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   applyResponse,
   boardPolicy,
+  overtrainPolicy,
   grade,
   selectSectionSet,
   sectionIdOfDomain,
@@ -57,21 +58,6 @@ interface RunConfig {
   poolFilter: (q: Question) => boolean;
 }
 
-function runConfigFor(mode: ExamMode, section: Section): RunConfig {
-  const realPace = section.totalTimeSec / section.totalQuestions; // 180s NEC, ~212s law
-  if (mode === "board") {
-    return {
-      eligibility: "board",
-      policy: boardPolicy().selection,
-      count: section.totalQuestions,
-      perQuestionSec: Math.round(realPace),
-      poolFilter: () => true,
-    };
-  }
-  // "overtrain" is wired in the Overtraining commit.
-  throw new Error(`Exam mode "${mode}" is not configured yet.`);
-}
-
 export interface SectionOption {
   id: string;
   name: string;
@@ -94,11 +80,44 @@ export function useExam(mode: ExamMode) {
   const [report, setReport] = useState<ExamReport | null>(null);
   const deadlineRef = useRef<number | null>(null);
 
+  // Per-mode run configuration. Content-aware for Hard Mode: it weights toward
+  // L3/L4 where a section has them, but falls back to L2+ so a section with no
+  // hard questions yet (e.g. the WA-law bank) still offers its toughest items.
+  const buildConfig = useCallback(
+    (s: Section): RunConfig => {
+      const realPace = s.totalTimeSec / s.totalQuestions; // 180s NEC, ~212s law
+      if (mode === "board") {
+        return {
+          eligibility: "board",
+          policy: boardPolicy().selection,
+          count: s.totalQuestions,
+          perQuestionSec: Math.round(realPace),
+          poolFilter: () => true,
+        };
+      }
+      const hardCount = pack.questions.filter(
+        (q) =>
+          q.modes.includes("overtrain") &&
+          sectionIdOfDomain(pack.domains, q.domainId) === s.id &&
+          q.difficulty >= 3,
+      ).length;
+      const minDifficulty = hardCount >= 6 ? 3 : 2;
+      return {
+        eligibility: "overtrain",
+        policy: overtrainPolicy().selection,
+        count: 30,
+        perQuestionSec: Math.round(realPace * 0.7), // tighter: ~2.1 min NEC, ~2.5 min law
+        poolFilter: (q) => q.difficulty >= minDifficulty,
+      };
+    },
+    [mode, pack],
+  );
+
   // Sections the user can choose, with the count we can actually serve.
   const sectionOptions: SectionOption[] = useMemo(
     () =>
       pack.blueprint.sections.map((s) => {
-        const cfg = runConfigFor(mode, s);
+        const cfg = buildConfig(s);
         const pool = pack.questions.filter(
           (q) =>
             q.modes.includes(cfg.eligibility) &&
@@ -112,7 +131,7 @@ export function useExam(mode: ExamMode) {
           perQuestionSec: cfg.perQuestionSec,
         };
       }),
-    [pack, mode],
+    [pack, buildConfig],
   );
 
   const domainName = useCallback((id: string) => pack.domains.find((d) => d.id === id)?.name ?? id, [pack]);
@@ -210,7 +229,7 @@ export function useExam(mode: ExamMode) {
     (sectionId: string) => {
       const s = pack.blueprint.sections.find((x) => x.id === sectionId);
       if (!s) return;
-      const cfg = runConfigFor(mode, s);
+      const cfg = buildConfig(s);
       const set = selectSectionSet({
         section: s,
         domains: pack.domains,
@@ -230,7 +249,7 @@ export function useExam(mode: ExamMode) {
       deadlineRef.current = Date.now() + allotted * 1000;
       setPhase("running");
     },
-    [pack, mode],
+    [pack, buildConfig],
   );
 
   const setSingle = useCallback((qid: string, optionId: string) => {

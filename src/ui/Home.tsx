@@ -4,9 +4,10 @@ import { loadPackOnce } from "../data/packLoader.ts";
 interface Props {
   onStartDiagnostic: () => void;
   onStartBoard: () => void;
+  onStartHardMode: () => void;
 }
 
-export function Home({ onStartDiagnostic, onStartBoard }: Props) {
+export function Home({ onStartDiagnostic, onStartBoard, onStartHardMode }: Props) {
   const { pack } = useMemo(() => loadPackOnce(), []);
 
   return (
@@ -33,7 +34,12 @@ export function Home({ onStartDiagnostic, onStartBoard }: Props) {
           active
           onClick={onStartBoard}
         />
-        <ModeCard title="Hard Mode" desc="Tougher questions to build your confidence." badge="Coming soon" />
+        <ModeCard
+          title="Hard Mode"
+          desc="Tougher questions and a tighter clock than the real exam. Scored at the end."
+          active
+          onClick={onStartHardMode}
+        />
       </div>
 
       <div className="mt-auto pt-6 text-xs text-slate-400">
