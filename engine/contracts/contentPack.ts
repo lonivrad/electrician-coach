@@ -17,6 +17,7 @@ import type {
   SkillId,
   TrapId,
 } from "../types.ts";
+import { isKnownCalc } from "../calc/calculators.ts";
 
 export interface PackEdition {
   /** e.g. "NEC-2023". */
@@ -115,6 +116,7 @@ export function validatePack(pack: ContentPack): PackIssue[] {
       warn("q.needs-review", `Question "${q.id}" is flagged needsReview: ${q.note ?? "(author unsure)"}`);
     }
     validateAnswer(q, err);
+    checkHygiene(q, err);
   }
 
   // Warn on any domain/subweight still flagged as provisional.
@@ -163,6 +165,43 @@ function validateAnswer(q: Question, err: (c: string, m: string) => void) {
       err("q.key", `Question "${q.id}" is numeric but answer key is ${q.answer.kind}.`);
     } else if (q.answer.tolerance < 0) {
       err("q.tol", `Question "${q.id}" has negative tolerance.`);
+    }
+  }
+}
+
+/** Data-hygiene checks applied to every question (all are build-failing errors). */
+function checkHygiene(q: Question, err: (c: string, m: string) => void) {
+  const id = q.id || "(missing id)";
+  if (!q.stem || q.stem.trim() === "") err("hy.stem", `Question "${id}" has an empty stem.`);
+  if (!Array.isArray(q.skillIds) || q.skillIds.length === 0)
+    err("hy.skills", `Question "${id}" must list at least one skillId.`);
+  if (typeof q.difficulty !== "number" || q.difficulty < 1 || q.difficulty > 5)
+    err("hy.difficulty", `Question "${id}" difficulty must be 1..5 (got ${q.difficulty}).`);
+  if (!Array.isArray(q.modes) || q.modes.length === 0)
+    err("hy.modes", `Question "${id}" must list at least one mode.`);
+  if (typeof q.timeTargetSec !== "number" || q.timeTargetSec <= 0)
+    err("hy.time", `Question "${id}" needs a positive estimated time (timeTargetSec).`);
+  if (typeof q.version !== "number") err("hy.version", `Question "${id}" is missing version.`);
+  if (!q.status) err("hy.status", `Question "${id}" is missing status.`);
+
+  // Worked solution with at least one code citation.
+  if (!q.solution || !Array.isArray(q.solution.steps) || q.solution.steps.length === 0)
+    err("hy.solution", `Question "${id}" needs a worked solution (at least one step).`);
+  if (!q.solution || !Array.isArray(q.solution.codePath) || q.solution.codePath.length === 0)
+    err("hy.citation", `Question "${id}" needs at least one code citation (solution.codePath).`);
+
+  // Numeric items: unit, tolerance, and a machine-checkable recompute spec.
+  if (q.type === "numeric") {
+    if (q.answer.kind === "numeric") {
+      if (!q.answer.unit || q.answer.unit.trim() === "")
+        err("hy.unit", `Numeric question "${id}" needs a unit.`);
+      if (typeof q.answer.tolerance !== "number" || q.answer.tolerance < 0)
+        err("hy.tolerance", `Numeric question "${id}" needs a tolerance ≥ 0.`);
+    }
+    if (!q.recompute) {
+      err("hy.recompute", `Numeric question "${id}" needs a recompute spec (calc + inputs).`);
+    } else if (!isKnownCalc(q.recompute.calc)) {
+      err("hy.calc", `Question "${id}" recompute references unknown calculator "${q.recompute.calc}".`);
     }
   }
 }

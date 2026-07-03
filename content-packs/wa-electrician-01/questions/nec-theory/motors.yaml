@@ -1,6 +1,7 @@
 # Motors (Article 430). DRAFT — verify table FLC values on adoption.
 
 - id: q-mt-001
+  recompute: { calc: motorFLC, inputs: { hp: "10", volts: 230, phase: 3 } }
   domainId: nec.motors
   commonMistake: "If you got a different value, make sure you read the three-phase table (430.250), not the single-phase table (430.248)."
   skillIds: [nec.motor.flc-table]
@@ -21,6 +22,7 @@
   note: "NEEDS_VERIFICATION."
 
 - id: q-mt-002
+  recompute: { calc: motorConductor, inputs: { flc: 28 } }
   domainId: nec.motors
   commonMistake: "If you got 28, you forgot to multiply the FLC by 125%."
   skillIds: [nec.motor.conductor-125]

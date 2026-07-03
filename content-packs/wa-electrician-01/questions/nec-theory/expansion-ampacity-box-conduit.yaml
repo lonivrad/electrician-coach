@@ -1,6 +1,7 @@
 # Phase 2 expansion — ampacity / box fill / conduit fill. 2020 NEC. All DRAFT.
 
 - id: q-amp-007
+  recompute: { calc: ampacityDerating, inputs: { size: "3", tempColumn: 90, ambientCorrection: 0.91, adjustment: 0.8, terminationColumn: 75 } }
   domainId: nec.ampacity
   commonMistake: "If you got a higher number, you forgot to apply both the temperature correction and the adjustment factor together."
   skillIds: [nec.ampacity.combined, nec.ampacity.termination-limit]
@@ -23,6 +24,7 @@
   note: "Draft: SME-verify table values/factors for 2020 NEC."
 
 - id: q-amp-008
+  recompute: { calc: continuousLoad, inputs: { current: 44 } }
   domainId: nec.ampacity
   commonMistake: "If you got 44, you used the meter reading directly and forgot the 125% continuous-load factor."
   skillIds: [nec.ampacity.table-lookup]
@@ -44,6 +46,7 @@
   note: "Draft: SME-verify 2020 NEC continuous-load sizing citation."
 
 - id: q-box-005
+  recompute: { calc: boxFill, inputs: { conductors: { "12": 3, "14": 4 }, clampSize: "12", deviceCount: 1, deviceSize: "12" } }
   domainId: nec.box-fill
   commonMistake: "If you got a lower number, you sized the clamp and device on the 14 AWG instead of the largest conductor (12 AWG)."
   skillIds: [nec.box.conductor-count, nec.box.device-clamp-allowance, nec.box.largest-conductor]
@@ -68,6 +71,7 @@
   note: "Draft/needsReview: confirm mixed-size largest-conductor treatment for clamp & device allowances (314.16(B))."
 
 - id: q-cf-004
+  recompute: { calc: conduitMaxSameSize, inputs: { raceway: EMT, tradeSize: "1/2", wireType: THHN, size: "10" } }
   domainId: nec.conduit-fill
   skillIds: [nec.conduit.same-size]
   type: numeric
@@ -86,6 +90,7 @@
   note: "Draft: SME-verify 2020 Annex C cell."
 
 - id: q-cf-005
+  recompute: { calc: conduitAreaUsed, inputs: { conductors: [ { size: "12", count: 3 }, { size: "10", count: 2 } ] } }
   domainId: nec.conduit-fill
   commonMistake: "If you were off, make sure you used each conductor's Table 5 area and summed all five conductors."
   skillIds: [nec.conduit.mixed-size]

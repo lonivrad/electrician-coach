@@ -51,6 +51,12 @@ export interface Option {
   distractorRationale?: string;
 }
 
+/** A calculator id + its inputs, so a numeric answer can be re-derived in code. */
+export interface RecomputeSpec {
+  calc: string;
+  inputs: Record<string, unknown>;
+}
+
 export interface SolutionStep {
   text: string;
   /** Article/table cited for this step (reference only). */
@@ -75,6 +81,12 @@ export interface Question {
   solution: { steps: SolutionStep[]; codePath: string[]; keyIdea: string };
   /** One plain sentence naming the likely wrong path — shown on a wrong answer. */
   commonMistake?: string;
+  /**
+   * Machine-checkable answer derivation. Names an engine calculator and the
+   * inputs to feed it; the recompute test re-derives `answer` from this and
+   * fails the build on mismatch. REQUIRED for numeric questions (hygiene).
+   */
+  recompute?: RecomputeSpec;
   trapIds?: TrapId[];
   timeTargetSec: number;
   modes: Mode[];

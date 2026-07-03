@@ -120,6 +120,7 @@
   note: "Draft: SME-verify 2020 NEC 376.22(A)."
 
 - id: q-th-003
+  recompute: { calc: power1ph, inputs: { volts: 120, amps: 10 } }
   domainId: nec.theory-general
   skillIds: [nec.theory.power]
   type: numeric
@@ -138,6 +139,7 @@
   note: "Draft: SME-verify."
 
 - id: q-th-004
+  recompute: { calc: voltageDrop, inputs: { k: 12.9, current: 20, oneWayFt: 100, cmil: 6530, phase: 1 } }
   domainId: nec.theory-general
   commonMistake: "If your answer was about half, you forgot to double the one-way length (the 2 in the formula)."
   skillIds: [nec.theory.ohms-law]

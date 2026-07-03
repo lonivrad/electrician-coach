@@ -1,6 +1,7 @@
 # Service & load calculations (Article 220). DRAFT — verify factors on adoption.
 
 - id: q-lc-001
+  recompute: { calc: generalLighting, inputs: { areaFt2: 2000 } }
   domainId: nec.load-calc
   skillIds: [nec.load.general-lighting]
   type: numeric
@@ -42,6 +43,7 @@
   note: "NEEDS_VERIFICATION."
 
 - id: q-lc-003
+  recompute: { calc: demandFactorStandard, inputs: { totalVA: 9000 } }
   domainId: nec.load-calc
   commonMistake: "If you got 3,150, you applied 35% to the whole load — the first 3,000 VA is counted at 100%."
   skillIds: [nec.load.demand-factor]

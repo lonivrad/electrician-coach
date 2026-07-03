@@ -1,6 +1,7 @@
 # Phase 2 expansion — overcurrent / motors / transformers. 2020 NEC. All DRAFT.
 
 - id: q-oc-004
+  recompute: { calc: ocpdMixedLoad, inputs: { continuous: 40, noncontinuous: 20 } }
   domainId: nec.overcurrent
   commonMistake: "If you got 60, you added the loads without first taking 125% of the continuous portion."
   skillIds: [nec.ocp.next-size-up]
@@ -45,6 +46,7 @@
   note: "Draft: SME-verify 2020 NEC 240.21(B)(1) conditions."
 
 - id: q-oc-006
+  recompute: { calc: continuousLoad, inputs: { current: 64 } }
   domainId: nec.overcurrent
   commonMistake: "If you got 64, you forgot to multiply the continuous load by 125%."
   skillIds: [nec.ocp.next-size-up]
@@ -66,6 +68,7 @@
   note: "Draft: SME-verify."
 
 - id: q-mt-004
+  recompute: { calc: motorBranchOCPD, inputs: { flc: 28, pct: 2.5 } }
   domainId: nec.motors
   commonMistake: "If you got 28, you used the FLC directly and forgot the 250% branch-protection factor."
   skillIds: [nec.motor.branch-protection]
@@ -87,6 +90,7 @@
   note: "Draft: SME-verify 2020 Table 430.52 percentage."
 
 - id: q-mt-005
+  recompute: { calc: motorOverload, inputs: { nameplateFLA: 26 } }
   domainId: nec.motors
   commonMistake: "If you used 28, remember overload protection is sized from the NAMEPLATE FLA (26 A), not the table FLC."
   skillIds: [nec.motor.overload]
@@ -108,6 +112,7 @@
   note: "Draft: SME-verify 2020 NEC 430.32(A)(1)."
 
 - id: q-mt-006
+  recompute: { calc: motorFeeder, inputs: { largestFLC: 28, otherSum: 16 } }
   domainId: nec.motors
   commonMistake: "If you got 44, you forgot to take 125% of the largest motor before adding the others."
   skillIds: [nec.motor.conductor-125]
@@ -129,6 +134,7 @@
   note: "Draft: SME-verify 2020 NEC 430.24."
 
 - id: q-xf-003
+  recompute: { calc: transformerCurrent, inputs: { kva: 30, volts: 480, phase: 3 } }
   domainId: nec.transformers
   commonMistake: "If you got a much larger number, you left out the √3 factor for three-phase."
   skillIds: [nec.xfmr.secondary]
@@ -149,6 +155,7 @@
   note: "Draft: SME-verify."
 
 - id: q-xf-004
+  recompute: { calc: transformerPrimaryOCP, inputs: { kva: 45, volts: 480, phase: 3 } }
   domainId: nec.transformers
   commonMistake: "If you got a lower number, you forgot the 125% factor or didn't round up to the next standard size."
   skillIds: [nec.xfmr.ocp-sizing]

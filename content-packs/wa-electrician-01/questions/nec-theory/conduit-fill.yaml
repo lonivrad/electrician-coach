@@ -25,6 +25,7 @@
   note: "NEEDS_VERIFICATION."
 
 - id: q-cf-002
+  recompute: { calc: conduitMaxSameSize, inputs: { raceway: EMT, tradeSize: "3/4", wireType: THHN, size: "12" } }
   domainId: nec.conduit-fill
   skillIds: [nec.conduit.same-size]
   type: numeric

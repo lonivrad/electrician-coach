@@ -25,6 +25,7 @@
   note: "NEEDS_VERIFICATION."
 
 - id: q-xf-002
+  recompute: { calc: transformerCurrent, inputs: { kva: 45, volts: 208, phase: 3 } }
   domainId: nec.transformers
   commonMistake: "If you got a much larger number, you left out the √3 factor for three-phase."
   skillIds: [nec.xfmr.secondary]
@@ -94,6 +95,7 @@
 
 # ---- Electrical theory ------------------------------------------------------
 - id: q-th-001
+  recompute: { calc: ohmsCurrent, inputs: { volts: 240, ohms: 20 } }
   domainId: nec.theory-general
   skillIds: [nec.theory.ohms-law]
   type: numeric
@@ -112,6 +114,7 @@
   note: "NEEDS_VERIFICATION."
 
 - id: q-th-002
+  recompute: { calc: power3ph, inputs: { volts: 480, amps: 20 } }
   domainId: nec.theory-general
   commonMistake: "If you got 9,600, you left out the √3 factor for three-phase power."
   skillIds: [nec.theory.three-phase, nec.theory.power]

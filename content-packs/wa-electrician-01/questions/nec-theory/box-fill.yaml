@@ -24,6 +24,7 @@
   note: "NEEDS_VERIFICATION."
 
 - id: q-box-002
+  recompute: { calc: boxFill, inputs: { conductors: { "12": 6 } } }
   domainId: nec.box-fill
   skillIds: [nec.box.conductor-count]
   type: numeric
@@ -42,6 +43,7 @@
   note: "NEEDS_VERIFICATION."
 
 - id: q-box-003
+  recompute: { calc: boxFill, inputs: { conductors: { "14": 8 }, clampSize: "14", deviceCount: 1, deviceSize: "14", egcSize: "14" } }
   domainId: nec.box-fill
   commonMistake: "If you got 16, you counted only the conductors and forgot the clamp (1), the device (2), and the grounding conductors (1)."
   skillIds: [nec.box.conductor-count, nec.box.device-clamp-allowance, nec.box.egc-allowance]

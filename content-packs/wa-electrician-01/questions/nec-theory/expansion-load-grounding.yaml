@@ -24,6 +24,7 @@
   note: "Draft: SME-verify 2020 NEC 220.52."
 
 - id: q-lc-006
+  recompute: { calc: rangeDemandC, inputs: { count: 1 } }
   domainId: nec.load-calc
   commonMistake: "If you got 12, you used the nameplate rating instead of the Column C demand value."
   skillIds: [nec.load.demand-factor]
@@ -43,6 +44,7 @@
   note: "Draft: SME-verify 2020 Table 220.55 Column C."
 
 - id: q-lc-007
+  recompute: { calc: demandFactorStandard, inputs: { totalVA: 10500 } }
   domainId: nec.load-calc
   commonMistake: "If you were off, add the general-lighting, small-appliance, and laundry loads together BEFORE applying the demand factors."
   skillIds: [nec.load.demand-factor]
@@ -65,6 +67,7 @@
   note: "Draft: general-lighting/SA/laundry demand subtotal only, not a full service calc."
 
 - id: q-lc-008
+  recompute: { calc: optionalMethod, inputs: { totalKVA: 40 } }
   domainId: nec.load-calc
   commonMistake: "If you got 16, you applied 40% to the whole load — the first 10 kVA is taken at 100%."
   skillIds: [nec.load.dwelling-optional]
@@ -159,6 +162,7 @@
   note: "Draft: SME-verify 2020 Table 250.66 row and electrode caps."
 
 - id: q-gb-007
+  recompute: { calc: cmilRatio, inputs: { newSize: "6", origSize: "8" } }
   domainId: nec.grounding-bonding
   commonMistake: "If you got a factor below 1, you divided the smaller area by the larger — divide the new area by the original (26,240 ÷ 16,510)."
   skillIds: [nec.gnd.egc-sizing]
