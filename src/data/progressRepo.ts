@@ -9,6 +9,16 @@
 
 import { emptyMastery, type MasteryState } from "@engine/index.ts";
 
+/** One finished timed run, for the plain "My progress" history. */
+export interface AttemptRecord {
+  at: number; // epoch ms
+  kind: "board" | "overtrain" | "retry";
+  section: string; // section name, or "Missed questions" for a retry run
+  correct: number;
+  total: number;
+  scorePct: number;
+}
+
 export interface StoredProgress {
   examId: string;
   mastery: MasteryState;
@@ -20,6 +30,8 @@ export interface StoredProgress {
    * the id; answering wrong adds it; leaving blank leaves it unchanged.
    */
   missedQuestionIds: string[];
+  /** Finished timed runs, oldest→newest, capped to the most recent 50. */
+  attempts: AttemptRecord[];
   updatedAt: number;
 }
 
@@ -33,7 +45,14 @@ const PREFIX = "ec:";
 const KEY = (examId: string) => `${PREFIX}progress:${examId}`;
 
 export function freshProgress(examId: string): StoredProgress {
-  return { examId, mastery: emptyMastery(), seenQuestionIds: [], missedQuestionIds: [], updatedAt: 0 };
+  return {
+    examId,
+    mastery: emptyMastery(),
+    seenQuestionIds: [],
+    missedQuestionIds: [],
+    attempts: [],
+    updatedAt: 0,
+  };
 }
 
 /** True only if the object looks like a real MasteryState (guards corrupt data). */
@@ -95,6 +114,7 @@ export function createLocalProgressRepo(): ProgressRepo {
           mastery: isMasteryShaped(o.mastery) ? o.mastery : emptyMastery(),
           seenQuestionIds: Array.isArray(o.seenQuestionIds) ? o.seenQuestionIds : [],
           missedQuestionIds: Array.isArray(o.missedQuestionIds) ? o.missedQuestionIds : [],
+          attempts: Array.isArray(o.attempts) ? o.attempts : [],
           updatedAt: typeof o.updatedAt === "number" ? o.updatedAt : 0,
         };
       } catch {

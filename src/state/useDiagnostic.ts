@@ -106,6 +106,7 @@ export function useDiagnostic() {
         mastery: nextMastery,
         seenQuestionIds: Array.from(new Set([...progress.seenQuestionIds, current.id])),
         missedQuestionIds: Array.from(missed),
+        attempts: progress.attempts, // the diagnostic isn't a scored run — preserve history
         updatedAt: Date.now(),
       };
       repo.save(persisted);
@@ -119,7 +120,15 @@ export function useDiagnostic() {
       setAnsweredThisRun((n) => n + 1);
       setPhase("explanation");
     },
-    [current, history.length, pack.examId, progress.seenQuestionIds, progress.missedQuestionIds, repo],
+    [
+      current,
+      history.length,
+      pack.examId,
+      progress.seenQuestionIds,
+      progress.missedQuestionIds,
+      progress.attempts,
+      repo,
+    ],
   );
 
   // Advance to a brand-new question (or results if the diagnostic is done).

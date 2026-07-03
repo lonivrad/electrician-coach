@@ -8,9 +8,16 @@ interface Props {
   onStartBoard: () => void;
   onStartHardMode: () => void;
   onPracticeMissed: () => void;
+  onOpenProgress: () => void;
 }
 
-export function Home({ onStartDiagnostic, onStartBoard, onStartHardMode, onPracticeMissed }: Props) {
+export function Home({
+  onStartDiagnostic,
+  onStartBoard,
+  onStartHardMode,
+  onPracticeMissed,
+  onOpenProgress,
+}: Props) {
   const { pack } = useMemo(() => loadPackOnce(), []);
   const repo = useMemo(() => createLocalProgressRepo(), []);
 
@@ -92,8 +99,16 @@ export function Home({ onStartDiagnostic, onStartBoard, onStartHardMode, onPract
         )}
       </div>
 
-      <div className="mt-auto pt-6 text-xs text-slate-400">
-        These are practice questions to help you study. They are not the official exam.
+      <div className="mt-auto pt-6">
+        <button
+          onClick={onOpenProgress}
+          className="w-full rounded-xl border border-line bg-panel px-4 py-3 text-sm font-medium text-slate-200 active:bg-panel2"
+        >
+          My progress
+        </button>
+        <p className="mt-4 text-xs text-slate-400">
+          These are practice questions to help you study. They are not the official exam.
+        </p>
       </div>
     </div>
   );

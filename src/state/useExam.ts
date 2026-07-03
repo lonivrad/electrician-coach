@@ -23,7 +23,7 @@ import {
   type Mode,
 } from "@engine/index.ts";
 import { loadPackOnce } from "../data/packLoader.ts";
-import { createLocalProgressRepo } from "../data/progressRepo.ts";
+import { createLocalProgressRepo, type AttemptRecord } from "../data/progressRepo.ts";
 
 export type ExamMode = "board" | "overtrain";
 export type ExamPhase = "config" | "running" | "results";
@@ -85,6 +85,7 @@ export function useExam(mode: ExamMode) {
   const [phase, setPhase] = useState<ExamPhase>("config");
   const [section, setSection] = useState<Section | null>(null);
   const [runLabel, setRunLabel] = useState("");
+  const [runKind, setRunKind] = useState<AttemptRecord["kind"]>("board");
   const [missedCount, setMissedCount] = useState(
     () => repo.load(pack.examId).missedQuestionIds.filter((id) => questionById.has(id)).length,
   );
@@ -196,17 +197,27 @@ export function useExam(mode: ExamMode) {
         else missedSet.add(item.question.id);
       }
       const missedIds = Array.from(missedSet);
+      const scorePct = questions.length ? correct / questions.length : 0;
+      // Log this run for the "My progress" history (keep the most recent 50).
+      const attempt: AttemptRecord = {
+        at: Date.now(),
+        kind: runKind,
+        section: section?.name ?? "Missed questions",
+        correct,
+        total: questions.length,
+        scorePct,
+      };
       repo.save({
         examId: pack.examId,
         mastery,
         seenQuestionIds: Array.from(new Set([...prev.seenQuestionIds, ...questions.map((q) => q.id)])),
         missedQuestionIds: missedIds,
+        attempts: [...prev.attempts, attempt].slice(-50),
         updatedAt: Date.now(),
       });
       setMissedCount(missedIds.filter((id) => questionById.has(id)).length);
 
       const cutPct = section?.cutScorePct ?? 0.7;
-      const scorePct = questions.length ? correct / questions.length : 0;
       const domains: DomainResult[] = [...perDomain.entries()]
         .map(([domainId, d]) => {
           const weight = weightOf(pack, domainId);
@@ -246,6 +257,7 @@ export function useExam(mode: ExamMode) {
       pack,
       section,
       runLabel,
+      runKind,
       questionById,
       allottedSec,
       remainingSec,
@@ -273,10 +285,17 @@ export function useExam(mode: ExamMode) {
 
   // Shared run setup — used by both a blueprint/section run and a retry run.
   const beginRun = useCallback(
-    (set: Question[], perQuestionSec: number, sec: Section | null, label: string) => {
+    (
+      set: Question[],
+      perQuestionSec: number,
+      sec: Section | null,
+      label: string,
+      kind: AttemptRecord["kind"],
+    ) => {
       const allotted = set.length * perQuestionSec;
       setSection(sec);
       setRunLabel(label);
+      setRunKind(kind);
       setQuestions(set);
       setAnswers({});
       setNumericRaw({});
@@ -313,9 +332,9 @@ export function useExam(mode: ExamMode) {
               count: cfg.count,
               policy: cfg.policy,
             });
-      beginRun(set, cfg.perQuestionSec, s, s.name);
+      beginRun(set, cfg.perQuestionSec, s, s.name, mode);
     },
-    [pack, buildConfig, beginRun],
+    [pack, buildConfig, beginRun, mode],
   );
 
   // Retry-only run: just the questions the user has missed and not since fixed.
@@ -326,7 +345,7 @@ export function useExam(mode: ExamMode) {
       .missedQuestionIds.map((id) => questionById.get(id))
       .filter((q): q is Question => q !== undefined);
     if (missed.length === 0) return;
-    beginRun(missed, 90, null, "Questions you missed");
+    beginRun(missed, 90, null, "Questions you missed", "retry");
   }, [repo, pack, questionById, beginRun]);
 
   const setSingle = useCallback((qid: string, optionId: string) => {
