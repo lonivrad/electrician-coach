@@ -154,5 +154,4 @@
   modes: [diagnostic, board, overtrain]
   status: draft
   version: 1
-  needsReview: true
-  note: "Draft/needsReview: K is an approximation; confirm cmil (Chapter 9 Table 8) and method for exam context."
+  note: "Recompute-verified (voltageDrop); K=12.9 Cu is the standard exam estimate (stated in-stem), 12 AWG cmil from Ch.9 Table 8. Cleared needsReview 2026-07."

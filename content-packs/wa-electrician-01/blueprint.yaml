@@ -15,8 +15,16 @@ passPolicy: per-section
 sections:
   # ---------------------------------------------------------------------------
   # SECTION A — NEC & Theory: 60 questions, 3 hours (180 min), open book.
-  # Per-domain split is PROVISIONAL (no per-topic PSI breakdown in hand) and
-  # every weight is flagged for verification.
+  #
+  # Section structure VERIFIED 2026-07 against WA L&I / the PSI candidate bulletin:
+  # the General (01) exam is 77 questions total (this 60 + the 17 WA-law below),
+  # 70% to pass EACH section independently, code edition 2020 NEC.
+  #
+  # The per-domain split below stays an ESTIMATE and is intentionally flagged:
+  # PSI states the number of questions per knowledge area is "approximate" and
+  # publishes no per-topic breakdown, so there is no authoritative source to size
+  # these weights against. They're a reasoned distribution across the covered NEC
+  # topics — adjust here (must still sum to 60) if L&I ever releases finer detail.
   # ---------------------------------------------------------------------------
   - id: nec-theory
     name: "NEC & Theory"

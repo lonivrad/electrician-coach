@@ -175,5 +175,4 @@
   modes: [diagnostic, board, overtrain]
   status: draft
   version: 1
-  needsReview: true
-  note: "Draft/needsReview: confirm 2020 Table 450.3(B) primary-only 125% row and the next-size-up note."
+  note: "Recompute-verified (transformerPrimaryOCP); 450.3(B) primary-only 125% + next-standard-size allowance confirmed (docs/nec-tables-audit.md). Cleared needsReview 2026-07."
