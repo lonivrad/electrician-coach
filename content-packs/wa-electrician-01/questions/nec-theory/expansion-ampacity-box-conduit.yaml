@@ -67,8 +67,7 @@
   modes: [diagnostic, board, overtrain]
   status: draft
   version: 1
-  needsReview: true
-  note: "Draft/needsReview: confirm mixed-size largest-conductor treatment for clamp & device allowances (314.16(B))."
+  note: "Recompute-verified (boxFill); Table 314.16(B) allowances + largest-conductor clamp/device rule (314.16(B)(2),(4)) confirmed. Cleared needsReview 2026-07; SME wording pass pending before live."
 
 - id: q-cf-004
   recompute: { calc: conduitMaxSameSize, inputs: { raceway: EMT, tradeSize: "1/2", wireType: THHN, size: "10" } }
@@ -110,5 +109,4 @@
   modes: [diagnostic, board, overtrain]
   status: draft
   version: 1
-  needsReview: true
-  note: "Draft/needsReview: confirm 2020 Chapter 9 Table 5 conductor areas and Table 4 raceway area."
+  note: "Recompute-verified (conduitAreaUsed); Ch.9 Table 5 conductor areas + Table 4 (3/4 EMT 40%) web-verified (docs/nec-tables-audit.md). Cleared needsReview 2026-07."

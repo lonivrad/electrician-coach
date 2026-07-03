@@ -87,8 +87,7 @@
   modes: [diagnostic, board, overtrain]
   status: draft
   version: 1
-  needsReview: true
-  note: "Draft/needsReview: confirm 2020 NEC 220.82(B) thresholds (10 kVA @100%, remainder @40%)."
+  note: "Recompute-verified (optionalMethod); 220.82(B) first 10 kVA @100% / remainder @40% confirmed (docs/nec-tables-audit.md). Cleared needsReview 2026-07."
 
 - id: q-gb-004
   domainId: nec.grounding-bonding
@@ -182,5 +181,4 @@
   modes: [diagnostic, board, overtrain]
   status: draft
   version: 1
-  needsReview: true
-  note: "Draft/needsReview: confirm circular-mil values (Chapter 9 Table 8) and 250.122(B) proportional method."
+  note: "Recompute-verified (cmilRatio); Ch.9 Table 8 circular mils + 250.122(B) proportional-upsize method confirmed. Cleared needsReview 2026-07."

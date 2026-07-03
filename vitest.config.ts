@@ -15,14 +15,15 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reporter: ["text-summary", "text"],
-      include: ["engine/**", "src/data/**", "src/state/**"],
+      include: ["engine/**", "src/data/**", "src/state/**", "src/ui/**"],
       // Floors set just below current coverage (rounded down to the nearest 5)
-      // so the gate passes today and guards against regressions.
+      // so the gate passes today and guards against regressions. src/ui is now
+      // covered by the flow + a11y tests, which lowers the aggregate a little.
       thresholds: {
-        statements: 90,
-        branches: 80,
-        functions: 95,
-        lines: 90,
+        statements: 85,
+        branches: 75,
+        functions: 80,
+        lines: 85,
       },
     },
   },
