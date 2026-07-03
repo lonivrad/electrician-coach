@@ -1,25 +1,18 @@
 import type { Question, Response } from "@engine/index.ts";
 import { TopBar } from "../components/TopBar.tsx";
 
-interface ReviewNav {
-  label: string;
-  canOlder: boolean;
-  canNewer: boolean;
-  onOlder: () => void;
-  onNewer: () => void;
-  onReturn: () => void;
-}
-
 interface Props {
   question: Question;
   correct: boolean;
   response: Response;
-  onHome: () => void;
   progressLabel: string;
-  /** Feedback mode: advance to the next question. */
-  onNext?: () => void;
-  /** Review mode: step through earlier answers and return to the quiz. */
-  review?: ReviewNav;
+  /** Move forward: next question, or forward through reviewed history. */
+  onContinue: () => void;
+  /** Step back to the previously answered question (read-only). */
+  onPrevious: () => void;
+  canPrevious: boolean;
+  /** Exit to the home screen (shows the "Leave practice?" confirm). */
+  onHome: () => void;
 }
 
 function responseText(question: Question, response: Response): string {
@@ -37,10 +30,20 @@ function correctText(question: Question): string {
   return "—";
 }
 
-export function Explanation({ question, correct, response, onHome, progressLabel, onNext, review }: Props) {
+export function Explanation({
+  question,
+  correct,
+  response,
+  progressLabel,
+  onContinue,
+  onPrevious,
+  canPrevious,
+  onHome,
+}: Props) {
   return (
     <div className="flex min-h-full flex-col">
-      <TopBar onHome={onHome} progressLabel={progressLabel} />
+      {/* Home lives in the footer here, so the top bar shows only progress. */}
+      <TopBar progressLabel={progressLabel} />
 
       <div
         className={[
@@ -92,41 +95,30 @@ export function Explanation({ question, correct, response, onHome, progressLabel
         </div>
       </div>
 
-      {review ? (
-        <div className="mt-auto flex flex-col gap-2 pt-2">
-          <div className="flex gap-2">
-            <button
-              onClick={review.onOlder}
-              disabled={!review.canOlder}
-              className="flex-1 rounded-xl border border-line px-4 py-3 text-base font-medium text-slate-200 disabled:opacity-30 active:bg-panel"
-            >
-              ← Earlier
-            </button>
-            <button
-              onClick={review.onNewer}
-              disabled={!review.canNewer}
-              className="flex-1 rounded-xl border border-line px-4 py-3 text-base font-medium text-slate-200 disabled:opacity-30 active:bg-panel"
-            >
-              Later →
-            </button>
-          </div>
+      {/* Exactly three controls: Continue (primary), Previous question, Home. */}
+      <div className="mt-auto flex flex-col gap-2 pt-2">
+        <button
+          onClick={onContinue}
+          className="w-full rounded-xl bg-brand px-4 py-4 text-base font-semibold text-white"
+        >
+          Continue
+        </button>
+        <div className="flex gap-2">
           <button
-            onClick={review.onReturn}
-            className="w-full rounded-xl bg-brand px-4 py-4 text-base font-semibold text-white"
+            onClick={onPrevious}
+            disabled={!canPrevious}
+            className="flex-1 rounded-xl border border-line px-4 py-3 text-base font-medium text-slate-200 active:bg-panel disabled:opacity-30"
           >
-            Back to my quiz
+            ← Previous question
+          </button>
+          <button
+            onClick={onHome}
+            className="flex-1 rounded-xl border border-line px-4 py-3 text-base font-medium text-slate-200 active:bg-panel"
+          >
+            Home
           </button>
         </div>
-      ) : (
-        <div className="mt-auto pt-2">
-          <button
-            onClick={onNext}
-            className="w-full rounded-xl bg-brand px-4 py-4 text-base font-semibold text-white"
-          >
-            Continue
-          </button>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

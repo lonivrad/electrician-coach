@@ -24,7 +24,7 @@ import {
 import { loadWaElectrician01, indexPack } from "../data/packLoader.ts";
 import { createLocalProgressRepo, type StoredProgress } from "../data/progressRepo.ts";
 
-export type Phase = "intro" | "question" | "feedback" | "review" | "results";
+export type Phase = "intro" | "question" | "explanation" | "results";
 
 export interface FeedbackState {
   question: Question;
@@ -83,13 +83,14 @@ export function useDiagnostic() {
   const [phase, setPhase] = useState<Phase>("intro");
   const [progress, setProgress] = useState<StoredProgress>(() => repo.load(pack.examId));
   const [current, setCurrent] = useState<Question | null>(null);
-  const [feedback, setFeedback] = useState<FeedbackState | null>(null);
   const [answeredThisRun, setAnsweredThisRun] = useState(0);
-  // Answered items this run, in order — powers the "see previous" review nav.
+  // Answered items this run, in order — powers linear back/forward navigation.
   const [history, setHistory] = useState<FeedbackState[]>([]);
-  const [reviewIndex, setReviewIndex] = useState<number | null>(null);
-  // Where to return to when leaving review (always the live question).
-  const returnPhase = useRef<Phase>("question");
+  // Which answered item's explanation is on screen (null = not on explanation).
+  const [viewIndex, setViewIndex] = useState<number | null>(null);
+  // True when history was opened from an as-yet-unanswered live question, so
+  // "Continue" past the newest item resumes that question instead of advancing.
+  const liveQuestionPending = useRef(false);
 
   // Questions used within THIS diagnostic run (independent of long-term history).
   const usedThisRun = useRef<Set<string>>(new Set());
@@ -99,12 +100,12 @@ export function useDiagnostic() {
   const start = useCallback(() => {
     usedThisRun.current = new Set();
     runMastery.current = progress.mastery;
+    liveQuestionPending.current = false;
     setAnsweredThisRun(0);
     setHistory([]);
-    setReviewIndex(null);
+    setViewIndex(null);
     const q = pickNext(pack, runMastery.current, usedThisRun.current);
     setCurrent(q);
-    setFeedback(null);
     setPhase(q ? "question" : "results");
   }, [pack, progress.mastery]);
 
@@ -133,69 +134,70 @@ export function useDiagnostic() {
       setProgress(persisted);
 
       const fb: FeedbackState = { question: current, correct, response };
-      setFeedback(fb);
+      const newIndex = history.length; // index this item will occupy
       setHistory((h) => [...h, fb]);
+      liveQuestionPending.current = false;
+      setViewIndex(newIndex);
       setAnsweredThisRun((n) => n + 1);
-      setPhase("feedback");
+      setPhase("explanation");
     },
-    [current, pack.examId, progress.seenQuestionIds, repo],
+    [current, history.length, pack.examId, progress.seenQuestionIds, repo],
   );
 
-  const next = useCallback(() => {
-    const answered = answeredThisRun;
+  // Advance to a brand-new question (or results if the diagnostic is done).
+  const advanceToNewQuestion = useCallback(() => {
     const done = diagnosticShouldStop({
       blueprint: pack.blueprint,
       mastery: runMastery.current,
-      answered,
+      answered: answeredThisRun,
       stop: POLICY.stop,
     });
-    if (done) {
-      setPhase("results");
-      setCurrent(null);
-      setFeedback(null);
-      return;
-    }
-    const q = pickNext(pack, runMastery.current, usedThisRun.current);
+    const q = done ? null : pickNext(pack, runMastery.current, usedThisRun.current);
+    setViewIndex(null);
     if (!q) {
-      setPhase("results");
       setCurrent(null);
+      setPhase("results");
     } else {
       setCurrent(q);
-      setFeedback(null);
       setPhase("question");
     }
   }, [answeredThisRun, pack]);
 
-  // ---- Navigation ----------------------------------------------------------
-  // Exit to the home screen. Progress is already saved after every answer, so
-  // leaving mid-question only discards the current unanswered item.
-  const goHome = useCallback(() => {
-    setReviewIndex(null);
-    setPhase("intro");
+  // ---- Linear navigation on the explanation screen -------------------------
+  // "Continue": step forward through any reviewed history, then either resume a
+  // pending live question or move on to a brand-new question.
+  const onContinue = useCallback(() => {
+    if (viewIndex != null && viewIndex < history.length - 1) {
+      setViewIndex(viewIndex + 1);
+      return;
+    }
+    if (liveQuestionPending.current) {
+      liveQuestionPending.current = false;
+      setViewIndex(null);
+      setPhase("question");
+      return;
+    }
+    advanceToNewQuestion();
+  }, [viewIndex, history.length, advanceToNewQuestion]);
+
+  // "Previous question": step back one answered question (read-only).
+  const onPreviousQuestion = useCallback(() => {
+    setViewIndex((i) => (i != null && i > 0 ? i - 1 : i));
   }, []);
 
-  // Look back at earlier answered questions (read-only) without disturbing the
-  // adaptive state, then resume where you left off.
-  const enterReview = useCallback(() => {
+  // From a live (unanswered) question: look back at answers already given.
+  const onSeePrevious = useCallback(() => {
     if (history.length === 0) return;
-    returnPhase.current = "question";
-    setReviewIndex(history.length - 1);
-    setPhase("review");
+    liveQuestionPending.current = true;
+    setViewIndex(history.length - 1);
+    setPhase("explanation");
   }, [history.length]);
 
-  const reviewStep = useCallback(
-    (delta: number) => {
-      setReviewIndex((i) => {
-        const base = i ?? 0;
-        return Math.min(history.length - 1, Math.max(0, base + delta));
-      });
-    },
-    [history.length],
-  );
-
-  const exitReview = useCallback(() => {
-    setReviewIndex(null);
-    setPhase(returnPhase.current);
+  // Exit to home. Progress is saved after every answer, so nothing is lost.
+  const goHome = useCallback(() => {
+    liveQuestionPending.current = false;
+    setViewIndex(null);
+    setPhase("intro");
   }, []);
 
   const resetAll = useCallback(() => {
@@ -203,17 +205,21 @@ export function useDiagnostic() {
     setProgress(fresh);
     runMastery.current = fresh.mastery;
     usedThisRun.current = new Set();
+    liveQuestionPending.current = false;
     setAnsweredThisRun(0);
     setHistory([]);
-    setReviewIndex(null);
+    setViewIndex(null);
     setCurrent(null);
-    setFeedback(null);
     setPhase("intro");
   }, [pack.examId, repo]);
 
   const section: Section | undefined = current
     ? idx.sectionById.get(sectionOf(pack, current.domainId) ?? "")
     : undefined;
+
+  const explanationItem = viewIndex != null ? history[viewIndex] : null;
+  const explanationIsLatest =
+    viewIndex != null && viewIndex === history.length - 1 && !liveQuestionPending.current;
 
   return {
     pack,
@@ -223,21 +229,20 @@ export function useDiagnostic() {
     progress,
     current,
     currentSection: section,
-    feedback,
     answeredThisRun,
     plannedItems: POLICY.stop.maxItems,
     start,
     submit,
-    next,
     resetAll,
     // Navigation
+    onContinue,
+    onPreviousQuestion,
+    onSeePrevious,
     goHome,
-    enterReview,
-    reviewStep,
-    exitReview,
     canReview: history.length > 0,
-    reviewItem: reviewIndex != null ? history[reviewIndex] : null,
-    reviewPosition: reviewIndex != null ? { index: reviewIndex, total: history.length } : null,
+    explanationItem,
+    explanationIsLatest,
+    canPreviousExplanation: viewIndex != null && viewIndex > 0,
     // Live mastery for results (working copy reflects this run immediately).
     liveMastery: runMastery.current,
   };

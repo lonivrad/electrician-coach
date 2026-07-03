@@ -2,21 +2,26 @@
 // progress text. Kept deliberately simple and high-contrast for older users.
 
 interface Props {
-  onHome: () => void;
+  /** When omitted, no Home button is shown (e.g. when Home is a footer button). */
+  onHome?: () => void;
   progressLabel?: string;
 }
 
 export function TopBar({ onHome, progressLabel }: Props) {
   return (
     <div className="mb-4 flex items-center justify-between">
-      <button
-        onClick={onHome}
-        aria-label="Go to the home screen"
-        className="flex items-center gap-2 rounded-xl border border-line bg-panel px-4 py-3 text-base font-semibold text-slate-100 active:bg-panel2"
-      >
-        <HomeIcon />
-        Home
-      </button>
+      {onHome ? (
+        <button
+          onClick={onHome}
+          aria-label="Go to the home screen"
+          className="flex items-center gap-2 rounded-xl border border-line bg-panel px-4 py-3 text-base font-semibold text-slate-100 active:bg-panel2"
+        >
+          <HomeIcon />
+          Home
+        </button>
+      ) : (
+        <span />
+      )}
       {progressLabel && <span className="text-sm font-medium text-slate-400">{progressLabel}</span>}
     </div>
   );

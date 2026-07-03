@@ -23,37 +23,23 @@ export function App() {
           total={d.plannedItems}
           onSubmit={d.submit}
           onHome={askExit}
-          onPrevious={d.enterReview}
+          onPrevious={d.onSeePrevious}
           canPrevious={d.canReview}
         />
       )}
 
-      {d.phase === "feedback" && d.feedback && (
+      {d.phase === "explanation" && d.explanationItem && (
         <Explanation
-          question={d.feedback.question}
-          correct={d.feedback.correct}
-          response={d.feedback.response}
+          question={d.explanationItem.question}
+          correct={d.explanationItem.correct}
+          response={d.explanationItem.response}
+          progressLabel={
+            d.explanationIsLatest ? `Question ${d.answeredThisRun} of ${d.plannedItems}` : "Looking back"
+          }
+          onContinue={d.onContinue}
+          onPrevious={d.onPreviousQuestion}
+          canPrevious={d.canPreviousExplanation}
           onHome={askExit}
-          progressLabel={`Question ${d.answeredThisRun} of ${d.plannedItems}`}
-          onNext={d.next}
-        />
-      )}
-
-      {d.phase === "review" && d.reviewItem && d.reviewPosition && (
-        <Explanation
-          question={d.reviewItem.question}
-          correct={d.reviewItem.correct}
-          response={d.reviewItem.response}
-          onHome={askExit}
-          progressLabel={`Reviewing ${d.reviewPosition.index + 1} of ${d.reviewPosition.total}`}
-          review={{
-            label: `Reviewing ${d.reviewPosition.index + 1} of ${d.reviewPosition.total}`,
-            canOlder: d.reviewPosition.index > 0,
-            canNewer: d.reviewPosition.index < d.reviewPosition.total - 1,
-            onOlder: () => d.reviewStep(-1),
-            onNewer: () => d.reviewStep(1),
-            onReturn: d.exitReview,
-          }}
         />
       )}
 
