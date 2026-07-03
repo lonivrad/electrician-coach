@@ -12,9 +12,9 @@ import {
   applyResponse,
   diagnosticPolicy,
   diagnosticShouldStop,
-  domainMastery,
   grade,
-  selectNext,
+  selectNextAcrossSections,
+  sectionIdOfDomain,
   type ContentPack,
   type MasteryState,
   type Question,
@@ -34,45 +34,17 @@ export interface FeedbackState {
 
 const POLICY = diagnosticPolicy(30);
 
-/** Pick the most informative next diagnostic item across all sections. */
+/** Thin adapter over the engine's cross-section selection for this pack + mode. */
 function pickNext(pack: ContentPack, mastery: MasteryState, used: Set<string>): Question | null {
-  const candidates: Question[] = [];
-  for (const section of pack.blueprint.sections) {
-    const pool = pack.questions.filter(
-      (q) => q.modes.includes("diagnostic") && sectionOf(pack, q.domainId) === section.id,
-    );
-    const c = selectNext({ section, pool, mastery, usedQuestionIds: used, policy: POLICY.selection });
-    if (c) candidates.push(c);
-  }
-  if (candidates.length === 0) return null;
-
-  // Choose the candidate whose domain we know least about (highest uncertainty),
-  // weighted by how much the exam cares about that domain.
-  let best = candidates[0];
-  let bestNeed = -Infinity;
-  for (const q of candidates) {
-    const est = domainMastery(mastery, q.domainId);
-    const uncertainty = est.variance / 0.25;
-    const weightFrac = weightFractionOf(pack, q.domainId);
-    const need = 0.4 * weightFrac + 0.6 * uncertainty;
-    if (need > bestNeed) {
-      bestNeed = need;
-      best = q;
-    }
-  }
-  return best;
-}
-
-function sectionOf(pack: ContentPack, domainId: string): string | undefined {
-  return pack.domains.find((d) => d.id === domainId)?.sectionId;
-}
-
-function weightFractionOf(pack: ContentPack, domainId: string): number {
-  for (const s of pack.blueprint.sections) {
-    const w = s.domainWeights.find((x) => x.domainId === domainId);
-    if (w) return w.officialExamWeight / s.totalQuestions;
-  }
-  return 0;
+  return selectNextAcrossSections({
+    blueprint: pack.blueprint,
+    domains: pack.domains,
+    questions: pack.questions,
+    mode: "diagnostic",
+    mastery,
+    usedQuestionIds: used,
+    policy: POLICY.selection,
+  });
 }
 
 export function useDiagnostic() {
@@ -214,7 +186,7 @@ export function useDiagnostic() {
   }, [pack.examId, repo]);
 
   const section: Section | undefined = current
-    ? idx.sectionById.get(sectionOf(pack, current.domainId) ?? "")
+    ? idx.sectionById.get(sectionIdOfDomain(pack.domains, current.domainId) ?? "")
     : undefined;
 
   const explanationItem = viewIndex != null ? history[viewIndex] : null;

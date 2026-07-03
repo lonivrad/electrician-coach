@@ -9,7 +9,16 @@
 //   • board       — blueprint-proportional draw at realistic difficulty.
 // =============================================================================
 
-import type { Blueprint, MasteryState, Question, Section } from "../types.ts";
+import type {
+  Blueprint,
+  Domain,
+  DomainId,
+  Mode,
+  MasteryState,
+  Question,
+  Section,
+  SectionId,
+} from "../types.ts";
 import { domainMastery, DEFAULT_PRIOR, type MasteryPrior } from "./mastery.ts";
 
 export interface SelectionPolicy {
@@ -85,6 +94,71 @@ export function selectNext(args: {
     const key = dScore * 2 + diffFit + byIdHash(q.id) * 0.05;
     if (key > bestKey) {
       bestKey = key;
+      best = q;
+    }
+  }
+  return best;
+}
+
+/** The section a domain belongs to (pack-defined; opaque to the engine). */
+export function sectionIdOfDomain(domains: Domain[], domainId: DomainId): SectionId | undefined {
+  return domains.find((d) => d.id === domainId)?.sectionId;
+}
+
+/** A domain's share of its section's questions (its exam frequency, 0..1). */
+export function weightFractionOfDomain(blueprint: Blueprint, domainId: DomainId): number {
+  for (const s of blueprint.sections) {
+    const w = s.domainWeights.find((x) => x.domainId === domainId);
+    if (w) return s.totalQuestions > 0 ? w.officialExamWeight / s.totalQuestions : 0;
+  }
+  return 0;
+}
+
+export interface AcrossSectionsArgs {
+  blueprint: Blueprint;
+  domains: Domain[];
+  questions: Question[];
+  mode: Mode;
+  mastery: MasteryState;
+  usedQuestionIds: Set<string>;
+  policy: SelectionPolicy;
+  prior?: MasteryPrior;
+}
+
+/**
+ * Pick the next item across ALL sections (used by the Baseline Diagnostic):
+ * take the best candidate per section, then choose the one whose domain is most
+ * worth measuring now — exam frequency weighted against how uncertain we still
+ * are about it. Reusable by future modes via the `mode` filter.
+ */
+export function selectNextAcrossSections(args: AcrossSectionsArgs): Question | null {
+  const prior = args.prior ?? DEFAULT_PRIOR;
+  const candidates: Question[] = [];
+  for (const section of args.blueprint.sections) {
+    const pool = args.questions.filter(
+      (q) => q.modes.includes(args.mode) && sectionIdOfDomain(args.domains, q.domainId) === section.id,
+    );
+    const c = selectNext({
+      section,
+      pool,
+      mastery: args.mastery,
+      usedQuestionIds: args.usedQuestionIds,
+      policy: args.policy,
+      prior,
+    });
+    if (c) candidates.push(c);
+  }
+  if (candidates.length === 0) return null;
+
+  let best = candidates[0];
+  let bestNeed = -Infinity;
+  for (const q of candidates) {
+    const est = domainMastery(args.mastery, q.domainId, prior);
+    const uncertainty = est.variance / 0.25;
+    const weightFrac = weightFractionOfDomain(args.blueprint, q.domainId);
+    const need = 0.4 * weightFrac + 0.6 * uncertainty;
+    if (need > bestNeed) {
+      bestNeed = need;
       best = q;
     }
   }

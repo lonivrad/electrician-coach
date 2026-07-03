@@ -9,12 +9,10 @@ import {
   applyResponse,
   diagnosticPolicy,
   diagnosticShouldStop,
-  domainMastery,
   emptyMastery,
-  selectNext,
+  selectNextAcrossSections,
   projectBoard,
   type ContentPack,
-  type MasteryState,
   type Question,
 } from "../engine/index.ts";
 
@@ -40,29 +38,18 @@ const pack: ContentPack = {
 };
 
 const POLICY = diagnosticPolicy(30);
-const sectionOf = (id: string) => pack.domains.find((d) => d.id === id)?.sectionId;
 
-function pickNext(m: MasteryState, used: Set<string>): Question | null {
-  const cands: Question[] = [];
-  for (const section of pack.blueprint.sections) {
-    const pool = pack.questions.filter(
-      (q) => q.modes.includes("diagnostic") && sectionOf(q.domainId) === section.id,
-    );
-    const c = selectNext({ section, pool, mastery: m, usedQuestionIds: used, policy: POLICY.selection });
-    if (c) cands.push(c);
-  }
-  if (!cands.length) return null;
-  let best = cands[0];
-  let need = -Infinity;
-  for (const q of cands) {
-    const u = domainMastery(m, q.domainId).variance / 0.25;
-    if (u > need) {
-      need = u;
-      best = q;
-    }
-  }
-  return best;
-}
+// Uses the SAME engine selection the app uses — no duplicated logic here.
+const pickNext = (mastery: Parameters<typeof applyResponse>[0], used: Set<string>) =>
+  selectNextAcrossSections({
+    blueprint: pack.blueprint,
+    domains: pack.domains,
+    questions: pack.questions,
+    mode: "diagnostic",
+    mastery,
+    usedQuestionIds: used,
+    policy: POLICY.selection,
+  });
 
 // Simulated skill: correct if the domain is one this candidate "knows".
 const strong = new Set(["nec.ampacity", "nec.theory-general", "nec.box-fill"]);
