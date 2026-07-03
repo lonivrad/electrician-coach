@@ -227,6 +227,25 @@ function transformerPrimaryOCP(i: Inputs): number {
   return optNum(i, "standardize", 1) ? nextStandardOCPD(v) : round(v, 2);
 }
 
+/** 450.3(B) primary-only OCP factor by primary FLC: ≥9 A → 125%, 2–9 A → 167%, <2 A → 300%. */
+function transformerPrimaryFactor(flc: number): number {
+  if (flc < 2) return 3.0;
+  if (flc < 9) return 1.67;
+  return 1.25;
+}
+
+/**
+ * Maximum primary-only OCP (Table 450.3(B)) with the factor auto-selected from the
+ * primary FLC. The 125% cell (≥9 A) rounds UP to a standard size (Note 1); the
+ * 167% / 300% cells (<9 A) are hard ceilings, returned as the maximum permitted value.
+ */
+function transformerPrimaryMaxOCP(i: Inputs): number {
+  const flc = transformerCurrent(i);
+  const factor = transformerPrimaryFactor(flc);
+  const max = flc * factor;
+  return factor === 1.25 ? nextStandardOCPD(max) : round(max, 2);
+}
+
 /** Voltage drop: 1φ = 2·K·I·D/cmil; 3φ = √3·K·I·D/cmil. */
 function voltageDrop(i: Inputs): number {
   const cmil = optStr(i, "size") ? need(CIRCULAR_MILS[str(i, "size")], "unknown size") : num(i, "cmil");
@@ -310,6 +329,7 @@ export const CALCULATORS: Record<string, (i: Inputs) => number> = {
   motorFeeder,
   transformerCurrent,
   transformerPrimaryOCP,
+  transformerPrimaryMaxOCP,
   voltageDrop,
   ocpdMixedLoad,
   nextStandardSize,
