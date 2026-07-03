@@ -1,0 +1,444 @@
+# WA Laws & Rules expansion — scenario-based, RCW 19.28 / WAC 296-46B.
+# ALL flagged needsReview: legal specifics (ratios, CE hours, penalties, scope
+# language) MUST be verified against the current RCW/WAC and PSI bulletin before
+# any item is promoted from draft to live.
+
+# ---- Licensing & certification ---------------------------------------------
+- id: q-wa-lic-003
+  domainId: wa.licensing
+  skillIds: [wa.lic.certificate-types]
+  type: single
+  difficulty: 2
+  stem: "In Washington, which credential does an individual need to perform general electrical work as an employee of an electrical contractor?"
+  options:
+    - { id: a, text: "A certificate of competency (e.g., 01 general journeyman) or registered trainee status", isCorrect: true }
+    - { id: b, text: "An electrical contractor license" }
+    - { id: c, text: "A city business license only" }
+    - { id: d, text: "No credential is required for employees" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Individuals hold a certificate of competency (or work as supervised trainees); the business holds the contractor license."
+    codePath: ["RCW 19.28.161"]
+    steps:
+      - { text: "Individuals doing electrical work must be certified or be supervised registered trainees.", ref: "RCW 19.28.161" }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm certificate-vs-license distinction in current RCW 19.28."
+
+- id: q-wa-lic-004
+  domainId: wa.licensing
+  skillIds: [wa.lic.supervision-ratio]
+  type: single
+  difficulty: 3
+  stem: "A contractor sends two workers to a commercial site: one holds an 01 general journeyman certificate, the other is a registered electrical trainee. Which statement best reflects Washington supervision rules?"
+  options:
+    - { id: a, text: "The trainee must work under the supervision of the certified electrician on the job", isCorrect: true }
+    - { id: b, text: "The trainee may work unsupervised if a permit is posted" }
+    - { id: c, text: "Two trainees may supervise each other" }
+    - { id: d, text: "Supervision is not required on commercial work" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Trainees work under the supervision of a certified electrician; specific ratios apply by rule."
+    codePath: ["RCW 19.28.161", "WAC 296-46B-942"]
+    steps:
+      - { text: "A registered trainee must be supervised by a certified electrician.", ref: "RCW 19.28.161" }
+      - { text: "Supervision ratios are set by rule.", ref: "WAC 296-46B-942" }
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm exact supervision ratio and WAC section."
+
+- id: q-wa-lic-005
+  domainId: wa.licensing
+  skillIds: [wa.lic.renewal-ce]
+  type: single
+  difficulty: 2
+  stem: "To keep a Washington certificate of competency current, a journeyman electrician must generally do what during the renewal cycle?"
+  options:
+    - { id: a, text: "Complete the required continuing education, including code-update hours", isCorrect: true }
+    - { id: b, text: "Retake the full certification exam" }
+    - { id: c, text: "Nothing — renewal is automatic" }
+    - { id: d, text: "Pay a penalty" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Renewal requires continuing education with a code-update component."
+    codePath: ["RCW 19.28.161", "WAC 296-46B-965"]
+    steps:
+      - { text: "Continuing education (including NEC updates) is required to renew.", ref: "WAC 296-46B-965" }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm CE hours and renewal cycle length."
+
+- id: q-wa-lic-006
+  domainId: wa.licensing
+  skillIds: [wa.lic.certificate-types]
+  type: single
+  difficulty: 4
+  stem: "A certified journeyman wants to begin contracting for electrical work directly under his own business name. Beyond his certificate of competency, what does Washington law require before he can contract for that work?"
+  options:
+    - { id: a, text: "A valid electrical contractor license (with a qualifying electrical administrator)", isCorrect: true }
+    - { id: b, text: "Nothing more — the journeyman certificate covers contracting" }
+    - { id: c, text: "Only a city business license" }
+    - { id: d, text: "A trainee certificate" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Contracting for electrical work requires a contractor license and a designated electrical administrator, separate from the individual certificate."
+    codePath: ["RCW 19.28.041", "RCW 19.28.161"]
+    steps:
+      - { text: "A business needs an electrical contractor license.", ref: "RCW 19.28.041" }
+      - { text: "The certificate of competency lets the individual perform work, not contract for it.", ref: "RCW 19.28.161" }
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm contractor-license + administrator requirements."
+
+# ---- Permits ---------------------------------------------------------------
+- id: q-wa-permit-002
+  domainId: wa.permits
+  skillIds: [wa.permit.responsibilities]
+  type: single
+  difficulty: 2
+  stem: "Who is responsible for making sure an electrical work permit is obtained for a job?"
+  options:
+    - { id: a, text: "The person or contractor performing the electrical work", isCorrect: true }
+    - { id: b, text: "The customer only" }
+    - { id: c, text: "The electrical inspector" }
+    - { id: d, text: "The electric utility" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "The party doing the work is responsible for the permit."
+    codePath: ["RCW 19.28.101"]
+    steps:
+      - { text: "The installer/contractor obtains the electrical work permit.", ref: "RCW 19.28.101" }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm permit responsibility language."
+
+- id: q-wa-permit-003
+  domainId: wa.permits
+  skillIds: [wa.permit.when-required]
+  type: single
+  difficulty: 3
+  stem: "A licensed contractor is hired to replace several receptacles and add a new branch circuit in a bedroom. Which is generally true about permits?"
+  options:
+    - { id: a, text: "An electrical work permit is required before the work is performed", isCorrect: true }
+    - { id: b, text: "No permit is needed because it is residential" }
+    - { id: c, text: "A permit is only required if the service panel is replaced" }
+    - { id: d, text: "The utility issues the permit" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Adding circuits/altering wiring generally requires a permit before work begins."
+    codePath: ["RCW 19.28.101", "WAC 296-46B-901"]
+    steps:
+      - { text: "New circuits and alterations require an electrical work permit.", ref: "RCW 19.28.101" }
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm permit thresholds/exemptions (e.g., like-for-like repairs)."
+
+- id: q-wa-permit-004
+  domainId: wa.permits
+  skillIds: [wa.permit.when-required]
+  type: single
+  difficulty: 2
+  stem: "In an area where L&I is the electrical inspection authority, where is an electrical work permit typically obtained?"
+  options:
+    - { id: a, text: "From L&I (Department of Labor & Industries)", isCorrect: true }
+    - { id: b, text: "From the fire department" }
+    - { id: c, text: "From the electric utility" }
+    - { id: d, text: "From the county assessor" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Where L&I is the AHJ, permits and inspections go through L&I."
+    codePath: ["WAC 296-46B-901"]
+    steps:
+      - { text: "L&I issues the permit where it is the inspection authority.", ref: "WAC 296-46B-901" }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: some cities/counties run their own programs — confirm AHJ handling."
+
+# ---- Inspections -----------------------------------------------------------
+- id: q-wa-insp-002
+  domainId: wa.inspections
+  skillIds: [wa.insp.corrections]
+  type: single
+  difficulty: 3
+  stem: "During a rough-in inspection, the inspector issues a correction notice for a violation. What is generally required next?"
+  options:
+    - { id: a, text: "Correct the noted items and request re-inspection before concealing the work", isCorrect: true }
+    - { id: b, text: "Cover the work and fix it on the next job" }
+    - { id: c, text: "Ignore it if the violation is minor" }
+    - { id: d, text: "Appeal to the electric utility" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Corrections must be made and re-inspected before the work is concealed."
+    codePath: ["WAC 296-46B-906"]
+    steps:
+      - { text: "Fix the violations and obtain approval before covering the work.", ref: "WAC 296-46B-906" }
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm correction/re-inspection procedure."
+
+- id: q-wa-insp-003
+  domainId: wa.inspections
+  skillIds: [wa.insp.process]
+  type: single
+  difficulty: 2
+  stem: "Before electrical rough-in wiring is concealed by drywall or insulation, what must generally happen?"
+  options:
+    - { id: a, text: "The wiring must be inspected (or inspection requested per the AHJ's process)", isCorrect: true }
+    - { id: b, text: "The utility must energize the service" }
+    - { id: c, text: "The permit must be renewed" }
+    - { id: d, text: "Nothing is required" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Concealed wiring must be inspected before it is covered."
+    codePath: ["RCW 19.28.161", "WAC 296-46B-906"]
+    steps:
+      - { text: "Request/obtain rough-in inspection before concealment.", ref: "WAC 296-46B-906" }
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm concealment/inspection sequence."
+
+- id: q-wa-insp-004
+  domainId: wa.inspections
+  skillIds: [wa.insp.corrections]
+  type: single
+  difficulty: 4
+  stem: "A contractor concealed rough-in wiring before it was inspected. Under Washington rules, what is the likely consequence?"
+  options:
+    - { id: a, text: "The work may have to be made accessible again for inspection, and a correction or penalty may apply", isCorrect: true }
+    - { id: b, text: "The inspection is automatically waived" }
+    - { id: c, text: "The utility inspects it instead" }
+    - { id: d, text: "Nothing, as long as the contractor believes it is safe" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Concealing before inspection can require uncovering the work and may draw a penalty."
+    codePath: ["WAC 296-46B-906", "RCW 19.28.271"]
+    steps:
+      - { text: "Uninspected concealed work may have to be exposed and is subject to enforcement.", ref: "WAC 296-46B-906" }
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm consequences for concealment before inspection."
+
+# ---- Administrative rules & scope of work ----------------------------------
+- id: q-wa-admin-003
+  domainId: wa.admin-rules
+  skillIds: [wa.admin.scope-of-work]
+  type: single
+  difficulty: 2
+  stem: "What is the general difference between an 01 General Journeyman and an 02 Residential (specialty) certificate?"
+  options:
+    - { id: a, text: "The 01 covers general electrical work; the 02 is limited to residential and similar occupancies", isCorrect: true }
+    - { id: b, text: "They are identical in scope" }
+    - { id: c, text: "The 02 is broader than the 01" }
+    - { id: d, text: "The 01 is limited to signs only" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "01 is broad/general; 02 and other specialties are scope-limited."
+    codePath: ["WAC 296-46B", "RCW 19.28.161"]
+    steps:
+      - { text: "Specialty certificates limit the work to a defined scope.", ref: "WAC 296-46B" }
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm 01/02 scope definitions in current WAC."
+
+- id: q-wa-admin-004
+  domainId: wa.admin-rules
+  skillIds: [wa.admin.scope-of-work]
+  type: single
+  difficulty: 3
+  stem: "A worker holds only a limited specialty electrical certificate (e.g., HVAC/refrigeration) and is asked to install general branch-circuit lighting wiring throughout a commercial building. Is that within scope?"
+  options:
+    - { id: a, text: "No — general branch-circuit wiring is outside a limited specialty scope and needs the appropriate general certification", isCorrect: true }
+    - { id: b, text: "Yes — any electrical certificate allows any electrical work" }
+    - { id: c, text: "Yes, as long as a permit is posted" }
+    - { id: d, text: "Only if performed on weekends" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Specialty scope does not authorize general electrical work."
+    codePath: ["WAC 296-46B", "RCW 19.28.161"]
+    steps:
+      - { text: "Work outside the specialty scope requires the matching certification.", ref: "WAC 296-46B" }
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm specialty scope boundaries."
+
+- id: q-wa-admin-005
+  domainId: wa.admin-rules
+  skillIds: [wa.admin.definitions]
+  type: single
+  difficulty: 2
+  stem: "Under RCW 19.28, 'electrical work' generally includes which of the following?"
+  options:
+    - { id: a, text: "Installing, altering, or repairing electrical wiring and equipment", isCorrect: true }
+    - { id: b, text: "Only new construction wiring" }
+    - { id: c, text: "Only utility-owned equipment" }
+    - { id: d, text: "Only low-voltage/limited-energy work" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Electrical work covers installation, alteration, and repair of wiring/equipment."
+    codePath: ["RCW 19.28.006"]
+    steps:
+      - { text: "The statutory definition is broad — install/alter/repair.", ref: "RCW 19.28.006" }
+  timeTargetSec: 60
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm the statutory definition wording."
+
+- id: q-wa-admin-006
+  domainId: wa.admin-rules
+  skillIds: [wa.admin.scope-of-work]
+  type: single
+  difficulty: 4
+  stem: "On a project, a general contractor's uncertified laborer performs branch-circuit wiring because 'the electrician was busy.' Under Washington law, which best describes this?"
+  options:
+    - { id: a, text: "A violation — electrical work must be done by certified individuals or supervised registered trainees", isCorrect: true }
+    - { id: b, text: "Acceptable if a journeyman signs off afterward" }
+    - { id: c, text: "Allowed for a general contractor's own employees" }
+    - { id: d, text: "Allowed under a homeowner permit" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Only certified electricians or supervised trainees may perform the work — after-the-fact sign-off doesn't cure it."
+    codePath: ["RCW 19.28.161", "RCW 19.28.271"]
+    steps:
+      - { text: "Uncertified, unsupervised electrical work violates the certification law.", ref: "RCW 19.28.161" }
+      - { text: "Violations are subject to L&I enforcement.", ref: "RCW 19.28.271" }
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm certification-requirement and enforcement citations."
+
+# ---- L&I enforcement & penalties -------------------------------------------
+- id: q-wa-enf-002
+  domainId: wa.enforcement
+  skillIds: [wa.enf.infractions]
+  type: single
+  difficulty: 2
+  stem: "Which agency issues civil penalties for electrical-law violations in Washington?"
+  options:
+    - { id: a, text: "L&I (Department of Labor & Industries)", isCorrect: true }
+    - { id: b, text: "The NFPA" }
+    - { id: c, text: "The local electric utility" }
+    - { id: d, text: "The county clerk" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "L&I administers and enforces electrical-law penalties."
+    codePath: ["RCW 19.28.271"]
+    steps:
+      - { text: "Civil penalties are issued by L&I.", ref: "RCW 19.28.271" }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm enforcing authority language."
+
+- id: q-wa-enf-003
+  domainId: wa.enforcement
+  skillIds: [wa.enf.penalties]
+  type: single
+  difficulty: 3
+  stem: "A contractor is found performing electrical work without required permits on several jobs. Under Washington law, what can L&I generally do?"
+  options:
+    - { id: a, text: "Issue citations/civil penalties and require permits and inspection of the work", isCorrect: true }
+    - { id: b, text: "Nothing — permits are optional" }
+    - { id: c, text: "Only issue one warning per year" }
+    - { id: d, text: "Void the customer's property deed" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Unpermitted work can draw citations/penalties plus a requirement to permit and inspect."
+    codePath: ["RCW 19.28.271", "RCW 19.28.101"]
+    steps:
+      - { text: "L&I can cite and penalize, and require the work be permitted/inspected.", ref: "RCW 19.28.271" }
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm penalty ranges and remedies."
+
+- id: q-wa-enf-004
+  domainId: wa.enforcement
+  skillIds: [wa.enf.penalties]
+  type: single
+  difficulty: 2
+  stem: "Working as an electrician without a valid certificate of competency in Washington can result in what?"
+  options:
+    - { id: a, text: "Civil penalties / infractions from L&I", isCorrect: true }
+    - { id: b, text: "A tax credit" }
+    - { id: c, text: "Automatic certification after 90 days" }
+    - { id: d, text: "No consequence" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Uncertified work is subject to civil penalties."
+    codePath: ["RCW 19.28.271", "RCW 19.28.161"]
+    steps:
+      - { text: "L&I penalizes uncertified electrical work.", ref: "RCW 19.28.271" }
+  timeTargetSec: 45
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm penalty classification/amounts."
+
+- id: q-wa-enf-005
+  domainId: wa.enforcement
+  skillIds: [wa.enf.infractions]
+  type: single
+  difficulty: 4
+  stem: "A contractor receives a citation and civil penalty from L&I for unpermitted work and disagrees with it. What is the general recourse?"
+  options:
+    - { id: a, text: "Request an appeal / administrative hearing within the required time period", isCorrect: true }
+    - { id: b, text: "Ignore the citation" }
+    - { id: c, text: "Sue the customer" }
+    - { id: d, text: "Report the inspector to the utility" }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Citations may be appealed through an administrative process within a set deadline."
+    codePath: ["RCW 19.28.131", "RCW 19.28.271"]
+    steps:
+      - { text: "There is an appeal/hearing process with a filing deadline.", ref: "RCW 19.28.131" }
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  needsReview: true
+  note: "NEEDS_VERIFICATION: confirm appeal process and deadlines."
