@@ -7,6 +7,7 @@ import {
   packErrors,
   selectBlueprintExam,
   boardPolicy,
+  orderedOptions,
   type ContentPack,
   type Question,
 } from "../../engine/index.ts";
@@ -103,6 +104,19 @@ describe("wa-electrician-01 pack", () => {
   it("wa.admin-rules gap is filled (every domain has ≥1 question)", () => {
     const withQuestions = new Set(pack.questions.map((q) => q.domainId));
     for (const d of pack.domains) expect(withQuestions.has(d.id)).toBe(true);
+  });
+
+  it("presented answer positions are well spread (no gameable A/B bias)", () => {
+    const singles = pack.questions.filter((q) => q.type === "single" && (q.options?.length ?? 0) >= 2);
+    const byPos = new Map<number, number>();
+    for (const q of singles) {
+      const idx = orderedOptions(q).findIndex((o) => o.isCorrect);
+      byPos.set(idx, (byPos.get(idx) ?? 0) + 1);
+    }
+    // All four positions must be used, and no single position may dominate.
+    for (const pos of [0, 1, 2, 3]) expect(byPos.get(pos) ?? 0, `position ${pos}`).toBeGreaterThan(0);
+    const maxShare = Math.max(...[...byPos.values()]) / singles.length;
+    expect(maxShare, `worst position holds ${(maxShare * 100).toFixed(0)}%`).toBeLessThanOrEqual(0.45);
   });
 
   it("a blueprint exam draws exactly the section total, proportioned by weight", () => {

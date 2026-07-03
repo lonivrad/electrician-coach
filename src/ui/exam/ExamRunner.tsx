@@ -1,4 +1,4 @@
-import { parseNumericInput, type Question, type Response, type Section } from "@engine/index.ts";
+import { orderedOptions, parseNumericInput, type Question, type Response, type Section } from "@engine/index.ts";
 import { TopBar } from "../components/TopBar.tsx";
 
 interface Props {
@@ -100,7 +100,7 @@ export function ExamRunner({
         </div>
       ) : (
         <div className="mb-6 flex flex-col gap-3">
-          {question.options?.map((o) => {
+          {orderedOptions(question).map((o, i) => {
             const selected = response?.kind === "single" && response.optionId === o.id;
             return (
               <button
@@ -113,7 +113,7 @@ export function ExamRunner({
                     : "border-line bg-panel text-slate-200 active:bg-panel2",
                 ].join(" ")}
               >
-                <span className="mr-2 font-mono text-slate-400">{o.id.toUpperCase()}.</span>
+                <span className="mr-2 font-mono text-slate-400">{"ABCD"[i] ?? "•"}.</span>
                 {o.text}
               </button>
             );
