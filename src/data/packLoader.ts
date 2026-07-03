@@ -11,6 +11,7 @@ import yaml from "js-yaml";
 import {
   validatePack,
   packErrors,
+  applyBalancedOptionOrders,
   type ContentPack,
   type Domain,
   type TrapDef,
@@ -48,6 +49,9 @@ export function loadWaElectrician01(): LoadedPack {
     const parsed = yaml.load(raw);
     if (Array.isArray(parsed)) questions.push(...(parsed as Question[]));
   }
+
+  // Spread each question's correct answer evenly across A/B/C/D (see optionOrder).
+  applyBalancedOptionOrders(questions);
 
   const pack: ContentPack = { ...manifest, domains, traps, blueprint, questions };
 

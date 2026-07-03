@@ -7,7 +7,7 @@ import {
   packErrors,
   selectBlueprintExam,
   boardPolicy,
-  orderedOptions,
+  balancedOptionOrders,
   type ContentPack,
   type Question,
 } from "../../engine/index.ts";
@@ -106,17 +106,23 @@ describe("wa-electrician-01 pack", () => {
     for (const d of pack.domains) expect(withQuestions.has(d.id)).toBe(true);
   });
 
-  it("presented answer positions are well spread (no gameable A/B bias)", () => {
-    const singles = pack.questions.filter((q) => q.type === "single" && (q.options?.length ?? 0) >= 2);
+  it("presented answer positions are balanced (no gameable A/B bias)", () => {
+    const orders = balancedOptionOrders(pack.questions);
     const byPos = new Map<number, number>();
-    for (const q of singles) {
-      const idx = orderedOptions(q).findIndex((o) => o.isCorrect);
-      byPos.set(idx, (byPos.get(idx) ?? 0) + 1);
+    let n = 0;
+    for (const q of pack.questions) {
+      const out = orders.get(q.id);
+      if (!out) continue;
+      byPos.set(
+        out.findIndex((o) => o.isCorrect),
+        (byPos.get(out.findIndex((o) => o.isCorrect)) ?? 0) + 1,
+      );
+      n++;
     }
-    // All four positions must be used, and no single position may dominate.
+    // Round-robin placement → all four positions used and none may dominate.
     for (const pos of [0, 1, 2, 3]) expect(byPos.get(pos) ?? 0, `position ${pos}`).toBeGreaterThan(0);
-    const maxShare = Math.max(...[...byPos.values()]) / singles.length;
-    expect(maxShare, `worst position holds ${(maxShare * 100).toFixed(0)}%`).toBeLessThanOrEqual(0.45);
+    const maxShare = Math.max(...[...byPos.values()]) / n;
+    expect(maxShare, `worst position holds ${(maxShare * 100).toFixed(0)}%`).toBeLessThanOrEqual(0.3);
   });
 
   it("a blueprint exam draws exactly the section total, proportioned by weight", () => {

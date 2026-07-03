@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { orderedOptions, parseNumericInput, type Question, type Response, type Section } from "@engine/index.ts";
+import { parseNumericInput, type Question, type Response, type Section } from "@engine/index.ts";
 import { TopBar } from "../components/TopBar.tsx";
 
 interface Props {
@@ -90,7 +90,7 @@ export function QuestionPlayer({
         </div>
       ) : (
         <div className="mb-6 flex flex-col gap-3">
-          {orderedOptions(question).map((o, i) => {
+          {question.options?.map((o, i) => {
             const selected = choice === o.id;
             return (
               <button
