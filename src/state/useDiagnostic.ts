@@ -220,6 +220,10 @@ export function useDiagnostic() {
   const explanationItem = viewIndex != null ? history[viewIndex] : null;
   const explanationIsLatest =
     viewIndex != null && viewIndex === history.length - 1 && !liveQuestionPending.current;
+  // Position within answered history, so the UI can show "2 of 5" while paging
+  // back. Reviewing is read-only: the explanation screen exposes no submit path,
+  // so stepping through past items never re-grades or changes mastery.
+  const explanationPosition = viewIndex != null ? { index: viewIndex, total: history.length } : null;
 
   return {
     pack,
@@ -242,6 +246,7 @@ export function useDiagnostic() {
     canReview: history.length > 0,
     explanationItem,
     explanationIsLatest,
+    explanationPosition,
     canPreviousExplanation: viewIndex != null && viewIndex > 0,
     // Live mastery for results (working copy reflects this run immediately).
     liveMastery: runMastery.current,

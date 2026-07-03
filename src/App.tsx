@@ -34,7 +34,11 @@ export function App() {
           correct={d.explanationItem.correct}
           response={d.explanationItem.response}
           progressLabel={
-            d.explanationIsLatest ? `Question ${d.answeredThisRun} of ${d.plannedItems}` : "Looking back"
+            d.explanationIsLatest
+              ? `Question ${d.answeredThisRun} of ${d.plannedItems}`
+              : d.explanationPosition
+                ? `Reviewing question ${d.explanationPosition.index + 1} of ${d.explanationPosition.total}`
+                : "Looking back"
           }
           onContinue={d.onContinue}
           onPrevious={d.onPreviousQuestion}
