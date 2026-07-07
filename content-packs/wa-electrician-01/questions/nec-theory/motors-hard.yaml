@@ -9,7 +9,7 @@
   commonMistake: "If you got 16, you sized from the 12.8 A nameplate FLA. 430.6(A)(1) requires the Table 430.250 FLC (14 A) for conductor sizing; the nameplate is only for the overload device."
   skillIds: [nec.motor.flc-table, nec.motor.conductor-125]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A continuous-duty 10 HP, 460 V, three-phase motor arrives with a nameplate reading 12.8 A FLA, service factor 1.15. What minimum branch-circuit conductor ampacity (A) is required?"
   answer: { kind: numeric, value: 17.5, unit: "A", tolerance: 0.1 }
   solution:
@@ -32,7 +32,7 @@
   commonMistake: "If you got 122.5, you used the 98 A nameplate. If you got 104, you forgot the 125% of 430.22. Table FLC (104 A) × 1.25 is the required ampacity."
   skillIds: [nec.motor.flc-table, nec.motor.conductor-125]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 40 HP, 230 V, three-phase continuous-duty motor has a nameplate FLA of 98 A. The installer's clamp meter reads 91 A under load. What minimum branch-circuit conductor ampacity (A) does 430.22 require?"
   answer: { kind: numeric, value: 130, unit: "A", tolerance: 0.5 }
   solution:
@@ -56,7 +56,7 @@
   commonMistake: "If you got 85, you took 125% of the 68 A table FLC. Overload protection is the one motor calculation that uses the NAMEPLATE FLA (430.6(A)(2) + 430.32)."
   skillIds: [nec.motor.overload, nec.motor.flc-table]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 25 HP, 230 V, three-phase motor has a nameplate FLA of 62 A and a service factor of 1.15 (Table 430.250 lists 68 A for this motor). What maximum rating (A) may a separate overload device be selected at per 430.32(A)(1)?"
   answer: { kind: numeric, value: 77.5, unit: "A", tolerance: 0.5 }
   solution:
@@ -79,7 +79,7 @@
   commonMistake: "If you got 33.75, you used 125%. A service factor below 1.15 with a temperature rise above 40°C puts the motor in the 'all other motors' 115% row of 430.32(A)(1)."
   skillIds: [nec.motor.overload]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A continuous-duty motor nameplate reads: FLA 27 A, service factor 1.0, temperature rise 50°C. Per 430.32(A)(1), what is the maximum selection (A) for its separate overload device?"
   answer: { kind: numeric, value: 31.05, unit: "A", tolerance: 0.1 }
   solution:
@@ -101,7 +101,7 @@
   commonMistake: "If you got 33.75, you took 125% of the 27 A table FLC — two mistakes stacked: wrong current source AND wrong percentage. Nameplate 25 A × 115% is correct here."
   skillIds: [nec.motor.overload, nec.motor.flc-table]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 20 HP, 460 V, three-phase motor (Table 430.250: 27 A) carries a nameplate of 25 A FLA, service factor 1.0, temperature rise 55°C. What is the maximum separate overload device selection (A)?"
   answer: { kind: numeric, value: 28.75, unit: "A", tolerance: 0.1 }
   solution:
@@ -124,7 +124,7 @@
   commonMistake: "If you got 30, you used the 24 A table FLC from Table 430.248. The table value drives conductors and the branch OCPD — the overload device tracks the 22 A nameplate."
   skillIds: [nec.motor.overload]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 2 HP, 115 V, single-phase motor (Table 430.248: 24 A) has a nameplate FLA of 22 A and a marked service factor of 1.15. Its running overload protection is a separate overload relay. What maximum relay selection (A) does 430.32(A)(1) permit?"
   answer: { kind: numeric, value: 27.5, unit: "A", tolerance: 0.1 }
   solution:
@@ -147,7 +147,7 @@
   commonMistake: "If you got 100, you rounded 105 A down; Table 430.52 note/exception allows the next standard size UP. If you got 52.5 or 60, you applied the 125% conductor factor instead of the 250% breaker factor."
   skillIds: [nec.motor.branch-protection, nec.motor.flc-table]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 15 HP, 230 V, three-phase motor (nameplate 38 A) is protected by an inverse-time circuit breaker sized at the Table 430.52 maximum of 250%, using the next standard size up where the calculation does not match a standard rating. What breaker rating (A) results?"
   answer: { kind: numeric, value: 110, unit: "A", tolerance: 0 }
   solution:
@@ -170,7 +170,7 @@
   commonMistake: "If you got 100, you used the 250% inverse-time-breaker column for a fuse. Dual-element (time-delay) fuses use 175% in Table 430.52."
   skillIds: [nec.motor.branch-protection]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 30 HP, 460 V, three-phase motor is protected by dual-element time-delay fuses sized at the Table 430.52 maximum percentage (next standard size up permitted). What fuse rating (A) results?"
   answer: { kind: numeric, value: 70, unit: "A", tolerance: 0 }
   solution:
@@ -193,7 +193,7 @@
   commonMistake: "If you got 90, you looked up the 230 V column (28 A) instead of 115 V. If you got 150, you rounded 168 down instead of up to the next standard size."
   skillIds: [nec.motor.branch-protection, nec.motor.flc-table]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 5 HP, 115 V, single-phase motor is protected by nontime-delay fuses at the Table 430.52 maximum of 300%, next standard size up permitted. What fuse rating (A) results?"
   answer: { kind: numeric, value: 175, unit: "A", tolerance: 0 }
   solution:
@@ -216,7 +216,7 @@
   commonMistake: "If you got 25, you rounded 27.5 A down. 430.52(C)(1) Exception 1 permits the NEXT standard size up when the computed value doesn't correspond to a standard rating."
   skillIds: [nec.motor.branch-protection, nec.motor.flc-table]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 7.5 HP, 460 V, three-phase motor (nameplate 10.4 A) gets an inverse-time breaker at the Table 430.52 maximum of 250%, next standard size up permitted. What breaker rating (A) results?"
   answer: { kind: numeric, value: 30, unit: "A", tolerance: 0 }
   solution:
@@ -239,7 +239,7 @@
   commonMistake: "If you got 175, you either rounded down from 195 or used 250% (162.5 → 175). Nontime-delay fuses use 300% and round UP: 195 → 200 A."
   skillIds: [nec.motor.branch-protection, nec.motor.flc-table]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 50 HP, 460 V, three-phase motor is protected with nontime-delay fuses at the Table 430.52 maximum of 300%, next standard size up permitted. What fuse rating (A) results?"
   answer: { kind: numeric, value: 200, unit: "A", tolerance: 0 }
   solution:
@@ -262,7 +262,7 @@
   commonMistake: "If you got 70, you used the 250% breaker column; if you got 90, the 300% nontime-delay column; if you got 35, you applied the 430.22 conductor 125% to the OCPD."
   skillIds: [nec.motor.branch-protection]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 10 HP, 230 V, three-phase motor (Table 430.250: 28 A) is to be protected by dual-element time-delay fuses at the Table 430.52 maximum of 175%, next standard size up permitted. What fuse rating (A) results?"
   answer: { kind: numeric, value: 50, unit: "A", tolerance: 0 }
   solution:
@@ -285,7 +285,7 @@
   commonMistake: "If you got 125, you took 125% of ALL the motors (100 × 1.25). Only the LARGEST motor's FLC gets the 125%; the others add at 100%."
   skillIds: [nec.motor.conductor-125, nec.motor.flc-table]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A feeder supplies three 460 V, three-phase motors: 40 HP, 25 HP, and 10 HP (Table 430.250: 52 A, 34 A, and 14 A). Per 430.24, what minimum feeder conductor ampacity (A) is required?"
   answer: { kind: numeric, value: 113, unit: "A", tolerance: 0.5 }
   solution:
@@ -307,7 +307,7 @@
   commonMistake: "If you got 88.5, you built the feeder from the nameplates (50 × 1.25 + 26). 430.6(A)(1) requires the table FLC values for feeder conductor sizing too."
   skillIds: [nec.motor.conductor-125, nec.motor.flc-table]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A feeder supplies two 230 V, three-phase motors: a 20 HP unit (nameplate 50 A; Table 430.250: 54 A) and a 10 HP unit (nameplate 26 A; Table 430.250: 28 A). Per 430.24, what minimum feeder conductor ampacity (A) is required?"
   answer: { kind: numeric, value: 95.5, unit: "A", tolerance: 0.5 }
   solution:
@@ -330,7 +330,7 @@
   commonMistake: "If you got 83.5, you gave the 125% to the 7.5 HP motor because it has more horsepower. 'Largest' in 430.24 means the largest FLC — here the 5 HP single-phase motor at 56 A."
   skillIds: [nec.motor.conductor-125, nec.motor.flc-table]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A feeder supplies a 7.5 HP, 230 V, three-phase motor (Table 430.250: 22 A) and a 5 HP, 115 V, single-phase motor (Table 430.248: 56 A). Per 430.24, what minimum feeder conductor ampacity (A) is required?"
   answer: { kind: numeric, value: 92, unit: "A", tolerance: 0.5 }
   solution:
@@ -353,7 +353,7 @@
   commonMistake: "If you got 115, you applied 125% to every motor (42 + 28 + 22 = 92 × 1.25). If you got 92, you forgot the 125% entirely. Only the 42 A motor is multiplied."
   skillIds: [nec.motor.conductor-125, nec.motor.flc-table]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "Three 230 V, three-phase motors share one feeder: 15 HP, 10 HP, and 7.5 HP (Table 430.250: 42 A, 28 A, and 22 A). What minimum feeder conductor ampacity (A) does 430.24 require?"
   answer: { kind: numeric, value: 102.5, unit: "A", tolerance: 0.5 }
   solution:
@@ -376,7 +376,7 @@
   commonMistake: "If you got 9.6, you read the three-phase table (430.250). If you got 34, you read the 115 V column. Single-phase 230 V lives in Table 430.248."
   skillIds: [nec.motor.flc-table]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 3 HP, 230 V, SINGLE-phase motor is being wired next to a bank of three-phase machines. What full-load current (A) is used for its conductor and branch-OCPD calculations?"
   answer: { kind: numeric, value: 17, unit: "A", tolerance: 0 }
   solution:
@@ -398,7 +398,7 @@
   commonMistake: "If you got 80, you read the 230 V column of Table 430.250. At double the voltage the table current is half."
   skillIds: [nec.motor.flc-table]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 30 HP, three-phase motor is re-connected from 230 V to a 460 V supply. After the change, what table full-load current (A) is used for its calculations?"
   answer: { kind: numeric, value: 40, unit: "A", tolerance: 0 }
   solution:
@@ -419,7 +419,7 @@
   domainId: nec.motors
   skillIds: [nec.motor.flc-table, nec.motor.overload]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: "A three-phase motor's nameplate reads 29 A FLA; Table 430.250 lists 34 A for its HP and voltage. Which pairing of current sources is correct for the design?"
   options:
     - { id: a, text: "Conductors and branch OCPD from 34 A (table); overload device from 29 A (nameplate)", isCorrect: true }
@@ -444,7 +444,7 @@
   domainId: nec.motors
   skillIds: [nec.motor.overload]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: "Four continuous-duty motors are being fitted with separate overload relays per 430.32(A)(1). Which motor must be limited to 115% of its nameplate FLA rather than 125%?"
   options:
     - { id: a, text: "Nameplate: SF 1.15, temperature rise 50°C", distractorRationale: "The service factor of 1.15 alone qualifies it for 125% — only one of the two conditions has to be met." }
@@ -469,7 +469,7 @@
   domainId: nec.motors
   skillIds: [nec.motor.branch-protection, nec.motor.conductor-125]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: "An inspector notes a 10 HP, 230 V, three-phase motor (Table FLC 28 A) wired with conductors rated 40 A but protected by a 70 A inverse-time breaker. Why can this installation be code-compliant?"
   options:
     - { id: a, text: "430.52 sizes the breaker for short-circuit/ground-fault only (up to 250% of FLC); the separate overload device per 430.32 protects the conductors against overload", isCorrect: true }
@@ -495,7 +495,7 @@
   domainId: nec.motors
   skillIds: [nec.motor.flc-table, nec.motor.conductor-125, nec.motor.branch-protection, nec.motor.overload]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: "Which sequence correctly orders a single continuous-duty motor branch-circuit design from start to finish?"
   options:
     - { id: a, text: "Table FLC (430.6/430.250) → conductors at 125% of FLC (430.22) → branch SC/GF device from the 430.52 percentage of FLC → overload from nameplate FLA (430.32)", isCorrect: true }
@@ -522,7 +522,7 @@
   domainId: nec.motors
   skillIds: [nec.motor.flc-table]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: "During commissioning of a 10 HP, 230 V, three-phase motor, a clamp meter reads 24 A, the nameplate reads 26 A FLA, and Table 430.250 lists 28 A. Which value sizes the branch-circuit conductors?"
   options:
     - { id: a, text: "24 A — it reflects the motor's real operating load", distractorRationale: "A field measurement varies with load and is never a code basis for conductor sizing (meter reading is not ampacity)." }

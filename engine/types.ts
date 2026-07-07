@@ -73,7 +73,7 @@ export interface Question {
   domainId: DomainId;
   skillIds: SkillId[];
   type: QuestionType;
-  /** Authored difficulty on a 1..5 ladder (see content strategy §6.3). */
+  /** Authored difficulty on a 1..10 ladder (see content strategy §6.3). */
   difficulty: number;
   stem: string;
   options?: Option[];

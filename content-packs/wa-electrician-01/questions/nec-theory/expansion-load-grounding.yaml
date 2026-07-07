@@ -72,7 +72,7 @@
   commonMistake: "If you got 16, you applied 40% to the whole load — the first 10 kVA is taken at 100%."
   skillIds: [nec.load.dwelling-optional]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "Using the optional calculation method for a dwelling (220.82), the total connected load other than heating/air-conditioning is 40 kVA. Applying the optional demand (first 10 kVA at 100%, remainder at 40%), what is the demand (kVA) for this portion?"
   answer: { kind: numeric, value: 22, unit: "kVA", tolerance: 0 }
   solution:
@@ -168,7 +168,7 @@
   commonMistake: "If you got a factor below 1, you divided the smaller area by the larger — divide the new area by the original (26,240 ÷ 16,510)."
   skillIds: [nec.gnd.egc-sizing]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "A 40 A branch circuit normally uses 8 AWG (16,510 cmil) ungrounded conductors with a 10 AWG copper EGC. The ungrounded conductors are increased to 6 AWG (26,240 cmil) for voltage drop. Per 250.122(B), by what factor must the EGC circular-mil area be increased? (round to 2 decimals)"
   answer: { kind: numeric, value: 1.59, unit: "ratio", tolerance: 0.05 }
   solution:

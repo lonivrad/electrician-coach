@@ -93,7 +93,7 @@
   commonMistake: "The clamp and device allowances use the LARGEST conductor (12 AWG here), while the EGC allowance uses the largest EGC."
   skillIds: [nec.box.largest-conductor]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "A box has four 14 AWG and four 12 AWG conductors, internal clamps, one device on a yoke, and 14 AWG equipment grounding conductors. What total box-fill volume (in³) is required?"
   answer: { kind: numeric, value: 25.75, unit: "in³", tolerance: 0.01 }
   solution:

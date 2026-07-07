@@ -53,7 +53,7 @@ export function boardPolicy(): ModePolicy {
 export function overtrainPolicy(paceFactor = 0.75): ModePolicy {
   return {
     mode: "overtrain",
-    selection: { difficultyBias: 1, uncertaintyWeight: 0.35 },
+    selection: { difficultyBias: 2, uncertaintyWeight: 0.35 },
     stop: { maxItems: 40 },
     timing: (s) => {
       const realPace = s.totalTimeSec / s.totalQuestions;

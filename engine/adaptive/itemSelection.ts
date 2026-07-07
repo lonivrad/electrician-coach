@@ -44,10 +44,10 @@ function byIdHash(id: string): number {
   return (h >>> 0) / 0xffffffff;
 }
 
-/** Target difficulty (1..5) for a domain given its current mastery. */
+/** Target difficulty (1..10) for a domain given its current mastery. */
 export function targetDifficulty(mastery: number, bias: number): number {
-  const base = 1 + mastery * 4; // 1 at 0 mastery, 5 at full mastery
-  return clamp(base + bias, 1, 5);
+  const base = 1 + mastery * 9; // 1 at 0 mastery, 10 at full mastery
+  return clamp(base + bias, 1, 10);
 }
 
 function clamp(x: number, lo: number, hi: number): number {
@@ -90,7 +90,7 @@ export function selectNext(args: {
     const dScore = domainScore.get(q.domainId) ?? 0;
     const m = domainMastery(mastery, q.domainId, prior).mastery;
     const wantDiff = targetDifficulty(m, policy.difficultyBias);
-    const diffFit = 1 - Math.abs(q.difficulty - wantDiff) / 4; // 0..1
+    const diffFit = 1 - Math.abs(q.difficulty - wantDiff) / 9; // 0..1
     const key = dScore * 2 + diffFit + byIdHash(q.id) * 0.05;
     if (key > bestKey) {
       bestKey = key;

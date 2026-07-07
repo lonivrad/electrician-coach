@@ -91,14 +91,16 @@ describe("wa-electrician-01 pack", () => {
     }
   });
 
-  it("NEC & Theory bank has questions at every difficulty and real L3/L4 depth", () => {
+  it("NEC & Theory bank spans the easy, mid, and hard difficulty bands", () => {
     const sectionOf = (id: string) => pack.domains.find((d) => d.id === id)?.sectionId;
     const nec = pack.questions.filter((q) => sectionOf(q.domainId) === "nec-theory");
-    const dist = { 1: 0, 2: 0, 3: 0, 4: 0 } as Record<number, number>;
-    for (const q of nec) dist[q.difficulty]++;
-    for (const level of [1, 2, 3, 4]) expect(dist[level], `L${level}`).toBeGreaterThan(0);
+    const easy = nec.filter((q) => q.difficulty <= 3).length;
+    const mid = nec.filter((q) => q.difficulty >= 4 && q.difficulty <= 6).length;
+    const hard = nec.filter((q) => q.difficulty >= 7).length;
+    expect(easy, "easy band (1-3)").toBeGreaterThan(0);
+    expect(mid, "mid band (4-6)").toBeGreaterThan(0);
     // Enough hard items to fill Hard Mode from a meaningful pool.
-    expect(dist[3] + dist[4]).toBeGreaterThanOrEqual(20);
+    expect(hard, "hard band (7-10)").toBeGreaterThanOrEqual(20);
   });
 
   it("wa.admin-rules gap is filled (every domain has ≥1 question)", () => {

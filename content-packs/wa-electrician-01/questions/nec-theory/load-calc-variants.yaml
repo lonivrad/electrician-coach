@@ -261,7 +261,7 @@
   commonMistake: "If you took 40% of the whole load, the first 10 kVA is at 100%."
   skillIds: [nec.load.dwelling-optional]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "Optional method: a dwelling's total load (other than HVAC) is 45 kVA. Applying first 10 kVA at 100% and remainder at 40%, what is the demand (kVA)?"
   answer: { kind: numeric, value: 24, unit: "kVA", tolerance: 0 }
   solution:
@@ -283,7 +283,7 @@
   commonMistake: "If you took 40% of the whole load, the first 10 kVA is at 100%."
   skillIds: [nec.load.dwelling-optional]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "Optional method: a dwelling's total load (other than HVAC) is 50 kVA. Applying first 10 kVA at 100% and remainder at 40%, what is the demand (kVA)?"
   answer: { kind: numeric, value: 26, unit: "kVA", tolerance: 0 }
   solution:
@@ -448,7 +448,7 @@
   commonMistake: "If you were off, add all the loads FIRST, then apply the demand factors."
   skillIds: [nec.load.demand-factor]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "A dwelling has 9,000 VA general lighting, two 1,500 VA small-appliance circuits, and one 1,500 VA laundry circuit. Applying the standard demand factors, what is the demand subtotal (VA)?"
   answer: { kind: numeric, value: 6675, unit: "VA", tolerance: 0 }
   solution:

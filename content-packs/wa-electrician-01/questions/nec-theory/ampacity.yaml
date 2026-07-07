@@ -97,7 +97,7 @@
   domainId: nec.ampacity
   skillIds: [nec.ampacity.termination-limit]
   type: single
-  difficulty: 4
+  difficulty: 5
   stem: "A 3 AWG THHN copper conductor (90°C insulation) terminates on equipment rated 75°C, ambient normal, not more than 3 conductors. The 90°C column shows 115 A and the 75°C column shows 100 A. What ampacity governs for sizing overcurrent protection?"
   options:
     - { id: a, text: "115 A", distractorRationale: "The 90°C column is only for derating math, never as the final rated ampacity at a 75°C termination." }
@@ -122,7 +122,7 @@
   domainId: nec.ampacity
   skillIds: [nec.ampacity.table-lookup]
   type: single
-  difficulty: 4
+  difficulty: 5
   stem: "In the field, a clamp meter reads 48 A on a 6 AWG THHN copper feeder with 75°C terminations. What is the conductor's ampacity?"
   options:
     - { id: a, text: "48 A", distractorRationale: "That is the measured current flowing — not the conductor's rated ampacity." }

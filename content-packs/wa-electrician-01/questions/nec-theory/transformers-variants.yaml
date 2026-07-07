@@ -189,7 +189,7 @@
   commonMistake: "112.8 A rounds up to the next standard size, not down."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "A 75 kVA, three-phase, 480 V transformer has primary-only protection. Per Table 450.3(B) at 125%, what standard OCPD rating (A) is used?"
   answer: { kind: numeric, value: 125, unit: "A", tolerance: 0 }
   solution:

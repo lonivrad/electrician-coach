@@ -445,7 +445,7 @@
   commonMistake: "Only the LARGEST motor gets the 125% factor; the others are added at 100%."
   skillIds: [nec.motor.conductor-125]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "A feeder supplies three three-phase motors with table FLCs of 54 A, 34 A, and 28 A. Per 430.24 (125% of the largest + the others), what minimum feeder ampacity (A) is required?"
   answer: { kind: numeric, value: 129.5, unit: "A", tolerance: 0.5 }
   solution:

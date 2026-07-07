@@ -99,9 +99,10 @@ export function useExam(mode: ExamMode) {
   const [report, setReport] = useState<ExamReport | null>(null);
   const deadlineRef = useRef<number | null>(null);
 
-  // Per-mode run configuration. Content-aware for Hard Mode: it weights toward
-  // L3/L4 where a section has them, but falls back to L2+ so a section with no
-  // hard questions yet (e.g. the WA-law bank) still offers its toughest items.
+  // Per-mode run configuration. Content-aware for Hard Mode: it draws from the
+  // hard band (difficulty ≥7) where a section has one, but falls back to L2+ so a
+  // section with no hard questions yet (e.g. the WA-law bank) still offers its
+  // toughest items.
   const buildConfig = useCallback(
     (s: Section): RunConfig => {
       const realPace = s.totalTimeSec / s.totalQuestions; // 180s NEC, ~212s law
@@ -119,9 +120,9 @@ export function useExam(mode: ExamMode) {
         (q) =>
           q.modes.includes("overtrain") &&
           sectionIdOfDomain(pack.domains, q.domainId) === s.id &&
-          q.difficulty >= 3,
+          q.difficulty >= 7,
       ).length;
-      const minDifficulty = hardCount >= 6 ? 3 : 2;
+      const minDifficulty = hardCount >= 6 ? 7 : 2;
       return {
         eligibility: "overtrain",
         policy: overtrainPolicy().selection,
