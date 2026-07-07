@@ -1,0 +1,838 @@
+# Electrical theory — BRUTAL tier (difficulty 9–10). Multi-stage chains: kW+pf+efficiency → 3φ VD,
+# feeder+branch drop budgets, power triangles, delta/wye conversions, series-parallel networks. All DRAFT; K=12.9 Cu / 21.2 Al.
+
+# ---- VD chains: derive line current from kW + pf + efficiency first ----------
+- id: q-thry-x001
+  recompute: { calc: voltageDrop, inputs: { phase: 3, k: 12.9, current: 47.17, oneWayFt: 280, size: "2/0" } }
+  domainId: nec.theory-general
+  commonMistake: "If you got 1.70 V, you used I = 30,000/(√3·480) = 36.1 A — the conductors carry the INPUT apparent-power current, so divide by efficiency AND power factor first."
+  skillIds: [nec.theory.three-phase, nec.theory.power]
+  type: numeric
+  difficulty: 10
+  stem: >-
+    A three-phase 480 V machine delivers 30 kW of mechanical OUTPUT at 90%
+    efficiency and 0.85 power factor. Its nameplate also lists 52 A FLA and a
+    277 V control circuit, and the room runs at 38°C. The feeder is 2/0 AWG
+    copper (133,100 cmil; 3/0 would be 167,800 cmil), 280 ft one-way. Using
+    K = 12.9, estimate the voltage drop (V) at the machine.
+  answer: { kind: numeric, value: 2.22, unit: "V", tolerance: 0.15 }
+  solution:
+    keyIdea: "Chain output kW → input kW via efficiency → line current via √3·V·pf, THEN the 3φ VD formula. Nameplate FLA, control voltage, and ambient are noise here."
+    codePath: ["Pin = Pout/eff", "I = Pin/(√3·V·pf)", "VD = √3·K·I·D/cmil", "Ch.9 Table 8 (2/0 = 133,100 cmil)"]
+    steps:
+      - { text: "Input real power: 30,000 ÷ 0.90 = 33,333 W." }
+      - { text: "Line current: 33,333 ÷ (1.732 × 480 × 0.85) = 33,333 ÷ 706.7 = 47.17 A." }
+      - { text: "VD = 1.732 × 12.9 × 47.17 × 280 ÷ 133,100 = 295,104 ÷ 133,100 = 2.22 V." }
+      - { text: "The 52 A nameplate FLA and 38°C ambient affect ampacity questions, not this VD estimate." }
+  trapIds: [unit-or-phase-confusion, meter-reading-vs-ampacity]
+  timeTargetSec: 300
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x002
+  recompute: { calc: voltageDrop, inputs: { phase: 3, k: 21.2, current: 55.51, oneWayFt: 190, size: "1/0" } }
+  domainId: nec.theory-general
+  commonMistake: "Two stacked traps: divide 12 kW by BOTH 0.80 efficiency and 0.75 pf to get the 55.5 A line current, and use the aluminum K of 21.2 — the copper 12.9 understates the drop by 40%."
+  skillIds: [nec.theory.three-phase, nec.theory.power]
+  type: numeric
+  difficulty: 10
+  stem: >-
+    An older three-phase 208 V blower delivers 12 kW of shaft OUTPUT at only 80%
+    efficiency and 0.75 power factor. It is fed with 1/0 AWG ALUMINUM (105,600
+    cmil), 190 ft one-way, in a conduit that also carries a spare 12 AWG copper
+    pair. Using K = 21.2 for aluminum, estimate the voltage drop (V).
+  answer: { kind: numeric, value: 3.67, unit: "V", tolerance: 0.15 }
+  solution:
+    keyIdea: "Output → input watts via efficiency, watts → line amps via √3·V·pf, then the 3φ VD formula with the ALUMINUM K."
+    codePath: ["Pin = Pout/eff", "I = Pin/(√3·V·pf)", "VD = √3·K·I·D/cmil (K_al ≈ 21.2)", "Ch.9 Table 8 (1/0 = 105,600 cmil)"]
+    steps:
+      - { text: "Input power: 12,000 ÷ 0.80 = 15,000 W." }
+      - { text: "Line current: 15,000 ÷ (1.732 × 208 × 0.75) = 15,000 ÷ 270.2 = 55.51 A." }
+      - { text: "VD = 1.732 × 21.2 × 55.51 × 190 ÷ 105,600 = 387,277 ÷ 105,600 = 3.67 V." }
+      - { text: "The spare 12 AWG pair is irrelevant to this calculation." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 300
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x009
+  recompute: { calc: voltageDrop, inputs: { phase: 1, k: 12.9, current: 22.86, oneWayFt: 130, size: "10" } }
+  domainId: nec.theory-general
+  commonMistake: "If you got 5.02 V, you used I = 3,730/240 = 15.5 A — the OUTPUT watts must be divided by efficiency (0.85) and pf (0.80) to get the 22.9 A the conductors actually carry."
+  skillIds: [nec.theory.power, nec.theory.ohms-law]
+  type: numeric
+  difficulty: 9
+  stem: >-
+    A single-phase 240 V motor delivers 5 hp (3,730 W) at the shaft with 85%
+    efficiency and 0.80 power factor. Its nameplate lists 24 A FLA, and the
+    Table 430.248 value for a 5 hp, 230 V motor is 28 A. The branch circuit is
+    10 AWG copper (10,380 cmil), 130 ft one-way. Using K = 12.9 and the
+    CALCULATED operating current, estimate the voltage drop (V).
+  answer: { kind: numeric, value: 7.39, unit: "V", tolerance: 0.15 }
+  solution:
+    keyIdea: "Output → input via efficiency, input watts → amps via V·pf; then VD = 2·K·I·D/cmil. Nameplate and table FLC are decoys — the stem asks for the calculated current."
+    codePath: ["Pin = Pout/eff", "I = Pin/(V·pf)", "VD = 2·K·I·D/cmil", "Ch.9 Table 8 (10 AWG = 10,380 cmil)"]
+    steps:
+      - { text: "Input power: 3,730 ÷ 0.85 = 4,388 W." }
+      - { text: "Line current: 4,388 ÷ (240 × 0.80) = 4,388 ÷ 192 = 22.86 A." }
+      - { text: "VD = 2 × 12.9 × 22.86 × 130 ÷ 10,380 = 76,672 ÷ 10,380 = 7.39 V — about 3.1% of 240 V." }
+  trapIds: [actual-current-vs-table, unit-or-phase-confusion]
+  timeTargetSec: 300
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x013
+  recompute: { calc: voltageDrop, inputs: { phase: 3, k: 12.9, current: 134.7, oneWayFt: 240, cmil: 350000 } }
+  domainId: nec.theory-general
+  commonMistake: "Two traps: 350 kcmil = 350,000 cmil (not 350), and the 134.7 A comes from dividing 112 kVA by √3 × 480 — dividing by 480 alone gives 233 A and a drop near 3.6 V."
+  skillIds: [nec.theory.three-phase, nec.theory.power]
+  type: numeric
+  difficulty: 9
+  stem: >-
+    A balanced 112 kVA three-phase load is served at 480 V (277 V to neutral)
+    through 350 kcmil copper conductors, 240 ft one-way, in a raceway sized at
+    40% fill. Using K = 12.9, estimate the line-to-line voltage drop (V).
+  answer: { kind: numeric, value: 2.06, unit: "V", tolerance: 0.15 }
+  solution:
+    keyIdea: "Derive line current from kVA with the √3, convert kcmil to circular mils, then the 3φ VD formula."
+    codePath: ["I = VA/(√3·V)", "350 kcmil = 350,000 cmil", "VD = √3·K·I·D/cmil"]
+    steps:
+      - { text: "Line current: 112,000 ÷ (1.732 × 480) = 112,000 ÷ 831.4 ≈ 134.7 A." }
+      - { text: "VD = 1.732 × 12.9 × 134.7 × 240 ÷ 350,000 = 722,319 ÷ 350,000 = 2.06 V." }
+      - { text: "The 277 V line-to-neutral figure and the raceway fill are irrelevant here." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x014
+  recompute: { calc: voltageDrop, inputs: { phase: 3, k: 12.9, current: 108.25, oneWayFt: 350, size: "4/0" } }
+  domainId: nec.theory-general
+  commonMistake: "Convert kW to kVA FIRST (76.5 ÷ 0.85 = 90 kVA), then to amps with √3 × 480. Skipping the pf gives 92 A and about 3.4 V."
+  skillIds: [nec.theory.three-phase, nec.theory.power]
+  type: numeric
+  difficulty: 10
+  stem: >-
+    A three-phase 480 V feeder serves a process load consuming 76.5 kW of REAL
+    power at 0.85 power factor. The run is 4/0 AWG copper (211,600 cmil —
+    equivalently 211.6 kcmil; 250 kcmil would be 250,000 cmil), 350 ft one-way,
+    with terminations rated 75°C. Using K = 12.9, estimate the voltage drop (V).
+  answer: { kind: numeric, value: 4.0, unit: "V", tolerance: 0.15 }
+  solution:
+    keyIdea: "kW ÷ pf = kVA; kVA ÷ (√3·V) = line amps; then the 3φ VD formula with the 4/0 circular-mil area."
+    codePath: ["S = P/pf", "I = S/(√3·V)", "VD = √3·K·I·D/cmil", "Ch.9 Table 8 (4/0 = 211,600 cmil)"]
+    steps:
+      - { text: "Apparent power: 76.5 ÷ 0.85 = 90 kVA." }
+      - { text: "Line current: 90,000 ÷ (1.732 × 480) = 90,000 ÷ 831.4 = 108.25 A." }
+      - { text: "VD = 1.732 × 12.9 × 108.25 × 350 ÷ 211,600 = 846,537 ÷ 211,600 = 4.00 V (0.83% of 480 V)." }
+      - { text: "The termination rating and the 250 kcmil figure are decoys." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 300
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x028
+  recompute: { calc: voltageDrop, inputs: { phase: 3, k: 12.9, current: 24, oneWayFt: 175, size: "8" } }
+  domainId: nec.theory-general
+  commonMistake: "Each 2,880 VA load sits on 120 V, so its 24 A flows directly in its line conductor (wye: line = phase current). Summing to 8,640 VA and dividing by 208 gives a wrong 41.5 A."
+  skillIds: [nec.theory.three-phase]
+  type: numeric
+  difficulty: 9
+  stem: >-
+    A 208Y/120 V panel feeds three balanced 2,880 VA line-to-neutral heaters
+    (unity pf) through a four-wire feeder of 8 AWG copper (16,510 cmil), 175 ft
+    one-way; the neutral carries no current under balanced load. Using K = 12.9,
+    estimate the line-to-line voltage drop (V).
+  answer: { kind: numeric, value: 5.68, unit: "V", tolerance: 0.15 }
+  solution:
+    keyIdea: "Get the line current from the PHASE quantities (2,880 VA ÷ 120 V = 24 A; wye line = phase), then use the three-phase VD formula."
+    codePath: ["Iφ = VA/VLN", "wye: IL = Iφ", "VD = √3·K·I·D/cmil", "Ch.9 Table 8 (8 AWG = 16,510 cmil)"]
+    steps:
+      - { text: "Per-phase current: 2,880 ÷ 120 = 24 A; in a wye the line current equals the phase current." }
+      - { text: "Cross-check: total 8,640 VA ÷ (1.732 × 208) = 24 A — same answer." }
+      - { text: "VD = 1.732 × 12.9 × 24 × 175 ÷ 16,510 = 93,842 ÷ 16,510 = 5.68 V (2.7% of 208 V)." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- Feeder + branch voltage-drop budgets (single-choice reasoning) ----------
+- id: q-thry-x008
+  domainId: nec.theory-general
+  skillIds: [nec.theory.ohms-law]
+  type: single
+  difficulty: 10
+  stem: >-
+    A 240 V single-phase service uses the 210.19(A) Informational Note guidance:
+    feeder plus branch circuit together should not exceed 5% voltage drop. The
+    feeder is 1/0 AWG copper (105,600 cmil), 160 ft one-way, carrying 100 A
+    (K = 12.9). The panel also feeds a 20 A spare. How much voltage drop
+    remains available for the branch circuit beyond the panel?
+  options:
+    - { id: a, text: "≈ 8.1 V", isCorrect: true }
+    - { id: b, text: "≈ 3.3 V", distractorRationale: "That budgets only 3% total (7.2 V) — 3% is the guideline for the branch circuit ALONE; the combined feeder-plus-branch guideline is 5%." }
+    - { id: c, text: "≈ 4.2 V", distractorRationale: "That computes the feeder drop with the 320 ft round-trip length AND the factor of 2 (7.82 V) — the 2 in the formula already accounts for the return conductor." }
+    - { id: d, text: "≈ 10.1 V", distractorRationale: "That drops the factor of 2 from the feeder calculation (1.95 V used) — a single-phase feeder drops voltage in both conductors." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Compute the feeder segment numerically, then subtract it from the 5% combined budget; what is left belongs to the branch."
+    codePath: ["Budget = 5% × 240 = 12 V", "VDfeeder = 2·K·I·D/cmil", "branch allowance = budget − feeder"]
+    steps:
+      - { text: "Total budget: 0.05 × 240 = 12 V." }
+      - { text: "Feeder: 2 × 12.9 × 100 × 160 ÷ 105,600 = 412,800 ÷ 105,600 = 3.91 V." }
+      - { text: "Remaining for the branch: 12 − 3.91 ≈ 8.1 V (the 20 A spare is a decoy)." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 300
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x021
+  domainId: nec.theory-general
+  skillIds: [nec.theory.three-phase, nec.theory.ohms-law]
+  type: single
+  difficulty: 9
+  stem: >-
+    On a 208 V three-phase system, the design limits combined feeder-plus-branch
+    voltage drop to 5% of nominal. A branch circuit runs 10 AWG copper
+    (10,380 cmil), 95 ft one-way, at 24 A per line (K = 12.9). The branch OCPD
+    is 30 A. How much drop is left for the feeder ahead of the panel?
+  options:
+    - { id: a, text: "≈ 5.5 V", isCorrect: true }
+    - { id: b, text: "≈ 4.7 V", distractorRationale: "That computes the branch drop with the single-phase factor of 2 (5.67 V) — a three-phase circuit uses √3, leaving more budget, not less." }
+    - { id: c, text: "≈ 1.3 V", distractorRationale: "That uses a 3% total budget (6.24 V) — the stem sets the COMBINED limit at 5%; 3% is the per-segment guideline." }
+    - { id: d, text: "10.4 V", distractorRationale: "That is the entire 5% budget — it ignores the branch segment already consuming part of it." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Compute the branch segment with the √3 formula, subtract from the 5% budget."
+    codePath: ["Budget = 5% × 208 = 10.4 V", "VDbranch = √3·K·I·D/cmil", "feeder allowance = budget − branch"]
+    steps:
+      - { text: "Budget: 0.05 × 208 = 10.4 V." }
+      - { text: "Branch: 1.732 × 12.9 × 24 × 95 ÷ 10,380 = 50,943 ÷ 10,380 = 4.91 V." }
+      - { text: "Feeder allowance: 10.4 − 4.91 ≈ 5.5 V. The 30 A OCPD rating plays no role." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 300
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x022
+  domainId: nec.theory-general
+  skillIds: [nec.theory.three-phase, nec.theory.power]
+  type: single
+  difficulty: 10
+  stem: >-
+    A 480 V three-phase feeder, 300 ft one-way, copper (K = 12.9), must deliver
+    45 kW of REAL power at 0.80... corrected: at 0.85 power factor, and the
+    designer caps the FEEDER voltage drop at 2% of nominal (overall system
+    budget is 5%). What is the minimum conductor size by circular-mil area
+    (Ch. 9 Table 8)?
+  options:
+    - { id: a, text: "3 AWG (52,620 cmil)", isCorrect: true }
+    - { id: b, text: "4 AWG (41,740 cmil)", distractorRationale: "That sizes for I = 45,000/(√3·480) = 54.1 A — treating the 45 kW as kVA. At pf 0.85 the conductors carry 63.7 A, and 41,740 cmil falls short of the required 44,463 cmil." }
+    - { id: c, text: "1/0 AWG (105,600 cmil)", distractorRationale: "That uses the 600 ft round-trip distance — the √3 (or 2) factor in the formula already accounts for the return path; use the one-way length." }
+    - { id: d, text: "6 AWG (26,240 cmil)", distractorRationale: "That budgets the full 5% system allowance (24 V) to the feeder — the stem caps the FEEDER alone at 2% (9.6 V)." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "kW → line amps via √3·V·pf, solve cmil = √3·K·I·D/VDmax, round UP to the next standard size."
+    codePath: ["I = P/(√3·V·pf)", "VDmax = 2% × 480 = 9.6 V", "cmil = √3·K·I·D/VD", "Ch.9 Table 8"]
+    steps:
+      - { text: "Line current: 45,000 ÷ (1.732 × 480 × 0.85) = 45,000 ÷ 706.7 = 63.68 A." }
+      - { text: "Allowable drop: 0.02 × 480 = 9.6 V." }
+      - { text: "Required cmil = 1.732 × 12.9 × 63.68 × 300 ÷ 9.6 = 426,848 ÷ 9.6 = 44,463 cmil." }
+      - { text: "4 AWG (41,740) is too small; 3 AWG (52,620) is the first size at or above 44,463 cmil." }
+  trapIds: [unit-or-phase-confusion, next-size-up-rounding]
+  timeTargetSec: 300
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- Power triangle: two of three given (real / apparent / reactive) ---------
+- id: q-thry-x005
+  domainId: nec.theory-general
+  skillIds: [nec.theory.power]
+  type: single
+  difficulty: 9
+  stem: >-
+    A power-quality meter on a facility service shows 50 kVA apparent power and
+    30 kVAR reactive power (it also logs 480 V and 60.1 Hz). What REAL power (kW)
+    is the facility consuming?
+  options:
+    - { id: a, text: "40 kW", isCorrect: true }
+    - { id: b, text: "20 kW", distractorRationale: "That subtracts 50 − 30 arithmetically — real and reactive power are at right angles on the power triangle; they combine by squares, not simple subtraction." }
+    - { id: c, text: "≈ 58.3 kW", distractorRationale: "That computes √(50² + 30²) — ADDING the squares treats kVA as a leg; apparent power is the HYPOTENUSE, so subtract." }
+    - { id: d, text: "32 kW", distractorRationale: "That multiplies the correct 40 kW by the 0.80 power factor a second time — the triangle already produced watts; the pf is an output of this problem, not another multiplier." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "The power triangle: S² = P² + Q², so P = √(S² − Q²) — a 3-4-5 triangle here."
+    codePath: ["P = √(S² − Q²)"]
+    steps:
+      - { text: "P = √(50² − 30²) = √(2,500 − 900) = √1,600 = 40 kW." }
+      - { text: "Power factor check: 40 ÷ 50 = 0.80. The voltage and frequency readings are noise." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x006
+  domainId: nec.theory-general
+  skillIds: [nec.theory.power, nec.theory.three-phase]
+  type: single
+  difficulty: 10
+  stem: >-
+    A 480 V three-phase feeder serves a load metered at 36 kW real power and
+    27 kVAR reactive power. What line current must the feeder conductors carry?
+  options:
+    - { id: a, text: "≈ 54.1 A", isCorrect: true }
+    - { id: b, text: "≈ 43.3 A", distractorRationale: "That divides the 36 kW directly by √3 × 480 — conductors carry the APPARENT-power current; the reactive 27 kVAR raises the amps even though it does no work." }
+    - { id: c, text: "≈ 75.8 A", distractorRationale: "That adds 36 + 27 = 63 kVA arithmetically — real and reactive power are perpendicular legs; combine them as √(36² + 27²) = 45 kVA." }
+    - { id: d, text: "≈ 93.8 A", distractorRationale: "That is the single-phase result 45,000 ÷ 480 — a three-phase feeder needs the √3 in the denominator." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Build the hypotenuse first (S = √(P² + Q²)), then I = S/(√3·V) — a 3-4-5 triangle scaled by 9."
+    codePath: ["S = √(P² + Q²)", "I = S/(√3·V)"]
+    steps:
+      - { text: "S = √(36² + 27²) = √(1,296 + 729) = √2,025 = 45 kVA." }
+      - { text: "I = 45,000 ÷ (1.732 × 480) = 45,000 ÷ 831.4 ≈ 54.1 A." }
+      - { text: "Power factor check: 36 ÷ 45 = 0.80." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x007
+  domainId: nec.theory-general
+  skillIds: [nec.theory.power]
+  type: single
+  difficulty: 9
+  stem: >-
+    A single-phase 240 V load is metered at 12 kVA apparent power with 7.2 kVAR
+    of reactive power; the clamp meter shows 50 A. What would a wattmeter on this
+    load read?
+  options:
+    - { id: a, text: "9.6 kW", isCorrect: true }
+    - { id: b, text: "4.8 kW", distractorRationale: "That subtracts 12 − 7.2 arithmetically — the triangle legs combine by squares: P = √(S² − Q²), not S − Q." }
+    - { id: c, text: "≈ 14.0 kW", distractorRationale: "That computes √(12² + 7.2²) — adding the squares makes the answer LARGER than the apparent power, which is impossible; real power never exceeds kVA." }
+    - { id: d, text: "7.2 kW", distractorRationale: "That reports the reactive leg with the unit changed to kW — kVAR does no real work and is not what a wattmeter reads." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "P = √(S² − Q²); the wattmeter reads only the real component."
+    codePath: ["P = √(S² − Q²)", "pf = P/S"]
+    steps:
+      - { text: "P = √(144 − 51.84) = √92.16 = 9.6 kW." }
+      - { text: "Consistency: pf = 9.6 ÷ 12 = 0.80, and 240 V × 50 A = 12 kVA matches the meter." }
+  trapIds: [unit-or-phase-confusion, meter-reading-vs-ampacity]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x023
+  recompute: { calc: power1ph, inputs: { volts: 240, amps: 50, pf: 0.6 } }
+  domainId: nec.theory-general
+  commonMistake: "If you got 2,400 W, you subtracted 12,000 − 9,600 — triangle legs combine by squares: P = √(12,000² − 9,600²) = 7,200 W, giving pf = 0.6."
+  skillIds: [nec.theory.power]
+  type: numeric
+  difficulty: 9
+  stem: >-
+    A single-phase 240 V circuit draws 50 A. A power-quality analyzer logs
+    9,600 VAR of reactive power but its watt channel has failed. Using the power
+    triangle, determine the REAL power (W) the load consumes.
+  answer: { kind: numeric, value: 7200, unit: "W", tolerance: 10 }
+  solution:
+    keyIdea: "Build S from V·I, then P = √(S² − Q²) — the pf (0.6) falls out of the triangle."
+    codePath: ["S = V·I = 12,000 VA", "P = √(S² − Q²)", "pf = P/S = 0.6"]
+    steps:
+      - { text: "Apparent power: 240 × 50 = 12,000 VA." }
+      - { text: "P = √(12,000² − 9,600²) = √(144,000,000 − 92,160,000) = √51,840,000 = 7,200 W." }
+      - { text: "Equivalent: pf = 7,200 ÷ 12,000 = 0.60, and 240 × 50 × 0.60 = 7,200 W." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x029
+  recompute: { calc: power1ph, inputs: { volts: 230, amps: 42, pf: 0.78 } }
+  domainId: nec.theory-general
+  commonMistake: "The wattmeter reads INPUT real power: V·I·pf. The 83% efficiency is a decoy — it would matter only if the question asked for shaft OUTPUT power."
+  skillIds: [nec.theory.power]
+  type: numeric
+  difficulty: 9
+  stem: >-
+    A single-phase 230 V motor draws 42 A at 0.78 power factor. Its nameplate
+    lists 7.5 hp output and 83% efficiency, and the analyzer shows 9,660 VA
+    apparent and about 6,045 VAR reactive. What does a wattmeter at the motor
+    terminals read (W)?
+  answer: { kind: numeric, value: 7534.8, unit: "W", tolerance: 10 }
+  solution:
+    keyIdea: "Terminal watts = V·I·pf. Efficiency converts input watts to shaft output — it does NOT change what the wattmeter sees at the terminals."
+    codePath: ["P = V·I·pf"]
+    steps:
+      - { text: "Apparent power: 230 × 42 = 9,660 VA (matches the analyzer)." }
+      - { text: "Real power: 9,660 × 0.78 = 7,535 W." }
+      - { text: "Triangle check: √(9,660² − 6,045²) ≈ 7,535 W. The 7.5 hp / 83% figures describe the OUTPUT, not the terminal reading." }
+  trapIds: [meter-reading-vs-ampacity, unit-or-phase-confusion]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- Delta / wye line-vs-phase conversions feeding a power calculation --------
+- id: q-thry-x003
+  recompute: { calc: power3ph, inputs: { volts: 480, amps: 69.28, pf: 1 } }
+  domainId: nec.theory-general
+  commonMistake: "In a DELTA, line current = √3 × winding current (69.3 A, not 40 A). Using 40 A in √3·V·I gives 33,255 W — low by the √3 factor."
+  skillIds: [nec.theory.three-phase, nec.theory.power]
+  type: numeric
+  difficulty: 9
+  stem: >-
+    A balanced DELTA-connected resistance heater bank (unity pf) runs on a 480 V
+    three-phase system; an ammeter inside the bank shows 40 A through each
+    winding. The system also provides 277 V to neutral for controls. What total
+    real power (W) does the bank consume?
+  answer: { kind: numeric, value: 57598, unit: "W", tolerance: 150 }
+  solution:
+    keyIdea: "Convert winding (phase) current to LINE current with √3 first, then P = √3·VLL·IL·pf."
+    codePath: ["delta: IL = √3·Iφ", "P = √3·VLL·IL·pf"]
+    steps:
+      - { text: "Line current: 40 × 1.732 = 69.28 A." }
+      - { text: "P = 1.732 × 480 × 69.28 × 1.0 ≈ 57,600 W." }
+      - { text: "Check per-winding: each winding sees 480 V at 40 A → 3 × 480 × 40 = 57,600 W. The 277 V figure is a decoy." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x004
+  recompute: { calc: power3ph, inputs: { volts: 480, amps: 30, pf: 0.9 } }
+  domainId: nec.theory-general
+  commonMistake: "In a WYE the line current EQUALS the 30 A phase current — multiplying by √3 (51.96 A) double-counts and inflates the power by 73%. Use 480 V line-to-line with the √3 in the formula."
+  skillIds: [nec.theory.three-phase, nec.theory.power]
+  type: numeric
+  difficulty: 9
+  stem: >-
+    A balanced WYE-connected load on a 480Y/277 V system draws 30 A through each
+    phase winding at 0.90 power factor. The feeder breaker is rated 40 A. What
+    total real power (W) does the load consume?
+  answer: { kind: numeric, value: 22447, unit: "W", tolerance: 60 }
+  solution:
+    keyIdea: "Wye: IL = Iφ, so the 30 A goes straight into P = √3·VLL·IL·pf with the 480 V line voltage."
+    codePath: ["wye: IL = Iφ", "P = √3·VLL·IL·pf"]
+    steps:
+      - { text: "Line current = phase current = 30 A (wye)." }
+      - { text: "P = 1.732 × 480 × 30 × 0.90 = 22,447 W." }
+      - { text: "Equivalent: 3 × 277 × 30 × 0.90 gives the same ≈22.4 kW. The 40 A breaker rating is noise." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x018
+  recompute: { calc: power3ph, inputs: { volts: 480, amps: 43.3, pf: 1 } }
+  domainId: nec.theory-general
+  commonMistake: "In a delta each 19.2 Ω winding sees the FULL 480 V (winding current 25 A). Using 277 V gives 14.4 A per winding and roughly one-third the true power."
+  skillIds: [nec.theory.three-phase, nec.theory.ohms-law]
+  type: numeric
+  difficulty: 10
+  stem: >-
+    A three-phase resistance furnace consists of three 19.2 Ω elements connected
+    in DELTA on a 480 V system (277 V is available to neutral elsewhere on the
+    premises). Ignoring temperature effects, what total real power (W) does the
+    furnace draw?
+  answer: { kind: numeric, value: 35999, unit: "W", tolerance: 100 }
+  solution:
+    keyIdea: "Chain Ohm's law inside the delta (winding sees line voltage), convert to line current with √3, then P = √3·V·I."
+    codePath: ["Iφ = VLL/R", "delta: IL = √3·Iφ", "P = √3·VLL·IL"]
+    steps:
+      - { text: "Winding current: 480 ÷ 19.2 = 25 A (delta windings sit across the full line voltage)." }
+      - { text: "Line current: 25 × 1.732 = 43.3 A." }
+      - { text: "P = 1.732 × 480 × 43.3 ≈ 36,000 W. Check: 3 × 480² ÷ 19.2 = 36,000 W exactly." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 300
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x019
+  recompute: { calc: power3ph, inputs: { volts: 208, amps: 15, pf: 1 } }
+  domainId: nec.theory-general
+  commonMistake: "In a wye each 8 Ω element sees 120 V line-to-neutral, giving 15 A — putting the full 208 V across an element (26 A) overstates the power threefold."
+  skillIds: [nec.theory.three-phase, nec.theory.ohms-law]
+  type: numeric
+  difficulty: 9
+  stem: >-
+    Three 8 Ω heating elements are connected in WYE on a 208Y/120 V, 4-wire
+    system (the neutral is unbroken but carries no current when balanced). What
+    total real power (W) does the bank draw?
+  answer: { kind: numeric, value: 5404, unit: "W", tolerance: 25 }
+  solution:
+    keyIdea: "Wye elements see the LINE-TO-NEUTRAL voltage; the resulting phase current equals the line current, then P = √3·VLL·IL."
+    codePath: ["Iφ = VLN/R = 120/8", "wye: IL = Iφ", "P = √3·VLL·IL"]
+    steps:
+      - { text: "Element current: 120 ÷ 8 = 15 A; wye line current = 15 A." }
+      - { text: "P = 1.732 × 208 × 15 = 5,404 W." }
+      - { text: "Check per element: 3 × (120² ÷ 8) = 3 × 1,800 = 5,400 W — same within rounding." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x020
+  domainId: nec.theory-general
+  skillIds: [nec.theory.three-phase, nec.theory.power]
+  type: single
+  difficulty: 10
+  stem: >-
+    A balanced three-phase resistance heater bank draws 36 kW when connected in
+    DELTA on a 480 V system. A technician reconnects the SAME three elements in
+    WYE on the same 480 V system. Ignoring temperature effects, what power does
+    the bank now draw?
+  options:
+    - { id: a, text: "12 kW", isCorrect: true }
+    - { id: b, text: "36 kW", distractorRationale: "That assumes the connection doesn't matter — but in wye each element now sees only 277 V instead of 480 V, and power varies with the SQUARE of element voltage." }
+    - { id: c, text: "≈ 20.8 kW", distractorRationale: "That divides by √3 once — the element voltage drops by √3, but power goes as V², so the reduction is (√3)² = 3." }
+    - { id: d, text: "108 kW", distractorRationale: "That multiplies by 3 — backwards. Delta-to-wye LOWERS each element's voltage; wye-to-delta on the same system would triple the power instead." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Delta → wye drops each element's voltage from VLL to VLL/√3; P ∝ V², so power falls to exactly one-third."
+    codePath: ["delta: Vφ = VLL", "wye: Vφ = VLL/√3", "P ∝ Vφ² → factor (1/√3)² = 1/3"]
+    steps:
+      - { text: "In delta each element sees 480 V; in wye it sees 480 ÷ 1.732 = 277 V." }
+      - { text: "Power ratio: (277/480)² = 1/3 → 36 kW × 1/3 = 12 kW." }
+      - { text: "This is why wye-delta starting reduces inrush: the wye connection is the 1/3-power state." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x027
+  recompute: { calc: power3ph, inputs: { volts: 208, amps: 34.64, pf: 0.9 } }
+  domainId: nec.theory-general
+  commonMistake: "Delta: line current = √3 × 20 = 34.64 A. Feeding the 20 A winding current into √3·V·I·pf gives 6,485 W — short by the √3."
+  skillIds: [nec.theory.three-phase, nec.theory.power]
+  type: numeric
+  difficulty: 9
+  stem: >-
+    A balanced DELTA-connected motor-load bank on a 208 V system draws 20 A
+    through each winding at 0.90 power factor; the panel breaker is 50 A and the
+    conductors are 8 AWG. What total real power (W) does the bank consume?
+  answer: { kind: numeric, value: 11232, unit: "W", tolerance: 60 }
+  solution:
+    keyIdea: "Convert phase to line current with √3 (delta), then P = √3·VLL·IL·pf."
+    codePath: ["delta: IL = √3·Iφ", "P = √3·VLL·IL·pf"]
+    steps:
+      - { text: "Line current: 20 × 1.732 = 34.64 A." }
+      - { text: "P = 1.732 × 208 × 34.64 × 0.90 = 11,232 W." }
+      - { text: "Check: 3 windings × 208 V × 20 A × 0.9 = 11,232 W. Breaker and wire size are decoys." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- Series-parallel networks reduced to one equivalent (ohmsCurrent) --------
+- id: q-thry-x010
+  recompute: { calc: ohmsCurrent, inputs: { volts: 240, ohms: 20 } }
+  domainId: nec.theory-general
+  commonMistake: "Reduce inside-out: the 20 + 40 series string is ONE 60 Ω branch. Adding all five resistances in series (110 Ω plus wire) gives about 2 A — an order-of-structure error, not arithmetic."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 9
+  stem: >-
+    A 240 V source feeds a remote load bank through conductors totaling 3 Ω. At
+    the bank, a 7 Ω element is in series with three parallel branches: (1) a
+    20 Ω and a 40 Ω resistor in series, (2) a 30 Ω resistor, and (3) a 20 Ω
+    resistor. What total current (A) does the source supply?
+  answer: { kind: numeric, value: 12, unit: "A", tolerance: 0.05 }
+  solution:
+    keyIdea: "Series inside a branch first, then the three-way parallel, then add the series element and wire resistance."
+    codePath: ["branch1 = 20 + 40 = 60 Ω", "60 ∥ 30 ∥ 20 = 10 Ω", "Rtotal = 10 + 7 + 3 = 20 Ω", "I = V/R"]
+    steps:
+      - { text: "Branch 1: 20 + 40 = 60 Ω." }
+      - { text: "Parallel bank: 1/60 + 1/30 + 1/20 = (1 + 2 + 3)/60 = 6/60 → 10 Ω." }
+      - { text: "Total: 10 + 7 + 3 = 20 Ω; I = 240 ÷ 20 = 12 A." }
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x011
+  recompute: { calc: ohmsCurrent, inputs: { volts: 120, ohms: 12 } }
+  domainId: nec.theory-general
+  commonMistake: "Both blocks must be collapsed separately: (8+4)∥6 = 4 Ω and 18∥9 = 6 Ω. Paralleling everything at once, or ignoring the 2 Ω of wire, gives 12 A or more."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 10
+  stem: >-
+    A 120 V source feeds two load blocks in series through conductors totaling
+    2 Ω. Block 1 is an 8 Ω and a 4 Ω resistor in series, all in parallel with a
+    6 Ω resistor. Block 2 is an 18 Ω resistor in parallel with a 9 Ω resistor.
+    What total current (A) flows from the source?
+  answer: { kind: numeric, value: 10, unit: "A", tolerance: 0.05 }
+  solution:
+    keyIdea: "Collapse each block to a single equivalent, then add the series chain: wire + block1 + block2."
+    codePath: ["block1 = (8+4) ∥ 6 = 4 Ω", "block2 = 18 ∥ 9 = 6 Ω", "Rtotal = 4 + 6 + 2 = 12 Ω", "I = V/R"]
+    steps:
+      - { text: "Block 1: 8 + 4 = 12 Ω; 12 ∥ 6 = (12 × 6)/18 = 4 Ω." }
+      - { text: "Block 2: 18 ∥ 9 = (18 × 9)/27 = 6 Ω." }
+      - { text: "Total: 4 + 6 + 2 = 12 Ω; I = 120 ÷ 12 = 10 A." }
+  timeTargetSec: 300
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x012
+  domainId: nec.theory-general
+  skillIds: [nec.theory.ohms-law]
+  type: single
+  difficulty: 9
+  stem: >-
+    A 240 V source feeds a load bank through conductors with 2 Ω of resistance
+    in EACH of the two conductors. The bank is a 40 Ω heater in parallel with a
+    series string of a 15 Ω and a 25 Ω element. What voltage appears ACROSS the
+    load bank?
+  options:
+    - { id: a, text: "200 V", isCorrect: true }
+    - { id: b, text: "240 V", distractorRationale: "That ignores the conductor resistance — 4 Ω of wire (2 Ω out + 2 Ω back) drops voltage before the bank, exactly like a voltage-drop problem." }
+    - { id: c, text: "40 V", distractorRationale: "40 V is the drop across the CONDUCTORS (10 A × 4 Ω) — the question asks for what remains at the load." }
+    - { id: d, text: "≈ 229 V", distractorRationale: "That adds the two bank paths in series (40 + 40 = 80 Ω) — parallel branches combine to LESS than either branch: 40 ∥ 40 = 20 Ω here." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Reduce the bank, count BOTH conductor resistances, then treat the circuit as a voltage divider."
+    codePath: ["string = 15 + 25 = 40 Ω", "40 ∥ 40 = 20 Ω", "Rtotal = 20 + 4 = 24 Ω", "I = 240/24 = 10 A", "Vbank = I·Rbank"]
+    steps:
+      - { text: "Series string: 15 + 25 = 40 Ω; bank: 40 ∥ 40 = 20 Ω." }
+      - { text: "Wire: 2 Ω each way = 4 Ω total; circuit resistance 24 Ω → I = 10 A." }
+      - { text: "Bank voltage: 10 × 20 = 200 V (the wire eats 40 V)." }
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x025
+  recompute: { calc: ohmsCurrent, inputs: { volts: 240, ohms: 24 } }
+  domainId: nec.theory-general
+  commonMistake: "The circuit includes BOTH conductors: 200 ft out and 200 ft back at 0.5 Ω per 100 ft = 2 Ω of wire, not 1 Ω."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 9
+  stem: >-
+    A 240 V single-phase circuit runs 200 ft one-way on conductors with a
+    resistance of 0.5 Ω per 100 ft PER CONDUCTOR. The load is a 10 Ω element in
+    series with a parallel pair of 20 Ω and 30 Ω heaters. The circuit is
+    protected at 15 A. What current (A) actually flows?
+  answer: { kind: numeric, value: 10, unit: "A", tolerance: 0.05 }
+  solution:
+    keyIdea: "Convert footage to wire ohms for BOTH conductors, reduce the load network, then I = V/R."
+    codePath: ["wire = 2 × (200/100 × 0.5) = 2 Ω", "20 ∥ 30 = 12 Ω", "Rtotal = 12 + 10 + 2 = 24 Ω", "I = V/R"]
+    steps:
+      - { text: "Wire: each conductor 200 ft × 0.5 Ω/100 ft = 1 Ω; both conductors = 2 Ω." }
+      - { text: "Parallel pair: (20 × 30)/(20 + 30) = 12 Ω; total 12 + 10 + 2 = 24 Ω." }
+      - { text: "I = 240 ÷ 24 = 10 A — below the 15 A OCPD, which is only a decoy." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x026
+  domainId: nec.theory-general
+  skillIds: [nec.theory.ohms-law]
+  type: single
+  difficulty: 10
+  stem: >-
+    A 120 V source feeds a 10 Ω resistor in series with a parallel pair: 15 Ω
+    and 30 Ω. How much power does the 15 Ω resistor alone dissipate?
+  options:
+    - { id: a, text: "240 W", isCorrect: true }
+    - { id: b, text: "960 W", distractorRationale: "That is 120²/15 — the 15 Ω resistor does NOT see the full source voltage; the series 10 Ω drops half of it first." }
+    - { id: c, text: "540 W", distractorRationale: "That is 6² × 15 — the 6 A TOTAL current does not all flow through the 15 Ω branch; it splits with the 30 Ω path." }
+    - { id: d, text: "360 W", distractorRationale: "That is 60 V × 6 A — the power of the ENTIRE parallel bank, not the 15 Ω resistor alone." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Solve the whole network for the bank voltage, then apply P = V²/R (or V·I) to the single branch."
+    codePath: ["15 ∥ 30 = 10 Ω", "Rtotal = 20 Ω → I = 6 A", "Vbank = 6 × 10 = 60 V", "P15 = 60²/15"]
+    steps:
+      - { text: "Bank: 15 ∥ 30 = 10 Ω; total 20 Ω → I = 120 ÷ 20 = 6 A." }
+      - { text: "Bank voltage: 6 × 10 = 60 V." }
+      - { text: "15 Ω branch: I = 60 ÷ 15 = 4 A → P = 60 × 4 = 240 W (the 30 Ω takes the other 2 A, 120 W)." }
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x030
+  recompute: { calc: ohmsCurrent, inputs: { volts: 480, ohms: 40 } }
+  domainId: nec.theory-general
+  commonMistake: "Three parallel branches reduce by reciprocals: 1/60 + 1/40 + 1/120 = 6/120 → 20 Ω. Adding them (220 Ω) makes the current impossibly small."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 9
+  stem: >-
+    A 480 V source supplies a heater assembly through conductors totaling 4 Ω.
+    The assembly is a 16 Ω element in series with a parallel bank of 60 Ω, 40 Ω,
+    and 120 Ω resistors. The nameplate lists 6.5 kW. What current (A) does the
+    source actually deliver?
+  answer: { kind: numeric, value: 12, unit: "A", tolerance: 0.05 }
+  solution:
+    keyIdea: "Reduce the three-way parallel bank by reciprocals, add the series element and wire, then I = V/R — the nameplate kW is a distractor."
+    codePath: ["1/60 + 1/40 + 1/120 = 6/120 → 20 Ω", "Rtotal = 20 + 16 + 4 = 40 Ω", "I = V/R"]
+    steps:
+      - { text: "Bank: 1/60 + 1/40 + 1/120 = (2 + 3 + 1)/120 = 6/120 → 20 Ω." }
+      - { text: "Total: 20 + 16 + 4 = 40 Ω; I = 480 ÷ 40 = 12 A." }
+      - { text: "Delivered power check: 480 × 12 = 5,760 W — the 6.5 kW nameplate assumed no wire loss." }
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- Efficiency + pf + √3 current chains (single-choice) ----------------------
+- id: q-thry-x024
+  domainId: nec.theory-general
+  skillIds: [nec.theory.power, nec.theory.three-phase]
+  type: single
+  difficulty: 10
+  stem: >-
+    A three-phase 460 V motor delivers 20 hp (14,920 W) at the shaft with 90%
+    efficiency and 0.82 power factor. Table 430.250 lists 27 A for a 20 hp,
+    460 V motor. What CALCULATED input current does the motor actually draw at
+    this operating point?
+  options:
+    - { id: a, text: "≈ 25.4 A", isCorrect: true }
+    - { id: b, text: "≈ 22.8 A", distractorRationale: "That skips efficiency — 14,920 W is the shaft OUTPUT; the motor must draw 14,920 ÷ 0.90 = 16,578 W of input real power." }
+    - { id: c, text: "≈ 20.8 A", distractorRationale: "That skips the power factor — dividing input watts by √3·V alone ignores the reactive current the conductors also carry." }
+    - { id: d, text: "≈ 44.0 A", distractorRationale: "That is the single-phase formula 16,578 ÷ (460 × 0.82) — a three-phase machine needs the √3 in the denominator." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Three-stage chain: output → input watts via efficiency; watts → amps via √3·V·pf. The Table 430.250 value sizes conductors, not this measurement question."
+    codePath: ["Pin = Pout/eff", "I = Pin/(√3·V·pf)"]
+    steps:
+      - { text: "Input power: 14,920 ÷ 0.90 = 16,578 W." }
+      - { text: "I = 16,578 ÷ (1.732 × 460 × 0.82) = 16,578 ÷ 653.3 ≈ 25.4 A." }
+      - { text: "The 27 A table FLC is what 430.22 conductor sizing would use — a different question." }
+  trapIds: [actual-current-vs-table, unit-or-phase-confusion]
+  timeTargetSec: 300
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- kcmil/AWG ratio chains (250.122(B) proportional upsize) ------------------
+- id: q-thry-x015
+  recompute: { calc: cmilRatio, inputs: { newSize: "4/0", origSize: "4" } }
+  domainId: nec.theory-general
+  commonMistake: "The ratio uses circular-mil AREAS (211,600 ÷ 41,740), not gauge arithmetic — jumping '4 to 4/0' is four size steps, roughly 5× the area, not 4×."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 9
+  stem: >-
+    A 480 V branch circuit protected at 70 A was designed with 4 AWG copper
+    (41,740 cmil) and a 8 AWG EGC. To hold voltage drop on a 400 ft run, the
+    circuit conductors are upsized to 4/0 AWG (211,600 cmil). Per 250.122(B),
+    by what circular-mil ratio must the EGC area be increased?
+  answer: { kind: numeric, value: 5.07, unit: "ratio", tolerance: 0.02 }
+  solution:
+    keyIdea: "250.122(B): the EGC scales by the same cmil ratio as the ungrounded conductors — new ÷ original."
+    codePath: ["250.122(B)", "Ch.9 Table 8 (4/0 = 211,600; 4 AWG = 41,740)"]
+    steps:
+      - { text: "Ratio = 211,600 ÷ 41,740 = 5.07.", ref: "250.122(B)" }
+      - { text: "The 8 AWG EGC's 16,510 cmil × 5.07 ≈ 83,706 cmil → it must grow to at least 1 AWG territory." }
+      - { text: "The OCPD rating and run length set the STARTING EGC, not the ratio." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x016
+  recompute: { calc: cmilRatio, inputs: { newCmil: 250000, origSize: "1" } }
+  domainId: nec.theory-general
+  commonMistake: "Mixed units: 250 kcmil = 250,000 cmil, and 1 AWG must be looked up (83,690 cmil) — dividing 250 by 1 or 250,000 by 1 treats the AWG number as an area."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 10
+  stem: >-
+    A feeder originally designed with 1 AWG copper (83,690 cmil) and protected
+    at 110 A is upsized to 250 kcmil copper for voltage drop on a 380 ft run at
+    K = 12.9. Per 250.122(B), what circular-mil ratio applies to the equipment
+    grounding conductor upsize?
+  answer: { kind: numeric, value: 2.99, unit: "ratio", tolerance: 0.02 }
+  solution:
+    keyIdea: "Convert both conductors to circular mils on the SAME scale (kcmil × 1,000), then divide new by original."
+    codePath: ["250.122(B)", "250 kcmil = 250,000 cmil", "Ch.9 Table 8 (1 AWG = 83,690 cmil)"]
+    steps:
+      - { text: "New area: 250 kcmil = 250,000 cmil; original: 83,690 cmil.", ref: "250.122(B)" }
+      - { text: "Ratio = 250,000 ÷ 83,690 = 2.99." }
+      - { text: "K and the run length already did their job selecting 250 kcmil — they don't enter the ratio." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-thry-x017
+  recompute: { calc: cmilRatio, inputs: { newSize: "3/0", origSize: "3" } }
+  domainId: nec.theory-general
+  commonMistake: "'3 AWG to 3/0 AWG' is a four-step size jump — the areas are 52,620 and 167,800 cmil, a ratio of 3.19. Reading '3 to 3/0' as no change (ratio 1) is the trap."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 9
+  stem: >-
+    To meet a 2% drop limit on a long 208 V feeder (K = 12.9, 100 A load), the
+    circuit conductors are changed from 3 AWG copper (52,620 cmil) to 3/0 AWG
+    copper (167,800 cmil); the raceway is upsized from 1-1/4 in. to 2 in. EMT.
+    Per 250.122(B), what ratio of circular-mil areas governs the EGC increase?
+  answer: { kind: numeric, value: 3.19, unit: "ratio", tolerance: 0.02 }
+  solution:
+    keyIdea: "3 AWG and 3/0 AWG are very different conductors — always divide the Ch. 9 Table 8 areas."
+    codePath: ["250.122(B)", "Ch.9 Table 8 (3/0 = 167,800; 3 AWG = 52,620)"]
+    steps:
+      - { text: "Ratio = 167,800 ÷ 52,620 = 3.19.", ref: "250.122(B)" }
+      - { text: "The raceway change is a decoy — conduit size never enters the 250.122(B) proportion." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
