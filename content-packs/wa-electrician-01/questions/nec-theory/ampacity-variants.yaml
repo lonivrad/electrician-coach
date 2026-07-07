@@ -20,7 +20,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 40
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify table value before live."
 
@@ -40,7 +40,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 40
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify table value before live."
 
@@ -60,7 +60,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 40
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify table value before live."
 
@@ -80,7 +80,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 40
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify table value before live."
 
@@ -100,7 +100,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 40
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify table value before live."
 
@@ -122,7 +122,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; correction factor from verified Table 310.15(B)(1)."
 
@@ -143,7 +143,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; correction factor from verified Table 310.15(B)(1)."
 
@@ -164,7 +164,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; correction factor from verified Table 310.15(B)(1)."
 
@@ -185,7 +185,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; correction factor from verified Table 310.15(B)(1)."
 
@@ -206,7 +206,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; correction factor from verified Table 310.15(B)(1)."
 
@@ -228,7 +228,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; adjustment factor from verified Table 310.15(C)(1)."
 
@@ -249,7 +249,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; 2020 factor 0.70 (2026 NEC changes 7–9 to 0.65)."
 
@@ -270,7 +270,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; adjustment factor from verified Table 310.15(C)(1)."
 
@@ -291,7 +291,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; adjustment factor from verified Table 310.15(C)(1)."
 
@@ -312,7 +312,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; adjustment factor from verified Table 310.15(C)(1)."
 
@@ -334,7 +334,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; factors from verified 310.15 tables."
 
@@ -355,7 +355,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; factors from verified 310.15 tables."
 
@@ -376,7 +376,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; factors from verified 310.15 tables."
 
@@ -397,7 +397,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; factors from verified 310.15 tables."
 
@@ -418,7 +418,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; aluminum value from verified Table 310.16 (Al)."
 
@@ -439,7 +439,7 @@
   trapIds: [adjusted-vs-corrected-ampacity, table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; aluminum + correction from verified tables."
 
@@ -459,7 +459,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; aluminum value from verified Table 310.16 (Al)."
 
@@ -482,7 +482,7 @@
   trapIds: [termination-temp-limit, adjusted-vs-corrected-ampacity]
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; factors from verified tables."
 
@@ -504,6 +504,6 @@
   trapIds: [termination-temp-limit, table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; table values from verified Table 310.16."

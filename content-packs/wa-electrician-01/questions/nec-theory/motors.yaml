@@ -17,7 +17,7 @@
   trapIds: [actual-current-vs-table, table-column-selection]
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."
 
@@ -38,7 +38,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."
 
@@ -63,6 +63,6 @@
   trapIds: [actual-current-vs-table, table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."

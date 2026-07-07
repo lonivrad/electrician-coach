@@ -21,7 +21,7 @@
       - { text: "Total = 15.00 + 2.25 + 4.50 + 2.25 = 24.00 in³." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -46,7 +46,7 @@
       - { text: "Total = 5.00 + 11.25 + 2.50 + 4.50 + 2.25 = 25.50 in³." }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -71,7 +71,7 @@
       - { text: "Total = 13.50 + 2.25 + 4.50 + 2.25 = 22.50 in³." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -96,7 +96,7 @@
       - { text: "Total = 17.50 + 2.25 + 4.50 + 4.50 + 2.25 = 31.00 in³." }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -129,7 +129,7 @@
       - { text: "Required = 22.50 in³ > 21.0 in³ marked volume → not permitted; a larger box is required.", ref: "314.16(A)" }
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -162,7 +162,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -185,7 +185,7 @@
       - { text: "Total = 29.0 + 5.0 + 3.0 = 37.0 in³." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -208,7 +208,7 @@
       - { text: "Total = 6.75 + 9.00 + 2.25 + 2.25 = 20.25 in³." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -241,7 +241,7 @@
       - { text: "EGC fill: single allowance for all EGCs, based on the largest EGC (10 AWG).", ref: "314.16(B)(5)" }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -273,7 +273,7 @@
       - { text: "All five conductors are omitted from the fill calculation." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -296,7 +296,7 @@
       - { text: "Total = 8.00 + 3.00 + 2.00 = 13.00 in³." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -320,7 +320,7 @@
       - { text: "Total = 19.25 + 2.25 + 4.50 + 2.00 = 28.00 in³." }
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -352,7 +352,7 @@
       - { text: "Loop < 2 × 300.14 minimum, so the two-allowance rule does not apply." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -385,7 +385,7 @@
       - { text: "Total = 18.00 in³ = marked volume → compliant (volume must be ≥ fill).", ref: "314.16(A)" }
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -409,7 +409,7 @@
       - { text: "Total = 18.00 + 2.25 + 13.50 + 2.25 = 36.00 in³." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -441,7 +441,7 @@
       - { text: "Pigtails, wirenuts, and external clamps are all excluded from the count." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -465,7 +465,7 @@
       - { text: "Total = 14.50 + 2.50 + 4.50 + 2.50 = 24.00 in³." }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -488,7 +488,7 @@
       - { text: "Total = 14.00 + 2.50 + 2.50 = 19.00 in³." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -521,7 +521,7 @@
       - { text: "Required = 24.00 in³ > 22.5 in³ marked → box too small.", ref: "314.16(A)" }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -553,7 +553,7 @@
       - { text: "Largest conductor in the box is 10 AWG → 2.5 in³." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -577,7 +577,7 @@
       - { text: "Total = 24.25 + 2.25 + 9.00 + 2.25 = 37.75 in³." }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -608,6 +608,6 @@
       - { text: "A conductor with no part leaving the box takes no volume allowance, regardless of length.", ref: "314.16(B)(1)" }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."

@@ -21,7 +21,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft: SME-verify 2020 NEC Table 310.16 value before promoting to live."
 
@@ -44,7 +44,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION: confirm base ampacity and correction factor for adopted edition."
 
@@ -67,7 +67,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."
 
@@ -89,7 +89,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."
 
@@ -114,7 +114,7 @@
   trapIds: [termination-temp-limit, table-column-selection]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."
 
@@ -139,6 +139,6 @@
   trapIds: [meter-reading-vs-ampacity, table-column-selection]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."

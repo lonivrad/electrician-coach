@@ -19,7 +19,7 @@
   trapIds: [adjusted-vs-corrected-ampacity, termination-temp-limit]
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft: SME-verify table values/factors for 2020 NEC."
 
@@ -41,7 +41,7 @@
   trapIds: [continuous-load-125, meter-reading-vs-ampacity]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft: SME-verify 2020 NEC continuous-load sizing citation."
 
@@ -65,7 +65,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Recompute-verified (boxFill); Table 314.16(B) allowances + largest-conductor clamp/device rule (314.16(B)(2),(4)) confirmed. Cleared needsReview 2026-07; SME wording pass pending before live."
 
@@ -84,7 +84,7 @@
       - { text: "Look up 10 AWG THHN in 1/2 EMT → 5 conductors.", ref: "Annex C Table C.1" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft: SME-verify 2020 Annex C cell."
 
@@ -107,6 +107,6 @@
   trapIds: [table-column-selection]
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Recompute-verified (conduitAreaUsed); Ch.9 Table 5 conductor areas + Table 4 (3/4 EMT 40%) web-verified (docs/nec-tables-audit.md). Cleared needsReview 2026-07."

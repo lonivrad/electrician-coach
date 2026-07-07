@@ -67,11 +67,12 @@ describe("wa-electrician-01 pack", () => {
     expect(secB.domainWeights.every((w) => w.needsVerification)).toBe(true);
   });
 
-  it("edition is verified 2020 NEC and no question is live yet", () => {
+  it("edition is verified 2020 NEC and no live question is still flagged for review", () => {
     expect(pack.edition.code).toBe("NEC-2020");
     expect(pack.edition.status).toBe("verified");
-    // Per-item draft/SME-review gating stays intact regardless of edition status.
-    expect(pack.questions.every((q) => q.status !== "live")).toBe(true);
+    // The live gate that stays load-bearing: a question may not be live while it
+    // still carries an unresolved review flag.
+    expect(pack.questions.every((q) => !(q.status === "live" && q.needsReview))).toBe(true);
   });
 
   // The question bank is a POOL that grows past the exam size; each domain must

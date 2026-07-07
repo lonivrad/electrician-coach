@@ -22,7 +22,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -45,7 +45,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -68,7 +68,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -91,7 +91,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -114,7 +114,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -141,7 +141,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -168,7 +168,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live. Pack canon per q-wm-118: dwelling-driveway row = 18 in."
 
@@ -195,7 +195,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -220,7 +220,7 @@
       - { text: "Protection must run from below grade (minimum cover point, need not exceed 18 in below grade) up to at least 8 ft above finished grade.", ref: "300.5(D)(1)" }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -246,7 +246,7 @@
       - { text: "The fix is dual-rated conductors, not a tighter glue joint." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -270,7 +270,7 @@
       - { text: "300.9 extends the wet classification to the interior of the raceway, so THWN/XHHW-class insulation is required." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -297,7 +297,7 @@
       - { text: "Compliant alternatives: Type UF cable (listed for direct burial and wet locations) or individual THWN conductors in the PVC." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -323,7 +323,7 @@
       - { text: "Fix: staple the cable within 12 in of the box (an 8 in limit applies instead to certain single-gang nonmetallic boxes without clamps, per 314.17(C))." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -348,7 +348,7 @@
       - { text: "The fished-cable allowance applies: concealed finished wall, securing impracticable → unsupported run permitted.", ref: "334.30(B)(1)" }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -374,7 +374,7 @@
       - { text: "So the governing distance for this box is 8 in, the stricter, box-specific rule." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -400,7 +400,7 @@
       - { text: "The 1¼ in setback protects against fasteners in wood and does not address sheared metal edges." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -425,7 +425,7 @@
       - { text: "Concealed dry wall cavities of a dwelling are the core permitted use.", ref: "334.10" }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -452,7 +452,7 @@
       - { text: "One failed clause makes the run non-compliant; move the first strap to within 3 ft." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -479,7 +479,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -505,7 +505,7 @@
       - { text: "A 150 ft run across a 100°F swing changes length by several inches — fittings required; supports must also allow the movement." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -531,7 +531,7 @@
       - { text: "RMC withstands severe damage and wet conditions; Schedule 80 PVC is the nonmetallic alternative identified for physical damage.", ref: "344.10 / 352.10(F)" }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -557,7 +557,7 @@
       - { text: "Rigid PVC is inherently corrosion-resistant and expressly identified for chemical exposure — the direct choice." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -583,7 +583,7 @@
       - { text: "Cover depth rules still apply outside the building, but depth alone cannot substitute for the raceway under it." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -610,7 +610,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -636,6 +636,6 @@
       - { text: "Step 3: enter Table 300.5 with the chosen method's column and the location's row; then satisfy 300.5(B) with wet-rated conductors.", ref: "Table 300.5" }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."

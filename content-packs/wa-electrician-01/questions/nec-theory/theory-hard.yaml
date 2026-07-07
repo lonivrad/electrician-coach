@@ -24,7 +24,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -48,7 +48,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -73,7 +73,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -99,7 +99,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -122,7 +122,7 @@
       - { text: "1,340,607 ÷ 250,000 = 5.36 V (about 1.1% of 480 V)." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -147,7 +147,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -176,7 +176,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -205,7 +205,7 @@
   trapIds: [unit-or-phase-confusion, next-size-up-rounding]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -234,7 +234,7 @@
   trapIds: [unit-or-phase-confusion, next-size-up-rounding]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -260,7 +260,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -288,7 +288,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -315,7 +315,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -344,7 +344,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -369,7 +369,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -393,7 +393,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -422,7 +422,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -448,7 +448,7 @@
       - { text: "I = 240 ÷ 48 = 5 A." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -474,7 +474,7 @@
       - { text: "I = 240 ÷ 24 = 10 A." }
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -502,7 +502,7 @@
       - { text: "Load voltage: 30 × 6 = 180 V (the wire eats 60 V)." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -530,7 +530,7 @@
       - { text: "Through the 60 Ω branch: 60 ÷ 60 = 1 A (the other 2 A takes the 30 Ω path)." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -558,7 +558,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -586,7 +586,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -612,7 +612,7 @@
       - { text: "The EGC's cmil area must be multiplied by at least 2.01, then rounded up to a standard size." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -636,6 +636,6 @@
       - { text: "Apply 2.53 to the EGC's cmil area and round up to the next standard conductor." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."

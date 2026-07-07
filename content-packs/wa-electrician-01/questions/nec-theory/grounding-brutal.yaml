@@ -28,7 +28,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding, table-column-selection]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -56,7 +56,7 @@
   trapIds: [next-size-up-rounding, adjusted-vs-corrected-ampacity, table-column-selection]
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -84,7 +84,7 @@
   trapIds: [continuous-load-125, table-column-selection]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -112,7 +112,7 @@
   trapIds: [next-size-up-rounding, adjusted-vs-corrected-ampacity, table-column-selection]
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -140,7 +140,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding, table-column-selection]
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -167,7 +167,7 @@
   trapIds: [table-column-selection, next-size-up-rounding]
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; 250.122(A) cap not modeled by egcSize calculator — keyed manually; SME-verify before live."
 
@@ -194,7 +194,7 @@
   trapIds: [continuous-load-125, table-column-selection]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -222,7 +222,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -249,7 +249,7 @@
   trapIds: [table-column-selection, unit-or-phase-confusion]
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -276,7 +276,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -303,7 +303,7 @@
   trapIds: [table-column-selection, unit-or-phase-confusion]
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -331,7 +331,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -358,7 +358,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -381,7 +381,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; recompute-verified (cmilRatio); SME-verify before live."
 
@@ -403,7 +403,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; recompute-verified (cmilRatio); SME-verify before live."
 
@@ -425,7 +425,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; recompute-verified (cmilRatio); SME-verify before live."
 
@@ -448,7 +448,7 @@
   trapIds: [unit-or-phase-confusion, table-column-selection]
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; recompute-verified (cmilRatio); SME-verify 250.122(B) 'minimum size' base interpretation before live."
 
@@ -470,7 +470,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; recompute-verified (cmilRatio); SME-verify before live."
 
@@ -493,7 +493,7 @@
   trapIds: [next-size-up-rounding, continuous-load-125]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; recompute-verified (nextStandardSize); SME-verify before live."
 
@@ -516,7 +516,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; recompute-verified (nextStandardSize); SME-verify before live."
 
@@ -538,7 +538,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; recompute-verified (nextStandardSize); SME-verify before live."
 
@@ -566,7 +566,7 @@
   trapIds: [table-column-selection, unit-or-phase-confusion]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier chain question (multi-calculator scenario, keyed as single); SME-verify near-miss arithmetic before live."
 
@@ -593,7 +593,7 @@
   trapIds: [table-column-selection, unit-or-phase-confusion]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier chain question (multi-calculator scenario, keyed as single); SME-verify near-miss arithmetic before live."
 
@@ -620,7 +620,7 @@
   trapIds: [table-column-selection, unit-or-phase-confusion]
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier chain question (multi-calculator scenario, keyed as single); SME-verify before live."
 
@@ -647,7 +647,7 @@
   trapIds: [continuous-load-125, table-column-selection]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier chain question (multi-calculator scenario, keyed as single); SME-verify before live."
 
@@ -675,7 +675,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier rule-selection question; SME-verify before live."
 
@@ -702,7 +702,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier 250.66(A) collision question; SME-verify before live."
 
@@ -728,7 +728,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier 250.66(A) rod-cap question; keyed manually (cap not modeled by gecSize); SME-verify before live."
 
@@ -754,7 +754,7 @@
   trapIds: [table-column-selection, unit-or-phase-confusion]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier 250.102(C) vs 250.66 divergence question; SME-verify 12.5% computation before live."
 
@@ -781,6 +781,6 @@
   trapIds: [table-column-selection]
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier three-rule adjudication question; SME-verify before live."

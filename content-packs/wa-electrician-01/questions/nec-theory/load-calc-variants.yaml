@@ -19,7 +19,7 @@
       - { text: "1,500 ft² × 3 VA/ft² = 4,500 VA." }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -38,7 +38,7 @@
       - { text: "1,800 ft² × 3 VA/ft² = 5,400 VA." }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -57,7 +57,7 @@
       - { text: "2,500 ft² × 3 VA/ft² = 7,500 VA." }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -76,7 +76,7 @@
       - { text: "3,200 ft² × 3 VA/ft² = 9,600 VA." }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -95,7 +95,7 @@
       - { text: "1,200 ft² × 3 VA/ft² = 3,600 VA." }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -118,7 +118,7 @@
       - { text: "3,000 + 1,575 = 4,575 VA." }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -140,7 +140,7 @@
       - { text: "3,000 + 3,150 = 6,150 VA." }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -162,7 +162,7 @@
       - { text: "3,000 + 4,200 = 7,200 VA." }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -184,7 +184,7 @@
       - { text: "3,000 + 1,750 = 4,750 VA." }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -206,7 +206,7 @@
       - { text: "3,000 + 5,950 = 8,950 VA." }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -229,7 +229,7 @@
       - { text: "10 + 8 = 18 kVA." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -251,7 +251,7 @@
       - { text: "10 + 10 = 20 kVA." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -273,7 +273,7 @@
       - { text: "10 + 14 = 24 kVA." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -295,7 +295,7 @@
       - { text: "10 + 16 = 26 kVA." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -317,7 +317,7 @@
       - { text: "10 + 6 = 16 kVA." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -338,7 +338,7 @@
       - { text: "Two ranges → 11 kW demand.", ref: "Table 220.55" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -357,7 +357,7 @@
       - { text: "Three ranges → 14 kW demand.", ref: "Table 220.55" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -376,7 +376,7 @@
       - { text: "Four ranges → 17 kW demand.", ref: "Table 220.55" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -395,7 +395,7 @@
       - { text: "Five ranges → 20 kW demand.", ref: "Table 220.55" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; SME-verify citation before live."
 
@@ -417,7 +417,7 @@
       - { text: "3,000 at 100% + 6,000 × 35% = 3,000 + 2,100 = 5,100 VA." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; general-lighting/SA/laundry demand subtotal only."
 
@@ -438,7 +438,7 @@
       - { text: "3,000 at 100% + 9,000 × 35% = 3,000 + 3,150 = 6,150 VA." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; demand subtotal only, not a full service calc."
 
@@ -459,6 +459,6 @@
       - { text: "3,000 at 100% + 10,500 × 35% = 3,000 + 3,675 = 6,675 VA." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-generated; demand subtotal only, not a full service calc."

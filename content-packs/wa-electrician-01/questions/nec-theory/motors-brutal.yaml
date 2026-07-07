@@ -23,7 +23,7 @@
   trapIds: [unit-or-phase-confusion, actual-current-vs-table, continuous-load-125]
   timeTargetSec: 280
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -46,7 +46,7 @@
   trapIds: [unit-or-phase-confusion, continuous-load-125]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -69,7 +69,7 @@
   trapIds: [table-column-selection, unit-or-phase-confusion, continuous-load-125]
   timeTargetSec: 280
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -92,7 +92,7 @@
   trapIds: [meter-reading-vs-ampacity, unit-or-phase-confusion, continuous-load-125]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -115,7 +115,7 @@
   trapIds: [continuous-load-125, unit-or-phase-confusion]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -138,7 +138,7 @@
   trapIds: [table-column-selection, actual-current-vs-table, continuous-load-125]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -162,7 +162,7 @@
   trapIds: [table-column-selection, actual-current-vs-table, meter-reading-vs-ampacity]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -185,7 +185,7 @@
   trapIds: [table-column-selection, actual-current-vs-table]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -208,7 +208,7 @@
   trapIds: [table-column-selection, actual-current-vs-table]
   timeTargetSec: 220
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -231,7 +231,7 @@
   trapIds: [table-column-selection, actual-current-vs-table]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -254,7 +254,7 @@
   trapIds: [table-column-selection, actual-current-vs-table, continuous-load-125]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -278,7 +278,7 @@
   trapIds: [table-column-selection, next-size-up-rounding, actual-current-vs-table]
   timeTargetSec: 220
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -301,7 +301,7 @@
   trapIds: [table-column-selection, next-size-up-rounding]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -324,7 +324,7 @@
   trapIds: [next-size-up-rounding, actual-current-vs-table]
   timeTargetSec: 220
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -347,7 +347,7 @@
   trapIds: [next-size-up-rounding, table-column-selection]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -370,7 +370,7 @@
   trapIds: [table-column-selection, next-size-up-rounding, actual-current-vs-table]
   timeTargetSec: 220
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -393,7 +393,7 @@
   trapIds: [next-size-up-rounding, table-column-selection, actual-current-vs-table]
   timeTargetSec: 220
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -417,7 +417,7 @@
   trapIds: [actual-current-vs-table, meter-reading-vs-ampacity, continuous-load-125]
   timeTargetSec: 200
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -439,7 +439,7 @@
   trapIds: [unit-or-phase-confusion, table-column-selection, actual-current-vs-table]
   timeTargetSec: 190
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -462,7 +462,7 @@
   trapIds: [actual-current-vs-table, continuous-load-125]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -484,7 +484,7 @@
   trapIds: [continuous-load-125, actual-current-vs-table]
   timeTargetSec: 200
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -507,7 +507,7 @@
   trapIds: [table-column-selection, unit-or-phase-confusion]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -534,7 +534,7 @@
   trapIds: [next-size-up-rounding, continuous-load-125]
   timeTargetSec: 280
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -560,7 +560,7 @@
   trapIds: [unit-or-phase-confusion, next-size-up-rounding]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -586,7 +586,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 260
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -612,7 +612,7 @@
   trapIds: [next-size-up-rounding, table-column-selection]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -637,7 +637,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 220
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -663,7 +663,7 @@
   trapIds: [actual-current-vs-table, meter-reading-vs-ampacity, table-column-selection]
   timeTargetSec: 280
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -688,7 +688,7 @@
   trapIds: [continuous-load-125, unit-or-phase-confusion]
   timeTargetSec: 220
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -714,6 +714,6 @@
   trapIds: [next-size-up-rounding, continuous-load-125, actual-current-vs-table]
   timeTargetSec: 280
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."

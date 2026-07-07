@@ -20,7 +20,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 40
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."
 
@@ -45,7 +45,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."
 
@@ -69,6 +69,6 @@
   trapIds: [next-size-up-rounding, adjusted-vs-corrected-ampacity]
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."

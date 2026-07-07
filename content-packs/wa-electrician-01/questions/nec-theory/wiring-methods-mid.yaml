@@ -22,7 +22,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -45,7 +45,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -68,7 +68,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 100
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -91,7 +91,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 110
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -114,7 +114,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -140,7 +140,7 @@
       - { text: "Both requirements met, so the run is compliant." }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -165,7 +165,7 @@
       - { text: "Fix: add a staple within 12 in of the box." }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -190,7 +190,7 @@
       - { text: "Fix: add staples so no interval exceeds 4½ ft." }
   timeTargetSec: 85
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -215,7 +215,7 @@
       - { text: "Securing within 12 in of each box remains a separate requirement, which this run meets." }
   timeTargetSec: 100
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -240,7 +240,7 @@
       - { text: "Fix: staple the cable on its flat face, or use listed stackers/straps that support it without deformation." }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -266,7 +266,7 @@
       - { text: "Both clauses satisfied — compliant." }
   timeTargetSec: 85
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -291,7 +291,7 @@
       - { text: "Maximum field spacing = 10 ft." }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -317,7 +317,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 80
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -342,7 +342,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -367,7 +367,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 85
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -393,7 +393,7 @@
       - { text: "Use fittings suitable for wet locations at every coupling and connector." }
   timeTargetSec: 110
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -418,7 +418,7 @@
       - { text: "Compliant alternatives: UF cable or wet-rated conductors in a raceway suitable for the location." }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -443,7 +443,7 @@
       - { text: "Use wet-rated insulation (THWN, XHHW) inside the raceway.", ref: "310.10(C)" }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -467,7 +467,7 @@
       - { text: "Only insulation listed for wet locations is permitted — THWN qualifies; plain THHN does not.", ref: "310.10(C)" }
   timeTargetSec: 80
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -492,7 +492,7 @@
       - { text: "Use a wet-location method instead (e.g., wet-rated conductors in EMT/PVC, or a cable listed for the location)." }
   timeTargetSec: 95
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -517,7 +517,7 @@
       - { text: "Remedy: a steel plate or bushing at least 1/16 in. thick, covering the area of the wiring, at that framing member." }
   timeTargetSec: 85
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -541,7 +541,7 @@
       - { text: "Exactly 1¼ in. satisfies 'not less than' — the setback alone protects the cable, and no plate is required." }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -565,7 +565,7 @@
       - { text: "Protection: a steel plate at least 1/16 in. thick covering the wiring at each notch, installed before the building finish." }
   timeTargetSec: 95
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -589,7 +589,7 @@
       - { text: "Minimum plate thickness = 1/16 in., appropriate length and width to cover the wiring area." }
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -614,6 +614,6 @@
       - { text: "So an 18 in. cover requirement for 2 in. conduit needs a trench at least 20 in. deep to the trench bottom." }
   timeTargetSec: 95
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."

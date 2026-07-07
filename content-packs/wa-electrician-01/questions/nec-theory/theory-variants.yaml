@@ -18,7 +18,7 @@
       - { text: "120 ÷ 20 = 6 A." }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (ohmsCurrent)."
 
@@ -37,7 +37,7 @@
       - { text: "240 ÷ 12 = 20 A." }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (ohmsCurrent)."
 
@@ -56,7 +56,7 @@
       - { text: "480 ÷ 96 = 5 A." }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (ohmsCurrent)."
 
@@ -75,7 +75,7 @@
       - { text: "208 ÷ 26 = 8 A." }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (ohmsCurrent)."
 
@@ -95,7 +95,7 @@
       - { text: "120 × 15 × 1 = 1,800 W." }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (power1ph)."
 
@@ -114,7 +114,7 @@
       - { text: "240 × 20 × 1 = 4,800 W." }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (power1ph)."
 
@@ -134,7 +134,7 @@
       - { text: "120 × 12 × 0.8 = 1,152 W." }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (power1ph)."
 
@@ -155,7 +155,7 @@
       - { text: "1.732 × 480 × 10 × 1 = 8,314 W." }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (power3ph)."
 
@@ -174,7 +174,7 @@
       - { text: "1.732 × 208 × 20 × 1 = 7,205 W." }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (power3ph)."
 
@@ -194,7 +194,7 @@
       - { text: "1.732 × 480 × 30 × 0.85 = 21,200 W." }
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (power3ph)."
 
@@ -215,7 +215,7 @@
       - { text: "2 × 12.9 × 20 × 100 ÷ 10,380 = 51,600 ÷ 10,380 = 4.97 V." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (voltageDrop); K = 12.9 Cu estimate."
 
@@ -234,7 +234,7 @@
       - { text: "2 × 12.9 × 16 × 80 ÷ 6,530 = 33,024 ÷ 6,530 = 5.06 V." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (voltageDrop); K = 12.9 Cu estimate."
 
@@ -254,6 +254,6 @@
       - { text: "1.732 × 12.9 × 40 × 150 ÷ 26,240 = 134,061 ÷ 26,240 = 5.11 V." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (voltageDrop); K = 12.9 Cu estimate."

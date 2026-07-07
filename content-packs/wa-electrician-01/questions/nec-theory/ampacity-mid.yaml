@@ -21,7 +21,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 105
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -44,7 +44,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 105
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -67,7 +67,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 105
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -90,7 +90,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -113,7 +113,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -137,7 +137,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 105
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -160,7 +160,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -183,7 +183,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -206,7 +206,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -230,7 +230,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -253,7 +253,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -276,7 +276,7 @@
   trapIds: [table-column-selection, adjusted-vs-corrected-ampacity]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -299,7 +299,7 @@
   trapIds: [adjusted-vs-corrected-ampacity, table-column-selection]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -322,7 +322,7 @@
   trapIds: [termination-temp-limit]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -344,7 +344,7 @@
   trapIds: [termination-temp-limit]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -366,7 +366,7 @@
   trapIds: [termination-temp-limit, table-column-selection]
   timeTargetSec: 105
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -389,7 +389,7 @@
   trapIds: [continuous-load-125, meter-reading-vs-ampacity]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -411,7 +411,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -433,7 +433,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -456,7 +456,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -478,7 +478,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 105
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -500,7 +500,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -534,7 +534,7 @@
   trapIds: [termination-temp-limit, table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -567,7 +567,7 @@
   trapIds: [adjusted-vs-corrected-ampacity]
   timeTargetSec: 135
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -600,6 +600,6 @@
   trapIds: [table-column-selection]
   timeTargetSec: 105
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."

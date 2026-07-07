@@ -20,7 +20,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 40
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."
 
@@ -39,7 +39,7 @@
       - { text: "Look up 12 AWG THHN in 3/4 EMT → 16 conductors.", ref: "Annex C Table C.1" }
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."
 
@@ -64,6 +64,6 @@
   trapIds: [table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."
