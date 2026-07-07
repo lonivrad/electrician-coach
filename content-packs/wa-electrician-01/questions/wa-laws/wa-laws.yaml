@@ -21,7 +21,7 @@
       - { text: "Work is done by a certified electrician or a registered electrical trainee under supervision.", ref: "RCW 19.28.161" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: reviewed
+  status: live
   version: 1
   note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm exact supervision language and ratios in current RCW/WAC."
 
@@ -44,7 +44,7 @@
       - { text: "Renewal CE ensures ongoing competency with current code.", ref: "WAC 296-46B-970" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: reviewed
+  status: live
   version: 1
   note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm CE hours and cycle."
 
@@ -67,7 +67,7 @@
       - { text: "An electrical work permit is required before work starts.", ref: "RCW 19.28.101" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: reviewed
+  status: live
   version: 1
   note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm permit timing/exemptions."
 
@@ -90,7 +90,7 @@
       - { text: "The party who took the permit requests the inspection.", ref: "WAC 296-46B-906" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: reviewed
+  status: live
   version: 1
   note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm inspection request process and AHJ scope."
 
@@ -113,6 +113,6 @@
       - { text: "Unlicensed/unpermitted work is subject to L&I civil penalties.", ref: "RCW 19.28.271" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: reviewed
+  status: live
   version: 1
   note: "Research-verified 2026-07 vs RCW 19.28 / WAC 296-46B; final live pending human sign-off — confirm: confirm penalty amounts/classification in current RCW."

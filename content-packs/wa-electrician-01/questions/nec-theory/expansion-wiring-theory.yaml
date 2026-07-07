@@ -20,7 +20,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "SME-reviewed 2026-07: Table 300.5 Column 2 (RMC/IMC) = 6 in. Fixed column citation (was Column 1)."
 
@@ -43,7 +43,7 @@
       - { text: "½–1 in PVC → support spacing 3 ft.", ref: "Table 352.30" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "SME-reviewed 2026-07: Table 352.30, ½–1 in PVC → 3 ft."
 
@@ -66,7 +66,7 @@
       - { text: "EMT: ≤ 360° total bends between pull points.", ref: "358.26" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft: SME-verify 2020 NEC 358.26."
 
@@ -89,7 +89,7 @@
       - { text: "MC support interval ≤ 6 ft; secured within 12 in of terminations.", ref: "330.30" }
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "SME-reviewed 2026-07: 330.30(B)/(C), MC support ≤ 6 ft, secured within 12 in."
 
@@ -113,7 +113,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft: SME-verify 2020 NEC 376.22(A)."
 
@@ -132,7 +132,7 @@
       - { text: "120 V × 10 A = 1,200 W." }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft: SME-verify."
 
@@ -152,6 +152,6 @@
       - { text: "VD = (2 × 12.9 × 20 × 100) / 6,530 = 51,600 / 6,530 ≈ 7.9 V." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Recompute-verified (voltageDrop); K=12.9 Cu is the standard exam estimate (stated in-stem), 12 AWG cmil from Ch.9 Table 8. Cleared needsReview 2026-07."

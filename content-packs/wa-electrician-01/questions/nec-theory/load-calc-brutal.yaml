@@ -21,7 +21,7 @@
       - { text: "Countable area = 2,600 + 800 = 3,400 ft²; 3,400 × 3 = 10,200 VA." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -43,7 +43,7 @@
       - { text: "Countable area = 3,256 − 480 − 120 = 2,656 ft²; 2,656 × 3 = 7,968 VA." }
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -68,7 +68,7 @@
       - { text: "3,000 at 100% + 11,640 × 35% = 3,000 + 4,074 = 7,074 VA.", ref: "Table 220.42" }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -91,7 +91,7 @@
       - { text: "3,000 + 7,524 × 35% = 3,000 + 2,633.4 = 5,633.4 VA.", ref: "Table 220.42" }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -114,7 +114,7 @@
       - { text: "3,000 + 17,100 × 35% = 3,000 + 5,985 = 8,985 VA.", ref: "Table 220.42" }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -139,7 +139,7 @@
       - { text: "Demand = 43,950 VA." }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -162,7 +162,7 @@
       - { text: "Demand = 3,000 + 40,950 + 712.5 = 44,662.5 VA." }
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -186,7 +186,7 @@
       - { text: "Demand = 3,000 + 40,950 + 13,848 = 57,798 VA." }
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -209,7 +209,7 @@
       - { text: "Demand = 3,000 + 40,950 + 12,720 = 56,670 VA." }
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -232,7 +232,7 @@
       - { text: "Demand = 3,000 + 40,950 + 30,000 = 73,950 VA." }
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -255,7 +255,7 @@
       - { text: "Demand = 3,000 + 40,950 + 250 = 44,200 VA." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -279,7 +279,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -302,7 +302,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -325,7 +325,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -351,7 +351,7 @@
       - { text: "Total = 20.96 + 9.75 = 30.71 kVA." }
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -373,7 +373,7 @@
       - { text: "A/C governs (7.5 > 7.15); total = 18 + 7.5 = 25.5 kVA." }
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -395,7 +395,7 @@
       - { text: "Heat governs; total = 19.6 + 6.4 = 26.0 kVA." }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -417,7 +417,7 @@
       - { text: "Total = 17.2 + 12.65 = 29.85 kVA." }
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -441,7 +441,7 @@
       - { text: "Total = 12.48 + 4.8 = 17.28 kVA." }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -465,7 +465,7 @@
       - { text: "Total = 29.56 + 13 = 42.56 kVA." }
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -490,7 +490,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -512,7 +512,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -547,7 +547,7 @@
       - { text: "Ranges, dryers, and fixed appliances each have their own demand rules outside Table 220.42." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -580,7 +580,7 @@
       - { text: "The 65% discount is an optional-method rule that does not exist in Part III." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -615,7 +615,7 @@
       - { text: "Neutral = 5,625 + 5,600 + 3,500 = 14,725 VA." }
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -650,7 +650,7 @@
       - { text: "25.3 kVA (optional) vs 33.1 kVA (standard) → option b. (25,300/240 ≈ 105 A, so the ≥100 A condition of 220.82(A) is met.)" }
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -685,7 +685,7 @@
       - { text: "Pair: 35.8 vs 27.0 → option c." }
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -717,7 +717,7 @@
       - { text: "The building service is calculated under Part III, or under 220.84 if its conditions are met — never by summing per-unit 220.82 results.", ref: "220.84" }
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -750,7 +750,7 @@
       - { text: "The nonlinearity of Column C is the point: more ranges on one conductor set means more diversity, not additive demand." }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -784,6 +784,6 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."

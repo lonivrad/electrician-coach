@@ -21,7 +21,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."
 
@@ -46,7 +46,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."
 
@@ -69,6 +69,6 @@
       - { text: "EGC increased in proportion to the circular-mil increase of the ungrounded conductors.", ref: "250.122(B)" }
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."

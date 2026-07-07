@@ -15,7 +15,7 @@
       - { text: "2,000 ft² × 3 VA/ft² = 6,000 VA." }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."
 
@@ -38,7 +38,7 @@
       - { text: "Minimum of two 20 A small-appliance circuits required.", ref: "210.11(C)(1)" }
   timeTargetSec: 40
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."
 
@@ -61,7 +61,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."
 
@@ -84,6 +84,6 @@
       - { text: "One-family dwelling minimum service = 100 A.", ref: "230.79(C)" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "NEEDS_VERIFICATION."

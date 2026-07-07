@@ -23,7 +23,7 @@
       - { text: "Demand = 3,000 + 28,434 = 31,434 VA." }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -47,7 +47,7 @@
       - { text: "Demand = 3,000 + 40,950 + 27,000 = 70,950 VA." }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -71,7 +71,7 @@
       - { text: "Demand = 3,000 + 40,950 + 8,250 = 52,200 VA." }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -94,7 +94,7 @@
       - { text: "3,000 at 100% + 60,000 × 35% = 3,000 + 21,000 = 24,000 VA.", ref: "Table 220.42" }
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -115,7 +115,7 @@
       - { text: "2,800 ft² × 3 VA/ft² = 8,400 VA." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -138,7 +138,7 @@
       - { text: "3,000 at 100% + 10,200 × 35% = 3,000 + 3,570 = 6,570 VA.", ref: "Table 220.42" }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -161,7 +161,7 @@
       - { text: "3,000 at 100% + 9,900 × 35% = 3,000 + 3,465 = 6,465 VA.", ref: "Table 220.42" }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -184,7 +184,7 @@
       - { text: "Demand = 3,000 + 40,950 + 6,250 = 50,200 VA." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -208,7 +208,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -230,7 +230,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -252,7 +252,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -277,7 +277,7 @@
       - { text: "Total = 17.2 + 7 = 24.2 kVA." }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -300,7 +300,7 @@
       - { text: "Total = 18.8 + 9.1 = 27.9 kVA." }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -325,7 +325,7 @@
       - { text: "Total = 18.8 + 6 = 24.8 kVA." }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -347,7 +347,7 @@
       - { text: "Total = 35.2 kVA." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -371,7 +371,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -409,7 +409,7 @@
       - { text: "24.3 kVA (optional) < 28.5 kVA (standard) → option a." }
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -442,7 +442,7 @@
       - { text: "Add the two demand results (plus dryers, appliances, HVAC, etc.) to build the service load." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -475,7 +475,7 @@
       - { text: "Include the larger, 6.5 kVA." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -507,7 +507,7 @@
       - { text: "A 60 A service fails the threshold, so the standard method (Part III) must be used." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -540,7 +540,7 @@
       - { text: "That total then gets first 10 kVA at 100% and the remainder at 40%." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."
 
@@ -572,6 +572,6 @@
       - { text: "Neutral: 8 kW × 70% = 5.6 kW.", ref: "220.61(B)(1)" }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft hard-tier question; SME-verify before live."

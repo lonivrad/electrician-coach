@@ -23,7 +23,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; calculator-backed (egcSize); SME-verify before live."
 
@@ -49,7 +49,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; calculator-backed (egcSize); SME-verify before live."
 
@@ -74,7 +74,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; calculator-backed (egcSize); SME-verify before live."
 
@@ -99,7 +99,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; calculator-backed (egcSize); SME-verify before live."
 
@@ -125,7 +125,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; calculator-backed (egcSize); SME-verify before live."
 
@@ -150,7 +150,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; calculator-backed (egcSize); SME-verify before live."
 
@@ -176,7 +176,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; calculator-backed (gecSize); SME-verify before live."
 
@@ -201,7 +201,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; calculator-backed (gecSize); SME-verify before live."
 
@@ -226,7 +226,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; calculator-backed (gecSize); SME-verify before live."
 
@@ -251,7 +251,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; calculator-backed (gecSize); SME-verify before live."
 
@@ -276,7 +276,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; calculator-backed (gecSize); SME-verify before live."
 
@@ -304,7 +304,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 105
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; calculator-backed (egcSize); SME-verify before live."
 
@@ -331,7 +331,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 105
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; calculator-backed (gecSize); SME-verify before live."
 
@@ -356,7 +356,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier conceptual question; SME-verify before live."
 
@@ -381,7 +381,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 105
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier conceptual question; SME-verify before live."
 
@@ -406,7 +406,7 @@
       - { text: "This connection lets ground-fault current return to the source and open the OCPD.", ref: "250.28" }
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier bonding question; SME-verify before live."
 
@@ -431,7 +431,7 @@
       - { text: "So the subpanel neutral bar is isolated, and the ground bar (with the feeder EGC) is bonded to the enclosure.", ref: "250.142(B)" }
   timeTargetSec: 105
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier bonding question; SME-verify before live."
 
@@ -455,7 +455,7 @@
       - { text: "The termination must be accessible and provide at least 3 terminals.", ref: "250.94(A)" }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier bonding question; SME-verify 250.94 terminal count before live."
 
@@ -480,7 +480,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 105
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier bonding question; SME-verify 250.104(A) sizing reference before live."
 
@@ -503,7 +503,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; recompute-verified (cmilRatio); SME-verify before live."
 
@@ -525,7 +525,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; recompute-verified (cmilRatio); SME-verify before live."
 
@@ -547,7 +547,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; recompute-verified (cmilRatio); SME-verify before live."
 
@@ -569,7 +569,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; recompute-verified (cmilRatio); SME-verify before live."
 
@@ -592,7 +592,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; recompute-verified (nextStandardSize); SME-verify before live."
 
@@ -614,6 +614,6 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 135
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; recompute-verified (nextStandardSize); SME-verify before live."

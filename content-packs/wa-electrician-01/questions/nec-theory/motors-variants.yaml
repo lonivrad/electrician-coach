@@ -20,7 +20,7 @@
   trapIds: [actual-current-vs-table, table-column-selection]
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorFLC); value from verified Table 430.250."
 
@@ -40,7 +40,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorFLC); value from verified Table 430.250."
 
@@ -60,7 +60,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorFLC); value from verified Table 430.250."
 
@@ -81,7 +81,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorFLC); value from verified Table 430.248."
 
@@ -101,7 +101,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorFLC); value from verified Table 430.250."
 
@@ -121,7 +121,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorFLC); value from verified Table 430.250."
 
@@ -143,7 +143,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorConductor)."
 
@@ -164,7 +164,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorConductor)."
 
@@ -184,7 +184,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorConductor)."
 
@@ -204,7 +204,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorConductor)."
 
@@ -224,7 +224,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorConductor)."
 
@@ -246,7 +246,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorBranchOCPD)."
 
@@ -267,7 +267,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorBranchOCPD)."
 
@@ -288,7 +288,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorBranchOCPD)."
 
@@ -309,7 +309,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorBranchOCPD)."
 
@@ -329,7 +329,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorBranchOCPD)."
 
@@ -351,7 +351,7 @@
   trapIds: [actual-current-vs-table]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorOverload)."
 
@@ -372,7 +372,7 @@
   trapIds: [actual-current-vs-table]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorOverload)."
 
@@ -392,7 +392,7 @@
   trapIds: [actual-current-vs-table]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorOverload)."
 
@@ -413,7 +413,7 @@
   trapIds: [actual-current-vs-table]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorOverload)."
 
@@ -435,7 +435,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorFeeder)."
 
@@ -456,7 +456,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorFeeder)."
 
@@ -477,6 +477,6 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (motorFeeder)."

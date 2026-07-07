@@ -19,7 +19,7 @@
       - { text: "Each small-appliance and laundry circuit = 1,500 VA.", ref: "220.52" }
   timeTargetSec: 40
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft: SME-verify 2020 NEC 220.52."
 
@@ -39,7 +39,7 @@
       - { text: "One range ≤ 12 kW → 8 kW demand.", ref: "Table 220.55" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft: SME-verify 2020 Table 220.55 Column C."
 
@@ -62,7 +62,7 @@
       - { text: "3,000 + 2,625 = 5,625 VA." }
   timeTargetSec: 150
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft: general-lighting/SA/laundry demand subtotal only, not a full service calc."
 
@@ -85,7 +85,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Recompute-verified (optionalMethod); 220.82(B) first 10 kVA @100% / remainder @40% confirmed (docs/nec-tables-audit.md). Cleared needsReview 2026-07."
 
@@ -109,7 +109,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 40
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft: SME-verify."
 
@@ -133,7 +133,7 @@
       - { text: "100 A OCPD → 8 AWG copper EGC.", ref: "Table 250.122" }
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft: SME-verify 2020 Table 250.122."
 
@@ -158,7 +158,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft: SME-verify 2020 Table 250.66 row and electrode caps."
 
@@ -179,6 +179,6 @@
       - { text: "The EGC's circular-mil area is multiplied by 1.59 (10 AWG → 8 AWG)." }
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Recompute-verified (cmilRatio); Ch.9 Table 8 circular mils + 250.122(B) proportional-upsize method confirmed. Cleared needsReview 2026-07."

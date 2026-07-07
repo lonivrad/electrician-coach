@@ -19,7 +19,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (nextStandardSize)."
 
@@ -39,7 +39,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (nextStandardSize)."
 
@@ -59,7 +59,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (nextStandardSize)."
 
@@ -79,7 +79,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (nextStandardSize)."
 
@@ -99,7 +99,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (nextStandardSize)."
 
@@ -121,7 +121,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (ocpdMixedLoad)."
 
@@ -142,7 +142,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (ocpdMixedLoad)."
 
@@ -163,7 +163,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (ocpdMixedLoad)."
 
@@ -184,7 +184,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (ocpdMixedLoad)."
 
@@ -205,7 +205,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (ocpdMixedLoad)."
 
@@ -227,7 +227,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (continuousLoad)."
 
@@ -247,7 +247,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (continuousLoad)."
 
@@ -267,7 +267,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 60
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (continuousLoad)."
 
@@ -288,7 +288,7 @@
       - { text: "12 AWG copper → 20 A maximum OCPD.", ref: "240.4(D)" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (smallConductorMaxOCPD); value from verified 240.4(D)."
 
@@ -308,7 +308,7 @@
       - { text: "14 AWG copper → 15 A maximum OCPD.", ref: "240.4(D)" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (smallConductorMaxOCPD); value from verified 240.4(D)."
 
@@ -329,7 +329,7 @@
   trapIds: [actual-current-vs-table]
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (smallConductorMaxOCPD); value from verified 240.4(D)."
 
@@ -349,6 +349,6 @@
       - { text: "10 AWG aluminum → 25 A maximum OCPD.", ref: "240.4(D)" }
   timeTargetSec: 45
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Calculator-backed (smallConductorMaxOCPD); value from verified 240.4(D)."

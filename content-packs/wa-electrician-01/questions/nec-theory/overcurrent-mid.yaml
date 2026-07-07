@@ -21,7 +21,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -43,7 +43,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -66,7 +66,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 100
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -88,7 +88,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -110,7 +110,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 100
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -133,7 +133,7 @@
   trapIds: [actual-current-vs-table]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -155,7 +155,7 @@
   trapIds: [table-column-selection, actual-current-vs-table]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -177,7 +177,7 @@
   trapIds: [actual-current-vs-table]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -199,7 +199,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -221,7 +221,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -245,7 +245,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live. Recompute inputs are the amperes derived from the stated VA at 240 V."
 
@@ -268,7 +268,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live. Recompute inputs are the amperes derived from the stated VA at 120 V."
 
@@ -291,7 +291,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live. Recompute inputs are the amperes derived from the stated VA at 240 V."
 
@@ -314,7 +314,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 135
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live. Recompute inputs are the amperes derived from the stated VA at 240 V."
 
@@ -337,7 +337,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 135
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live. Recompute inputs are the amperes derived from the stated VA at 240 V."
 
@@ -361,7 +361,7 @@
   trapIds: [continuous-load-125, unit-or-phase-confusion]
   timeTargetSec: 100
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live. Recompute input is the 56 A derived from 13,440 VA at 240 V."
 
@@ -383,7 +383,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -409,7 +409,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -433,7 +433,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -459,7 +459,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 80
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -485,7 +485,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -512,7 +512,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 100
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -538,7 +538,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 100
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -564,7 +564,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 100
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -591,6 +591,6 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 100
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."

@@ -22,7 +22,7 @@
   trapIds: [adjusted-vs-corrected-ampacity, termination-temp-limit, table-column-selection]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -46,7 +46,7 @@
   trapIds: [next-size-up-rounding, termination-temp-limit]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live. Chain partner of q-ocp-x001."
 
@@ -70,7 +70,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -93,7 +93,7 @@
   trapIds: [next-size-up-rounding, table-column-selection]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -116,7 +116,7 @@
   trapIds: [termination-temp-limit, table-column-selection, next-size-up-rounding]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -139,7 +139,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -162,7 +162,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -185,7 +185,7 @@
   trapIds: [table-column-selection, adjusted-vs-corrected-ampacity, termination-temp-limit]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -208,7 +208,7 @@
   trapIds: [next-size-up-rounding, table-column-selection]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live. Chain partner of q-ocp-x008."
 
@@ -231,7 +231,7 @@
   trapIds: [next-size-up-rounding, actual-current-vs-table]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -254,7 +254,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -278,7 +278,7 @@
   trapIds: [adjusted-vs-corrected-ampacity, table-column-selection, termination-temp-limit]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -301,7 +301,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live. Chain partner of q-ocp-x012."
 
@@ -324,7 +324,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -347,7 +347,7 @@
   trapIds: [next-size-up-rounding, meter-reading-vs-ampacity]
   timeTargetSec: 180
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -370,7 +370,7 @@
   trapIds: [adjusted-vs-corrected-ampacity, next-size-up-rounding]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -398,7 +398,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -425,7 +425,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -452,7 +452,7 @@
   trapIds: [next-size-up-rounding, actual-current-vs-table]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -479,7 +479,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -506,7 +506,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding, meter-reading-vs-ampacity]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -533,7 +533,7 @@
   trapIds: [next-size-up-rounding, adjusted-vs-corrected-ampacity, termination-temp-limit]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -560,7 +560,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -587,7 +587,7 @@
   trapIds: [next-size-up-rounding, termination-temp-limit]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -614,7 +614,7 @@
   trapIds: [termination-temp-limit, next-size-up-rounding]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -641,7 +641,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -668,7 +668,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -695,7 +695,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -722,7 +722,7 @@
   trapIds: [continuous-load-125, next-size-up-rounding, adjusted-vs-corrected-ampacity]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -749,6 +749,6 @@
   trapIds: [next-size-up-rounding, adjusted-vs-corrected-ampacity, termination-temp-limit]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."

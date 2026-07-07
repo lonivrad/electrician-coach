@@ -20,7 +20,7 @@
       - { text: "The two small-appliance circuits (3,000 VA) are added later under 220.52 — not part of this figure." }
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -41,7 +41,7 @@
       - { text: "The 46 receptacles are included in that unit load per 220.14(J) — no addition.", ref: "220.14(J)" }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -62,7 +62,7 @@
       - { text: "3,050 × 3 = 9,150 VA." }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -86,7 +86,7 @@
       - { text: "Demand = 3,000 + 4,725 = 7,725 VA." }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -108,7 +108,7 @@
       - { text: "Demand = 3,000 + 6,650 = 9,650 VA." }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -130,7 +130,7 @@
       - { text: "Demand = 3,000 + 15,750 = 18,750 VA." }
   timeTargetSec: 105
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -152,7 +152,7 @@
       - { text: "Demand = 3,000 + 19,950 = 22,950 VA." }
   timeTargetSec: 105
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -176,7 +176,7 @@
       - { text: "Demand = 3,000 + 2,205 = 5,205 VA." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -198,7 +198,7 @@
       - { text: "Demand = 6,255 VA." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -220,7 +220,7 @@
       - { text: "Demand = 5,415 VA." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -242,7 +242,7 @@
       - { text: "Demand = 7,200 VA." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -266,7 +266,7 @@
       - { text: "Total = 21.6 kVA." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -288,7 +288,7 @@
       - { text: "Total = 28.9 kVA." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -310,7 +310,7 @@
       - { text: "Total = 29 kVA." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -332,7 +332,7 @@
       - { text: "Total = 26 kVA." }
   timeTargetSec: 120
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -356,7 +356,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -378,7 +378,7 @@
   trapIds: [table-column-selection]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -402,7 +402,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -424,7 +424,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -446,7 +446,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -468,7 +468,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -503,7 +503,7 @@
       - { text: "Total added to the lighting bucket = 4,500 VA." }
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -535,7 +535,7 @@
       - { text: "The range takes its demand from Table 220.55 Column C and is added afterward.", ref: "Table 220.55" }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -568,7 +568,7 @@
   trapIds: [continuous-load-125]
   timeTargetSec: 75
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."
 
@@ -601,6 +601,6 @@
       - { text: "Add the selected heating/air-conditioning value at 100%.", ref: "220.82(C)" }
   timeTargetSec: 90
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft mid-tier question; SME-verify before live."

@@ -27,7 +27,7 @@
   trapIds: [unit-or-phase-confusion, meter-reading-vs-ampacity]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -55,7 +55,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -83,7 +83,7 @@
   trapIds: [actual-current-vs-table, unit-or-phase-confusion]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -109,7 +109,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -137,7 +137,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -164,7 +164,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -196,7 +196,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -226,7 +226,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -258,7 +258,7 @@
   trapIds: [unit-or-phase-confusion, next-size-up-rounding]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -287,7 +287,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 210
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -315,7 +315,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -343,7 +343,7 @@
   trapIds: [unit-or-phase-confusion, meter-reading-vs-ampacity]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -369,7 +369,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -396,7 +396,7 @@
   trapIds: [meter-reading-vs-ampacity, unit-or-phase-confusion]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -424,7 +424,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -450,7 +450,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -477,7 +477,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -503,7 +503,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -533,7 +533,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -559,7 +559,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -586,7 +586,7 @@
       - { text: "Total: 10 + 7 + 3 = 20 Ω; I = 240 ÷ 20 = 12 A." }
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -612,7 +612,7 @@
       - { text: "Total: 4 + 6 + 2 = 12 Ω; I = 120 ÷ 12 = 10 A." }
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -641,7 +641,7 @@
       - { text: "Bank voltage: 10 × 20 = 200 V (the wire eats 40 V)." }
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -668,7 +668,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -695,7 +695,7 @@
       - { text: "15 Ω branch: I = 60 ÷ 15 = 4 A → P = 60 × 4 = 240 W (the 30 Ω takes the other 2 A, 120 W)." }
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -721,7 +721,7 @@
       - { text: "Delivered power check: 480 × 12 = 5,760 W — the 6.5 kW nameplate assumed no wire loss." }
   timeTargetSec: 270
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -752,7 +752,7 @@
   trapIds: [actual-current-vs-table, unit-or-phase-confusion]
   timeTargetSec: 300
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -780,7 +780,7 @@
   trapIds: [next-size-up-rounding]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -807,7 +807,7 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
 
@@ -833,6 +833,6 @@
   trapIds: [unit-or-phase-confusion]
   timeTargetSec: 240
   modes: [diagnostic, board, overtrain]
-  status: draft
+  status: live
   version: 1
   note: "Draft brutal-tier question; SME-verify before live."
