@@ -1,0 +1,627 @@
+# Grounding & bonding — HARD tier (difficulty 4–5). 2020 NEC. All DRAFT.
+# Multi-step chains: OCPD derivation → Table 250.122, 250.66 parallel services,
+# 250.122(B) cmil-ratio upsizing, parallel-run EGCs, and rule-selection traps.
+
+# ---- EGC via a derived OCPD (chain: load → 240.6 → Table 250.122) -----------
+- id: q-gnd-h001
+  recompute: { calc: egcSize, inputs: { ocpd: 110 } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you got 8 AWG, you skipped the 125% continuous factor: 88 A × 1.25 = 110 A OCPD, which is over the 100 A row."
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 4
+  stem: "A feeder serves an 88 A continuous load (no noncontinuous load). The OCPD is sized at the minimum standard rating permitted by 215.3 and 240.6(A). What is the minimum copper equipment grounding conductor for this feeder per Table 250.122?"
+  options:
+    - { id: a, text: "8 AWG", distractorRationale: "Sizing the OCPD at 88 A (forgetting the 125% continuous factor) lands in the ≤100 A row. The required OCPD is 88 × 1.25 = 110 A." }
+    - { id: b, text: "6 AWG", isCorrect: true }
+    - { id: c, text: "10 AWG", distractorRationale: "10 AWG is the EGC for a ≤60 A device — this reads the wrong row entirely." }
+    - { id: d, text: "4 AWG", distractorRationale: "4 AWG applies above 200 A. Skipping ahead a row overshoots the 110 A device." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "The EGC follows the OCPD rating you actually install — derive the OCPD first (125% of continuous), then read Table 250.122."
+    codePath: ["215.3 → 88 A × 1.25 = 110 A", "240.6(A) → 110 A standard", "Table 250.122 → over 100 A, ≤200 A → 6 AWG Cu"]
+    steps:
+      - { text: "Minimum OCPD = 88 A × 1.25 = 110 A, a standard 240.6(A) rating.", ref: "215.3" }
+      - { text: "110 A exceeds the 100 A row, so use the ≤200 A row → 6 AWG copper EGC.", ref: "Table 250.122" }
+  trapIds: [continuous-load-125, table-column-selection]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-gnd-h002
+  recompute: { calc: egcSize, inputs: { ocpd: 70 } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you got 10 AWG, you sized the EGC from the 62 A load instead of the 70 A device that actually protects the circuit."
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 4
+  stem: "A feeder's computed noncontinuous load is 62 A. Its conductors have a 65 A ampacity, and 240.4(B) is applied to protect them at the next standard rating up. What is the minimum copper equipment grounding conductor per Table 250.122?"
+  options:
+    - { id: a, text: "10 AWG", distractorRationale: "This uses the ≤60 A row from the 62 A load or 65 A ampacity — but the EGC is keyed to the installed 70 A device, which is over 60 A." }
+    - { id: b, text: "8 AWG", isCorrect: true }
+    - { id: c, text: "6 AWG", distractorRationale: "6 AWG is the row above 100 A; a 70 A device sits in the ≤100 A row." }
+    - { id: d, text: "12 AWG", distractorRationale: "12 AWG is only permitted for devices ≤20 A." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Next-size-up protection under 240.4(B) drags the EGC up with it: Table 250.122 reads the device rating, not the load or the conductor ampacity."
+    codePath: ["240.4(B)/240.6(A) → 65 A protected at 70 A", "Table 250.122 → over 60 A, ≤100 A → 8 AWG Cu"]
+    steps:
+      - { text: "Next standard rating above 65 A ampacity is 70 A.", ref: "240.6(A)" }
+      - { text: "70 A is over the 60 A row → ≤100 A row → 8 AWG copper EGC.", ref: "Table 250.122" }
+  trapIds: [next-size-up-rounding, table-column-selection]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-gnd-h003
+  recompute: { calc: egcSize, inputs: { ocpd: 225 } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you got 6 AWG, you treated 225 A as if it were in the 200 A row — 225 A is over 200 A, so the next row (4 AWG) governs."
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 4
+  stem: "A 208Y/120 V feeder to a distribution panel is protected by a 225 A circuit breaker. What is the minimum copper equipment grounding conductor run with the feeder, per Table 250.122?"
+  options:
+    - { id: a, text: "6 AWG", distractorRationale: "6 AWG covers devices up to 200 A. A 225 A breaker is over that row's edge, even though it feels 'close to 200'." }
+    - { id: b, text: "4 AWG", isCorrect: true }
+    - { id: c, text: "3 AWG", distractorRationale: "3 AWG is required only above 300 A." }
+    - { id: d, text: "8 AWG", distractorRationale: "8 AWG stops at 100 A — two rows short of a 225 A device." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Table 250.122 rows are 'not exceeding' limits — a rating one standard size past a row edge jumps to the next row."
+    codePath: ["Table 250.122 → 225 A is over 200 A → ≤300 A row → 4 AWG Cu"]
+    steps:
+      - { text: "225 A > 200 A row limit, so the ≤300 A row applies → 4 AWG copper EGC.", ref: "Table 250.122" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-gnd-h004
+  recompute: { calc: egcSize, inputs: { ocpd: 60 } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you got 8 AWG, you treated 60 A as 'over 60' — the row reads NOT EXCEEDING 60 A, so a 60 A device is still in the 10 AWG row."
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 4
+  stem: "A branch circuit carries 30 A of continuous load plus 20 A of noncontinuous load. The OCPD is sized at the minimum standard rating per 210.20(A) and 240.6(A). What is the minimum copper equipment grounding conductor per Table 250.122?"
+  options:
+    - { id: a, text: "10 AWG", isCorrect: true }
+    - { id: b, text: "8 AWG", distractorRationale: "8 AWG would apply above 60 A. The required device is exactly 60 A (30 × 1.25 + 20 = 57.5 → 60 A), which is still within the 'not exceeding 60 A' row." }
+    - { id: c, text: "12 AWG", distractorRationale: "This sizes from 50 A of raw load with the ≤20 A row logic — 12 AWG is only for devices ≤20 A." }
+    - { id: d, text: "6 AWG", distractorRationale: "This applies 125% to the entire 50 A (62.5 → 70 A device). Only the continuous 30 A gets the 125% factor." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Compute the OCPD from 125% continuous + 100% noncontinuous, then read Table 250.122 remembering the rows are 'not exceeding' values."
+    codePath: ["210.20(A) → 30 × 1.25 + 20 = 57.5 A", "240.6(A) → 60 A standard", "Table 250.122 → ≤60 A → 10 AWG Cu"]
+    steps:
+      - { text: "Minimum OCPD = 30 A × 1.25 + 20 A = 57.5 A → next standard rating 60 A.", ref: "210.20(A)" }
+      - { text: "60 A does not exceed the 60 A row limit → 10 AWG copper EGC.", ref: "Table 250.122" }
+  trapIds: [continuous-load-125, table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-gnd-h023
+  recompute: { calc: egcSize, inputs: { ocpd: 1600 } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you got 250 kcmil, you read the row for devices over 1600 A — a 1600 A device is still within the 'not exceeding 1600 A' row (4/0)."
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 4
+  stem: "A 1600 A main breaker protects a feeder to a distribution switchboard. Per Table 250.122, what is the minimum copper equipment grounding conductor?"
+  options:
+    - { id: a, text: "4/0 AWG", isCorrect: true }
+    - { id: b, text: "250 kcmil copper", distractorRationale: "250 kcmil is the row for devices over 1600 A (up to 2000 A). Exactly 1600 A stays in the 'not exceeding 1600 A' row." }
+    - { id: c, text: "3/0 AWG", distractorRationale: "3/0 covers devices only up to 1200 A." }
+    - { id: d, text: "2/0 AWG", distractorRationale: "2/0 covers devices only up to 1000 A — two rows short." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "At a row edge, 'not exceeding' means the boundary rating itself still belongs to the smaller-EGC row."
+    codePath: ["Table 250.122 → not exceeding 1600 A → 4/0 Cu"]
+    steps:
+      - { text: "1600 A is exactly the row limit, not over it → 4/0 copper EGC.", ref: "Table 250.122" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Parallel-run EGCs (250.122(F): full size in each raceway) --------------
+- id: q-gnd-h005
+  recompute: { calc: egcSize, inputs: { ocpd: 450 } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you divided 450 A by the two runs and looked up 225 A, remember: each raceway's EGC is sized for the FULL rating of the feeder OCPD."
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 5
+  stem: "A 450 A feeder is run as two parallel sets of conductors in two separate PVC raceways, with a wire-type copper EGC in each raceway. Per 250.122(F) and Table 250.122, what is the minimum size of EACH equipment grounding conductor?"
+  options:
+    - { id: a, text: "2 AWG in each raceway", isCorrect: true }
+    - { id: b, text: "4 AWG in each raceway", distractorRationale: "This divides 450 A by the two runs (225 A → 4 AWG). A fault can return through one raceway alone, so each EGC must be sized for the full 450 A device." }
+    - { id: c, text: "3 AWG in each raceway", distractorRationale: "3 AWG is the ≤400 A row. A 450 A device is over that edge — the ≤500 A row (2 AWG) governs." }
+    - { id: d, text: "One 2 AWG EGC in either raceway is sufficient", distractorRationale: "250.122(F) requires an EGC in EACH raceway of a parallel run, not one shared conductor." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Parallel runs need a full-size EGC (per the total OCPD rating) in every raceway, because fault current may return on only one path."
+    codePath: ["250.122(F) → EGC in each raceway, sized per Table 250.122", "Table 250.122 → 450 A → ≤500 A row → 2 AWG Cu"]
+    steps:
+      - { text: "Each raceway of a parallel feeder must contain a wire EGC sized for the feeder OCPD.", ref: "250.122(F)" }
+      - { text: "450 A is over 400 A → ≤500 A row → 2 AWG copper in each raceway.", ref: "Table 250.122" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-gnd-h006
+  recompute: { calc: egcSize, inputs: { ocpd: 400 } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you got 6 AWG, you sized each EGC from 200 A (half the device). Each parallel raceway gets an EGC for the full 400 A rating."
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 5
+  stem: "A 400 A feeder uses two parallel sets of 500 kcmil copper conductors, one set per nonmetallic raceway. A copper wire EGC is installed with each set. What is the minimum size of each EGC per 250.122(F) and Table 250.122?"
+  options:
+    - { id: a, text: "6 AWG", distractorRationale: "6 AWG comes from looking up 200 A — half the device rating per set. The table entry is the full 400 A OCPD, in every raceway." }
+    - { id: b, text: "3 AWG", isCorrect: true }
+    - { id: c, text: "2 AWG", distractorRationale: "2 AWG is the row above 400 A. Exactly 400 A is still within the 'not exceeding 400 A' row." }
+    - { id: d, text: "1/0 AWG", distractorRationale: "This sizes the EGC from the 500 kcmil phase conductors via Table 250.66 — that table is for grounding electrode conductors at services, not feeder EGCs." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Every raceway of a parallel run carries a full-size EGC per the feeder OCPD; the phase-conductor size is irrelevant to the base lookup."
+    codePath: ["250.122(F)", "Table 250.122 → not exceeding 400 A → 3 AWG Cu"]
+    steps:
+      - { text: "Each raceway requires its own wire EGC sized from the 400 A device.", ref: "250.122(F)" }
+      - { text: "400 A → 'not exceeding 400 A' row → 3 AWG copper in each raceway.", ref: "Table 250.122" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- GEC for parallel services (Table 250.66 note: equivalent area) ---------
+- id: q-gnd-h007
+  recompute: { calc: gecSize, inputs: { serviceKcmil: 700 } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you got 2 AWG, you looked up a single 350 kcmil conductor. Parallel sets are added: 2 × 350 = 700 kcmil equivalent."
+  skillIds: [nec.gnd.gec-sizing]
+  type: single
+  difficulty: 5
+  stem: "A service uses two parallel sets of 350 kcmil copper service-entrance conductors per phase. Per the notes to Table 250.66, what is the minimum copper grounding electrode conductor (connected to a metal water pipe electrode)?"
+  options:
+    - { id: a, text: "2 AWG", distractorRationale: "This reads the table for one 350 kcmil conductor. For parallel conductors you use the equivalent area of the set: 700 kcmil." }
+    - { id: b, text: "2/0 AWG", isCorrect: true }
+    - { id: c, text: "1/0 AWG", distractorRationale: "1/0 is the 'over 350 through 600 kcmil' row — 700 kcmil is past that edge." }
+    - { id: d, text: "3/0 AWG", distractorRationale: "3/0 is required only above 1100 kcmil equivalent." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "For parallel service conductors, Table 250.66 is entered with the total equivalent circular-mil area of one phase's set."
+    codePath: ["Table 250.66 note → 2 × 350 kcmil = 700 kcmil equivalent", "Table 250.66 → over 600 through 1100 kcmil → 2/0 Cu"]
+    steps:
+      - { text: "Equivalent area per phase = 2 × 350 kcmil = 700 kcmil.", ref: "Table 250.66, Note 1" }
+      - { text: "700 kcmil falls in 'over 600 through 1100 kcmil' → 2/0 copper GEC.", ref: "Table 250.66" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-gnd-h008
+  recompute: { calc: gecSize, inputs: { serviceKcmil: 1200 } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you got 1/0, you sized from a single 400 kcmil conductor instead of the 3 × 400 = 1200 kcmil parallel equivalent."
+  skillIds: [nec.gnd.gec-sizing]
+  type: single
+  difficulty: 5
+  stem: "A large service is built with three parallel sets of 400 kcmil copper conductors per phase. Using the equivalent-area method of Table 250.66, what is the minimum copper grounding electrode conductor to the building's concrete-encased electrode?"
+  options:
+    - { id: a, text: "3/0 AWG", isCorrect: true }
+    - { id: b, text: "1/0 AWG", distractorRationale: "1/0 is the answer for one 400 kcmil conductor. Three parallel 400s are treated as 1200 kcmil equivalent." }
+    - { id: c, text: "2/0 AWG", distractorRationale: "2/0 covers 'over 600 through 1100 kcmil'. 1200 kcmil is just past that row's upper edge." }
+    - { id: d, text: "250 kcmil copper", distractorRationale: "Table 250.66 tops out at 3/0 copper — the GEC never has to be larger than 3/0 Cu regardless of service size." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Sum the parallel set (3 × 400 = 1200 kcmil), then read Table 250.66 — 3/0 copper is the table's maximum."
+    codePath: ["Table 250.66 note → 3 × 400 kcmil = 1200 kcmil", "Table 250.66 → over 1100 kcmil → 3/0 Cu"]
+    steps:
+      - { text: "Equivalent area = 3 × 400 kcmil = 1200 kcmil per phase.", ref: "Table 250.66, Note 1" }
+      - { text: "Over 1100 kcmil → 3/0 copper GEC (the table maximum).", ref: "Table 250.66" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- GEC boundary rows -------------------------------------------------------
+- id: q-gnd-h009
+  recompute: { calc: gecSize, inputs: { serviceSize: "3/0" } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you got 2 AWG, you read the 'over 3/0' row — 3/0 itself is still in the '2/0 or 3/0' row."
+  skillIds: [nec.gnd.gec-sizing]
+  type: single
+  difficulty: 4
+  stem: "A 200 A service is wired with 3/0 AWG copper service-entrance conductors. Per Table 250.66, what is the minimum copper grounding electrode conductor to the metal water pipe?"
+  options:
+    - { id: a, text: "4 AWG", isCorrect: true }
+    - { id: b, text: "2 AWG", distractorRationale: "2 AWG is for services OVER 3/0 (through 350 kcmil). Exactly 3/0 stays in the '2/0 or 3/0' row." }
+    - { id: c, text: "6 AWG", distractorRationale: "6 AWG is the EGC for a 200 A OCPD from Table 250.122 — the wrong table. The GEC follows the service-conductor size in Table 250.66." }
+    - { id: d, text: "1/0 AWG", distractorRationale: "1/0 applies to services over 350 through 600 kcmil — far larger than 3/0." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Table 250.66 rows are inclusive of their named sizes: '2/0 or 3/0' covers 3/0 exactly; 'over 3/0' starts one size beyond."
+    codePath: ["Table 250.66 → 2/0 or 3/0 Cu service → 4 AWG Cu GEC"]
+    steps:
+      - { text: "3/0 Cu service falls in the '2/0 or 3/0' row → 4 AWG copper GEC.", ref: "Table 250.66" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-gnd-h010
+  recompute: { calc: gecSize, inputs: { serviceKcmil: 350 } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you got 1/0, you treated 350 kcmil as 'over 350' — the row reads over 3/0 THROUGH 350 kcmil, so 350 is included."
+  skillIds: [nec.gnd.gec-sizing]
+  type: single
+  difficulty: 4
+  stem: "A service uses 350 kcmil copper service-entrance conductors. Per Table 250.66, what is the minimum copper grounding electrode conductor to the building steel electrode?"
+  options:
+    - { id: a, text: "2 AWG", isCorrect: true }
+    - { id: b, text: "1/0 AWG", distractorRationale: "1/0 begins at 'over 350 kcmil'. Exactly 350 kcmil is the top of the 'through 350' row, so 2 AWG still applies." }
+    - { id: c, text: "4 AWG", distractorRationale: "4 AWG stops at 3/0 (167.8 kcmil) service conductors — well below 350 kcmil." }
+    - { id: d, text: "3 AWG", distractorRationale: "3 AWG is a Table 250.122 EGC row (301–400 A OCPD), not a Table 250.66 GEC size for this service." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "'Through 350 kcmil' includes 350 exactly — the boundary belongs to the smaller-GEC row."
+    codePath: ["Table 250.66 → over 3/0 through 350 kcmil → 2 AWG Cu"]
+    steps:
+      - { text: "350 kcmil is within 'over 3/0 through 350 kcmil' → 2 AWG copper GEC.", ref: "Table 250.66" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- GEC vs EGC rule-selection traps -----------------------------------------
+- id: q-gnd-h011
+  recompute: { calc: gecSize, inputs: { serviceKcmil: 500 } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you got 3 AWG, you entered Table 250.122 with the 400 A main — GECs are sized by SERVICE-CONDUCTOR size in Table 250.66, not by the OCPD."
+  skillIds: [nec.gnd.gec-sizing]
+  type: single
+  difficulty: 5
+  stem: "A 400 A service has 500 kcmil copper service-entrance conductors and a 400 A main breaker. What is the minimum copper GROUNDING ELECTRODE conductor to the metal water pipe electrode?"
+  options:
+    - { id: a, text: "1/0 AWG", isCorrect: true }
+    - { id: b, text: "3 AWG", distractorRationale: "3 AWG comes from Table 250.122 entered at 400 A — that table sizes equipment grounding conductors on the load side, not the GEC." }
+    - { id: c, text: "2 AWG", distractorRationale: "2 AWG is the Table 250.66 row through 350 kcmil; 500 kcmil is past that edge." }
+    - { id: d, text: "2/0 AWG", distractorRationale: "2/0 starts above 600 kcmil; 500 kcmil is within the 'over 350 through 600' row." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Pick the rule before the row: GEC → Table 250.66 by service-conductor size; EGC → Table 250.122 by OCPD rating. The 400 A main is a decoy here."
+    codePath: ["250.66 → sized from service-entrance conductors", "Table 250.66 → over 350 through 600 kcmil → 1/0 Cu"]
+    steps:
+      - { text: "The conductor to the electrode is a GEC, governed by 250.66 — the main breaker rating is irrelevant.", ref: "250.66" }
+      - { text: "500 kcmil Cu service → 'over 350 through 600 kcmil' row → 1/0 copper.", ref: "Table 250.66" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-gnd-h012
+  recompute: { calc: egcSize, inputs: { ocpd: 200 } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you got 4 AWG, you entered Table 250.66 with the 3/0 feeder conductors — a feeder EGC is sized from the 200 A OCPD in Table 250.122."
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 5
+  stem: "A 200 A feeder with 3/0 AWG copper conductors supplies a panelboard in a detached shop (no separate services involved). What is the minimum copper EQUIPMENT GROUNDING conductor run with the feeder?"
+  options:
+    - { id: a, text: "6 AWG", isCorrect: true }
+    - { id: b, text: "4 AWG", distractorRationale: "4 AWG is the Table 250.66 answer for 3/0 conductors — but 250.66 covers grounding ELECTRODE conductors at services. A feeder EGC uses Table 250.122 by OCPD." }
+    - { id: c, text: "8 AWG", distractorRationale: "8 AWG covers OCPDs only up to 100 A — one row short of the 200 A device." }
+    - { id: d, text: "3/0 AWG", distractorRationale: "The EGC does not need to match the phase conductors; it is sized from the 200 A device per Table 250.122." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Feeder to a panel = EGC territory: Table 250.122 by device rating. The 3/0 conductor size baits you into the GEC table."
+    codePath: ["250.122 → EGC sized from OCPD", "Table 250.122 → not exceeding 200 A → 6 AWG Cu"]
+    steps:
+      - { text: "This conductor bonds equipment on the load side of the service — it is an EGC under 250.122.", ref: "250.122" }
+      - { text: "200 A OCPD → 6 AWG copper EGC.", ref: "Table 250.122" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- 250.122(B) proportional upsizing (numeric, cmilRatio) -------------------
+- id: q-gnd-h013
+  recompute: { calc: cmilRatio, inputs: { newSize: "8", origSize: "12" } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you got 0.40, you divided original by new. The multiplier is new ÷ original: 16,510 ÷ 6,530."
+  skillIds: [nec.gnd.egc-sizing]
+  type: numeric
+  difficulty: 4
+  stem: "A 20 A branch circuit feeding a remote well pump normally uses 12 AWG copper (6,530 cmil) with a 12 AWG EGC. Because of a 260 ft run, the ungrounded conductors are increased to 8 AWG (16,510 cmil). Per 250.122(B), by what factor must the EGC's circular-mil area be increased? (round to 2 decimals)"
+  answer: { kind: numeric, value: 2.53, unit: "ratio", tolerance: 0.05 }
+  solution:
+    keyIdea: "250.122(B): the EGC grows by the same circular-mil ratio as the ungrounded conductors."
+    codePath: ["Chapter 9 Table 8 → 12 AWG = 6,530 cmil; 8 AWG = 16,510 cmil", "250.122(B) → ratio = new ÷ original"]
+    steps:
+      - { text: "Ratio = 16,510 ÷ 6,530 = 2.53.", ref: "Chapter 9, Table 8" }
+      - { text: "The 12 AWG EGC's area (6,530 cmil) must be multiplied by 2.53 → 16,510 cmil → 8 AWG.", ref: "250.122(B)" }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; recompute-verified (cmilRatio); SME-verify before live."
+
+- id: q-gnd-h014
+  recompute: { calc: cmilRatio, inputs: { newSize: "3", origSize: "6" } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you got about 1.5, you counted AWG steps instead of dividing circular-mil areas (52,620 ÷ 26,240)."
+  skillIds: [nec.gnd.egc-sizing]
+  type: numeric
+  difficulty: 4
+  stem: "A 60 A feeder to a detached garage normally uses 6 AWG copper (26,240 cmil) ungrounded conductors with a 10 AWG EGC. To hold voltage drop under 3%, the ungrounded conductors are upsized to 3 AWG (52,620 cmil). Per 250.122(B), what multiplier applies to the EGC's circular-mil area? (round to 2 decimals)"
+  answer: { kind: numeric, value: 2.01, unit: "ratio", tolerance: 0.05 }
+  solution:
+    keyIdea: "The multiplier is the circular-mil ratio of new to original ungrounded conductors — not a count of AWG size steps."
+    codePath: ["Chapter 9 Table 8 → 6 AWG = 26,240 cmil; 3 AWG = 52,620 cmil", "250.122(B)"]
+    steps:
+      - { text: "Ratio = 52,620 ÷ 26,240 = 2.01.", ref: "Chapter 9, Table 8" }
+      - { text: "The 10 AWG EGC (10,380 cmil) must reach 10,380 × 2.01 ≈ 20,864 cmil → 8 AWG is too small (16,510); 6 AWG (26,240) qualifies.", ref: "250.122(B)" }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; recompute-verified (cmilRatio); SME-verify before live."
+
+- id: q-gnd-h015
+  recompute: { calc: cmilRatio, inputs: { newCmil: 250000, origSize: "3/0" } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you got 0.67, you inverted the ratio; if you got 1.25, you ratioed breaker amps instead of circular mils."
+  skillIds: [nec.gnd.egc-sizing]
+  type: numeric
+  difficulty: 4
+  stem: "A 200 A feeder designed with 3/0 AWG copper (167,800 cmil) is installed with 250 kcmil copper (250,000 cmil) because of a long run to a barn. Per 250.122(B), by what factor must the circular-mil area of the copper EGC be increased? (round to 2 decimals)"
+  answer: { kind: numeric, value: 1.49, unit: "ratio", tolerance: 0.05 }
+  solution:
+    keyIdea: "Divide the new circular-mil area by the original design area — amp ratings and AWG steps play no part in the ratio."
+    codePath: ["Chapter 9 Table 8 → 3/0 = 167,800 cmil; 250 kcmil = 250,000 cmil", "250.122(B)"]
+    steps:
+      - { text: "Ratio = 250,000 ÷ 167,800 = 1.49.", ref: "Chapter 9, Table 8" }
+      - { text: "The 6 AWG EGC for the 200 A device must grow to 26,240 × 1.49 ≈ 39,098 cmil → 4 AWG (41,740 cmil).", ref: "250.122(B)" }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; recompute-verified (cmilRatio); SME-verify before live."
+
+# ---- Full 250.122(B) chains (conceptual single; exceeds one calculator) ------
+- id: q-gnd-h016
+  domainId: nec.grounding-bonding
+  commonMistake: "If you picked 8 AWG, you ignored 250.122(B) — upsizing the phase conductors for voltage drop forces a proportional EGC upsize."
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 5
+  stem: "A 100 A feeder was designed with 3 AWG copper (52,620 cmil) and an 8 AWG copper EGC (16,510 cmil). For voltage drop, the ungrounded conductors are installed as 1/0 AWG (105,600 cmil). Per 250.122(B), what is the minimum copper EGC? (6 AWG = 26,240 cmil; 4 AWG = 41,740 cmil)"
+  options:
+    - { id: a, text: "8 AWG", distractorRationale: "8 AWG is the Table 250.122 base for a 100 A device, but 250.122(B) requires a proportional increase whenever the ungrounded conductors are upsized for voltage drop." }
+    - { id: b, text: "6 AWG", distractorRationale: "Bumping the EGC 'one size like the phases moved one row' is not the rule — 16,510 × (105,600 ÷ 52,620) ≈ 33,132 cmil, and 6 AWG (26,240 cmil) falls short." }
+    - { id: c, text: "4 AWG", isCorrect: true }
+    - { id: d, text: "1/0 AWG", distractorRationale: "The EGC does not have to match the new phase-conductor size — only grow by the same circular-mil ratio." }
+  answer: { kind: single, optionId: c }
+  solution:
+    keyIdea: "Chain: base EGC from Table 250.122 → cmil ratio of the upsize → smallest standard conductor meeting the required area."
+    codePath: ["Table 250.122 → 100 A → 8 AWG (16,510 cmil)", "250.122(B) → ratio = 105,600 ÷ 52,620 = 2.01", "16,510 × 2.01 ≈ 33,132 cmil → 4 AWG"]
+    steps:
+      - { text: "Base EGC for a 100 A OCPD is 8 AWG = 16,510 cmil.", ref: "Table 250.122" }
+      - { text: "Upsize ratio = 105,600 ÷ 52,620 = 2.01.", ref: "Chapter 9, Table 8" }
+      - { text: "Required EGC area = 16,510 × 2.01 ≈ 33,132 cmil. 6 AWG (26,240) is too small; 4 AWG (41,740) is the minimum.", ref: "250.122(B)" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier chain question (multi-calculator scenario, keyed as single); SME-verify before live."
+
+- id: q-gnd-h017
+  domainId: nec.grounding-bonding
+  commonMistake: "If you kept 6 AWG, you applied only Table 250.122 and skipped the 250.122(B) proportional upsize triggered by the voltage-drop change."
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 5
+  stem: "A 200 A feeder was designed with 3/0 copper (167,800 cmil) and a 6 AWG copper EGC (26,240 cmil). The install uses 250 kcmil copper (250,000 cmil) for voltage drop. Per 250.122(B), what is the minimum copper EGC? (4 AWG = 41,740 cmil; 2 AWG = 66,360 cmil)"
+  options:
+    - { id: a, text: "6 AWG", distractorRationale: "6 AWG is only the Table 250.122 base for 200 A. Upsizing the phases for voltage drop requires a proportional EGC increase under 250.122(B)." }
+    - { id: b, text: "4 AWG", isCorrect: true }
+    - { id: c, text: "2 AWG", distractorRationale: "2 AWG overshoots: required area is 26,240 × (250,000 ÷ 167,800) ≈ 39,098 cmil, which 4 AWG (41,740) already satisfies." }
+    - { id: d, text: "3 AWG", distractorRationale: "3 AWG is the Table 250.122 row for devices over 300 A — a table-row answer, not the 250.122(B) proportional result." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Base EGC × (new cmil ÷ design cmil), then round UP to the next conductor that meets the computed area."
+    codePath: ["Table 250.122 → 200 A → 6 AWG (26,240 cmil)", "250.122(B) → ratio = 250,000 ÷ 167,800 = 1.49", "26,240 × 1.49 ≈ 39,098 cmil → 4 AWG"]
+    steps:
+      - { text: "Base EGC for the 200 A device: 6 AWG = 26,240 cmil.", ref: "Table 250.122" }
+      - { text: "Ratio = 250,000 ÷ 167,800 = 1.49.", ref: "Chapter 9, Table 8" }
+      - { text: "Required area = 26,240 × 1.49 ≈ 39,098 cmil → 4 AWG (41,740 cmil) is the smallest that qualifies.", ref: "250.122(B)" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier chain question (multi-calculator scenario, keyed as single); SME-verify before live."
+
+# ---- OCPD selection that sets the 250.122 row (numeric, nextStandardSize) ----
+- id: q-gnd-h018
+  recompute: { calc: nextStandardSize, inputs: { value: 105 } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you answered 100 A, you rounded down — 240.6(A)'s next standard rating at or above 105 A is 110 A, which also pushes the EGC past the 100 A row."
+  skillIds: [nec.gnd.egc-sizing]
+  type: numeric
+  difficulty: 4
+  stem: "A feeder's minimum OCPD works out to 105 A (84 A continuous × 1.25). What is the smallest standard OCPD rating per 240.6(A)? (This rating — not the load — is what you carry into Table 250.122 for the EGC, and it lands past the 100 A row.) (amps)"
+  answer: { kind: numeric, value: 110, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "The EGC row is set by the standard device rating you actually select, so the 240.6(A) round-up happens before the Table 250.122 lookup."
+    codePath: ["215.3 → 84 × 1.25 = 105 A", "240.6(A) → next standard ≥ 105 → 110 A", "Table 250.122 → 110 A → 6 AWG Cu (not 8 AWG)"]
+    steps:
+      - { text: "Minimum device = 105 A; the next standard rating is 110 A.", ref: "240.6(A)" }
+      - { text: "Consequence: 110 A exceeds the 100 A row, so the EGC becomes 6 AWG instead of 8 AWG.", ref: "Table 250.122" }
+  trapIds: [next-size-up-rounding, continuous-load-125]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; recompute-verified (nextStandardSize); SME-verify before live."
+
+- id: q-gnd-h019
+  recompute: { calc: nextStandardSize, inputs: { value: 460 } }
+  domainId: nec.grounding-bonding
+  commonMistake: "If you answered 450 A, you rounded down. 460 A requires the next standard rating UP (500 A), which moves the EGC into the 2 AWG row."
+  skillIds: [nec.gnd.egc-sizing]
+  type: numeric
+  difficulty: 4
+  stem: "A feeder calculation requires an OCPD of at least 460 A. Per 240.6(A), what standard rating must be used? (Watch the knock-on effect: Table 250.122 is entered with this device rating, and it crosses a row edge.) (amps)"
+  answer: { kind: numeric, value: 500, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Rounding the OCPD up across a Table 250.122 row edge (here 500 A vs 450 A) changes the required EGC — size the device first, then the EGC."
+    codePath: ["240.6(A) → next standard ≥ 460 → 500 A", "Table 250.122 → 500 A → 2 AWG Cu (a 400 A device would have needed only 3 AWG)"]
+    steps:
+      - { text: "Standard ratings near 460 A are 450 and 500; the first rating ≥ 460 is 500 A.", ref: "240.6(A)" }
+      - { text: "At 500 A the EGC row is 'not exceeding 500 A' → 2 AWG copper.", ref: "Table 250.122" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; recompute-verified (nextStandardSize); SME-verify before live."
+
+# ---- Conceptual rule-selection / bonding (single, no recompute) --------------
+- id: q-gnd-h020
+  domainId: nec.grounding-bonding
+  commonMistake: "If you thought the EGCs could share the fault duty, remember: a ground fault in one raceway returns on THAT raceway's EGC alone."
+  skillIds: [nec.gnd.bonding]
+  type: single
+  difficulty: 5
+  stem: "Why does 250.122(F) require the wire-type EGC in EACH raceway of a parallel feeder to be full-sized from the feeder OCPD rating, rather than letting the parallel EGCs share the required circular-mil area?"
+  options:
+    - { id: a, text: "Because a ground fault in one raceway may have only that raceway's EGC as its low-impedance return path, and it must carry enough fault current to open the full-size OCPD.", isCorrect: true }
+    - { id: b, text: "Because parallel EGCs must match the ungrounded conductors' size in each raceway.", distractorRationale: "EGCs are sized from Table 250.122 by OCPD, not by matching the phase conductors (though they never need to be larger than them)." }
+    - { id: c, text: "Because splitting the EGC area is only prohibited in nonmetallic raceways.", distractorRationale: "The each-raceway rule applies to wire-type EGCs in parallel runs generally — it is about the fault-return path, not the raceway material." }
+    - { id: d, text: "Because the NEC requires all conductors of a circuit, including EGCs, to be identical in every parallel raceway.", distractorRationale: "The conductors must be grouped per raceway, but the EGC size comes from Table 250.122 — 'identical everywhere' is not the reason and overstates the rule." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Effective ground-fault current path: each raceway's EGC must alone clear the full OCPD, since a fault sees only its own raceway's return."
+    codePath: ["250.122(F)", "250.4(A)(5) → effective ground-fault current path"]
+    steps:
+      - { text: "A phase-to-ground fault inside one raceway returns primarily on that raceway's EGC.", ref: "250.4(A)(5)" }
+      - { text: "So each parallel raceway carries an EGC sized from the full feeder OCPD per Table 250.122.", ref: "250.122(F)" }
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier conceptual question; SME-verify before live."
+
+- id: q-gnd-h021
+  domainId: nec.grounding-bonding
+  commonMistake: "If you upsized the EGC beyond the circuit conductors, remember 250.122(A): the EGC is never required to be larger than the ungrounded conductors."
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 4
+  stem: "A motor branch circuit uses 14 AWG copper ungrounded conductors, but 430.52 allows the branch short-circuit device to be a 30 A inverse-time breaker. Table 250.122 lists 10 AWG for a 30 A device. What EGC is actually required?"
+  options:
+    - { id: a, text: "14 AWG — the EGC is not required to be larger than the circuit's ungrounded conductors.", isCorrect: true }
+    - { id: b, text: "10 AWG — Table 250.122 always controls by OCPD rating.", distractorRationale: "250.122(A) caps the requirement: the EGC never has to be larger than the ungrounded conductors, even when the table row says otherwise." }
+    - { id: c, text: "12 AWG — split the difference between the table and the circuit conductors.", distractorRationale: "There is no averaging rule; the cap in 250.122(A) sets the answer at the ungrounded-conductor size." }
+    - { id: d, text: "No wire EGC is permitted with an OCPD larger than the conductor ampacity.", distractorRationale: "Motor circuits routinely have branch OCPDs above conductor ampacity per 430.52; the EGC rules still apply normally." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "250.122(A) is a ceiling on the table: the EGC never needs to exceed the ungrounded conductors, which matters on motor circuits with oversized branch OCPDs."
+    codePath: ["430.52 → branch OCPD may exceed conductor ampacity", "Table 250.122 → 30 A → 10 AWG", "250.122(A) → capped at 14 AWG (ungrounded size)"]
+    steps:
+      - { text: "Table 250.122 at 30 A would say 10 AWG.", ref: "Table 250.122" }
+      - { text: "But the EGC is not required to be larger than the 14 AWG ungrounded conductors.", ref: "250.122(A)" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier conceptual question; SME-verify 250.122(A) cap wording before live."
+
+- id: q-gnd-h022
+  domainId: nec.grounding-bonding
+  commonMistake: "If you picked 1/0 from Table 250.66, you missed 250.66(A): a GEC that is the sole connection to a rod electrode never has to be larger than 6 AWG copper."
+  skillIds: [nec.gnd.gec-sizing]
+  type: single
+  difficulty: 5
+  stem: "A 600 kcmil copper service has two grounding electrode conductors: one to the metal water pipe and one that is the SOLE connection to a driven ground rod. Which sizing is correct for the conductor to the ground rod?"
+  options:
+    - { id: a, text: "6 AWG copper is sufficient, regardless of the service size.", isCorrect: true }
+    - { id: b, text: "1/0 AWG copper, from Table 250.66 for a 600 kcmil service.", distractorRationale: "Table 250.66 sets the general GEC, but 250.66(A) caps the sole connection to a rod/pipe/plate electrode at 6 AWG copper — a bigger wire adds nothing a rod can deliver." }
+    - { id: c, text: "2/0 AWG copper, the row above 600 kcmil.", distractorRationale: "600 kcmil is within 'over 350 through 600' (1/0), and in any case the rod-only cap of 250.66(A) makes 6 AWG sufficient." }
+    - { id: d, text: "It must match the water-pipe GEC size.", distractorRationale: "Each electrode conductor is sized for its own electrode; the rod connection has its own 6 AWG cap under 250.66(A)." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Rule selection: Table 250.66 governs generally, but 250.66(A) caps the sole connection to a rod electrode at 6 AWG copper."
+    codePath: ["Table 250.66 → 600 kcmil would give 1/0 generally", "250.66(A) → sole connection to rod electrode → 6 AWG Cu max required"]
+    steps:
+      - { text: "The water-pipe GEC follows Table 250.66 (1/0 for a 600 kcmil service).", ref: "Table 250.66" }
+      - { text: "The conductor serving only the ground rod is capped at 6 AWG copper.", ref: "250.66(A)" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier conceptual question; 250.66(A) rod cap not modeled by gecSize calculator — keyed manually; SME-verify before live."
+
+- id: q-gnd-h024
+  domainId: nec.grounding-bonding
+  commonMistake: "If you looked up Table 250.122 with the raw load current, you skipped two steps: the 125% continuous factor and the 240.6(A) standard-rating selection."
+  skillIds: [nec.gnd.egc-sizing]
+  type: single
+  difficulty: 4
+  stem: "When sizing the wire EGC for a new feeder with a continuous load, which sequence of steps is correct?"
+  options:
+    - { id: a, text: "Apply 125% to the continuous load, select the standard OCPD rating per 240.6(A), then enter Table 250.122 with that device rating.", isCorrect: true }
+    - { id: b, text: "Enter Table 250.122 with the computed load current, then round the EGC up one size for continuous loads.", distractorRationale: "Table 250.122 is entered with the OCPD rating, and there is no 'round the EGC up for continuous load' rule — the 125% factor belongs to the OCPD/conductor sizing step." }
+    - { id: c, text: "Select the feeder conductors first, then enter Table 250.66 with their size.", distractorRationale: "Table 250.66 sizes grounding electrode conductors from service-entrance conductors — the wrong table for a feeder EGC." }
+    - { id: d, text: "Enter Table 250.122 with the conductor ampacity after derating.", distractorRationale: "Derated ampacity governs conductor protection, not the EGC lookup — the table key is the installed OCPD rating." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Order of operations: load × 125% → standard OCPD → Table 250.122. The EGC is a function of the device, not of load or ampacity."
+    codePath: ["215.3 → continuous × 125%", "240.6(A) → standard rating", "Table 250.122 → EGC by OCPD"]
+    steps:
+      - { text: "Compute the minimum device: 125% of continuous plus 100% of noncontinuous load.", ref: "215.3" }
+      - { text: "Select the standard rating (next size up where permitted).", ref: "240.6(A)" }
+      - { text: "Enter Table 250.122 with the selected device rating to size the EGC.", ref: "Table 250.122" }
+  trapIds: [continuous-load-125, table-column-selection]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier ordering question; SME-verify before live."
