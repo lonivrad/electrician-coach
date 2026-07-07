@@ -1,0 +1,792 @@
+# Wiring methods (Chapter 3) — BRUTAL tier (difficulty 9–10). 2020 NEC. All DRAFT.
+# Multi-condition Table 300.5 adjudication, multi-method runs, competing support rules,
+# 300.4 protection geometry, and fished-vs-new-work securing chains. SME-verify before live.
+
+# ---- Table 300.5 column adjudication under near-miss conditions (numerics) ----
+- id: q-wm-x001
+  recompute: { calc: burialDepth, inputs: { method: directBurial } }
+  domainId: nec.wiring-methods
+  commonMistake: "If you got 12 in, you saw 'dwelling, 20 A, GFCI breaker' and stopped counting conditions — Column 4 also caps the circuit at 120 V, and a 240 V multiwire-style circuit fails on voltage alone. One failed condition kills the whole column."
+  skillIds: [nec.wm.burial-depth]
+  type: numeric
+  difficulty: 10
+  stem: "At a single-family dwelling, a 240 V, 20 A branch circuit feeds a hot-tub heater 60 ft away using direct-buried UF cable across the lawn (no driveway, slab, or rock). The circuit originates on a 2-pole GFCI breaker, the run also passes within 4 ft of a 120 V, 15 A GFCI-protected landscape circuit in the same yard, and the soil is ordinary loam. Per Table 300.5, what minimum cover (inches) is required for the hot-tub circuit's trench?"
+  answer: { kind: numeric, value: 24, unit: "in", tolerance: 0 }
+  solution:
+    keyIdea: "Column 4 needs ALL of: residential branch circuit, 120 V or less, 20 A or less OCPD, GFCI protection. Here three conditions pass and exactly one — voltage — fails, so the reduction is dead and the wiring-method column governs."
+    codePath: ["Table 300.5, Column 4 → fails on voltage (240 V > 120 V)", "Table 300.5, Column 1 (direct-buried cable) → 24 in"]
+    steps:
+      - { text: "Inventory the Column 4 conditions for the hot-tub circuit: residential — yes; 20 A OCPD — yes; GFCI protected — yes; 120 V or less — NO (240 V).", ref: "Table 300.5" }
+      - { text: "The neighboring 120 V, 15 A GFCI landscape circuit is a decoy — each circuit's cover is judged on its own conditions, not its neighbor's." }
+      - { text: "With Column 4 unavailable, read the wiring-method column for direct-buried cable: 24 in.", ref: "Table 300.5, Column 1" }
+      - { text: "Three passing conditions out of four buy nothing — the reduced-cover column is all-or-nothing." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x002
+  recompute: { calc: burialDepth, inputs: { method: rmcImc } }
+  domainId: nec.wiring-methods
+  commonMistake: "If you got 12 in, you treated the residential-GFCI column as the floor for every qualifying circuit. Column 4 is an ALLOWANCE for the listed methods; when the installed method is RMC, Column 2's 6 in is itself a lawful minimum — the shallowest applicable column wins."
+  skillIds: [nec.wm.burial-depth]
+  type: numeric
+  difficulty: 9
+  stem: "A homeowner's 120 V, 20 A GFCI-protected branch circuit to a fountain is run underground in galvanized rigid metal conduit across a planting bed (general location, no vehicles). The estimator notes the circuit 'qualifies for the 12 in reduced cover.' The installer wants the legally shallowest trench for the RMC as installed. Per Table 300.5, what minimum cover (inches) applies?"
+  answer: { kind: numeric, value: 6, unit: "in", tolerance: 0 }
+  solution:
+    keyIdea: "Three columns are each defensible at first glance — 24 (cable habit), 12 (GFCI circuit), 6 (RMC). The method actually installed is RMC, and its own column permits 6 in; the circuit-based 12 in column is an alternative, not a floor."
+    codePath: ["Table 300.5, Column 2 (RMC/IMC) → 6 in", "Table 300.5, Column 4 → would allow 12 in but is not more restrictive here"]
+    steps:
+      - { text: "Identify the installed wiring method: rigid metal conduit → Column 2 applies directly.", ref: "Table 300.5, Column 2" }
+      - { text: "The circuit also meets every Column 4 condition (residential, 120 V, 20 A, GFCI), which would permit 12 in — but that column exists to REDUCE cover for methods that need more, not to raise RMC's 6 in." }
+      - { text: "The minimum required cover is the smallest value from any column the installation satisfies: 6 in for RMC in a general location.", ref: "Table 300.5" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x003
+  recompute: { calc: burialDepth, inputs: { method: nonmetallicRaceway } }
+  domainId: nec.wiring-methods
+  commonMistake: "If you got 12 in, you accepted 120 V + GFCI + residential and never checked the OCPD: Column 4 caps the device at 20 A, and this circuit is protected at 25 A — over by a single table step."
+  skillIds: [nec.wm.burial-depth]
+  type: numeric
+  difficulty: 9
+  stem: "A dwelling's 120 V branch circuit to a detached greenhouse runs in Schedule 40 PVC under the vegetable garden (general location). The circuit is GFCI protected at the panel, the conductors are 10 AWG THWN, and the overcurrent device is 25 A to serve a specific listed appliance. Per Table 300.5, what minimum cover (inches) is required?"
+  answer: { kind: numeric, value: 18, unit: "in", tolerance: 0 }
+  solution:
+    keyIdea: "Three columns compete: 12 (GFCI reduced), 18 (nonmetallic raceway), 24 (cable habit). The 25 A OCPD is 5 A past Column 4's 20 A ceiling, so the method column — PVC → 18 in — governs."
+    codePath: ["Table 300.5, Column 4 → fails on OCPD rating (25 A > 20 A)", "Table 300.5, Column 3 (nonmetallic raceway) → 18 in"]
+    steps:
+      - { text: "Test Column 4: residential — yes; 120 V — yes; GFCI — yes; OCPD 20 A or less — NO (25 A).", ref: "Table 300.5" }
+      - { text: "The 10 AWG conductor size is surplus data — the column condition reads the overcurrent device rating, not the wire." }
+      - { text: "Fall back to the installed method: Schedule 40 PVC is a nonmetallic raceway → 18 in.", ref: "Table 300.5, Column 3" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x004
+  recompute: { calc: burialDepth, inputs: { method: directBurial } }
+  domainId: nec.wiring-methods
+  commonMistake: "If you got 12 in, you qualified the CIRCUIT (120 V, 20 A, GFCI) but never qualified the OCCUPANCY — Column 4 is limited to residential branch circuits, and a dental office is not a dwelling no matter how house-like the circuit looks."
+  skillIds: [nec.wm.burial-depth]
+  type: numeric
+  difficulty: 10
+  stem: "A converted-bungalow dental office (commercial occupancy) adds a 120 V, 20 A GFCI-protected branch circuit to an illuminated yard sign, direct-buried in UF cable across the lawn (general location, no vehicular traffic). The building still looks like a house, the panel is a residential-style loadcenter, and the inspector's notes call the area 'yard.' Per Table 300.5, what minimum cover (inches) is required?"
+  answer: { kind: numeric, value: 24, unit: "in", tolerance: 0 }
+  solution:
+    keyIdea: "Every electrical condition of Column 4 passes; the occupancy condition fails. 'Residential branch circuits' means circuits of a dwelling — a commercial dental office gets no reduced cover, so direct burial reads 24 in."
+    codePath: ["Table 300.5, Column 4 → fails on occupancy (commercial, not residential)", "Table 300.5, Column 1 (direct-buried cable) → 24 in"]
+    steps:
+      - { text: "Check Column 4: 120 V — yes; 20 A — yes; GFCI — yes; residential branch circuit — NO. The occupancy is a dental office, a commercial use, regardless of the building's original form.", ref: "Table 300.5" }
+      - { text: "The residential-style loadcenter and house-like appearance are decoys — occupancy classification, not architecture, controls." }
+      - { text: "Use the wiring-method column: direct-buried cable → 24 in.", ref: "Table 300.5, Column 1" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x005
+  recompute: { calc: burialDepth, inputs: { method: rmcImc } }
+  domainId: nec.wiring-methods
+  commonMistake: "If you got 18 or 24 in, you priced the trench off the feeder's voltage or off a raceway column that doesn't apply — IMC shares Column 2 with RMC, and voltage does not change the row in a general location."
+  skillIds: [nec.wm.burial-depth]
+  type: numeric
+  difficulty: 9
+  stem: "A 480 V, 3-phase feeder to a shop building is run underground in intermediate metal conduit (IMC) across an open equipment yard — a general location with no vehicular traffic, pavement, or rock. The same trench line passes 10 ft from a concrete transformer pad, and the specifier mentions concrete encasement was considered but rejected. Per Table 300.5, what minimum cover (inches) does the IMC require?"
+  answer: { kind: numeric, value: 6, unit: "in", tolerance: 0 }
+  solution:
+    keyIdea: "IMC rides in the same Table 300.5 column as RMC — 6 in in a general location — and neither the 480 V feeder rating nor the nearby pad changes the row."
+    codePath: ["Table 300.5, Column 2 (RMC and IMC) → 6 in", "Column 4 inapplicable (not a ≤120 V, ≤20 A residential GFCI branch circuit)"]
+    steps:
+      - { text: "Classify the location: open yard, no vehicles, no slab — the general row of Table 300.5.", ref: "Table 300.5" }
+      - { text: "Identify the method column: IMC is grouped with RMC in Column 2 → 6 in. Voltage does not select the column in this row; the reduced-cover column is irrelevant to a 480 V feeder." }
+      - { text: "The rejected concrete encasement and the transformer pad are surplus data — no depth credit or penalty attaches to either.", ref: "Table 300.5, Column 2" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x006
+  recompute: { calc: burialDepth, inputs: { method: directBurial } }
+  domainId: nec.wiring-methods
+  commonMistake: "If you got 12 in, you credited GFCI protection that lives DOWNSTREAM of the buried run. Column 4 requires the buried circuit to be GFCI protected — a GFCI receptacle at the load end protects nothing behind itself, so the buried UF is unprotected."
+  skillIds: [nec.wm.burial-depth]
+  type: numeric
+  difficulty: 9
+  stem: "A dwelling's 120 V, 20 A branch circuit runs direct-buried UF cable 40 ft across the back lawn to a post, where the FIRST device on the circuit is a GFCI receptacle protecting itself and one downstream outlet. The breaker at the panel is a standard inverse-time type with no GFCI function. Per Table 300.5, what minimum cover (inches) applies to the buried portion?"
+  answer: { kind: numeric, value: 24, unit: "in", tolerance: 0 }
+  solution:
+    keyIdea: "GFCI protection must exist AHEAD of the buried conductors for Column 4 to apply. Protection provided at the far end of the run leaves the underground portion unprotected, so the direct-burial column's 24 in governs."
+    codePath: ["Table 300.5, Column 4 → fails (buried run not GFCI protected)", "Table 300.5, Column 1 (direct-buried cable) → 24 in"]
+    steps:
+      - { text: "Locate the point of GFCI protection: a receptacle at the LOAD end of the buried run. A GFCI device protects only itself and what is wired downstream of it.", ref: "Table 300.5" }
+      - { text: "The buried UF between the panel and the post is upstream of the GFCI — it has no ground-fault protection, so the Column 4 condition fails even though the circuit is residential, 120 V, and 20 A." }
+      - { text: "Apply the wiring-method column: direct-buried cable → 24 in. (A GFCI breaker at the panel would have earned 12 in.)", ref: "Table 300.5, Column 1" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x007
+  recompute: { calc: burialDepth, inputs: { method: nonmetallicRaceway } }
+  domainId: nec.wiring-methods
+  commonMistake: "If you got 12 in, you read 'electronic protective breaker' as GFCI. AFCI protection detects arcs, not ground faults — Column 4 demands GFCI specifically, and an AFCI-only circuit fails that condition."
+  skillIds: [nec.wm.burial-depth]
+  type: numeric
+  difficulty: 9
+  stem: "A dwelling's 120 V, 20 A branch circuit to a detached studio runs THWN conductors in Schedule 40 PVC under the side yard (general location). The circuit is protected by a combination-type AFCI breaker (no GFCI function anywhere on the circuit). Per Table 300.5, what minimum cover (inches) is required?"
+  answer: { kind: numeric, value: 18, unit: "in", tolerance: 0 }
+  solution:
+    keyIdea: "Column 4's protection condition is GFCI, not 'any electronic breaker.' AFCI-only protection fails it, so the installed method's column — nonmetallic raceway, 18 in — governs."
+    codePath: ["Table 300.5, Column 4 → fails (AFCI is not GFCI)", "Table 300.5, Column 3 (nonmetallic raceway) → 18 in"]
+    steps:
+      - { text: "Test Column 4: residential — yes; 120 V — yes; 20 A — yes; GFCI protection — NO. The AFCI breaker interrupts arcing faults, not the ground-fault current the reduced-cover allowance is predicated on.", ref: "Table 300.5" }
+      - { text: "With the reduction unavailable, use the method column: Schedule 40 PVC = nonmetallic raceway → 18 in.", ref: "Table 300.5, Column 3" }
+      - { text: "Swapping to a dual-function AFCI/GFCI breaker before burial would legitimately buy the 12 in trench." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- Multi-method / multi-segment underground runs (single) -------------------
+- id: q-wm-x008
+  domainId: nec.wiring-methods
+  commonMistake: "Each SEGMENT takes its own column AND its own location row: RMC's 6 in general allowance dies under the dwelling driveway (18 in row), while the UF segment keeps Column 1's 24 in on the lawn."
+  skillIds: [nec.wm.burial-depth]
+  type: single
+  difficulty: 10
+  stem: "A 240 V, 30 A feeder to a detached shop leaves the house in rigid metal conduit that crosses under the dwelling's own concrete driveway, transitions in a flush pull box to Schedule 40 PVC under the lawn, then transitions again to direct-buried UF cable for the final stretch through the garden (all general locations except the driveway). What are the minimum covers for the three segments, in order (RMC under driveway / PVC under lawn / UF in garden)?"
+  options:
+    - { id: a, text: "18 in / 18 in / 24 in", isCorrect: true }
+    - { id: b, text: "6 in / 18 in / 24 in", distractorRationale: "6 in is RMC's GENERAL-location value; the one/two-family-dwelling driveway row overrides it at 18 in for the methods used there." }
+    - { id: c, text: "18 in / 12 in / 12 in", distractorRationale: "12 in is the residential-GFCI reduced cover — unavailable to a 240 V, 30 A feeder, which fails both the voltage and ampere conditions." }
+    - { id: d, text: "24 in / 24 in / 24 in", distractorRationale: "Only the direct-buried UF segment owes 24 in; carrying the deepest segment's number across the whole route wastes trench and misreads the table — each segment is judged by its own column and row." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "A multi-method run is adjudicated segment by segment: pick each segment's location ROW first, then its method COLUMN — the driveway row overrides RMC's shallow general value, and the UF segment keeps the deep cable column."
+    codePath: ["Table 300.5, one/two-family driveway row → 18 in (RMC segment)", "Table 300.5, Column 3 general row → 18 in (PVC segment)", "Table 300.5, Column 1 general row → 24 in (UF segment)"]
+    steps:
+      - { text: "Segment 1 — RMC under the dwelling's driveway: the location-specific driveway row (18 in) displaces RMC's 6 in general allowance.", ref: "Table 300.5" }
+      - { text: "Segment 2 — PVC under the lawn: general row, nonmetallic-raceway column → 18 in.", ref: "Table 300.5, Column 3" }
+      - { text: "Segment 3 — direct-buried UF in the garden: general row, Column 1 → 24 in. The 240 V, 30 A rating forecloses any Column 4 reduction on every segment.", ref: "Table 300.5, Column 1" }
+      - { text: "Result: 18 / 18 / 24 — trench depth steps at each method or row change; no single number covers the route." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live. Pack canon per q-wm-118/q-wm-h007: dwelling-driveway row = 18 in."
+
+- id: q-wm-x009
+  domainId: nec.wiring-methods
+  commonMistake: "Sharing one trench does not average the columns: each method must independently satisfy its own cover, so a common burial elevation is set by the DEEPEST requirement among the occupants."
+  skillIds: [nec.wm.burial-depth]
+  type: single
+  difficulty: 9
+  stem: "To save excavation, a contractor lays a direct-buried UF feeder and a Schedule 40 PVC conduit side by side at the SAME elevation in one trench across a lawn (general location; neither circuit qualifies for reduced cover). What single burial depth, measured as cover over both, makes the whole trench compliant?"
+  options:
+    - { id: a, text: "18 in — the PVC column governs because a raceway is the more protective method in the trench", distractorRationale: "PVC's 18 in satisfies only the PVC; the UF cable beside it would sit 6 in shy of its own Column 1 requirement — the cable is not upgraded by its neighbor." }
+    - { id: b, text: "24 in — each method must meet its own column, and the direct-buried cable's 24 in is the strictest", isCorrect: true }
+    - { id: c, text: "21 in — the average of the two columns applies to a shared trench", distractorRationale: "Table 300.5 has no averaging provision; every wiring method in the trench must individually meet its own minimum cover." }
+    - { id: d, text: "12 in — a shared trench is treated as a single 'multiple conductors' installation with reduced cover", distractorRationale: "There is no shared-trench reduction; 12 in belongs to the residential-GFCI column, whose conditions neither circuit meets." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Table 300.5 attaches to each wiring method individually. At a common elevation the trench must give the most demanding occupant its full cover — here the direct-buried cable's 24 in."
+    codePath: ["Table 300.5, Column 1 (direct-buried cable) → 24 in", "Table 300.5, Column 3 (nonmetallic raceway) → 18 in", "Strictest occupant governs a shared elevation"]
+    steps:
+      - { text: "List each occupant's requirement: UF direct-buried → 24 in; Schedule 40 PVC → 18 in.", ref: "Table 300.5" }
+      - { text: "Both sit at one elevation, so the cover over the pair must satisfy both simultaneously: max(24, 18) = 24 in." }
+      - { text: "Alternative design: bench the trench — PVC on an 18 in shelf, UF at 24 in — each method at its own lawful depth." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x010
+  domainId: nec.wiring-methods
+  commonMistake: "The riser at grade must survive TWO tests at once: 300.5(D) protection to 8 ft AND the method's own damage rules — EMT fails the severe-damage test (358.12) even though it would satisfy the height."
+  skillIds: [nec.wm.burial-depth, nec.wm.method-rules]
+  type: single
+  difficulty: 10
+  stem: "An underground Schedule 40 PVC run surfaces at the wall of a truck-loading dock, where forklifts routinely strike the lower wall (severe physical damage). The installer plans to transition at grade to EMT with raintight fittings, rising 8 ft to a disconnect. Which statement is correct?"
+  options:
+    - { id: a, text: "Compliant — the riser reaches 8 ft above grade as 300.5(D) requires, and raintight fittings handle the wet location", distractorRationale: "Height and fittings satisfy 300.5(D) and the wet location, but 358.12 independently prohibits EMT where subject to severe physical damage — the forklift exposure fails the method itself." }
+    - { id: b, text: "Violation — the riser must be RMC, IMC, or Schedule 80 PVC (a method permitted where subject to severe physical damage), extending at least 8 ft above grade", isCorrect: true }
+    - { id: c, text: "Violation — the underground portion must also be upgraded to Schedule 80 for its entire buried length", distractorRationale: "The buried portion is protected by earth cover; only the exposed emergence subject to damage needs the damage-rated method — Schedule 40 remains fine underground." }
+    - { id: d, text: "Compliant if the EMT is guarded by a bolted steel channel to 42 in above grade", distractorRationale: "A partial-height guard does not cure the method selection; where the location is subject to severe physical damage the raceway itself must be one identified for it, over the full protection window." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Stack the rules at the transition: 300.5(D) sets the protection window (below grade to 8 ft above), 300.5(D)(4)/358.12 set WHICH methods may occupy it — severe damage eliminates EMT and Schedule 40, leaving RMC, IMC, or Schedule 80 PVC."
+    codePath: ["300.5(D) → protection from below grade to 8 ft above grade", "300.5(D)(4) → where subject to physical damage: RMC, IMC, Schedule 80 PVC, or equivalent", "358.12 → EMT not permitted where subject to severe physical damage"]
+    steps:
+      - { text: "Define the protection window for emerging underground conductors: from the required cover depth up to at least 8 ft above finished grade.", ref: "300.5(D)" }
+      - { text: "Classify the exposure: forklift strikes at a loading dock = severe physical damage — this selects the permitted methods for the window.", ref: "300.5(D)(4)" }
+      - { text: "Screen the proposed method: EMT is expressly disqualified where subject to severe physical damage, raintight fittings notwithstanding.", ref: "358.12" }
+      - { text: "Compliant design: transition to RMC, IMC, or Schedule 80 PVC at (or below) grade and run it to at least 8 ft; the buried Schedule 40 upstream is unaffected." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- Competing support rules on shared supports (single) ----------------------
+- id: q-wm-x011
+  domainId: nec.wiring-methods
+  commonMistake: "A shared support line obeys the tightest occupant. Small PVC (½–1 in) is capped at 3 ft by Table 352.30 — tighter than NM's 4½ ft and far tighter than EMT's 10 ft."
+  skillIds: [nec.wm.support]
+  type: single
+  difficulty: 9
+  stem: "A strut trapeze system across an unfinished basement ceiling will carry three parallel runs: a ¾ in. EMT, a ¾ in. Schedule 40 PVC, and an NM cable (secured to the strut with listed fittings, and separately secured within 12 in of every box). The installer wants one uniform trapeze spacing for the whole rack. What is the largest spacing that keeps all three runs compliant between boxes?"
+  options:
+    - { id: a, text: "3 ft", isCorrect: true }
+    - { id: b, text: "4.5 ft", distractorRationale: "4½ ft satisfies the NM cable (334.30) but exceeds the 3 ft maximum Table 352.30 assigns to ½–1 in. PVC — the smallest pipe on the rack is the binding constraint." }
+    - { id: c, text: "10 ft", distractorRationale: "10 ft is EMT's own interval (358.30(A)); it triples the small-PVC limit and more than doubles NM's 4½ ft." }
+    - { id: d, text: "5 ft", distractorRationale: "5 ft is the Table 352.30 value for 1¼–2 in. PVC — the rack's PVC is ¾ in., which sits in the 3 ft row, and NM's 4½ ft also fails at 5 ft." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Each method carries its own support law onto the shared rack: EMT 10 ft, NM 4½ ft, ¾ in. PVC 3 ft. The uniform spacing must be the minimum of the three — 3 ft."
+    codePath: ["Table 352.30 → ½–1 in. PVC: 3 ft", "334.30 → NM secured at intervals ≤ 4½ ft", "358.30(A) → EMT ≤ 10 ft"]
+    steps:
+      - { text: "List each occupant's maximum interval: EMT — 10 ft; NM cable — 4½ ft; ¾ in. PVC — 3 ft.", ref: "358.30(A) / 334.30 / Table 352.30" }
+      - { text: "A single trapeze spacing must not exceed the smallest of these: 3 ft, driven by the small-trade-size PVC row.", ref: "Table 352.30" }
+      - { text: "Box-proximity rules still ride along independently: EMT and PVC within 3 ft of each box, NM secured within 12 in — met here by the stated box securing." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x012
+  domainId: nec.wiring-methods
+  commonMistake: "Support maxima are 'not to exceed' limits — landing EXACTLY on 10 ft, 3 ft, or a Table 352.30 value is compliant. Failing candidates either treat the boundary as a violation or miss that the rules are inclusive."
+  skillIds: [nec.wm.support]
+  type: single
+  difficulty: 9
+  stem: "An inspector measures an exposed run: EMT strapped at exactly 10 ft 0 in intervals with the first strap exactly 3 ft 0 in from each box, and a parallel 1¼ in. Schedule 40 PVC strapped at exactly 5 ft 0 in intervals with straps exactly 3 ft 0 in from its boxes. No other defects exist. What should the inspector conclude?"
+  options:
+    - { id: a, text: "Both runs comply — every measured value equals, and does not exceed, its rule's maximum", isCorrect: true }
+    - { id: b, text: "The EMT violates — straps must be at LESS than 10 ft, so 10 ft 0 in fails by definition", distractorRationale: "358.30(A) says intervals 'not exceeding' 10 ft — equality is compliant; the limit is inclusive, not exclusive." }
+    - { id: c, text: "The PVC violates — 1¼ in. PVC is limited to 3 ft between supports", distractorRationale: "3 ft is the Table 352.30 row for ½–1 in. PVC; 1¼ in. sits in the next row, which permits 5 ft." }
+    - { id: d, text: "Both violate — a strap exactly 3 ft from a box leaves the box unsupported", distractorRationale: "The box-proximity rule for EMT and PVC is 'within 3 ft' — a securing point at exactly 3 ft satisfies it; boxes are supported by their own means." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Every support rule here is an inclusive maximum: EMT ≤ 10 ft and within 3 ft of boxes; 1¼ in. PVC ≤ 5 ft (Table 352.30) and within 3 ft of boxes. Measurements landing exactly on the limits pass."
+    codePath: ["358.30(A) → intervals not exceeding 10 ft; within 3 ft of each box", "Table 352.30 → 1¼–2 in. PVC: 5 ft", "352.30 → PVC within 3 ft of each box"]
+    steps:
+      - { text: "EMT: 10 ft 0 in interval vs a 10 ft maximum — equal, therefore compliant; 3 ft 0 in to the box vs 'within 3 ft' — compliant.", ref: "358.30(A)" }
+      - { text: "PVC: read the correct Table 352.30 row — 1¼ in. is in the 1¼–2 in. band → 5 ft maximum; 5 ft 0 in is compliant, and its 3 ft box distance passes 352.30.", ref: "Table 352.30" }
+      - { text: "Conclusion: zero violations. The trap is treating an inclusive boundary as a failure, or sliding the PVC into the smaller-size 3 ft row." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x013
+  domainId: nec.wiring-methods
+  commonMistake: "334.30(B)'s fished-cable allowance attaches to the CLOSED, finished portion only — the same cable, where it runs through open new framing, owes full securing (intervals AND within 12 in of the clamped box)."
+  skillIds: [nec.wm.support, nec.wm.method-rules]
+  type: single
+  difficulty: 9
+  stem: "During a kitchen remodel, one NM cable serves two areas: it is fished 9 ft down an existing closed wall to an old-work box (no securing possible inside), then continues through a newly opened stud bay — exposed framing — running 3 ft horizontally to a metal box with internal clamps, with no staple anywhere in the open bay. Which portion, if any, violates Article 334?"
+  options:
+    - { id: a, text: "Only the fished portion — cable may never run 9 ft without support", distractorRationale: "Backwards: 334.30(B) expressly permits unsupported fished cable in concealed finished spaces where securing is impracticable — the 9 ft fished drop is the LEGAL portion." }
+    - { id: b, text: "Only the new-work portion — in the open bay the cable must be secured within 12 in of the clamped box (and at intervals), and it is not", isCorrect: true }
+    - { id: c, text: "Both portions violate — NM always requires securing every 4½ ft and within 12 in of every box", distractorRationale: "The blanket rule is displaced for the fished segment by 334.30(B); only the accessible open-framing segment still owes securing." }
+    - { id: d, text: "Neither portion — one fished segment makes the entire cable a 'fished run' exempt from securing", distractorRationale: "The allowance is location-specific, not cable-specific: where the same cable emerges into open framing, securing becomes practicable and required again." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "One cable, two legal regimes: 334.30(B) exempts the concealed fished drop; the open new-work bay reverts to 334.30's full securing — intervals ≤ 4½ ft and within 12 in of the clamped box — which the unstapled 3 ft approach fails."
+    codePath: ["334.30(B)(1) → fished in concealed finished spaces: unsupported permitted", "334.30 → open framing: secured ≤ 4½ ft intervals AND within 12 in of the box", "Metal box with clamps → the 12 in (not 8 in) securing distance applies"]
+    steps:
+      - { text: "Fished segment: closed finished wall, securing impracticable → the unsupported run is expressly permitted.", ref: "334.30(B)(1)" }
+      - { text: "New-work segment: framing is open, so securing IS practicable — the general rule reapplies in full.", ref: "334.30" }
+      - { text: "Test the approach to the box: metal box WITH clamps → cable must be secured within 12 in of the box; the nearest securing point is beyond the open bay entirely — violation." }
+      - { text: "Fix: one staple within 12 in of the clamped box (and satisfy the interval across the bay); the fished wall needs nothing." }
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x014
+  domainId: nec.wiring-methods
+  commonMistake: "The clamp-less box's 8 in securing demand has its own escape hatch for OLD WORK: where the cable is fished, 314.17(C)'s exception drops the securing requirement — but the ¼ in sheath-into-box requirement never goes away."
+  skillIds: [nec.wm.support, nec.wm.method-rules]
+  type: single
+  difficulty: 10
+  stem: "In an existing finished wall, an electrician fishes NM cable to a single-gang nonmetallic old-work box that has NO internal cable clamps. The cable cannot be secured anywhere inside the closed wall, and the sheath extends about ½ in into the box. Is this installation permitted?"
+  options:
+    - { id: a, text: "No — a clamp-less single-gang nonmetallic box always requires the cable secured within 8 in of the box", distractorRationale: "The 8 in rule governs NEW work; 314.17(C)'s exception waives securing where the cable is fished between access points in a finished building and securing is impracticable." }
+    - { id: b, text: "Yes — for fished cable in a finished wall, securing at the box is not required, provided the sheath extends at least ¼ in inside the box", isCorrect: true }
+    - { id: c, text: "No — NM entering any box without an internal clamp is a violation regardless of securing outside", distractorRationale: "Single-gang nonmetallic boxes are expressly permitted without internal clamps; the trade-off is external securing (8 in) in new work, waived for fished old work." }
+    - { id: d, text: "Yes — and the sheath may be stripped back flush with the box wall since no clamp will bear on it", distractorRationale: "The sheath-extension requirement (≥ ¼ in into the box) is independent of clamping and survives the fished-cable exception — flush-stripped sheath is a violation." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Three rules stack at this box: 314.17(C) sheath must extend ≥ ¼ in inside; clamp-less single-gang boxes normally demand securing within 8 in; the fished-cable exception waives the securing — never the sheath entry."
+    codePath: ["314.17(C) → sheath ≥ ¼ in inside nonmetallic box", "314.17(C) → clamp-less single-gang: secure within 8 in (new work)", "314.17(C) Exception → fished in existing finished walls: securing not required"]
+    steps:
+      - { text: "Baseline for this box type: no internal clamp is allowed only with external securing within 8 in of the box, sheath extending at least ¼ in inside.", ref: "314.17(C)" }
+      - { text: "Old-work condition: the cable is fished in a closed finished wall — securing is impracticable, and the exception expressly relieves the securing requirement.", ref: "314.17(C) Exception" }
+      - { text: "What survives: the sheath-entry requirement. At ½ in inside the box it passes; a flush-stripped sheath would fail." }
+      - { text: "Verdict: permitted as described — the exception removes securing, the sheath detail is met." }
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x015
+  domainId: nec.wiring-methods
+  commonMistake: "One staple distance, two verdicts: 10 in passes the 12 in rule at a box WITH clamps but fails the 8 in rule at a clamp-less single-gang nonmetallic box — the securing distance is a property of the BOX, not of the cable."
+  skillIds: [nec.wm.support, nec.wm.method-rules]
+  type: single
+  difficulty: 9
+  stem: "In new construction, an apprentice staples every NM cable exactly 10 in from the box it enters. On one wall this feeds (1) a metal device box with internal cable clamps and (2) a single-gang nonmetallic box with no internal clamps (sheaths extend properly into both). Which assessment is correct?"
+  options:
+    - { id: a, text: "Both compliant — 10 in is inside the 12 in securing distance NM requires at boxes", distractorRationale: "12 in is the distance only where the box provides clamping; the clamp-less single-gang nonmetallic box tightens it to 8 in, which 10 in exceeds." }
+    - { id: b, text: "Box (1) compliant; box (2) violates because its clamp-less allowance requires securing within 8 in", isCorrect: true }
+    - { id: c, text: "Both violate — securing must be within 8 in of every device box in a dwelling", distractorRationale: "8 in attaches only to the clamp-less single-gang nonmetallic case; boxes with internal clamps keep the general 12 in distance, which 10 in satisfies." }
+    - { id: d, text: "Box (1) violates because metal boxes require securing within 8 in; box (2) is compliant at 12 in", distractorRationale: "Exactly backwards — the metal box HAS clamps (12 in applies), and it is the clamp-less nonmetallic box that carries the 8 in condition." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "334.30 gives 12 in at boxes that clamp the cable; 314.17(C) trades the omitted clamp for an 8 in securing distance at single-gang nonmetallic boxes. A uniform 10 in habit passes one box and fails the other."
+    codePath: ["334.30 → secured within 12 in of boxes with clamps", "314.17(C) → clamp-less single-gang nonmetallic box: secured within 8 in", "Verdict follows the box type, not the cable"]
+    steps:
+      - { text: "Box (1): metal box with internal clamps → general rule, secured within 12 in; the 10 in staple complies.", ref: "334.30" }
+      - { text: "Box (2): single-gang nonmetallic, no clamps → the clamp omission is legal ONLY with securing within 8 in, measured along the sheath; 10 in exceeds it — violation.", ref: "314.17(C)" }
+      - { text: "Fix: move box (2)'s staple to 8 in or less (or use a box with clamps); box (1) needs nothing." }
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- 300.4 protection geometry by framing type (single) -----------------------
+- id: q-wm-x016
+  domainId: nec.wiring-methods
+  commonMistake: "Three penetrations, three different remedies: a wood bored hole under 1¼ in setback takes a 1/16 in steel plate; a wood NOTCH takes a plate regardless of measurements; a steel-stud punchout takes a listed grommet no matter how generous the setback."
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 10
+  stem: "One NM cable crosses a partition three ways: (1) through a bored hole in a wood stud whose edge is 1 in from the stud face, (2) through a notch cut in the wood top plate, and (3) through a factory punchout in a steel stud whose edge sits 2 in from either stud face. What protection does 300.4 require at each point, in order?"
+  options:
+    - { id: a, text: "(1) 1/16 in steel plate; (2) 1/16 in steel plate; (3) listed bushing/grommet in the punchout", isCorrect: true }
+    - { id: b, text: "(1) nothing — bored holes are inherently protected; (2) steel plate; (3) nothing — the 2 in setback exceeds 1¼ in", distractorRationale: "The wood bored hole is only self-sufficient at ≥1¼ in setback (this one is 1 in → plate), and the metal-stud grommet requirement is about sheared edges, not setback — it applies at any distance." }
+    - { id: c, text: "(1) steel plate; (2) nothing if the notch is less than 40% of the plate width; (3) grommet", distractorRationale: "The 40%-style figures are structural (building-code) notch limits — 300.4(A)(2) requires the steel plate at a notched member whenever the cable could be penetrated, with no percentage carve-out." }
+    - { id: d, text: "Listed grommets at all three points", distractorRationale: "Grommets are the METAL-framing remedy (300.4(B)); wood members take the 1¼ in setback or a 1/16 in steel plate — a grommet in wood does not stop a drywall screw." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "300.4 assigns the remedy by member type and penetration type: wood bored hole → setback-or-plate; wood notch → plate; metal framing opening → listed grommet, independent of setback."
+    codePath: ["300.4(A)(1) → wood bored hole: ≥1¼ in setback or 1/16 in steel plate", "300.4(A)(2) → wood notch: 1/16 in steel plate before finish", "300.4(B)(1) → metal framing: listed bushing/grommet in the opening"]
+    steps:
+      - { text: "Point (1): wood bored hole at 1 in from the edge — under the 1¼ in threshold, so a steel plate at least 1/16 in thick is required over the cable path.", ref: "300.4(A)(1)" }
+      - { text: "Point (2): a notch in a wood member always takes the steel plate — the cable lies at the member surface where fasteners land, so no setback can qualify it.", ref: "300.4(A)(2)" }
+      - { text: "Point (3): steel-stud punchout — the hazard is the sheared metal edge cutting the sheath, so a listed bushing or grommet is required even at a 2 in setback; a plate would be the wrong remedy.", ref: "300.4(B)(1)" }
+      - { text: "Answer pattern: plate / plate / grommet — matching remedy to member is the whole test." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x017
+  domainId: nec.wiring-methods
+  commonMistake: "The 1¼ in rule follows the cable, not just the hole: a cable run PARALLEL to a framing member (300.4(D)) needs the same 1¼ in standoff from the nailing edge or physical protection — stapling tight to the stud face at 1 in invites every trim screw."
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 9
+  stem: "An NM cable runs vertically alongside a wood stud (parallel to the member, not through holes), stapled to the stud's side 1 in back from the drywall face. Baseboard and trim will be nailed over this wall. Per 300.4(D), which statement is correct?"
+  options:
+    - { id: a, text: "Compliant — the parallel-run rule applies only to cables inside bored holes", distractorRationale: "300.4(D) exists precisely for cables run PARALLEL to framing: they need the same 1¼ in clearance from the nearest edge or supplemental protection." }
+    - { id: b, text: "Violation — the cable must sit at least 1¼ in from the nearest edge of the stud, or be protected by a 1/16 in steel plate (or be in RMC/IMC/EMT/rigid PVC)", isCorrect: true }
+    - { id: c, text: "Compliant — staples themselves qualify as the required physical protection", distractorRationale: "A staple positions the cable; it does not shield it. The rule accepts distance (1¼ in), a 1/16 in steel plate/sleeve, or a raceway-class method — never the fastener." }
+    - { id: d, text: "Violation — parallel runs along studs are prohibited; the cable must be re-run through bored holes", distractorRationale: "Parallel runs are fully permitted when the 1¼ in standoff or protection is provided; the geometry, not the routing style, is the defect." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "300.4(D): cables parallel to framing members must keep 1¼ in from the nearest edge where fasteners can land, or be protected by a 1/16 in steel plate — an exception excuses RMC, IMC, EMT, and rigid PVC, not staples."
+    codePath: ["300.4(D) → parallel to framing: ≥1¼ in from nearest edge or protected", "300.4(D) Exception → steel plate not required for RMC/IMC/EMT/rigid PVC", "Trim nailing = the fastener exposure the rule anticipates"]
+    steps:
+      - { text: "Identify the rule family: this is a parallel run along a framing member, governed by 300.4(D) — not the bored-hole rule.", ref: "300.4(D)" }
+      - { text: "Measure: 1 in from the likely-nailed drywall face is under the required 1¼ in — trim nails can reach the cable." }
+      - { text: "Remedies: hold the cable ≥1¼ in back, add a 1/16 in steel plate along the exposure, or run a raceway-class method that the exception excuses.", ref: "300.4(D) Exception" }
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x018
+  domainId: nec.wiring-methods
+  commonMistake: "300.4(A)(1)'s steel-plate demand has a method-shaped hole: the exception excuses RMC, IMC, rigid PVC, and EMT in the identical under-setback bored hole — the plate protects soft sheaths, not steel-walled or rigid raceways."
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 9
+  stem: "Two runs pass through the SAME line of bored holes in wood studs, every hole edge exactly 1 in from the stud face: run A is NM cable, run B is ¾ in. EMT. Neither has any added protection. Per 300.4(A)(1), which is the correct enforcement?"
+  options:
+    - { id: a, text: "Both violate — every wiring method in an under-1¼ in hole requires a 1/16 in steel plate", distractorRationale: "The exception to 300.4(A)(1) exempts RMC, IMC, rigid PVC, and EMT from the plate — the tubing resists fastener penetration on its own; only the NM needs the plate." }
+    - { id: b, text: "Only run A (NM) violates; the EMT is exempt from the steel-plate requirement by exception", isCorrect: true }
+    - { id: c, text: "Only run B (EMT) violates — thin-wall tubing is more vulnerable than cable sheath", distractorRationale: "Backwards: EMT is among the excepted raceways, while NM's nonmetallic sheath is exactly what the plate rule protects." }
+    - { id: d, text: "Neither violates — a 1 in setback rounds up to the required 1¼ in", distractorRationale: "There is no rounding in 300.4(A)(1); at less than 1¼ in the NM requires a 1/16 in steel plate, full stop." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Same hole, different law: under-setback bored holes require the 1/16 in plate for cables like NM, but the exception releases RMC, IMC, rigid PVC, and EMT — the raceway wall is its own screw shield."
+    codePath: ["300.4(A)(1) → <1¼ in setback: 1/16 in steel plate required (cables)", "300.4(A)(1) Exception → not required for RMC, IMC, rigid PVC, EMT", "Enforcement: plate run A; run B passes as-is"]
+    steps:
+      - { text: "Both holes fail the setback test: 1 in < 1¼ in, so the plate requirement is triggered for protected wiring methods.", ref: "300.4(A)(1)" }
+      - { text: "Apply the exception: EMT is on the excused list (with RMC, IMC, rigid PVC) — no plate for run B.", ref: "300.4(A)(1) Exception" }
+      - { text: "Run A's NM sheath has no such excuse — a 1/16 in steel plate (or listed equivalent) must cover the cable at each stud." }
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- Triple-condition method elimination (single) -----------------------------
+- id: q-wm-x019
+  domainId: nec.wiring-methods
+  commonMistake: "Run all three filters, in any order, and only one method survives: wet kills nothing by itself, severe damage kills EMT and Schedule 40, corrosive spray kills unprotected steel — Schedule 80 PVC alone passes wet AND damage AND corrosion."
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 10
+  stem: "A raceway must run exposed along the lower wall of a self-serve car-wash bay: continuously wet, routinely struck by wands and vehicle doors (severe physical damage), and soaked in corrosive detergent chemistry that attacks bare steel. Which single method satisfies all three conditions without supplementary protection?"
+  options:
+    - { id: a, text: "EMT with raintight compression fittings", distractorRationale: "Fittings answer only the water. EMT fails the severe-physical-damage test (358.12) and its steel also needs protection against the corrosive spray — two of three filters kill it." }
+    - { id: b, text: "Schedule 40 PVC", distractorRationale: "Immune to the water and the chemicals, but Schedule 40 is not the PVC identified for physical-damage areas — the impact exposure demands extra-heavy-wall Schedule 80." }
+    - { id: c, text: "Schedule 80 PVC", isCorrect: true }
+    - { id: d, text: "Plain-steel RMC without supplementary corrosion protection", distractorRationale: "RMC beats the impacts and the water, but 344.10 permits it under severe corrosive influence only where judged suitably protected — unprotected steel in detergent spray fails the third filter." }
+  answer: { kind: single, optionId: c }
+  solution:
+    keyIdea: "Three independent eliminations: (wet) all four candidates could survive with details; (severe damage) EMT and Schedule 40 out; (corrosive) unprotected steel out — Schedule 80 PVC is the intersection."
+    codePath: ["358.12 → EMT not where subject to severe physical damage", "352.10(F) → PVC exposed to damage must be Schedule 80", "344.10 → RMC in severe corrosion only with suitable protection", "352.10 → PVC identified for corrosive/chemical environments"]
+    steps:
+      - { text: "Filter 1 — wet location: with proper fittings and wet-rated conductors, EMT, PVC, and RMC all remain candidates; nothing is eliminated yet.", ref: "300.9" }
+      - { text: "Filter 2 — severe physical damage: EMT is expressly disqualified, and exposed PVC in damage areas must be Schedule 80 — Schedule 40 drops out.", ref: "358.12 / 352.10(F)" }
+      - { text: "Filter 3 — corrosive chemicals: plain steel needs corrosion protection judged suitable, which the stem forbids adding — unprotected RMC drops out.", ref: "344.10" }
+      - { text: "Survivor: Schedule 80 PVC — inherently corrosion-proof, identified for damage exposure, unaffected by water." }
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x020
+  domainId: nec.wiring-methods
+  commonMistake: "RMC's seductive 6 in column is only available where RMC itself is permitted — in corrosive cinder fill, unprotected steel conduit loses its use-permission first, so its shallow trench never comes into play."
+  skillIds: [nec.wm.method-rules, nec.wm.burial-depth]
+  type: single
+  difficulty: 9
+  stem: "A feeder must cross a yard whose subsoil is cinder fill subject to permanent moisture — an environment corrosive to steel. The contractor wants the cheapest lawful trench and proposes plain galvanized RMC at 6 in of cover, with no concrete envelope or added corrosion protection. Which evaluation is correct?"
+  options:
+    - { id: a, text: "Compliant — Table 300.5 gives RMC 6 in in a general location, and depth is the only underground requirement", distractorRationale: "Depth is the SECOND question. The first is use-permission: 344.10 restricts RMC in corrosive cinder fill without protection, so the 6 in column belongs to a method this soil forbids." }
+    - { id: b, text: "Not compliant as proposed — unprotected steel conduit is not permitted in corrosive cinder fill; Schedule 40 PVC at 18 in of cover is a directly compliant alternative", isCorrect: true }
+    - { id: c, text: "Not compliant — nothing may be buried in cinder fill; the feeder must be rerouted or run overhead", distractorRationale: "Cinder fill limits UNPROTECTED steel, not burial generally — corrosion-immune PVC (or steel with a suitable protective envelope) is fully permitted through it." }
+    - { id: d, text: "Compliant if the trench is deepened to 24 in, which offsets the corrosion exposure", distractorRationale: "Extra depth is not a corrosion remedy — the chemistry attacks steel at any depth; the fix is a permitted method or protection, not more dirt." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Use-permission gates the depth table: corrosive cinder fill disqualifies unprotected RMC (344.10), taking its 6 in column off the menu; corrosion-immune PVC is permitted and takes Column 3's 18 in."
+    codePath: ["344.10 → RMC in cinder fill/corrosive soil only with suitable protection (e.g., concrete envelope)", "352.10 → PVC identified for corrosive environments and direct burial", "Table 300.5, Column 3 → nonmetallic raceway: 18 in"]
+    steps:
+      - { text: "Screen the method before pricing the trench: permanently moist cinder fill severely corrodes steel, and RMC is permitted there only with protection judged suitable — the proposal has none.", ref: "344.10" }
+      - { text: "With RMC out, its 6 in Table 300.5 column is unavailable — a depth column cannot be borrowed by a prohibited method." }
+      - { text: "Select a permitted method: rigid PVC is identified for corrosive soils and direct burial → Column 3, 18 in of cover.", ref: "352.10 / Table 300.5" }
+      - { text: "Alternative: keep RMC by adding suitable corrosion protection (such as a concrete envelope), then its own column applies — but that is not what was proposed." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x021
+  domainId: nec.wiring-methods
+  commonMistake: "Attic protection turns on TWO variables: where the cable sits (across the top of joists vs through bored holes) and how the attic is reached (scuttle hole → guard strips within 6 ft of the opening; cable in bored holes → no guard strips anywhere)."
+  skillIds: [nec.wm.method-rules, nec.wm.support]
+  type: single
+  difficulty: 9
+  stem: "An attic is reached only through a ceiling scuttle hole (no permanent stairs). Two NM cables cross it: cable A runs ACROSS THE TOP of the floor joists, passing 4 ft from the scuttle opening, with no guard strips; cable B runs through bored holes in the joists, passing 2 ft from the same opening, with no guard strips. Which cable violates 334.23/320.23?"
+  options:
+    - { id: a, text: "Cable A only — on top of the joists within 6 ft of the scuttle, it requires guard strips", isCorrect: true }
+    - { id: b, text: "Cable B only — proximity to the opening is what triggers protection, and 2 ft is closer than 4 ft", distractorRationale: "Proximity matters only for cables run ACROSS THE TOP of framing; a cable inside bored holes is below the walking/crawling surface and needs no guard strips at any distance." }
+    - { id: c, text: "Both cables — everything within 6 ft of a scuttle hole must have guard strips", distractorRationale: "The 6 ft zone attaches to exposed cables run across the top of joists, not to cables protected inside bored holes." }
+    - { id: d, text: "Neither cable — guard strips are required only in attics with permanent stairs", distractorRationale: "Backwards: permanent stairs or ladders EXPAND the protected area; a scuttle-only attic still requires guard strips within 6 ft of the opening for cables atop the joists." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "320.23(A) (via 334.23): cables across the top of attic floor joists need guard strips — within 6 ft of the scuttle opening when access is by scuttle hole only. Cables in bored holes are already protected by the framing and need none."
+    codePath: ["334.23 → NM in attics per 320.23", "320.23(A) → across top of joists: guard strips; scuttle-only access limits the zone to within 6 ft of the opening", "Bored holes → no guard strips required"]
+    steps:
+      - { text: "Classify each cable's position: A is exposed on top of the joists (where someone entering the attic kneels and steps); B is inside bored holes, below the surface.", ref: "320.23(A)" }
+      - { text: "Apply the access rule: scuttle-hole-only attic → guard strips required for on-top cables within 6 ft of the opening's nearest edge. Cable A at 4 ft is inside the zone and unprotected — violation.", ref: "334.23 / 320.23(A)" }
+      - { text: "Cable B needs no guard strips at 2 ft or anywhere else — bored-hole routing is itself the protection." }
+      - { text: "Note the inversion trap: with permanent stairs the protected area grows; it never shrinks to zero." }
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- Underground details beyond the depth columns (single) --------------------
+- id: q-wm-x022
+  domainId: nec.wiring-methods
+  commonMistake: "Two protections stack at a service trench: 300.5(D)(3)'s warning ribbon lives 12 in ABOVE service conductors (not beside or below), and it attaches to underground SERVICE conductors not under the utility's exclusive control — feeders and branch circuits don't owe it."
+  skillIds: [nec.wm.burial-depth, nec.wm.method-rules]
+  type: single
+  difficulty: 10
+  stem: "Two trenches are dug at a commercial site: trench 1 carries the customer-owned underground service-entrance conductors (direct-buried, 30 in of cover, not under utility control); trench 2 carries a 480 V feeder in PVC at 18 in. The excavator asks where warning ribbon is required and where it goes. Per 300.5(D)(3), which answer is correct?"
+  options:
+    - { id: a, text: "Trench 1 only — a warning ribbon placed in the backfill at least 12 in above the service conductors", isCorrect: true }
+    - { id: b, text: "Both trenches — every underground run deeper than 12 in requires a ribbon 6 in below finished grade", distractorRationale: "The ribbon rule targets underground SERVICE conductors not under exclusive utility control; ordinary feeders don't owe one, and the ribbon's position is keyed to the conductors (12 in above), not to grade." }
+    - { id: c, text: "Trench 1 only — a ribbon laid directly on top of the conductors so locators find it immediately", distractorRationale: "Directly on the conductors defeats the purpose: the ribbon must be 12 in ABOVE them so an excavator hits the warning a full shovel-depth before the live conductors." }
+    - { id: d, text: "Neither trench — warning ribbon is required only for conductors buried less than 18 in", distractorRationale: "There is no shallow-burial trigger; the requirement follows the conductor's role (non-utility-controlled service conductors), and these are buried 30 in with the ribbon at 18 in." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "300.5(D)(3): underground service conductors not under the exclusive control of the utility, buried 18 in or more, require a warning ribbon in the trench at least 12 in above them. The feeder trench has no ribbon requirement."
+    codePath: ["300.5(D)(3) → service conductors, ≥18 in deep, not utility-controlled → warning ribbon 12 in above", "Feeder in trench 2 → outside the rule's scope"]
+    steps:
+      - { text: "Scope the rule: it reaches underground SERVICE conductors that the serving utility does not exclusively control — trench 1 qualifies; the 480 V feeder in trench 2 does not.", ref: "300.5(D)(3)" }
+      - { text: "Depth trigger: the service conductors are 30 in deep (≥18 in), so the ribbon is mandatory." }
+      - { text: "Placement geometry: the ribbon lies in the backfill at least 12 in above the conductors — here no deeper than 18 in below grade — so digging equipment uncovers the warning before the conductors." }
+      - { text: "Trench 2's PVC feeder needs its 18 in of cover and nothing more from this rule." }
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x023
+  domainId: nec.wiring-methods
+  commonMistake: "Underground splices flip the usual box instinct: a buried junction box violates accessibility, while a boxless splice with listed direct-burial splicing means is expressly permitted by 300.5(E)/300.15(G)."
+  skillIds: [nec.wm.method-rules, nec.wm.burial-depth]
+  type: single
+  difficulty: 9
+  stem: "A backhoe nicks a direct-buried UF feeder mid-span, 30 ft from any structure. The electrician proposes two repairs: option 1 — cut in a standard PVC junction box, splice inside it, and bury the box at the cable's depth; option 2 — splice the cable with a listed underground splice kit identified for direct burial, no box, and backfill. Which repair is Code-compliant?"
+  options:
+    - { id: a, text: "Option 1 only — all splices must be enclosed in a box", distractorRationale: "300.15(G) expressly waives the box for direct-buried splices made with identified methods; meanwhile burying a standard box makes it inaccessible, its own violation." }
+    - { id: b, text: "Option 2 only — a listed direct-burial splice needs no box, while a buried standard junction box would be an inaccessible enclosure", isCorrect: true }
+    - { id: c, text: "Both — underground work is exempt from splice rules entirely", distractorRationale: "Hardly exempt: the boxless splice is legal only because the splicing means is LISTED and identified for direct burial; the buried standard box still fails accessibility." }
+    - { id: d, text: "Neither — a damaged direct-buried cable must be replaced end-to-end with no splice", distractorRationale: "Full replacement is never demanded; 300.5(E) exists precisely to let direct-buried conductors be spliced in the trench with identified means." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "300.5(E) permits direct-buried splices without a box when made per 300.15(G) with splicing means identified for the purpose; a conventional junction box buried in the yard violates the accessibility required of boxes."
+    codePath: ["300.5(E) → direct-buried conductors may be spliced without a splice box", "300.15(G) → splicing devices identified for direct burial", "314.29 → boxes must remain accessible — a buried standard box fails"]
+    steps:
+      - { text: "Option 2: the listed direct-burial splice kit is exactly the 'identified means' contemplated — boxless underground splice permitted, backfill and done.", ref: "300.5(E) / 300.15(G)" }
+      - { text: "Option 1: a standard junction box under 24 in of soil cannot be reached without excavation — boxes and their splices must remain accessible, so the buried box is itself a violation.", ref: "314.29" }
+      - { text: "The exam trap is the reflex that 'a box is always safer' — underground, the identified boxless splice is the compliant path." }
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x024
+  domainId: nec.wiring-methods
+  commonMistake: "Cover is measured from the TOP SURFACE of the raceway or cable to finished grade — not from the trench bottom. A '20 in trench' holding a 2 in conduit yields only 18 in of cover, which passes PVC exactly and fails direct-buried cable by 6 in."
+  skillIds: [nec.wm.burial-depth]
+  type: single
+  difficulty: 10
+  stem: "A trench is excavated exactly 20 in deep across a lawn (general location). Two installations are proposed for the SAME trench depth on separate jobs: (1) a 2 in. Schedule 40 PVC conduit laid on the trench bottom carrying a 480 V feeder; (2) a direct-buried UF cable (roughly ½ in thick) laid on the same bottom, for a 240 V, 30 A circuit. Using Table 300.5's definition of cover, which proposal complies?"
+  options:
+    - { id: a, text: "Proposal 1 only — the PVC ends up with exactly 18 in of cover (20 − 2), meeting Column 3; the UF has about 19.5 in, short of its 24 in", isCorrect: true }
+    - { id: b, text: "Both — the trench is 20 in deep, which exceeds PVC's 18 in and rounds to the UF's 24 in", distractorRationale: "Cover is the distance from the conduit or cable TOP to grade, not the trench depth, and nothing rounds 19.5 up to 24 — the UF fails by roughly 4.5 in." }
+    - { id: c, text: "Proposal 2 only — cable needs less cover than rigid conduit because it flexes under load", distractorRationale: "Backwards: direct-buried cable takes the DEEPEST column (24 in) precisely because it has no raceway wall; PVC's column is 18 in." }
+    - { id: d, text: "Neither — a 20 in trench cannot produce 18 in of cover once bedding sand is added", distractorRationale: "The stem places the conduit on the trench bottom; 20 in minus the 2 in conduit height is exactly 18 in of cover — landing exactly on a minimum is compliant." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Table 300.5's Note defines cover as the shortest distance from the TOP of the buried raceway/cable to finished grade. The same 20 in trench gives a 2 in conduit exactly 18 in (passes Column 3 on the boundary) and a thin cable ~19.5 in (fails Column 1's 24 in)."
+    codePath: ["Table 300.5, Note 1 → cover measured from top surface to finished grade", "Column 3 (nonmetallic raceway) → 18 in: 20 − 2 = 18, compliant at the boundary", "Column 1 (direct burial) → 24 in: ~19.5 in falls short"]
+    steps:
+      - { text: "Apply the definition: cover = grade elevation minus the elevation of the conduit/cable TOP — trench depth alone answers nothing.", ref: "Table 300.5, Note 1" }
+      - { text: "Proposal 1: top of the 2 in conduit sits at 20 − 2 = 18 in below grade → exactly the 18 in Column 3 minimum; equal to the limit is compliant.", ref: "Table 300.5, Column 3" }
+      - { text: "Proposal 2: top of the ½ in cable sits ≈19.5 in below grade, but Column 1 demands 24 in — the trench must be deepened about 4½ in for the cable.", ref: "Table 300.5, Column 1" }
+      - { text: "Same hole, opposite verdicts — the geometry of the measurement, not the excavation, decides." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 300
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x025
+  domainId: nec.wiring-methods
+  commonMistake: "Solid rock rewrites the depth rules rather than waiving them: the run must go into a raceway suitable for burial and take a 2 in concrete cover down to rock — direct-buried cable simply laid on the rock at reduced depth is never an option."
+  skillIds: [nec.wm.burial-depth, nec.wm.method-rules]
+  type: single
+  difficulty: 10
+  stem: "Trenching for a direct-buried UF circuit (required cover 24 in) hits solid ledge rock 10 in below grade for a 30 ft stretch; blasting is not an option. Per the notes to Table 300.5, what is the compliant way to cross the rock section?"
+  options:
+    - { id: a, text: "Lay the UF directly on the rock at 10 in and mark the route with warning ribbon", distractorRationale: "Ribbon never substitutes for cover, and the rock allowance is available only to wiring installed in a RACEWAY — bare cable on rock at 10 in stays a violation." }
+    - { id: b, text: "Install the conductors in a raceway permitted for burial, laid on or in the rock, and cover it with at least 2 in of concrete extending down to the rock", isCorrect: true }
+    - { id: c, text: "The circuit cannot cross the rock underground; it must be rerouted or run overhead", distractorRationale: "The table's own notes provide the rock workaround (raceway + 2 in concrete) — no reroute is forced." }
+    - { id: d, text: "Switch to RMC on top of the rock with no concrete, since RMC's column is only 6 in anyway", distractorRationale: "RMC's 6 in still means 6 in of COVER, and at 10 in of soil the run above the rock may qualify normally — but the specific rock provision, where cover cannot be achieved, pairs the raceway WITH the 2 in concrete envelope; bare conduit at reduced cover on rock does not invoke it." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Table 300.5's notes handle solid rock: where the required cover is unobtainable, the wiring goes in a raceway permitted for burial, protected by a minimum 2 in of concrete extending down to the rock — the cable column disappears as an option."
+    codePath: ["Table 300.5, Notes → solid rock: raceway for burial + ≥2 in concrete to rock", "Direct-buried cable column unavailable where its 24 in cannot be achieved"]
+    steps:
+      - { text: "Recognize the condition: required cover (24 in for direct-buried cable) is physically unobtainable over the ledge — the general columns cannot be satisfied.", ref: "Table 300.5" }
+      - { text: "Apply the rock note: conductors must be installed in a raceway permitted for burial (metal or nonmetallic) across the rock section.", ref: "Table 300.5, Notes" }
+      - { text: "Add the envelope: at least 2 in of concrete over the raceway, extending down to the rock surface, replaces the missing earth cover." }
+      - { text: "Transition back to the normal direct-burial depth on both sides of the ledge where soil resumes." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x026
+  domainId: nec.wiring-methods
+  commonMistake: "Frost heave and settlement are addressed by SLACK, not depth: 300.5(J) wants 'S' loops or equivalent flexibility where buried runs enter buildings or rise to equipment, so earth movement doesn't shear the conductors at the rigid termination."
+  skillIds: [nec.wm.burial-depth, nec.wm.method-rules]
+  type: single
+  difficulty: 9
+  stem: "In a region with deep frost and settling backfill, a direct-buried feeder rises out of the trench into a conduit stub at a building wall. The trench meets every Table 300.5 depth. Per 300.5(J), what additional measure is required at the transition, and why?"
+  options:
+    - { id: a, text: "Nothing — meeting the burial-depth table fully satisfies underground requirements", distractorRationale: "Depth protects against dig-ins, not ground movement; 300.5(J) is a separate demand that the installation tolerate settlement and frost without damage." }
+    - { id: b, text: "Slack in the conductors (such as an 'S' loop) or other arrangements at the entry, so earth movement cannot strain or damage them", isCorrect: true }
+    - { id: c, text: "A concrete anchor block clamping the cable rigidly to the foundation so it cannot move", distractorRationale: "Rigid anchorage is the OPPOSITE of the remedy — fixing the cable hard to the structure concentrates the strain the rule is trying to relieve." }
+    - { id: d, text: "Doubling the burial depth through the frost zone", distractorRationale: "Extra depth may reduce frost exposure but is not what 300.5(J) requires — the rule targets flexibility at terminations, not deeper trenches." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "300.5(J): direct-buried conductors, cables, or raceways subject to earth movement from settlement or frost must be arranged — typically with 'S' loops of slack — to prevent damage."
+    codePath: ["300.5(J) → earth movement: slack/'S' loops or equivalent arrangements", "Depth (Table 300.5) and movement protection are independent requirements"]
+    steps:
+      - { text: "Identify the hazard the depth table does NOT cover: frost heave and settling backfill move the earth around the buried run, straining it where it terminates rigidly at the building.", ref: "300.5(J)" }
+      - { text: "Apply the remedy: leave slack — an 'S' loop at the entry — or use expansion/deflection arrangements so the run can move with the earth." }
+      - { text: "Reject rigid clamping and extra depth: neither provides the required freedom of movement at the transition." }
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x027
+  domainId: nec.wiring-methods
+  commonMistake: "A raceway is not a cable tray: 300.11(C) forbids using raceways as a means of support for other cables or raceways unless identified for the purpose — however convenient the existing EMT rack looks."
+  skillIds: [nec.wm.support, nec.wm.method-rules]
+  type: single
+  difficulty: 9
+  stem: "To avoid new supports, an installer zip-ties a new NM cable along the top of an existing EMT run for 25 ft across a basement ceiling, then also drapes a low-voltage thermostat cable over the same conduit. Neither the EMT nor its fittings are identified as a support means. Per 300.11(C), which statement is correct?"
+  options:
+    - { id: a, text: "Compliant — the EMT is secured every 10 ft, so anything attached to it is equally well supported", distractorRationale: "The EMT's own compliance doesn't transfer: 300.11(C) prohibits raceways being USED AS SUPPORT for other cables unless identified for it — the quality of the borrowed support is irrelevant." }
+    - { id: b, text: "Violation — the raceway may not serve as a means of support for the cables unless it is identified for that use; both attached cables must be independently supported", isCorrect: true }
+    - { id: c, text: "Violation for the NM only — Class 2 thermostat cable is exempt from all support rules", distractorRationale: "The prohibition in 300.11(C) is on the RACEWAY being used as support; it applies to the low-voltage cable draped on it just as it does to the NM." }
+    - { id: d, text: "Compliant if the zip ties are listed and spaced within 4½ ft", distractorRationale: "Listed ties at NM's own interval don't cure the defect — the structure the ties attach to (a raceway not identified for support) is what the rule prohibits." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "300.11(C): raceways shall not be used as a means of support for other raceways, cables, or nonelectric equipment, except where the raceway or means is identified for the purpose — so both piggybacked cables violate."
+    codePath: ["300.11(C) → raceways as support: prohibited unless identified", "334.30 → the NM must be independently secured to structure", "Fix: separate straps/staples to the building structure"]
+    steps:
+      - { text: "Identify what carries what: the EMT (a raceway) is being used as the supporting means for an NM cable and a thermostat cable.", ref: "300.11(C)" }
+      - { text: "Test the exception: neither the EMT nor any attachment fitting is identified as a support means — the exception fails, so both attachments are violations regardless of tie quality or spacing." }
+      - { text: "Correct design: support each cable independently from the structure (staples/straps for the NM at its 334.30 spacing; appropriate supports for the thermostat cable)." }
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x028
+  domainId: nec.wiring-methods
+  commonMistake: "EMT's 3 ft box-proximity rule carries its own relief valve: where structural members make fastening within 3 ft impracticable, the exception stretches the distance to 5 ft — but only for that reason, and never past 5 ft."
+  skillIds: [nec.wm.support]
+  type: single
+  difficulty: 10
+  stem: "An EMT run terminates at a junction box mounted between roof trusses spaced so that the NEAREST structural member capable of taking a strap is 4½ ft from the box; nothing closer can accept a fastener. The installer straps the EMT at that member (4½ ft) and every 10 ft thereafter. A second, identical box elsewhere has a usable member 2 ft away, but the installer strapped at 4½ ft there too, for symmetry. Which assessment is correct?"
+  options:
+    - { id: a, text: "Both locations violate — 358.30(A) allows no strap farther than 3 ft from a box under any circumstances", distractorRationale: "The exception to 358.30(A) permits up to 5 ft where structural members do not readily permit fastening within 3 ft — the first box qualifies for exactly that relief." }
+    - { id: b, text: "The first box complies under the exception (no member within 3 ft, strap at 4½ ft ≤ 5 ft); the second violates because a member 2 ft away made the 3 ft rule achievable", isCorrect: true }
+    - { id: c, text: "Both comply — 4½ ft is the universal securing distance for tubing and cable alike", distractorRationale: "4½ ft is the CABLE interval (334.30); EMT's box rule is 3 ft, stretched to 5 ft only where structure genuinely prevents closer fastening — available at box 1, not box 2." }
+    - { id: d, text: "The first box violates (4½ ft > 3 ft); the second complies because a strap exists within 5 ft", distractorRationale: "Inverted: the 5 ft figure is an EXCEPTION conditioned on impracticability — box 1 meets the condition; box 2, with a usable member at 2 ft, does not, so its baseline stays 3 ft." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "358.30(A)'s 3-ft-of-the-box rule yields to its exception — up to 5 ft where structural members don't readily permit closer fastening. The relief is conditional: available where structure forces it, unavailable where a compliant point exists."
+    codePath: ["358.30(A) → secure within 3 ft of every box/termination", "358.30(A) Exception → up to 5 ft where fastening within 3 ft is impracticable", "Condition tested per location, not per job"]
+    steps:
+      - { text: "Box 1: nearest fastenable member is 4½ ft away — fastening within 3 ft is structurally impracticable, so the exception applies; 4½ ft ≤ 5 ft → compliant.", ref: "358.30(A) Exception" }
+      - { text: "Box 2: a usable member sits 2 ft from the box — the 3 ft baseline is readily achievable, the exception's condition fails, and the 4½ ft strap violates.", ref: "358.30(A)" }
+      - { text: "The 10 ft interval spacing along both runs is independently fine; the defect is purely at the second box's first fastening." }
+      - { text: "Lesson: exceptions are entitlement-tested at each location — 'for symmetry' is not a Code condition." }
+  timeTargetSec: 270
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x029
+  domainId: nec.wiring-methods
+  commonMistake: "Wet-location logic chains THROUGH the transition: conductors that pass through ANY wet segment (the underground PVC) must be wet-rated over that portion — the run being 'mostly indoors' rescues nothing."
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 9
+  stem: "A continuous circuit is pulled through three raceway segments with no splices: indoor EMT across a dry warehouse, underground Schedule 40 PVC beneath a courtyard (30 in cover), and indoor EMT again in the far building. The pull uses plain THHN (not dual-rated). Every depth, support, and fitting is correct. Which statement is right?"
+  options:
+    - { id: a, text: "Compliant — the run originates and terminates in dry locations, which sets the insulation requirement", distractorRationale: "Insulation is judged wherever the conductor actually IS: the underground segment's interior is a wet location, and the same unspliced conductor passes through it." }
+    - { id: b, text: "Violation — the interior of the underground raceway is a wet location, so every conductor passing through it must be wet-rated (THWN, XHHW, or dual-rated)", isCorrect: true }
+    - { id: c, text: "Compliant — 30 in of cover exceeds the 18 in requirement, and extra depth compensates for the insulation", distractorRationale: "Depth and insulation are unrelated requirements; no amount of cover reclassifies the raceway interior, which 300.5(B) declares wet by definition." }
+    - { id: d, text: "Violation — THHN may never share a raceway with a wet location anywhere on the premises", distractorRationale: "Overbroad: plain THHN is fine in the two DRY EMT segments; the defect is only that the same conductors continue unspliced through the wet underground segment." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "A conductor must satisfy the location classification of every segment it occupies. 300.5(B) makes the buried PVC's interior wet; the unspliced THHN passing through it must therefore be wet-rated, however dry both ends are."
+    codePath: ["300.5(B) → underground raceway interior = wet location", "310.10(C) → wet locations require wet-rated insulation", "Dry EMT segments impose no extra requirement"]
+    steps:
+      - { text: "Segment the run by location: dry EMT — dry; underground PVC — WET by definition; dry EMT — dry.", ref: "300.5(B)" }
+      - { text: "Apply insulation rules per segment: the conductors physically occupying the wet segment need wet-listed insulation — plain THHN is dry/damp only.", ref: "310.10(C)" }
+      - { text: "The 30 in cover, correct supports, and correct fittings are all surplus reassurance — none touches the insulation defect." }
+      - { text: "Fix: pull dual-rated THHN/THWN (or XHHW) end-to-end, or splice to wet-rated conductors for the underground segment in accessible boxes." }
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-wm-x030
+  domainId: nec.wiring-methods
+  commonMistake: "Audit each element against ITS OWN rule instead of hunting one 'gotcha': depth, under-building sleeving, emergence protection, and support can all pass while a single conductor-rating detail sinks the job."
+  skillIds: [nec.wm.method-rules, nec.wm.burial-depth, nec.wm.support]
+  type: single
+  difficulty: 10
+  stem: "A detached-garage feeder at a dwelling is built as follows: (1) Schedule 40 PVC at 18 in cover across the lawn; (2) where the route passes under the garage slab, the PVC continues as a sleeve extending beyond the outside walls; (3) at the house end the riser is Schedule 80 PVC to 8 ft above grade in an area subject to damage; (4) exposed PVC indoors is strapped per Table 352.30 and within 3 ft of boxes; (5) the conductors are plain THHN throughout. Which numbered element violates the Code?"
+  options:
+    - { id: a, text: "Element (5) — the underground raceway interior is wet, so plain THHN is not permitted there", isCorrect: true }
+    - { id: b, text: "Element (1) — PVC under a lawn requires 24 in of cover", distractorRationale: "24 in is the DIRECT-BURIAL cable column; a nonmetallic raceway in a general location takes Column 3's 18 in, which element (1) meets exactly." }
+    - { id: c, text: "Element (2) — conductors may never pass under a building", distractorRationale: "Passing under the building is expressly handled by 300.5(C): the run must be in a raceway extending beyond the outside walls — which is precisely what was built." }
+    - { id: d, text: "Element (3) — risers subject to damage must be RMC; PVC of any schedule is prohibited", distractorRationale: "Schedule 80 PVC is one of the methods identified for physical-damage exposure at emergences (300.5(D)(4)); RMC is an alternative, not the only answer." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Four elements are textbook-correct — 18 in Column 3 cover, the 300.5(C) under-building sleeve, the Schedule 80 riser to 8 ft, and Table 352.30 supports. The single defect is insulation: the buried raceway interior is wet and plain THHN is not wet-rated."
+    codePath: ["Table 300.5, Column 3 → PVC: 18 in (element 1 passes)", "300.5(C) → raceway under building extending past walls (element 2 passes)", "300.5(D)(4) → Schedule 80 riser where subject to damage (element 3 passes)", "300.5(B) + 310.10(C) → wet interior requires wet-rated conductors (element 5 fails)"]
+    steps:
+      - { text: "Element (1): nonmetallic raceway, general location → 18 in required, 18 in provided — compliant on the boundary.", ref: "Table 300.5, Column 3" }
+      - { text: "Elements (2) and (3): the under-slab sleeve extending past the walls satisfies 300.5(C); the Schedule 80 riser to 8 ft satisfies the emergence-protection rules where damage is expected.", ref: "300.5(C) / 300.5(D)" }
+      - { text: "Element (4): PVC strapped per Table 352.30 with securing within 3 ft of boxes — compliant.", ref: "352.30" }
+      - { text: "Element (5): the underground PVC's interior is a wet location, so the conductors through it must be THWN/XHHW-class; plain THHN fails — the only violation in the design.", ref: "300.5(B) / 310.10(C)" }
+  timeTargetSec: 300
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."

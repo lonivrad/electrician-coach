@@ -1,0 +1,719 @@
+# Motors (Article 430) — BRUTAL tier (difficulty 9–10). 2020 NEC. All DRAFT.
+# Mixed-phase/voltage feeders where largest FLC ≠ largest HP, 430.6 current-source routing,
+# 430.32 115/125% boundary flips, 430.52 device columns + Ex.1/Ex.2, and 430.62 feeder OCPD.
+
+# ---- Feeders (430.24) where the largest FLC is NOT the largest HP ------------
+- id: q-mot-x001
+  recompute: { calc: motorFeeder, inputs: { largestFLC: 56, otherSum: 66 } }
+  domainId: nec.motors
+  commonMistake: "If you got 135, you gave the 125% to the 40 HP motor because it has the most horsepower (52 × 1.25 + 56 + 14). 430.24's 'largest' means largest FLC — the 5 HP single-phase 115 V motor at 56 A. If you got 131.4, you built the feeder from the nameplates; 430.6(A)(1) requires the table values."
+  skillIds: [nec.motor.conductor-125, nec.motor.flc-table]
+  type: numeric
+  difficulty: 10
+  stem: "One feeder supplies three continuous-duty motors: a 40 HP, 460 V, three-phase compressor (nameplate 48 A FLA, SF 1.15), a 10 HP, 460 V, three-phase fan (nameplate 13.1 A FLA, SF 1.15), and a 5 HP, 115 V, single-phase sump pump (nameplate 53 A FLA, SF 1.0, temp rise 50°C). All conductors are 75°C copper THWN. Per 430.24, what minimum feeder conductor ampacity (A) is required?"
+  answer: { kind: numeric, value: 136, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "430.24 keys the 125% to the highest-FLC motor — the low-voltage single-phase 5 HP unit (56 A) beats the 40 HP, 460 V unit (52 A)."
+    codePath: ["430.6(A)(1) → table values, not nameplates", "Table 430.248 → 5 HP, 115 V, 1φ = 56 A", "Table 430.250 → 40 HP, 460 V = 52 A; 10 HP, 460 V = 14 A", "430.24 → 56 × 1.25 + 52 + 14 = 136 A"]
+    steps:
+      - { text: "Discard all three nameplates and the SF/temp-rise data — feeder conductors come from the tables (SF and rise matter only for the 430.32 overloads).", ref: "430.6(A)(1)" }
+      - { text: "Table FLCs: 5 HP 1φ 115 V = 56 A; 40 HP 3φ 460 V = 52 A; 10 HP 3φ 460 V = 14 A.", ref: "Tables 430.248 / 430.250" }
+      - { text: "Largest FLC is the 5 HP motor's 56 A, not the 40 HP motor: 56 × 1.25 = 70 A.", ref: "430.24" }
+      - { text: "70 + 52 + 14 = 136 A minimum feeder ampacity." }
+  trapIds: [unit-or-phase-confusion, actual-current-vs-table, continuous-load-125]
+  timeTargetSec: 280
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x002
+  recompute: { calc: motorFeeder, inputs: { largestFLC: 34, otherSum: 48 } }
+  domainId: nec.motors
+  commonMistake: "If you got 88.75, you multiplied the 20 HP motor's 27 A by 125% because it is the biggest machine. The 3 HP single-phase 115 V motor draws 34 A from Table 430.248 — the largest FLC on the feeder — and it alone gets the 125%."
+  skillIds: [nec.motor.conductor-125, nec.motor.flc-table]
+  type: numeric
+  difficulty: 9
+  stem: "A machine-shop feeder serves a 20 HP, 460 V, three-phase lathe (nameplate 25 A), a 15 HP, 460 V, three-phase mill (nameplate 19.4 A), and a 3 HP, 115 V, single-phase grinder (nameplate 32 A, SF 1.15). The shop ambient is 30°C. Per 430.24, what minimum feeder conductor ampacity (A) is required?"
+  answer: { kind: numeric, value: 90.5, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Rank the motors by TABLE FLC before applying 430.24 — horsepower order is a decoy when phases and voltages are mixed."
+    codePath: ["Table 430.248 → 3 HP, 115 V, 1φ = 34 A", "Table 430.250 → 20 HP, 460 V = 27 A; 15 HP, 460 V = 21 A", "430.24 → 34 × 1.25 + 27 + 21 = 90.5 A"]
+    steps:
+      - { text: "Table FLCs: 34 A (3 HP, 1φ, 115 V), 27 A (20 HP), 21 A (15 HP). The nameplates and ambient are surplus data.", ref: "430.6(A)(1)" }
+      - { text: "Largest FLC = 34 A → 34 × 1.25 = 42.5 A.", ref: "430.24" }
+      - { text: "42.5 + 27 + 21 = 90.5 A minimum feeder ampacity." }
+  trapIds: [unit-or-phase-confusion, continuous-load-125]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x003
+  recompute: { calc: motorFeeder, inputs: { largestFLC: 42, otherSum: 58 } }
+  domainId: nec.motors
+  commonMistake: "If you got 108.5, you applied the 125% to the 25 HP motor (34 × 1.25 + 42 + 24). At 460 V the 25 HP motor draws only 34 A — the 15 HP motor on the 230 V system draws 42 A and is the 'largest' for 430.24."
+  skillIds: [nec.motor.conductor-125, nec.motor.flc-table]
+  type: numeric
+  difficulty: 10
+  stem: "A feeder in a plant with both 230 V and 460 V three-phase systems (via a step-up transformer, all motors metered on this one feeder) supplies: a 25 HP, 460 V, three-phase pump (nameplate 31 A), a 15 HP, 230 V, three-phase conveyor (nameplate 39 A), and a 2 HP, 115 V, single-phase blower (nameplate 22.5 A). Per 430.24, what minimum feeder conductor ampacity (A) is required?"
+  answer: { kind: numeric, value: 110.5, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Voltage flips the ranking: 15 HP at 230 V (42 A) outdraws 25 HP at 460 V (34 A), so the smaller-HP motor takes the 125%."
+    codePath: ["Table 430.250 → 15 HP, 230 V = 42 A; 25 HP, 460 V = 34 A", "Table 430.248 → 2 HP, 115 V = 24 A", "430.24 → 42 × 1.25 + 34 + 24 = 110.5 A"]
+    steps:
+      - { text: "Look up each motor in its own voltage column: 42 A, 34 A, and 24 A. Nameplates are for the overload devices only.", ref: "430.6(A)(1)" }
+      - { text: "Largest FLC = 42 A (the 15 HP unit): 42 × 1.25 = 52.5 A.", ref: "430.24" }
+      - { text: "52.5 + 34 + 24 = 110.5 A minimum feeder ampacity." }
+  trapIds: [table-column-selection, unit-or-phase-confusion, continuous-load-125]
+  timeTargetSec: 280
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x004
+  recompute: { calc: motorFeeder, inputs: { largestFLC: 56, otherSum: 35 } }
+  domainId: nec.motors
+  commonMistake: "If you got 96.25, you gave the 125% to the 15 HP motor (21 × 1.25 + 56 + 14). If you got 113.75, you multiplied the whole sum by 125% — only the single largest FLC (the 5 HP single-phase motor at 56 A) is increased."
+  skillIds: [nec.motor.conductor-125, nec.motor.flc-table]
+  type: numeric
+  difficulty: 9
+  stem: "Three motors share a feeder: a 15 HP, 460 V, three-phase exhaust fan; a 10 HP, 460 V, three-phase air handler; and a 5 HP, 115 V, single-phase pressure washer. A clamp meter on the running feeder reads 74 A. Per 430.24, what minimum feeder conductor ampacity (A) is required?"
+  answer: { kind: numeric, value: 105, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "The meter reading is never a sizing basis; rank the table FLCs, and the 115 V single-phase motor wins despite the smallest HP."
+    codePath: ["Table 430.250 → 15 HP, 460 V = 21 A; 10 HP, 460 V = 14 A", "Table 430.248 → 5 HP, 115 V = 56 A", "430.24 → 56 × 1.25 + 21 + 14 = 105 A"]
+    steps:
+      - { text: "Discard the 74 A clamp reading — measured current is not a code basis for conductor sizing.", ref: "430.6(A)(1)" }
+      - { text: "Table FLCs: 56 A (5 HP, 1φ), 21 A (15 HP), 14 A (10 HP).", ref: "Tables 430.248 / 430.250" }
+      - { text: "56 × 1.25 + 21 + 14 = 70 + 35 = 105 A minimum feeder ampacity.", ref: "430.24" }
+  trapIds: [meter-reading-vs-ampacity, unit-or-phase-confusion, continuous-load-125]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x005
+  recompute: { calc: motorFeeder, inputs: { largestFLC: 34, otherSum: 45 } }
+  domainId: nec.motors
+  commonMistake: "If you got 96, you applied 125% to BOTH 34 A motors (42.5 + 42.5 + 11). Even when two motors tie for the largest FLC, only ONE of them is increased to 125%; the other adds at 100%."
+  skillIds: [nec.motor.conductor-125, nec.motor.flc-table]
+  type: numeric
+  difficulty: 9
+  stem: "A feeder supplies a 25 HP, 460 V, three-phase chiller, a 3 HP, 115 V, single-phase circulator (nameplate 31 A, SF 1.15), and a 7.5 HP, 460 V, three-phase cooling-tower fan. Table 430.250 and Table 430.248 list identical 34 A FLCs for the chiller and the circulator. Per 430.24, what minimum feeder conductor ampacity (A) is required?"
+  answer: { kind: numeric, value: 87.5, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "A tie for largest FLC still yields exactly one 125% term — 430.24 says 125% of THE highest-rated motor, singular."
+    codePath: ["Table 430.250 → 25 HP, 460 V = 34 A; 7.5 HP, 460 V = 11 A", "Table 430.248 → 3 HP, 115 V = 34 A", "430.24 → 34 × 1.25 + 34 + 11 = 87.5 A"]
+    steps:
+      - { text: "FLCs are 34 A, 34 A, and 11 A. Pick either 34 A motor as 'largest' — the arithmetic is the same.", ref: "430.24" }
+      - { text: "34 × 1.25 = 42.5 A for one of the tied motors.", ref: "430.24" }
+      - { text: "42.5 + 34 + 11 = 87.5 A minimum feeder ampacity." }
+  trapIds: [continuous-load-125, unit-or-phase-confusion]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x006
+  recompute: { calc: motorFeeder, inputs: { largestFLC: 80, otherSum: 93 } }
+  domainId: nec.motors
+  commonMistake: "If you got 189.25, you gave the 125% to the 50 HP motor (65 × 1.25 + 80 + 28). The 30 HP motor on the 230 V system draws 80 A — more than the 50 HP motor at 460 V (65 A). If you got 182, you worked from the nameplates."
+  skillIds: [nec.motor.conductor-125, nec.motor.flc-table]
+  type: numeric
+  difficulty: 10
+  stem: "An industrial feeder supplies: a 50 HP, 460 V, three-phase extruder (nameplate 61 A, SF 1.15, rise 40°C), a 30 HP, 230 V, three-phase granulator (nameplate 76 A, SF 1.0, rise 50°C), and a 5 HP, 230 V, single-phase hoist (nameplate 26 A). Per 430.24, what minimum feeder conductor ampacity (A) is required?"
+  answer: { kind: numeric, value: 193, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Twenty fewer horsepower at half the voltage still draws MORE table current — the 30 HP, 230 V motor (80 A) is the 430.24 'largest,' not the 50 HP unit (65 A)."
+    codePath: ["Table 430.250 → 30 HP, 230 V = 80 A; 50 HP, 460 V = 65 A", "Table 430.248 → 5 HP, 230 V = 28 A", "430.24 → 80 × 1.25 + 65 + 28 = 193 A"]
+    steps:
+      - { text: "Use table FLCs, ignoring nameplates, service factors, and temperature rises (those route to 430.32 only).", ref: "430.6(A)(1)" }
+      - { text: "FLCs: 80 A (30 HP, 230 V), 65 A (50 HP, 460 V), 28 A (5 HP, 1φ, 230 V) — the largest is NOT the largest HP.", ref: "Table 430.250 / 430.248" }
+      - { text: "80 × 1.25 = 100 A; 100 + 65 + 28 = 193 A minimum feeder ampacity.", ref: "430.24" }
+  trapIds: [table-column-selection, actual-current-vs-table, continuous-load-125]
+  timeTargetSec: 300
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- Overload selection (430.32): route the number AND pick 115 vs 125% ------
+- id: q-mot-x007
+  recompute: { calc: motorOverload, inputs: { nameplateFLA: 23 } }
+  domainId: nec.motors
+  commonMistake: "If you got 26.45, you used 115% because the service factor is below 1.15 — but the marked temperature rise of 40°C independently qualifies the motor for 125% (either condition is enough). If you got 30, you took 125% of the 24 A table FLC instead of the nameplate."
+  skillIds: [nec.motor.overload, nec.motor.flc-table]
+  type: numeric
+  difficulty: 10
+  stem: "A continuous-duty 2 HP, 115 V, single-phase motor (Table 430.248: 24 A) carries a nameplate reading FLA 23 A, service factor 1.12, temperature rise 40°C. A clamp meter shows 21 A under load. What maximum selection (A) does 430.32(A)(1) permit for its separate overload device?"
+  answer: { kind: numeric, value: 28.75, unit: "A", tolerance: 0.1 }
+  solution:
+    keyIdea: "125% applies if SF ≥ 1.15 OR marked rise ≤ 40°C — a rise of exactly 40°C passes even though SF 1.12 fails."
+    codePath: ["430.6(A)(2) → nameplate 23 A", "430.32(A)(1) → rise 40°C ≤ 40°C → 125%", "23 × 1.25 = 28.75 A"]
+    steps:
+      - { text: "Overload sizing uses the 23 A nameplate; the 24 A table value and the 21 A reading are decoys here.", ref: "430.6(A)(2)" }
+      - { text: "Test both 125% gates: SF 1.12 < 1.15 fails, but rise 40°C is 'not over 40°C' — it passes.", ref: "430.32(A)(1)" }
+      - { text: "23 × 1.25 = 28.75 A maximum overload selection." }
+  trapIds: [table-column-selection, actual-current-vs-table, meter-reading-vs-ampacity]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x008
+  recompute: { calc: motorOverload, inputs: { nameplateFLA: 59 } }
+  domainId: nec.motors
+  commonMistake: "If you got 67.85, you dropped to 115% because of the 55°C rise — but SF 1.15 alone earns the 125% row; the conditions are alternatives, not both-required. If you got 81.25, you used the 65 A table FLC."
+  skillIds: [nec.motor.overload, nec.motor.flc-table]
+  type: numeric
+  difficulty: 9
+  stem: "A 50 HP, 460 V, three-phase motor (Table 430.250: 65 A) has a nameplate of FLA 59 A, service factor 1.15, temperature rise 55°C. Its branch OCPD is a 150 A inverse-time breaker. What is the maximum separate overload device selection (A) per 430.32(A)(1)?"
+  answer: { kind: numeric, value: 73.75, unit: "A", tolerance: 0.1 }
+  solution:
+    keyIdea: "SF 1.15 qualifies for 125% regardless of the high temperature rise — only a motor failing BOTH tests drops to 115%."
+    codePath: ["430.6(A)(2) → nameplate 59 A", "430.32(A)(1) → SF 1.15 → 125%", "59 × 1.25 = 73.75 A"]
+    steps:
+      - { text: "The 65 A table value sized the conductors and the 150 A breaker; the overload keys to the 59 A nameplate.", ref: "430.6(A)(2)" }
+      - { text: "SF ≥ 1.15 → 125% row; the 55°C rise cannot take that away.", ref: "430.32(A)(1)" }
+      - { text: "59 × 1.25 = 73.75 A maximum overload selection." }
+  trapIds: [table-column-selection, actual-current-vs-table]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x009
+  recompute: { calc: motorOverload, inputs: { nameplateFLA: 38, factor: 1.15 } }
+  domainId: nec.motors
+  commonMistake: "If you got 47.5, you used 125% — but SF 1.1 is below 1.15 AND the 45°C rise exceeds 40°C, so this is an 'all other motors' 115% case. If you got 48.3, you applied the 115% to the 42 A table FLC instead of the nameplate."
+  skillIds: [nec.motor.overload, nec.motor.flc-table]
+  type: numeric
+  difficulty: 9
+  stem: "A continuous-duty 15 HP, 230 V, three-phase motor (Table 430.250: 42 A) has a nameplate reading FLA 38 A, service factor 1.1, temperature rise 45°C. Its conductors are sized for 52.5 A and its breaker is 110 A. What is the maximum separate overload device selection (A)?"
+  answer: { kind: numeric, value: 43.7, unit: "A", tolerance: 0.1 }
+  solution:
+    keyIdea: "SF 1.1 (< 1.15) and rise 45°C (> 40°C) fail both 125% gates — nameplate × 115%."
+    codePath: ["430.6(A)(2) → nameplate 38 A", "430.32(A)(1) → both gates fail → 115%", "38 × 1.15 = 43.7 A"]
+    steps:
+      - { text: "The 42 A table FLC already produced the 52.5 A conductors and 110 A breaker — none of those numbers feed the overload.", ref: "430.6(A)(2)" }
+      - { text: "SF 1.1 < 1.15 and rise 45°C > 40°C → 'all other motors' 115% row.", ref: "430.32(A)(1)" }
+      - { text: "38 × 1.15 = 43.7 A maximum overload selection." }
+  trapIds: [table-column-selection, actual-current-vs-table]
+  timeTargetSec: 220
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x010
+  recompute: { calc: motorOverload, inputs: { nameplateFLA: 50, factor: 1.15 } }
+  domainId: nec.motors
+  commonMistake: "If you got 62.5, you rounded SF 1.14 up to 1.15 or treated 41°C as close enough to 40°C. Both gates are hard boundaries: SF must be not less than 1.15 and rise not over 40°C — this motor misses each by the smallest margin and gets 115%."
+  skillIds: [nec.motor.overload, nec.motor.flc-table]
+  type: numeric
+  difficulty: 10
+  stem: "A 20 HP, 230 V, three-phase motor (Table 430.250: 54 A) carries a nameplate reading FLA 50 A, service factor 1.14, temperature rise 41°C, ambient 40°C. What is the maximum separate overload device selection (A) per 430.32(A)(1)?"
+  answer: { kind: numeric, value: 57.5, unit: "A", tolerance: 0.1 }
+  solution:
+    keyIdea: "430.32(A)(1) has no rounding: SF 1.14 fails 'not less than 1.15' and rise 41°C fails 'not over 40°C' — 115% governs."
+    codePath: ["430.6(A)(2) → nameplate 50 A", "430.32(A)(1) → SF 1.14 < 1.15 AND rise 41 > 40 → 115%", "50 × 1.15 = 57.5 A"]
+    steps:
+      - { text: "Route the overload to the 50 A nameplate, not the 54 A table value.", ref: "430.6(A)(2)" }
+      - { text: "SF 1.14 misses the 1.15 threshold and 41°C misses the 40°C threshold — both by a hair, and both fail.", ref: "430.32(A)(1)" }
+      - { text: "50 × 1.15 = 57.5 A maximum overload selection. (The 40°C ambient marking is surplus data.)" }
+  trapIds: [table-column-selection, actual-current-vs-table]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x011
+  recompute: { calc: motorOverload, inputs: { nameplateFLA: 30 } }
+  domainId: nec.motors
+  commonMistake: "If you got 34.5, you used 115% because SF is only 1.0 — but the 40°C marked rise independently qualifies for 125%. If you got 42.5, you took 125% of the 34 A table FLC: that number is the CONDUCTOR minimum, not the overload."
+  skillIds: [nec.motor.overload, nec.motor.flc-table]
+  type: numeric
+  difficulty: 10
+  stem: "A 25 HP, 460 V, three-phase motor (Table 430.250: 34 A) has a nameplate reading FLA 30 A, service factor 1.0, temperature rise 40°C. The branch conductors are sized at 42.5 A per 430.22. What is the maximum separate overload device selection (A) per 430.32(A)(1)?"
+  answer: { kind: numeric, value: 37.5, unit: "A", tolerance: 0.1 }
+  solution:
+    keyIdea: "SF 1.0 fails, but a marked rise of exactly 40°C passes 'not over 40°C' — the motor still earns 125% of NAMEPLATE."
+    codePath: ["430.6(A)(2) → nameplate 30 A", "430.32(A)(1) → rise ≤ 40°C → 125%", "30 × 1.25 = 37.5 A"]
+    steps:
+      - { text: "The 42.5 A figure is the 430.22 conductor minimum (34 × 1.25) — a decoy for the overload question.", ref: "430.22" }
+      - { text: "Gates: SF 1.0 < 1.15 fails; rise 40°C ≤ 40°C passes → 125% row.", ref: "430.32(A)(1)" }
+      - { text: "30 × 1.25 = 37.5 A maximum overload selection.", ref: "430.6(A)(2)" }
+  trapIds: [table-column-selection, actual-current-vs-table, continuous-load-125]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- Branch SC/GF protection (430.52): device column + Ex.1 round-up ---------
+- id: q-mot-x012
+  recompute: { calc: motorBranchOCPD, inputs: { flc: 14, pct: 8 } }
+  domainId: nec.motors
+  commonMistake: "If you got 35, you used the 250% inverse-time-breaker column — an instantaneous-trip breaker in a listed combination controller may go to 800% of FLC. If you got 110, you rounded 112 A down instead of up per 430.52(C)(1) Ex.1."
+  skillIds: [nec.motor.branch-protection, nec.motor.flc-table]
+  type: numeric
+  difficulty: 10
+  stem: "A 10 HP, 460 V, three-phase motor (nameplate 12.6 A, SF 1.15) is protected by an instantaneous-trip breaker in a listed combination motor controller, sized at the Table 430.52 maximum of 800% with the next standard size up permitted. What breaker rating (A) results?"
+  answer: { kind: numeric, value: 125, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Each device has its own 430.52 column — instantaneous-trip breakers run to 800% of the TABLE FLC, then round up to a standard rating."
+    codePath: ["Table 430.250 → 10 HP, 460 V = 14 A", "Table 430.52 → instantaneous-trip breaker 800%", "14 × 8.0 = 112 → next standard = 125 A"]
+    steps:
+      - { text: "Use the 14 A table FLC, not the 12.6 A nameplate.", ref: "430.6(A)(1)" }
+      - { text: "Instantaneous-trip column: 14 × 800% = 112 A.", ref: "Table 430.52" }
+      - { text: "112 A is not a standard rating; the next standard size up is 125 A.", ref: "430.52(C)(1) Exc. 1 / 240.6" }
+  trapIds: [table-column-selection, next-size-up-rounding, actual-current-vs-table]
+  timeTargetSec: 220
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x013
+  recompute: { calc: motorBranchOCPD, inputs: { flc: 56, pct: 1.75 } }
+  domainId: nec.motors
+  commonMistake: "If you got 50, you looked up the 230 V column (28 A → 49 → 50). At 115 V this motor draws 56 A from Table 430.248: 56 × 1.75 = 98 → 100 A."
+  skillIds: [nec.motor.branch-protection, nec.motor.flc-table]
+  type: numeric
+  difficulty: 9
+  stem: "A 5 HP, 115 V, single-phase motor (nameplate 52 A, SF 1.15, rise 40°C) is protected by dual-element time-delay fuses at the Table 430.52 maximum of 175%, next standard size up permitted. What fuse rating (A) results?"
+  answer: { kind: numeric, value: 100, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Right voltage column first (115 V = 56 A, double the 230 V value), then the dual-element 175% column, then round up."
+    codePath: ["Table 430.248 → 5 HP, 115 V = 56 A", "Table 430.52 → dual-element fuse 175%", "56 × 1.75 = 98 → next standard = 100 A"]
+    steps:
+      - { text: "Table 430.248 at 115 V: 56 A (the 230 V column reads 28 A — the classic wrong turn). Nameplate/SF/rise feed the overload only.", ref: "Table 430.248" }
+      - { text: "Dual-element time-delay fuse column = 175%: 56 × 1.75 = 98 A.", ref: "Table 430.52" }
+      - { text: "98 A is not standard; the next standard size up is 100 A.", ref: "430.52(C)(1) Exc. 1 / 240.6" }
+  trapIds: [table-column-selection, next-size-up-rounding]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x014
+  recompute: { calc: motorBranchOCPD, inputs: { flc: 20, pct: 3.0 } }
+  domainId: nec.motors
+  commonMistake: "If you got 70, you rounded up out of habit — 20 × 300% = 60 A is ALREADY a standard 240.6 rating, so 430.52(C)(1) Ex.1's next-size-up permission never activates. 60 A is the maximum."
+  skillIds: [nec.motor.branch-protection, nec.motor.flc-table]
+  type: numeric
+  difficulty: 10
+  stem: "A 1.5 HP, 115 V, single-phase motor (nameplate 18.6 A) is protected by nontime-delay fuses sized at the Table 430.52 maximum of 300%. What is the maximum fuse rating (A) permitted before any starting-difficulty exception is invoked?"
+  answer: { kind: numeric, value: 60, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Ex.1 only applies when the computed value does NOT correspond to a standard rating — 60 A lands exactly on one, so there is no round-up."
+    codePath: ["Table 430.248 → 1.5 HP, 115 V = 20 A", "Table 430.52 → nontime-delay fuse 300%", "20 × 3.0 = 60 A = standard rating → no Ex.1 bump"]
+    steps:
+      - { text: "Table 430.248: 1.5 HP, 115 V = 20 A (not the 18.6 A nameplate).", ref: "430.6(A)(1)" }
+      - { text: "Nontime-delay fuse column: 20 × 300% = 60 A.", ref: "Table 430.52" }
+      - { text: "60 A is a standard 240.6(A) rating, so the Exception 1 next-size-up permission does not apply — 60 A is the ceiling.", ref: "430.52(C)(1) Exc. 1" }
+  trapIds: [next-size-up-rounding, actual-current-vs-table]
+  timeTargetSec: 220
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x015
+  recompute: { calc: motorBranchOCPD, inputs: { flc: 68, pct: 2.5 } }
+  domainId: nec.motors
+  commonMistake: "If you got 150, you rounded 170 A down to the standard below. If you got 125, you used the 175% dual-element column for a breaker. Inverse-time breakers use 250%, and 170 rounds UP to 175."
+  skillIds: [nec.motor.branch-protection, nec.motor.flc-table]
+  type: numeric
+  difficulty: 9
+  stem: "A 25 HP, 230 V, three-phase motor (nameplate 62 A, SF 1.0, rise 50°C) is protected by an inverse-time circuit breaker at the Table 430.52 maximum of 250%, next standard size up permitted. Branch conductors are 85 A THWN copper. What breaker rating (A) results?"
+  answer: { kind: numeric, value: 175, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Table FLC × the device's own column (breaker = 250%), then UP to the next 240.6 standard size — far above the conductor ampacity, which is normal for motor circuits."
+    codePath: ["Table 430.250 → 25 HP, 230 V = 68 A", "Table 430.52 → inverse-time breaker 250%", "68 × 2.5 = 170 → next standard = 175 A"]
+    steps:
+      - { text: "Use the 68 A table FLC; the nameplate, SF, and rise belong to the 430.32 overload question.", ref: "430.6(A)(1)" }
+      - { text: "Inverse-time breaker: 68 × 250% = 170 A.", ref: "Table 430.52" }
+      - { text: "170 A is not standard; next standard size up is 175 A. The 85 A conductors stay protected by the overload device, not this breaker.", ref: "430.52(C)(1) Exc. 1 / 240.6" }
+  trapIds: [next-size-up-rounding, table-column-selection]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x016
+  recompute: { calc: motorBranchOCPD, inputs: { flc: 27, pct: 2.5 } }
+  domainId: nec.motors
+  commonMistake: "If you got 50, you used the 175% fuse column for a breaker (27 × 1.75 = 47.25 → 50). If you got 90, you looked up 20 HP in the 230 V column (54 A → 135 → 150) — wait, that gives 150; 90 comes from 27 × 300% + round-down errors. Match device to column: breaker = 250% → 67.5 → 70."
+  skillIds: [nec.motor.branch-protection, nec.motor.flc-table]
+  type: numeric
+  difficulty: 9
+  stem: "A 20 HP, 460 V, three-phase motor (nameplate 24.8 A, SF 1.15) is protected by an inverse-time circuit breaker at the Table 430.52 maximum of 250%, next standard size up permitted. The same panel also feeds a 20 HP, 230 V motor on another circuit. What breaker rating (A) protects the 460 V motor's branch circuit?"
+  answer: { kind: numeric, value: 70, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Pick the 460 V column (27 A, not the 230 V motor's 54 A), the breaker's 250% column, then round up."
+    codePath: ["Table 430.250 → 20 HP, 460 V = 27 A", "Table 430.52 → inverse-time breaker 250%", "27 × 2.5 = 67.5 → next standard = 70 A"]
+    steps:
+      - { text: "The 230 V neighbor (54 A) is surplus data — the question is the 460 V motor at 27 A.", ref: "Table 430.250" }
+      - { text: "27 × 250% = 67.5 A.", ref: "Table 430.52" }
+      - { text: "Next standard rating above 67.5 A is 70 A.", ref: "430.52(C)(1) Exc. 1 / 240.6" }
+  trapIds: [table-column-selection, next-size-up-rounding, actual-current-vs-table]
+  timeTargetSec: 220
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x017
+  recompute: { calc: motorBranchOCPD, inputs: { flc: 104, pct: 1.75 } }
+  domainId: nec.motors
+  commonMistake: "If you got 175, you rounded 182 A down — Ex.1 permits the next size UP, and the standard ladder jumps from 175 to 200. If you got 350, you used the 300% nontime-delay column for a dual-element fuse (312 → 350)."
+  skillIds: [nec.motor.branch-protection, nec.motor.flc-table]
+  type: numeric
+  difficulty: 10
+  stem: "A 40 HP, 230 V, three-phase motor (nameplate 98 A, SF 1.15, rise 40°C) is protected by dual-element time-delay fuses at the Table 430.52 maximum of 175%, next standard size up permitted. What fuse rating (A) results?"
+  answer: { kind: numeric, value: 200, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "104 × 175% = 182 A falls in the 175→200 gap of the 240.6 ladder — the round-up is a full size jump, not a small nudge."
+    codePath: ["Table 430.250 → 40 HP, 230 V = 104 A", "Table 430.52 → dual-element fuse 175%", "104 × 1.75 = 182 → next standard = 200 A"]
+    steps:
+      - { text: "Use the 104 A table FLC (the 98 A nameplate feeds only the overload device).", ref: "430.6(A)(1)" }
+      - { text: "Dual-element fuse column: 104 × 1.75 = 182 A.", ref: "Table 430.52" }
+      - { text: "182 A is not standard; the ladder reads ... 175, 200 ... so the next standard size up is 200 A.", ref: "430.52(C)(1) Exc. 1 / 240.6" }
+  trapIds: [next-size-up-rounding, table-column-selection, actual-current-vs-table]
+  timeTargetSec: 220
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- Branch conductors (430.22) with heavy surplus data -----------------------
+- id: q-mot-x018
+  recompute: { calc: motorConductor, inputs: { flc: 130 } }
+  domainId: nec.motors
+  commonMistake: "If you got 152.5, you used the 122 A nameplate; if you got 147.5, the 118 A clamp reading. 430.6(A)(1) fixes conductor sizing to the 130 A table FLC × 125%."
+  skillIds: [nec.motor.conductor-125, nec.motor.flc-table]
+  type: numeric
+  difficulty: 9
+  stem: "A continuous-duty 50 HP, 230 V, three-phase motor arrives with a nameplate reading FLA 122 A, SF 1.15, rise 40°C; the startup tech's clamp meter reads 118 A at full load in a 35°C mechanical room. What minimum branch-circuit conductor ampacity (A) does 430.22 require before any ambient adjustment?"
+  answer: { kind: numeric, value: 162.5, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Three currents on the table, one code answer: the Table 430.250 FLC (130 A) at 125% — nameplate and meter are for other rules or no rule at all."
+    codePath: ["430.6(A)(1) → Table 430.250, not nameplate/meter", "Table 430.250 → 50 HP, 230 V = 130 A", "430.22 → 130 × 1.25 = 162.5 A"]
+    steps:
+      - { text: "Nameplate 122 A → overload device only; clamp 118 A → no sizing rule; SF/rise → the 430.32 percentage choice.", ref: "430.6(A)(1) / 430.6(A)(2)" }
+      - { text: "Table 430.250: 50 HP, 230 V, 3φ = 130 A.", ref: "Table 430.250" }
+      - { text: "130 × 1.25 = 162.5 A minimum conductor ampacity.", ref: "430.22" }
+  trapIds: [actual-current-vs-table, meter-reading-vs-ampacity, continuous-load-125]
+  timeTargetSec: 200
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x019
+  recompute: { calc: motorConductor, inputs: { flc: 17 } }
+  domainId: nec.motors
+  commonMistake: "If you got 42.5, you read the 115 V column (34 A); if you got 12, you read the three-phase table (9.6 A). A 3 HP single-phase motor at 230 V is 17 A in Table 430.248: 17 × 1.25 = 21.25 A."
+  skillIds: [nec.motor.conductor-125, nec.motor.flc-table]
+  type: numeric
+  difficulty: 9
+  stem: "A 3 HP, 230 V, SINGLE-phase compressor (nameplate 15.2 A) is installed beside a rack of 230 V three-phase machines fed from the same panel. What minimum branch-circuit conductor ampacity (A) does 430.22 require for the compressor?"
+  answer: { kind: numeric, value: 21.25, unit: "A", tolerance: 0.1 }
+  solution:
+    keyIdea: "Two wrong tables sit one lookup away: the 115 V column (34 A) and the 3φ table (9.6 A). Phase first, voltage second, then 125%."
+    codePath: ["Table 430.248 → 3 HP, 230 V, 1φ = 17 A", "430.22 → 17 × 1.25 = 21.25 A"]
+    steps:
+      - { text: "Single-phase → Table 430.248; 230 V column → 17 A (not 34 A at 115 V, not the 3φ table's 9.6 A).", ref: "430.6(A)(1) / Table 430.248" }
+      - { text: "17 × 1.25 = 21.25 A minimum conductor ampacity.", ref: "430.22" }
+  trapIds: [unit-or-phase-confusion, table-column-selection, actual-current-vs-table]
+  timeTargetSec: 190
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x020
+  recompute: { calc: motorConductor, inputs: { flc: 34 } }
+  domainId: nec.motors
+  commonMistake: "If you got 35.65, you took 115% of the 31 A nameplate — that is the OVERLOAD selection for this SF-1.0/50°C-rise motor, not the conductor minimum. Conductors: table 34 A × 125% = 42.5 A."
+  skillIds: [nec.motor.conductor-125, nec.motor.flc-table, nec.motor.overload]
+  type: numeric
+  difficulty: 9
+  stem: "A 25 HP, 460 V, three-phase motor has a nameplate reading FLA 31 A, SF 1.0, temperature rise 50°C. The overload relay has already been correctly set at 35.65 A. What minimum branch-circuit conductor ampacity (A) does 430.22 require?"
+  answer: { kind: numeric, value: 42.5, unit: "A", tolerance: 0.1 }
+  solution:
+    keyIdea: "The correctly-sized overload (31 × 1.15) is a plausible-looking decoy — conductors run off a different current source AND a different percentage."
+    codePath: ["430.6(A)(1) → Table 430.250 → 25 HP, 460 V = 34 A", "430.22 → 34 × 1.25 = 42.5 A"]
+    steps:
+      - { text: "The 35.65 A figure is nameplate 31 × 115% — the 430.32 overload path, irrelevant to conductor sizing.", ref: "430.32(A)(1)" }
+      - { text: "Table 430.250: 25 HP, 460 V, 3φ = 34 A.", ref: "Table 430.250" }
+      - { text: "34 × 1.25 = 42.5 A minimum conductor ampacity.", ref: "430.22" }
+  trapIds: [actual-current-vs-table, continuous-load-125]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x021
+  recompute: { calc: motorConductor, inputs: { flc: 22 } }
+  domainId: nec.motors
+  commonMistake: "If you got 92, you computed the FEEDER (56 × 1.25 + 22) — the question asks for the 7.5 HP motor's individual BRANCH circuit: its own 22 A × 1.25 = 27.5 A."
+  skillIds: [nec.motor.conductor-125, nec.motor.flc-table]
+  type: numeric
+  difficulty: 9
+  stem: "A feeder supplies a 5 HP, 115 V, single-phase motor (Table 430.248: 56 A) and a 7.5 HP, 230 V, three-phase motor (Table 430.250: 22 A; nameplate 20.4 A). What minimum conductor ampacity (A) does 430.22 require for the 7.5 HP motor's individual branch circuit?"
+  answer: { kind: numeric, value: 27.5, unit: "A", tolerance: 0.1 }
+  solution:
+    keyIdea: "Read the ask: 430.24 governs the shared feeder, but an individual branch circuit is just that motor's table FLC × 125%."
+    codePath: ["430.22 → branch conductors for ONE motor", "Table 430.250 → 7.5 HP, 230 V = 22 A", "22 × 1.25 = 27.5 A"]
+    steps:
+      - { text: "The 56 A single-phase motor is on its own branch circuit — it only matters for the feeder calculation, which is not what was asked.", ref: "430.24 vs 430.22" }
+      - { text: "22 × 1.25 = 27.5 A minimum branch conductor ampacity for the 7.5 HP motor.", ref: "430.22" }
+  trapIds: [continuous-load-125, actual-current-vs-table]
+  timeTargetSec: 200
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- FLC re-lookup after a reconnection ---------------------------------------
+- id: q-mot-x022
+  recompute: { calc: motorFLC, inputs: { hp: "3", volts: 115, phase: 1 } }
+  domainId: nec.motors
+  commonMistake: "If you got 17, you kept the old 230 V value; if you got 8.5, you halved it — dropping to HALF the voltage DOUBLES the table current. Table 430.248 at 115 V reads 34 A."
+  skillIds: [nec.motor.flc-table]
+  type: numeric
+  difficulty: 9
+  stem: "A dual-voltage 3 HP single-phase motor originally connected for 230 V (Table 430.248: 17 A; overload set at 19.55 A from a 17 A nameplate) is reconnected for 115 V operation. What table full-load current (A) now governs its conductor and branch-OCPD calculations?"
+  answer: { kind: numeric, value: 34, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Reconnection moves you to a new table column — and every downstream number (conductors, OCPD, overload from the new nameplate connection) must be redone from it."
+    codePath: ["Table 430.248 → 3 HP, 115 V, 1φ = 34 A"]
+    steps:
+      - { text: "At half the voltage the same horsepower draws twice the current: the 115 V column reads 34 A, not 17 A.", ref: "Table 430.248" }
+      - { text: "Conductors (430.22), branch OCPD (430.52), and any feeder contribution all rebuild from the 34 A basis; the old 19.55 A overload setting is now wrong too.", ref: "430.6(A)(1)" }
+  trapIds: [table-column-selection, unit-or-phase-confusion]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+# ---- Feeder OCPD (430.62) and rule-collision singles ---------------------------
+- id: q-mot-x023
+  domainId: nec.motors
+  skillIds: [nec.motor.branch-protection, nec.motor.flc-table]
+  type: single
+  difficulty: 10
+  stem: "A feeder supplies two 460 V, three-phase motors: 30 HP (Table FLC 40 A) with a 100 A inverse-time breaker (its 430.52 maximum), and 10 HP (Table FLC 14 A) with a 35 A inverse-time breaker. Per 430.62(A), what is the maximum rating of the feeder's inverse-time breaker?"
+  options:
+    - { id: a, text: "110 A — the sum 100 + 14 = 114 A is not standard, and 430.62 is a maximum, so the next standard size DOWN applies", isCorrect: true }
+    - { id: b, text: "125 A — compute 100 + 14 = 114 A and round up to the next standard size", distractorRationale: "The next-size-up permission belongs to 430.52(C)(1) Ex.1 for BRANCH devices; 430.62(A) states a ceiling ('not greater than'), so exceeding 114 A is a violation." }
+    - { id: c, text: "135 A — the largest branch device plus the other motor's branch device (100 + 35)", distractorRationale: "430.62(A) adds the other motors' FLCs (14 A), not their branch-device ratings (35 A)." }
+    - { id: d, text: "150 A — 125% of the largest FLC plus the other FLC (40 × 1.25 + 14 = 64) rounded up through the conductor rules", distractorRationale: "That is the 430.24 CONDUCTOR method; the feeder OCPD instead starts from the largest branch OCPD rating (100 A) plus the other FLCs." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Feeder OCPD = largest branch SC/GF device rating + sum of the other motors' FLCs, treated as a hard ceiling — round DOWN when the sum is nonstandard."
+    codePath: ["430.62(A) → 100 A (largest branch device) + 14 A (other FLC) = 114 A max", "240.6 → largest standard rating not exceeding 114 A = 110 A"]
+    steps:
+      - { text: "Largest branch device: the 30 HP motor's 100 A breaker. Add the OTHER motor's FLC (14 A), not its breaker rating.", ref: "430.62(A)" }
+      - { text: "114 A is the ceiling; because it is a maximum, choose the largest standard rating that does not exceed it — 110 A.", ref: "240.6(A)" }
+      - { text: "Contrast with branch devices, where Ex.1 permits rounding UP — the two rules round in opposite directions.", ref: "430.52(C)(1) Exc. 1" }
+  trapIds: [next-size-up-rounding, continuous-load-125]
+  timeTargetSec: 280
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x024
+  domainId: nec.motors
+  skillIds: [nec.motor.branch-protection, nec.motor.flc-table]
+  type: single
+  difficulty: 10
+  stem: "A feeder supplies three motors: a 5 HP, 115 V, single-phase motor (Table FLC 56 A) with a 150 A inverse-time breaker; a 40 HP, 460 V, three-phase motor (Table FLC 52 A) with a 110 A inverse-time breaker; and a 10 HP, 460 V, three-phase motor (Table FLC 14 A) with a 30 A breaker. Per 430.62(A), what is the maximum feeder inverse-time breaker rating?"
+  options:
+    - { id: a, text: "200 A — 150 (largest branch device) + 52 + 14 = 216 A, then down to the standard 200 A", isCorrect: true }
+    - { id: b, text: "175 A — 110 (device on the largest motor, the 40 HP) + 56 + 14 = 180 A, then down to 175 A", distractorRationale: "430.62 starts from the largest branch DEVICE RATING, which is the 5 HP motor's 150 A breaker — the largest-HP motor is a decoy; its breaker is smaller." }
+    - { id: c, text: "225 A — 216 A rounded up to the next standard size", distractorRationale: "430.62(A) is a ceiling; the next-size-up allowance applies only to branch devices under 430.52(C)(1) Ex.1, never to the feeder device." }
+    - { id: d, text: "290 A — the sum of all three branch breakers (150 + 110 + 30)", distractorRationale: "Only the single largest branch device is used; the other motors contribute their FLCs (52 + 14), not their breaker ratings." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "The 'largest branch device' can hang on the smallest-HP motor — the 115 V single-phase unit's 56 A FLC produced the biggest breaker."
+    codePath: ["430.62(A) → 150 + 52 + 14 = 216 A max", "240.6 → largest standard ≤ 216 = 200 A"]
+    steps:
+      - { text: "Identify the largest branch SC/GF device by RATING: 150 A (on the 5 HP, 1φ, 115 V motor), not the 110 A on the 40 HP.", ref: "430.62(A)" }
+      - { text: "Add the other motors' table FLCs: 150 + 52 + 14 = 216 A.", ref: "430.62(A)" }
+      - { text: "216 A is a maximum; the largest standard rating not exceeding it is 200 A.", ref: "240.6(A)" }
+  trapIds: [unit-or-phase-confusion, next-size-up-rounding]
+  timeTargetSec: 300
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x025
+  domainId: nec.motors
+  skillIds: [nec.motor.branch-protection, nec.motor.flc-table]
+  type: single
+  difficulty: 10
+  stem: "A 30 HP, 230 V, three-phase motor (Table FLC 80 A) is to get an inverse-time breaker. The installer computes 80 × 250% = 200 A but wants to install 225 A 'since the next size up is always allowed.' Under 430.52(C)(1) and its Exception 1 alone, what is the maximum breaker rating?"
+  options:
+    - { id: a, text: "200 A — the calculation lands exactly on a standard rating, so Exception 1's next-size-up permission never applies", isCorrect: true }
+    - { id: b, text: "225 A — Exception 1 always permits one standard size above the calculated value", distractorRationale: "Ex.1 applies only where the computed value 'does not correspond to a standard rating' — 200 A is standard, so the exception is dead on arrival." }
+    - { id: c, text: "250 A — inverse-time breakers over 100 A may be increased to 400% territory automatically", distractorRationale: "Going beyond the Table 430.52 percentage requires Exception 2's engineering condition (device insufficient for starting current); it is not automatic." }
+    - { id: d, text: "175 A — the rating must stay below the calculated 200 A maximum", distractorRationale: "The 250% figure is itself the permitted maximum; a device AT 200 A complies — there is no requirement to stay a size below it." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Ex.1 is conditional: it activates only when FLC × percentage is NOT a standard rating. 80 × 2.5 = 200 A is standard — full stop."
+    codePath: ["Table 430.52 → inverse-time breaker 250%", "80 × 2.5 = 200 A (standard per 240.6)", "430.52(C)(1) Exc. 1 → inapplicable"]
+    steps:
+      - { text: "Compute the table maximum: 80 × 250% = 200 A.", ref: "Table 430.52" }
+      - { text: "Check 240.6(A): 200 A is a standard rating, so the 'does not correspond' trigger of Exception 1 fails.", ref: "430.52(C)(1) Exc. 1" }
+      - { text: "225 A would require demonstrating the 200 A device cannot carry the starting current (Exception 2), which was not established.", ref: "430.52(C)(1) Exc. 2" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 260
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x026
+  domainId: nec.motors
+  skillIds: [nec.motor.branch-protection, nec.motor.flc-table]
+  type: single
+  difficulty: 10
+  stem: "A 10 HP, 460 V, three-phase motor (Table FLC 14 A) has 45 A nontime-delay fuses (the Table 430.52 300% value of 42 A, rounded up per Ex.1). The fuses still open on starting inrush. Per 430.52(C)(1) Exception 2, what is the largest nontime-delay fuse (600 A class) now permitted?"
+  options:
+    - { id: a, text: "50 A — Exception 2 caps nontime-delay fuses at 400% of FLC (56 A); the largest standard fuse not exceeding that is 50 A", isCorrect: true }
+    - { id: b, text: "60 A — compute 14 × 400% = 56 A and round up to the next standard size", distractorRationale: "Exception 2's 400% is an absolute ceiling ('shall not exceed'); rounding up past 56 A is prohibited — only Ex.1's initial calculation rounds up." }
+    - { id: c, text: "56 A — install a fuse rated exactly at the 400% calculation", distractorRationale: "56 A is not a standard 240.6(A) fuse rating; the device actually installed must be a standard (or listed available) rating below the ceiling — 50 A." }
+    - { id: d, text: "125 A — where starting current is a problem, the limit becomes 800% as for instantaneous-trip breakers", distractorRationale: "800% belongs to instantaneous-trip breakers in listed combination controllers (and Ex.2(d) fuse cases 601–6000 A); a 600 A-class nontime-delay fuse is capped at 400%." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Ex.2 trades the round-up privilege for a hard ceiling: up to 400% of FLC for ≤600 A nontime-delay fuses, no next-size-up above it."
+    codePath: ["Table 430.250 → 14 A", "430.52(C)(1) Exc. 2(a) → nontime-delay fuse ≤ 600 A → max 400%", "14 × 4.0 = 56 A ceiling → largest standard ≤ 56 = 50 A"]
+    steps:
+      - { text: "Exception 2 applies because the Ex.1-sized 45 A device is insufficient for the starting current.", ref: "430.52(C)(1) Exc. 2" }
+      - { text: "Ceiling: 14 × 400% = 56 A — 'shall not exceed' language, so no rounding up.", ref: "430.52(C)(1) Exc. 2(a)" }
+      - { text: "Largest standard fuse not exceeding 56 A is 50 A.", ref: "240.6(A)" }
+  trapIds: [next-size-up-rounding, table-column-selection]
+  timeTargetSec: 300
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x027
+  domainId: nec.motors
+  skillIds: [nec.motor.overload]
+  type: single
+  difficulty: 9
+  stem: "Separate overload relays are being selected per 430.32(A)(1) for four continuous-duty motors. Which nameplate forces the 115% ('all other motors') multiplier?"
+  options:
+    - { id: a, text: "FLA 40 A, SF 1.15, temperature rise 45°C", distractorRationale: "SF exactly 1.15 satisfies 'not less than 1.15' — the 45°C rise cannot demote a motor that passes the SF gate." }
+    - { id: b, text: "FLA 40 A, SF 1.0, temperature rise 40°C", distractorRationale: "A marked rise of exactly 40°C satisfies 'not over 40°C' — this motor earns 125% despite SF 1.0." }
+    - { id: c, text: "FLA 40 A, SF 1.1, temperature rise 42°C", isCorrect: true }
+    - { id: d, text: "FLA 40 A, SF 1.16, temperature rise 60°C", distractorRationale: "SF 1.16 exceeds 1.15, so this motor qualifies for 125% regardless of its high rise." }
+  answer: { kind: single, optionId: c }
+  solution:
+    keyIdea: "Both boundaries are inclusive on the 125% side: SF 1.15 passes and rise 40°C passes — only SF 1.1 with rise 42°C fails both."
+    codePath: ["430.32(A)(1) → SF ≥ 1.15 → 125%", "430.32(A)(1) → rise ≤ 40°C → 125%", "fail both → 115%"]
+    steps:
+      - { text: "Run each nameplate through both gates; a single pass keeps the motor at 125%.", ref: "430.32(A)(1)" }
+      - { text: "Option (c): SF 1.1 < 1.15 fails, rise 42°C > 40°C fails — it lands in 'all other motors' at 115% (40 × 1.15 = 46 A max)." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 220
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x028
+  domainId: nec.motors
+  skillIds: [nec.motor.flc-table, nec.motor.conductor-125, nec.motor.branch-protection, nec.motor.overload]
+  type: single
+  difficulty: 9
+  stem: "A 10 HP, 230 V, three-phase motor: Table 430.250 lists 28 A; nameplate reads FLA 26 A, SF 1.0, rise 50°C; a clamp meter shows 24 A. Which set of design values is entirely correct?"
+  options:
+    - { id: a, text: "Conductors ≥ 35 A (28 × 1.25); inverse-time breaker ≤ 70 A (28 × 250%); overload ≤ 29.9 A (26 × 115%)", isCorrect: true }
+    - { id: b, text: "Conductors ≥ 35 A; breaker ≤ 70 A; overload ≤ 32.5 A (26 × 125%)", distractorRationale: "SF 1.0 with a 50°C rise fails both 125% gates of 430.32(A)(1) — the overload multiplier is 115%, so 32.5 A is oversized." }
+    - { id: c, text: "Conductors ≥ 32.5 A (26 × 1.25); breaker ≤ 65 A (26 × 250%); overload ≤ 29.9 A", distractorRationale: "Conductors and the branch device are built from the 28 A TABLE FLC (430.6(A)(1)), not the 26 A nameplate — and 65 A is not even a standard rating." }
+    - { id: d, text: "Conductors ≥ 30 A (24 × 1.25); breaker ≤ 60 A (24 × 250%); overload ≤ 27.6 A (24 × 115%)", distractorRationale: "The 24 A clamp reading is a field measurement with no role in any 430 calculation — every value here is built on the wrong current." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Three currents, three rules: table 28 A → conductors and breaker; nameplate 26 A → overload (at 115% here); meter 24 A → nothing."
+    codePath: ["430.6(A)(1) → 28 A for 430.22 and 430.52", "430.22 → 28 × 1.25 = 35 A", "Table 430.52 → 28 × 2.5 = 70 A", "430.32(A)(1) → 26 × 1.15 = 29.9 A"]
+    steps:
+      - { text: "Conductors: 28 × 1.25 = 35 A minimum.", ref: "430.22" }
+      - { text: "Inverse-time breaker: 28 × 250% = 70 A maximum (standard rating, no round-up needed).", ref: "Table 430.52" }
+      - { text: "Overload: SF 1.0 and 50°C rise → 115% of nameplate: 26 × 1.15 = 29.9 A maximum.", ref: "430.32(A)(1)" }
+  trapIds: [actual-current-vs-table, meter-reading-vs-ampacity, table-column-selection]
+  timeTargetSec: 280
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x029
+  domainId: nec.motors
+  skillIds: [nec.motor.conductor-125, nec.motor.flc-table]
+  type: single
+  difficulty: 9
+  stem: "Two motors on one feeder each have a table FLC of exactly 34 A: a 3 HP, 115 V, single-phase unit and a 25 HP, 460 V, three-phase unit. How is the 430.24 feeder conductor calculation performed?"
+  options:
+    - { id: a, text: "Apply 125% to ONE of the 34 A motors and add the other at 100%: 34 × 1.25 + 34 = 76.5 A", isCorrect: true }
+    - { id: b, text: "Apply 125% to both, since both are 'the largest': (34 + 34) × 1.25 = 85 A", distractorRationale: "430.24 increases the single highest-rated motor only; a tie does not multiply the allowance — pick either one." }
+    - { id: c, text: "Apply 125% to the 25 HP motor's current twice-removed nameplate and add the 1φ motor at 100%", distractorRationale: "Nameplates never enter feeder conductor sizing; 430.6(A)(1) requires the table values, which here happen to tie." }
+    - { id: d, text: "Add both at 100% (68 A) because neither is larger than the other, so no 125% applies", distractorRationale: "The 125% term is mandatory — 430.24 always increases one motor's FLC; a tie changes which motor you may call largest, not whether the multiplier exists." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "'The highest-rated motor' is singular even in a tie — exactly one 125% term, chosen from either tied motor."
+    codePath: ["Table 430.248 / 430.250 → both = 34 A", "430.24 → 34 × 1.25 + 34 = 76.5 A"]
+    steps:
+      - { text: "Both motors list 34 A; designate either as the largest.", ref: "430.24" }
+      - { text: "34 × 1.25 = 42.5; 42.5 + 34 = 76.5 A minimum feeder ampacity — never 85 A and never 68 A." }
+  trapIds: [continuous-load-125, unit-or-phase-confusion]
+  timeTargetSec: 220
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
+
+- id: q-mot-x030
+  domainId: nec.motors
+  skillIds: [nec.motor.branch-protection, nec.motor.conductor-125, nec.motor.overload]
+  type: single
+  difficulty: 9
+  stem: "An apprentice flags a 5 HP, 115 V, single-phase motor circuit (Table FLC 56 A): conductors rated 70 A, a 150 A inverse-time breaker, and an overload relay set at 59.8 A from the 52 A nameplate. Which analysis is correct?"
+  options:
+    - { id: a, text: "Compliant: conductors meet 430.22 (56 × 1.25 = 70 A); the breaker is at the 430.52 maximum (56 × 250% = 140 → 150 A); the overload at 52 × 115% protects against sustained overcurrent", isCorrect: true }
+    - { id: b, text: "Violation: a 150 A breaker cannot protect 70 A conductors under 240.4", distractorRationale: "240.4(G) sends motor circuits to Article 430, where the branch device protects against faults only and routinely exceeds conductor ampacity — the overload device covers overloads." }
+    - { id: c, text: "Violation: the breaker may not exceed 140 A because next-size-up is limited to feeder devices", distractorRationale: "Backwards — the round-up permission (430.52(C)(1) Ex.1) belongs to BRANCH devices like this one; it is the FEEDER device (430.62) that must round down." }
+    - { id: d, text: "Violation: the overload must be 125% of the table FLC (70 A), so 59.8 A is set too low", distractorRationale: "Overloads come from the NAMEPLATE (430.6(A)(2)) and a lower setting is always permitted — 430.32 states maximums, not minimums; 56 × 1.25 is the conductor calculation." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Motor circuits split the protection job: 430.52 device for faults (can dwarf the conductor rating), 430.32 overload for heat — all three installed values sit exactly at their limits."
+    codePath: ["430.22 → 56 × 1.25 = 70 A conductors", "Table 430.52 + Exc. 1 → 56 × 2.5 = 140 → 150 A breaker", "430.32(A)(1) → 52 × 1.15 = 59.8 A overload"]
+    steps:
+      - { text: "Conductors: 56 × 1.25 = 70 A — met exactly.", ref: "430.22" }
+      - { text: "Breaker: 56 × 250% = 140 A, not standard, next size up = 150 A — the maximum, and lawful above the conductor ampacity per 240.4(G).", ref: "430.52(C)(1) Exc. 1" }
+      - { text: "Overload: nameplate 52 × 115% = 59.8 A keeps the 70 A conductors from sustained overload.", ref: "430.32(A)(1)" }
+  trapIds: [next-size-up-rounding, continuous-load-125, actual-current-vs-table]
+  timeTargetSec: 280
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft brutal-tier question; SME-verify before live."
