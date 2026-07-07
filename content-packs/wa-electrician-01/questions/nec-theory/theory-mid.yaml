@@ -1,0 +1,622 @@
+# Electrical theory — MID tier (difficulty 5–6). Scenario-framed single-formula problems:
+# Ohm's law, 1φ/3φ power with pf, direct voltage drop, wye/delta relationships, cmil ratios. All DRAFT; K = 12.9 Cu / 21.2 Al.
+
+# ---- Ohm's law in a scenario (I = V / R) -------------------------------------
+- id: q-thry-m001
+  recompute: { calc: ohmsCurrent, inputs: { volts: 240, ohms: 16 } }
+  domainId: nec.theory-general
+  commonMistake: "The nameplate wattage is a decoy — with the measured resistance and voltage in hand, I = V/R gets you there directly (and 3,600 W ÷ 240 V confirms it)."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    A 240 V resistance heater element is nameplated 3,600 W. Your ohmmeter
+    confirms the element measures 16 Ω cold. Treating the resistance as
+    constant, what current (A) does the element draw at 240 V?
+  answer: { kind: numeric, value: 15, unit: "A", tolerance: 0.05 }
+  solution:
+    keyIdea: "With voltage and resistance known, current is I = V/R."
+    codePath: ["Ohm's law: I = V/R"]
+    steps:
+      - { text: "I = 240 ÷ 16 = 15 A." }
+      - { text: "Cross-check with the nameplate: 3,600 W ÷ 240 V = 15 A — consistent." }
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m002
+  recompute: { calc: ohmsCurrent, inputs: { volts: 120, ohms: 7.5 } }
+  domainId: nec.theory-general
+  commonMistake: "Use the resistance you measured, not the branch-circuit rating — the 20 A breaker tells you the circuit limit, not the load current."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    A portable heater on a 20 A, 120 V branch circuit has a heating element
+    that measures 7.5 Ω. What current (A) flows through the element when it is
+    energized at 120 V?
+  answer: { kind: numeric, value: 16, unit: "A", tolerance: 0.05 }
+  solution:
+    keyIdea: "Load current comes from Ohm's law, independent of the breaker size."
+    codePath: ["Ohm's law: I = V/R"]
+    steps:
+      - { text: "I = 120 ÷ 7.5 = 16 A." }
+      - { text: "The 20 A breaker rating is circuit protection — it does not set the load current." }
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m003
+  recompute: { calc: ohmsCurrent, inputs: { volts: 480, ohms: 32 } }
+  domainId: nec.theory-general
+  commonMistake: "Ohm's law needs consistent values — divide the applied 480 V by the 32 Ω resistance; there is nothing to convert first."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    An industrial process heater bank presents a total resistance of 32 Ω and
+    is connected line-to-line on a 480 V system. What current (A) does the
+    bank draw?
+  answer: { kind: numeric, value: 15, unit: "A", tolerance: 0.05 }
+  solution:
+    keyIdea: "A purely resistive load follows I = V/R at the applied voltage."
+    codePath: ["Ohm's law: I = V/R"]
+    steps:
+      - { text: "I = 480 ÷ 32 = 15 A." }
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m004
+  recompute: { calc: ohmsCurrent, inputs: { volts: 208, ohms: 16 } }
+  domainId: nec.theory-general
+  commonMistake: "Use the voltage the load actually sees (208 V line-to-line), not 240 V — many charts assume 240 V, but this panel is 208."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    A 16 Ω strip heater designed for line-to-line connection is landed on two
+    ungrounded conductors of a 208Y/120 V panel. What current (A) does it draw
+    at 208 V?
+  answer: { kind: numeric, value: 13, unit: "A", tolerance: 0.05 }
+  solution:
+    keyIdea: "The applied voltage is the panel's line-to-line 208 V; then I = V/R."
+    codePath: ["Ohm's law: I = V/R"]
+    steps:
+      - { text: "I = 208 ÷ 16 = 13 A." }
+      - { text: "On a 240 V system the same element would draw 15 A — resistive loads scale with voltage." }
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- Single-phase power with pf stated (P = V·I·pf) ---------------------------
+- id: q-thry-m005
+  recompute: { calc: power1ph, inputs: { volts: 240, amps: 18, pf: 0.9 } }
+  domainId: nec.theory-general
+  commonMistake: "If you got 4,320, that is the apparent power in VA — real power (watts) is V·I·pf."
+  skillIds: [nec.theory.power]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    A single-phase 240 V pump motor draws 18 A while running, and its
+    nameplate lists a power factor of 0.90. What real power (W) is the motor
+    taking from the line?
+  answer: { kind: numeric, value: 3888, unit: "W", tolerance: 2 }
+  solution:
+    keyIdea: "Real power is P = V × I × pf; V × I alone is volt-amperes."
+    codePath: ["P = V·I·pf"]
+    steps:
+      - { text: "Apparent power: 240 × 18 = 4,320 VA." }
+      - { text: "Real power: 4,320 × 0.90 = 3,888 W." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m006
+  recompute: { calc: power1ph, inputs: { volts: 120, amps: 16, pf: 0.85 } }
+  domainId: nec.theory-general
+  commonMistake: "Multiply by the power factor, not divide — real watts are always LESS than the VA on an inductive load."
+  skillIds: [nec.theory.power]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    A 120 V single-phase compressor draws 16 A at a power factor of 0.85.
+    What real power (W) does it consume?
+  answer: { kind: numeric, value: 1632, unit: "W", tolerance: 2 }
+  solution:
+    keyIdea: "P = V × I × pf; the pf scales apparent power DOWN to watts."
+    codePath: ["P = V·I·pf"]
+    steps:
+      - { text: "120 × 16 = 1,920 VA." }
+      - { text: "1,920 × 0.85 = 1,632 W." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m007
+  recompute: { calc: power1ph, inputs: { volts: 277, amps: 14, pf: 0.95 } }
+  domainId: nec.theory-general
+  commonMistake: "This luminaire circuit is line-to-neutral single-phase — use 277 V with no √3 factor; the √3 belongs to three-phase totals only."
+  skillIds: [nec.theory.power]
+  type: numeric
+  difficulty: 6
+  stem: >-
+    A lighting circuit fed line-to-neutral at 277 V on a 480Y/277 V system
+    carries 14 A of ballast load at a power factor of 0.95. What real power
+    (W) does this single circuit deliver?
+  answer: { kind: numeric, value: 3684.1, unit: "W", tolerance: 2 }
+  solution:
+    keyIdea: "A single line-to-neutral circuit is single-phase: P = V·I·pf with 277 V, no √3."
+    codePath: ["P = V·I·pf"]
+    steps:
+      - { text: "277 × 14 = 3,878 VA." }
+      - { text: "3,878 × 0.95 = 3,684 W." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m008
+  recompute: { calc: power1ph, inputs: { volts: 240, amps: 25, pf: 0.75 } }
+  domainId: nec.theory-general
+  commonMistake: "At a poor power factor the watts fall well below the VA — 240 × 25 = 6,000 VA, but only 75% of that is real power."
+  skillIds: [nec.theory.power]
+  type: numeric
+  difficulty: 6
+  stem: >-
+    An older single-phase 240 V machine draws 25 A, and a power-quality meter
+    shows its power factor sagging to 0.75. How much real power (W) is the
+    machine actually converting?
+  answer: { kind: numeric, value: 4500, unit: "W", tolerance: 2 }
+  solution:
+    keyIdea: "P = V·I·pf — the conductors carry 6,000 VA of current, but only 4,500 W does work."
+    codePath: ["P = V·I·pf"]
+    steps:
+      - { text: "240 × 25 = 6,000 VA." }
+      - { text: "6,000 × 0.75 = 4,500 W." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- Three-phase power with line values given (P = √3·V·I·pf) -----------------
+- id: q-thry-m009
+  recompute: { calc: power3ph, inputs: { volts: 480, amps: 40, pf: 0.9 } }
+  domainId: nec.theory-general
+  commonMistake: "If you got 17,280, you left out the √3 — three-phase power is √3 × V(line) × I(line) × pf."
+  skillIds: [nec.theory.three-phase, nec.theory.power]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    A balanced three-phase load on a 480 V system draws 40 A per line at a
+    power factor of 0.90. What is the total real power (W)?
+  answer: { kind: numeric, value: 29930, unit: "W", tolerance: 30 }
+  solution:
+    keyIdea: "Three-phase real power: P = √3 × V × I × pf with line-to-line voltage and line current."
+    codePath: ["P = √3·V·I·pf"]
+    steps:
+      - { text: "1.732 × 480 × 40 = 33,255 VA." }
+      - { text: "33,255 × 0.90 = 29,930 W (≈ 30 kW)." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m010
+  recompute: { calc: power3ph, inputs: { volts: 208, amps: 35, pf: 0.82 } }
+  domainId: nec.theory-general
+  commonMistake: "Use the 208 V line-to-line voltage in √3·V·I — not the 120 V line-to-neutral value; the √3 already handles the phase relationship."
+  skillIds: [nec.theory.three-phase]
+  type: numeric
+  difficulty: 6
+  stem: >-
+    A balanced three-phase HVAC unit on a 208Y/120 V service draws 35 A per
+    line at a power factor of 0.82. What total real power (W) does it consume?
+  answer: { kind: numeric, value: 10340, unit: "W", tolerance: 15 }
+  solution:
+    keyIdea: "P = √3 × V(line-to-line) × I(line) × pf — pair 208 V with the √3 factor."
+    codePath: ["P = √3·V·I·pf"]
+    steps:
+      - { text: "1.732 × 208 × 35 = 12,609 VA." }
+      - { text: "12,609 × 0.82 = 10,340 W." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 110
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m011
+  recompute: { calc: power3ph, inputs: { volts: 240, amps: 30 } }
+  domainId: nec.theory-general
+  commonMistake: "Resistive means pf = 1, but the √3 still applies — 240 × 30 = 7,200 misses the three-phase factor."
+  skillIds: [nec.theory.three-phase]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    A balanced, purely resistive three-phase heater bank on a 240 V delta
+    system draws 30 A per line. What total power (W) does the bank produce?
+  answer: { kind: numeric, value: 12471, unit: "W", tolerance: 15 }
+  solution:
+    keyIdea: "Unity power factor removes the pf term, not the √3: P = √3 × V × I."
+    codePath: ["P = √3·V·I (pf = 1)"]
+    steps:
+      - { text: "1.732 × 240 × 30 = 12,471 W (≈ 12.5 kW)." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m012
+  recompute: { calc: power3ph, inputs: { volts: 480, amps: 65, pf: 0.87 } }
+  domainId: nec.theory-general
+  commonMistake: "Both factors apply: √3 for three-phase AND the 0.87 pf — dropping either one overstates or understates the watts."
+  skillIds: [nec.theory.three-phase, nec.theory.power]
+  type: numeric
+  difficulty: 6
+  stem: >-
+    A three-phase 480 V feeder to a machine shop carries a balanced 65 A per
+    line at an overall power factor of 0.87. What real power (W) is the shop
+    drawing through this feeder?
+  answer: { kind: numeric, value: 47015, unit: "W", tolerance: 50 }
+  solution:
+    keyIdea: "P = √3 × V × I × pf, all four factors together."
+    codePath: ["P = √3·V·I·pf"]
+    steps:
+      - { text: "1.732 × 480 × 65 = 54,040 VA." }
+      - { text: "54,040 × 0.87 = 47,015 W (≈ 47 kW)." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 110
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m013
+  recompute: { calc: power3ph, inputs: { volts: 208, amps: 45, pf: 0.9 } }
+  domainId: nec.theory-general
+  commonMistake: "If you got 16,212, you reported the apparent power (VA) — the kW billing figure requires multiplying by the 0.90 power factor."
+  skillIds: [nec.theory.three-phase, nec.theory.power]
+  type: numeric
+  difficulty: 6
+  stem: >-
+    A commercial kitchen's three-phase 208 V feeder carries a balanced 45 A
+    per line at a power factor of 0.90. What real power (W) is being consumed?
+  answer: { kind: numeric, value: 14591, unit: "W", tolerance: 20 }
+  solution:
+    keyIdea: "Watts = √3·V·I (the VA) scaled by the power factor."
+    codePath: ["P = √3·V·I·pf"]
+    steps:
+      - { text: "1.732 × 208 × 45 = 16,212 VA." }
+      - { text: "16,212 × 0.90 = 14,591 W." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 110
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- Voltage drop, all inputs given directly ----------------------------------
+- id: q-thry-m014
+  recompute: { calc: voltageDrop, inputs: { phase: 1, k: 12.9, current: 30, oneWayFt: 110, size: "10" } }
+  domainId: nec.theory-general
+  commonMistake: "If you got 4.10 V, you dropped the factor of 2 — single-phase current travels out AND back, so both conductor lengths drop voltage."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 6
+  stem: >-
+    A 240 V single-phase circuit runs 110 ft one-way on 10 AWG copper
+    (10,380 cmil) and carries 30 A. Using K = 12.9, what is the voltage
+    drop (V)?
+  answer: { kind: numeric, value: 8.2, unit: "V", tolerance: 0.1 }
+  solution:
+    keyIdea: "Single-phase VD = 2·K·I·D / cmil with the one-way distance."
+    codePath: ["VD = 2·K·I·D/cmil", "Ch.9 Table 8 (10 AWG = 10,380 cmil)"]
+    steps:
+      - { text: "2 × 12.9 × 30 × 110 = 85,140." }
+      - { text: "85,140 ÷ 10,380 = 8.20 V — about 3.4% of 240 V, worth upsizing." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m015
+  recompute: { calc: voltageDrop, inputs: { phase: 1, k: 12.9, current: 24, oneWayFt: 130, size: "8" } }
+  domainId: nec.theory-general
+  commonMistake: "Use the ONE-WAY distance of 130 ft with the factor of 2 — plugging in a 260 ft round trip double-counts the return conductor."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    A single-phase branch circuit carries 24 A on 8 AWG copper (16,510 cmil),
+    130 ft one-way. Using K = 12.9, estimate the voltage drop (V).
+  answer: { kind: numeric, value: 4.88, unit: "V", tolerance: 0.1 }
+  solution:
+    keyIdea: "The 2 in VD = 2·K·I·D/cmil already accounts for the return path; D stays one-way."
+    codePath: ["VD = 2·K·I·D/cmil", "Ch.9 Table 8 (8 AWG = 16,510 cmil)"]
+    steps:
+      - { text: "2 × 12.9 × 24 × 130 = 80,496." }
+      - { text: "80,496 ÷ 16,510 = 4.88 V." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m016
+  recompute: { calc: voltageDrop, inputs: { phase: 3, k: 12.9, current: 50, oneWayFt: 200, size: "4" } }
+  domainId: nec.theory-general
+  commonMistake: "If you got 6.18 V, you used the single-phase factor of 2 — a three-phase circuit uses √3 (1.732)."
+  skillIds: [nec.theory.three-phase]
+  type: numeric
+  difficulty: 6
+  stem: >-
+    A 480 V three-phase feeder carries 50 A per line on 4 AWG copper
+    (41,740 cmil), 200 ft one-way. Using K = 12.9, what is the line-to-line
+    voltage drop (V)?
+  answer: { kind: numeric, value: 5.35, unit: "V", tolerance: 0.1 }
+  solution:
+    keyIdea: "Three-phase VD = √3·K·I·D / cmil — √3 replaces the single-phase 2."
+    codePath: ["VD = √3·K·I·D/cmil", "Ch.9 Table 8 (4 AWG = 41,740 cmil)"]
+    steps:
+      - { text: "1.732 × 12.9 × 50 × 200 = 223,435." }
+      - { text: "223,435 ÷ 41,740 = 5.35 V — about 1.1% of 480 V." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 130
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m017
+  recompute: { calc: voltageDrop, inputs: { phase: 1, k: 21.2, current: 30, oneWayFt: 150, size: "6" } }
+  domainId: nec.theory-general
+  commonMistake: "If you got 4.42 V, you used the copper K of 12.9 — the stem says aluminum, K = 21.2."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 6
+  stem: >-
+    A single-phase circuit is wired with 6 AWG ALUMINUM (26,240 cmil), 150 ft
+    one-way, carrying 30 A. Using K = 21.2 for aluminum, estimate the voltage
+    drop (V).
+  answer: { kind: numeric, value: 7.27, unit: "V", tolerance: 0.1 }
+  solution:
+    keyIdea: "Aluminum's higher resistivity means K ≈ 21.2 in VD = 2·K·I·D/cmil."
+    codePath: ["VD = 2·K·I·D/cmil (K_al ≈ 21.2)", "Ch.9 Table 8 (6 AWG = 26,240 cmil)"]
+    steps:
+      - { text: "2 × 21.2 × 30 × 150 = 190,800." }
+      - { text: "190,800 ÷ 26,240 = 7.27 V — roughly 1.6× what copper would drop." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 130
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m018
+  recompute: { calc: voltageDrop, inputs: { phase: 3, k: 12.9, current: 80, oneWayFt: 120, size: "3" } }
+  domainId: nec.theory-general
+  commonMistake: "Match the size to its area: 3 AWG is 52,620 cmil — grabbing a neighboring row of Ch. 9 Table 8 skews the whole answer."
+  skillIds: [nec.theory.three-phase]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    A 208 V three-phase feeder runs 120 ft one-way on 3 AWG copper
+    (52,620 cmil) and carries 80 A per line. Using K = 12.9, estimate the
+    voltage drop (V).
+  answer: { kind: numeric, value: 4.08, unit: "V", tolerance: 0.1 }
+  solution:
+    keyIdea: "Plug directly into VD = √3·K·I·D / cmil."
+    codePath: ["VD = √3·K·I·D/cmil", "Ch.9 Table 8 (3 AWG = 52,620 cmil)"]
+    steps:
+      - { text: "1.732 × 12.9 × 80 × 120 = 214,497." }
+      - { text: "214,497 ÷ 52,620 = 4.08 V — about 2% of 208 V." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 130
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- Wye / delta line-vs-phase relationships (single-choice) -------------------
+- id: q-thry-m019
+  domainId: nec.theory-general
+  skillIds: [nec.theory.three-phase]
+  type: single
+  difficulty: 5
+  stem: >-
+    A luminaire is connected from one ungrounded conductor to the neutral on a
+    480Y/277 V wye system. What voltage does the luminaire operate at?
+  options:
+    - { id: a, text: "277 V", isCorrect: true }
+    - { id: b, text: "480 V", distractorRationale: "480 V is the LINE-TO-LINE voltage — a line-to-neutral connection sees the phase voltage, which is 480 ÷ √3." }
+    - { id: c, text: "240 V", distractorRationale: "That halves 480 — wye phase voltage is line voltage divided by √3 (1.732), not by 2." }
+    - { id: d, text: "120 V", distractorRationale: "120 V is the line-to-neutral value on a 208Y/120 system — this is a 480 V wye, where line-to-neutral is 277 V." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Wye: V(line-to-neutral) = V(line-to-line) ÷ √3; 480 ÷ 1.732 = 277 V."
+    codePath: ["Wye relationships: VLL = √3·VLN"]
+    steps:
+      - { text: "480 ÷ 1.732 = 277 V — the system designation 480Y/277 states both values." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m020
+  domainId: nec.theory-general
+  skillIds: [nec.theory.three-phase]
+  type: single
+  difficulty: 5
+  stem: >-
+    A transformer bank supplies a 240 V three-phase DELTA system. What voltage
+    appears across each individual transformer winding (phase) of the delta?
+  options:
+    - { id: a, text: "240 V", isCorrect: true }
+    - { id: b, text: "139 V", distractorRationale: "That divides 240 by √3 — the wye rule. In a delta, each winding connects directly line-to-line, so phase voltage EQUALS line voltage." }
+    - { id: c, text: "416 V", distractorRationale: "That multiplies by √3 — no delta quantity is √3 times the line voltage; in a delta the √3 shows up on the CURRENT side." }
+    - { id: d, text: "120 V", distractorRationale: "That halves the line voltage — a 120 V value only appears on a delta via a center-tapped winding, not across a full winding." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Delta: V(phase) = V(line) because each winding spans two lines; the √3 applies to current instead."
+    codePath: ["Delta relationships: VLL = Vφ, IL = √3·Iφ"]
+    steps:
+      - { text: "Each delta winding is connected line-to-line, so it sees the full 240 V." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m021
+  domainId: nec.theory-general
+  skillIds: [nec.theory.three-phase]
+  type: single
+  difficulty: 6
+  stem: >-
+    The line conductors feeding a balanced delta-connected load each carry
+    26 A. Approximately what current flows in each phase winding of the delta?
+  options:
+    - { id: a, text: "≈ 15 A", isCorrect: true }
+    - { id: b, text: "26 A", distractorRationale: "That applies the WYE rule (line = phase current). In a delta, each line splits between two windings, so winding current = line current ÷ √3." }
+    - { id: c, text: "≈ 45 A", distractorRationale: "That MULTIPLIES 26 by √3 — winding current in a delta is always SMALLER than line current; the √3 divides going from line to phase." }
+    - { id: d, text: "13 A", distractorRationale: "That halves the line current — the two windings at each terminal are 120° apart, so the split is by √3 (1.732), not by 2." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Delta: I(phase) = I(line) ÷ √3 — the mirror of finding line current from winding current."
+    codePath: ["Delta relationships: IL = √3·Iφ, solved for Iφ"]
+    steps:
+      - { text: "Iφ = 26 ÷ 1.732 ≈ 15 A per winding." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m022
+  domainId: nec.theory-general
+  skillIds: [nec.theory.three-phase]
+  type: single
+  difficulty: 6
+  stem: >-
+    On a wye-connected system, each line-to-neutral (phase) voltage measures
+    120 V. What voltage will you read between any two ungrounded (line)
+    conductors?
+  options:
+    - { id: a, text: "208 V", isCorrect: true }
+    - { id: b, text: "240 V", distractorRationale: "That doubles 120 V — the two phase voltages are 120° apart, so they combine vectorially to √3 × 120, not arithmetically to 2 × 120." }
+    - { id: c, text: "120 V", distractorRationale: "120 V is the line-to-NEUTRAL reading — between two ungrounded conductors of a wye you read the larger line-to-line value." }
+    - { id: d, text: "180 V", distractorRationale: "That multiplies by 1.5 — the wye factor is √3 ≈ 1.732, giving 208 V, not 180 V." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Wye: V(line-to-line) = √3 × V(line-to-neutral); phasors 120° apart add to √3×, not 2×."
+    codePath: ["Wye relationships: VLL = √3·VLN"]
+    steps:
+      - { text: "120 × 1.732 = 208 V — the familiar 208Y/120 designation." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- Circular-mil ratios, one step, both sizes named (250.122(B)) --------------
+- id: q-thry-m023
+  recompute: { calc: cmilRatio, inputs: { newSize: "4", origSize: "6" } }
+  domainId: nec.theory-general
+  commonMistake: "Divide the circular-mil AREAS (41,740 ÷ 26,240), not the AWG numbers — 6 ÷ 4 = 1.5 is a coincidence-looking wrong path."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    For voltage drop, a circuit's copper conductors are upsized from 6 AWG
+    (26,240 cmil) to 4 AWG (41,740 cmil). Per 250.122(B), what circular-mil
+    ratio must be applied when upsizing the equipment grounding conductor?
+  answer: { kind: numeric, value: 1.59, unit: "ratio", tolerance: 0.02 }
+  solution:
+    keyIdea: "250.122(B): the EGC increases by the same ratio of circular-mil areas as the ungrounded conductors."
+    codePath: ["250.122(B)", "Ch.9 Table 8 (4 AWG = 41,740; 6 AWG = 26,240)"]
+    steps:
+      - { text: "Ratio = 41,740 ÷ 26,240 = 1.59.", ref: "250.122(B)" }
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m024
+  recompute: { calc: cmilRatio, inputs: { newSize: "1", origSize: "4" } }
+  domainId: nec.theory-general
+  commonMistake: "New over original: 83,690 ÷ 41,740 — inverting the fraction gives 0.5, which would shrink the EGC instead of growing it."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 6
+  stem: >-
+    A feeder's copper ungrounded conductors are increased from 4 AWG
+    (41,740 cmil) to 1 AWG (83,690 cmil) to control voltage drop. What is the
+    circular-mil ratio the equipment grounding conductor must be increased by
+    under 250.122(B)?
+  answer: { kind: numeric, value: 2.01, unit: "ratio", tolerance: 0.02 }
+  solution:
+    keyIdea: "Ratio = new cmil ÷ original cmil, always greater than 1 for an upsize."
+    codePath: ["250.122(B)", "Ch.9 Table 8 (1 AWG = 83,690; 4 AWG = 41,740)"]
+    steps:
+      - { text: "Ratio = 83,690 ÷ 41,740 = 2.01 — three AWG steps roughly doubles the area.", ref: "250.122(B)" }
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-thry-m025
+  recompute: { calc: cmilRatio, inputs: { newSize: "2", origSize: "8" } }
+  domainId: nec.theory-general
+  commonMistake: "Work in areas, not gauges: 66,360 ÷ 16,510 ≈ 4 — the jump 8 → 2 is six AWG steps, which quadruples the area rather than dividing 8 by 2."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 6
+  stem: >-
+    To hold voltage drop on a long run, a circuit's copper conductors are
+    upsized from 8 AWG (16,510 cmil) to 2 AWG (66,360 cmil). Per 250.122(B),
+    by what circular-mil ratio must the equipment grounding conductor be
+    increased?
+  answer: { kind: numeric, value: 4.02, unit: "ratio", tolerance: 0.02 }
+  solution:
+    keyIdea: "The 250.122(B) ratio is the new-to-original circular-mil quotient from Ch. 9 Table 8."
+    codePath: ["250.122(B)", "Ch.9 Table 8 (2 AWG = 66,360; 8 AWG = 16,510)"]
+    steps:
+      - { text: "Ratio = 66,360 ÷ 16,510 = 4.02.", ref: "250.122(B)" }
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."

@@ -1,0 +1,623 @@
+# Transformers (Article 450) — MID tier (difficulty 5–6). 2020 NEC. All DRAFT.
+# Numeric answers recomputed by transformerCurrent / transformerPrimaryOCP / transformerPrimaryMaxOCP.
+
+# ---- Single-winding FLC computations (1φ and 3φ) ------------------------------
+- id: q-xfmr-m001
+  recompute: { calc: transformerCurrent, inputs: { kva: 37.5, volts: 480, phase: 1 } }
+  domainId: nec.transformers
+  commonMistake: "45.1 A means you applied √3 — this transformer is single-phase, so the formula is simply VA ÷ V."
+  skillIds: [nec.xfmr.secondary]
+  type: numeric
+  difficulty: 5
+  stem: "A 37.5 kVA SINGLE-phase transformer has a 480 V primary. What is its full-load primary current (A)?"
+  answer: { kind: numeric, value: 78.13, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Single-phase FLC = VA ÷ V — no √3."
+    codePath: ["I = VA / V (1φ)", "primary V = 480"]
+    steps:
+      - { text: "Convert kVA to VA: 37.5 kVA = 37,500 VA." }
+      - { text: "37,500 ÷ 480 = 78.1 A. No √3 for single-phase." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m002
+  recompute: { calc: transformerCurrent, inputs: { kva: 60, volts: 480, phase: 3 } }
+  domainId: nec.transformers
+  commonMistake: "125 A means you dropped the √3 — for three-phase the denominator is √3 × V, not V alone."
+  skillIds: [nec.xfmr.secondary]
+  type: numeric
+  difficulty: 5
+  stem: "A 60 kVA THREE-phase transformer has a 480 V primary. What is its full-load primary line current (A)?"
+  answer: { kind: numeric, value: 72.17, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Three-phase FLC = VA ÷ (√3 × V)."
+    codePath: ["I = VA / (√3·V)", "primary V = 480"]
+    steps:
+      - { text: "√3 × 480 = 831.4." }
+      - { text: "60,000 ÷ 831.4 = 72.2 A." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m003
+  recompute: { calc: transformerCurrent, inputs: { kva: 30, volts: 208, phase: 3 } }
+  domainId: nec.transformers
+  commonMistake: "144.2 A means you used 208 without the √3; 36.1 A means you used the 480 V primary voltage instead of the secondary."
+  skillIds: [nec.xfmr.secondary]
+  type: numeric
+  difficulty: 6
+  stem: "A 30 kVA, three-phase, 480 V – 208Y/120 V transformer feeds a small office panel. To check the panel feeder, you need the full-load SECONDARY line current (A). What is it?"
+  answer: { kind: numeric, value: 83.27, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Use the SECONDARY voltage (208 V) in VA ÷ (√3 × V)."
+    codePath: ["I = VA / (√3·V)", "secondary V = 208"]
+    steps:
+      - { text: "√3 × 208 = 360.3." }
+      - { text: "30,000 ÷ 360.3 = 83.3 A on the secondary." }
+      - { text: "The 480 V side gives 36.1 A — that is the primary, not what was asked." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 110
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m004
+  recompute: { calc: transformerCurrent, inputs: { kva: 25, volts: 240, phase: 1 } }
+  domainId: nec.transformers
+  commonMistake: "60.1 A means you slipped a √3 into a single-phase calculation."
+  skillIds: [nec.xfmr.secondary]
+  type: numeric
+  difficulty: 5
+  stem: "A 25 kVA SINGLE-phase transformer serves a workshop at 240 V on the secondary. What full-load secondary current (A) do the secondary conductors need to carry?"
+  answer: { kind: numeric, value: 104.17, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Single-phase: I = VA ÷ V, using the secondary voltage."
+    codePath: ["I = VA / V (1φ)", "secondary V = 240"]
+    steps:
+      - { text: "25,000 ÷ 240 = 104.2 A." }
+      - { text: "No √3 — the transformer is single-phase." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m005
+  recompute: { calc: transformerCurrent, inputs: { kva: 100, volts: 480, phase: 3 } }
+  domainId: nec.transformers
+  commonMistake: "208.3 A means you left out the √3; 277.6 A means you used 208 V — the question asks for the 480 V primary side."
+  skillIds: [nec.xfmr.secondary]
+  type: numeric
+  difficulty: 6
+  stem: "A 100 kVA, three-phase, 480 V – 208Y/120 V transformer is being installed for a tenant space. The primary OCPD sizing starts with the full-load PRIMARY line current (A). Compute it."
+  answer: { kind: numeric, value: 120.28, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Primary FLC uses the PRIMARY voltage with √3 for three-phase."
+    codePath: ["I = VA / (√3·V)", "primary V = 480"]
+    steps:
+      - { text: "√3 × 480 = 831.4." }
+      - { text: "100,000 ÷ 831.4 = 120.3 A." }
+      - { text: "The 208 V secondary side would give 277.6 A — wrong winding for the primary OCPD." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 110
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m006
+  recompute: { calc: transformerCurrent, inputs: { kva: 15, volts: 120, phase: 1 } }
+  domainId: nec.transformers
+  commonMistake: "62.5 A means you used the 240 V primary — the question asks for the 120 V secondary current."
+  skillIds: [nec.xfmr.secondary]
+  type: numeric
+  difficulty: 5
+  stem: "A 15 kVA single-phase transformer steps 240 V down to 120 V for a dedicated equipment circuit. What is the full-load SECONDARY current (A)?"
+  answer: { kind: numeric, value: 125, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Same kVA both sides — pick the SECONDARY voltage for secondary current."
+    codePath: ["I = VA / V (1φ)", "secondary V = 120"]
+    steps:
+      - { text: "15,000 ÷ 120 = 125 A." }
+      - { text: "Using 240 V gives 62.5 A — that is the primary current." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m007
+  recompute: { calc: transformerCurrent, inputs: { kva: 225, volts: 480, phase: 3 } }
+  domainId: nec.transformers
+  commonMistake: "468.8 A means you forgot the √3 in the three-phase formula."
+  skillIds: [nec.xfmr.secondary]
+  type: numeric
+  difficulty: 6
+  stem: "A 225 kVA, three-phase transformer with a 480 V primary is being set for a manufacturing addition. Before ordering the primary conductors, compute the full-load primary line current (A)."
+  answer: { kind: numeric, value: 270.63, unit: "A", tolerance: 1.0 }
+  solution:
+    keyIdea: "Three-phase FLC = VA ÷ (√3 × V) — keep the √3 even on large units."
+    codePath: ["I = VA / (√3·V)", "primary V = 480"]
+    steps:
+      - { text: "√3 × 480 = 831.4." }
+      - { text: "225,000 ÷ 831.4 = 270.6 A." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m008
+  recompute: { calc: transformerCurrent, inputs: { kva: 10, volts: 480, phase: 1 } }
+  domainId: nec.transformers
+  commonMistake: "12.03 A means you divided by √3 × 480 — this unit is single-phase."
+  skillIds: [nec.xfmr.secondary]
+  type: numeric
+  difficulty: 5
+  stem: "A 10 kVA SINGLE-phase transformer with a 480 V primary supplies an outbuilding. What full-load primary current (A) is the starting point for its overcurrent protection?"
+  answer: { kind: numeric, value: 20.83, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Single-phase: I = VA ÷ V."
+    codePath: ["I = VA / V (1φ)", "primary V = 480"]
+    steps:
+      - { text: "10,000 ÷ 480 = 20.8 A." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 80
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m009
+  recompute: { calc: transformerCurrent, inputs: { kva: 45, volts: 600, phase: 3 } }
+  domainId: nec.transformers
+  commonMistake: "75 A means you dropped the √3: 45,000 ÷ 600 is a single-phase calculation, and this transformer is three-phase."
+  skillIds: [nec.xfmr.secondary]
+  type: numeric
+  difficulty: 6
+  stem: "A 45 kVA, three-phase transformer with a 600 V primary serves a shop with a 600 V distribution system. What is the full-load primary line current (A)?"
+  answer: { kind: numeric, value: 43.3, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Three-phase: I = VA ÷ (√3 × V), here at 600 V."
+    codePath: ["I = VA / (√3·V)", "primary V = 600"]
+    steps:
+      - { text: "√3 × 600 = 1039.2." }
+      - { text: "45,000 ÷ 1039.2 = 43.3 A." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- Primary-only OCP at 125% → next standard size (Table 450.3(B), Note 1) ---
+- id: q-xfmr-m010
+  recompute: { calc: transformerPrimaryOCP, inputs: { kva: 50, volts: 480, phase: 3 } }
+  domainId: nec.transformers
+  commonMistake: "70 A means you rounded 75.2 A DOWN — Note 1 permits the next standard size UP, and 75 A is not a standard rating in 240.6(A)."
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: numeric
+  difficulty: 5
+  stem: "A 50 kVA, three-phase, 480 V-primary transformer has primary-only overcurrent protection. Per Table 450.3(B) at 125% with Note 1, what standard breaker rating (A) is selected?"
+  answer: { kind: numeric, value: 80, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Compute primary FLC, apply 125%, then round UP to the next standard rating per Note 1."
+    codePath: ["I = 50,000/(√3·480) = 60.1 A", "×1.25 = 75.2 A", "Note 1 + 240.6(A) → 80 A"]
+    steps:
+      - { text: "Primary FLC = 50,000 ÷ 831.4 = 60.1 A (≥9 A → 125% cell)." }
+      - { text: "60.1 × 1.25 = 75.2 A — not a standard rating." }
+      - { text: "240.6(A) jumps from 70 to 80; Note 1 permits the next size up: 80 A." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m011
+  recompute: { calc: transformerPrimaryOCP, inputs: { kva: 20, volts: 240, phase: 1 } }
+  domainId: nec.transformers
+  commonMistake: "100 A means you rounded 104.2 A down; Note 1 allows the next standard size UP, which is 110 A."
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: numeric
+  difficulty: 5
+  stem: "A 20 kVA, single-phase transformer with a 240 V primary is protected on the primary only. Using the 125% cell of Table 450.3(B) and Note 1, what standard overcurrent device rating (A) results?"
+  answer: { kind: numeric, value: 110, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "125% of primary FLC, then the next higher standard rating."
+    codePath: ["I = 20,000/240 = 83.3 A", "×1.25 = 104.2 A", "Note 1 + 240.6(A) → 110 A"]
+    steps:
+      - { text: "Primary FLC = 20,000 ÷ 240 = 83.3 A." }
+      - { text: "83.3 × 1.25 = 104.2 A — between the 100 and 110 standard ratings." }
+      - { text: "Note 1 permits rounding up: 110 A." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m012
+  recompute: { calc: transformerPrimaryOCP, inputs: { kva: 112.5, volts: 208, phase: 3 } }
+  domainId: nec.transformers
+  commonMistake: "175 A means you used 480 V — this unit's PRIMARY is 208 V. Read the winding voltages carefully before computing FLC."
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: numeric
+  difficulty: 6
+  stem: "A 112.5 kVA, three-phase step-UP transformer has a 208 V primary and a 480 V secondary. It is protected by a primary overcurrent device only. Per Table 450.3(B) at 125% with Note 1, what standard breaker rating (A) protects the primary?"
+  answer: { kind: numeric, value: 400, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "In a step-up transformer the PRIMARY is the low-voltage winding — use 208 V for primary FLC."
+    codePath: ["I = 112,500/(√3·208) = 312.3 A", "×1.25 = 390.3 A", "Note 1 + 240.6(A) → 400 A"]
+    steps:
+      - { text: "Primary FLC = 112,500 ÷ (1.732 × 208) = 312.3 A." }
+      - { text: "312.3 × 1.25 = 390.3 A — not a standard rating." }
+      - { text: "Next standard size above 390.3 A is 400 A." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 140
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m013
+  recompute: { calc: transformerPrimaryOCP, inputs: { kva: 10, volts: 240, phase: 1 } }
+  domainId: nec.transformers
+  commonMistake: "50 A means you rounded 52.1 A down; the next standard rating UP from 52.1 A is 60 A (240.6(A) has no 55 A rating)."
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: numeric
+  difficulty: 5
+  stem: "A 10 kVA, single-phase transformer with a 240 V primary gets primary-only protection. Applying 125% from Table 450.3(B) and Note 1, what standard fuse rating (A) is selected?"
+  answer: { kind: numeric, value: 60, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "125% of FLC lands between standard ratings — go UP, and note 240.6(A) skips from 50 to 60."
+    codePath: ["I = 10,000/240 = 41.7 A", "×1.25 = 52.1 A", "Note 1 + 240.6(A) → 60 A"]
+    steps:
+      - { text: "Primary FLC = 10,000 ÷ 240 = 41.7 A." }
+      - { text: "41.7 × 1.25 = 52.1 A." }
+      - { text: "Standard ratings near this value are 50 and 60; Note 1 permits 60 A." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m014
+  recompute: { calc: transformerPrimaryOCP, inputs: { kva: 30, volts: 480, phase: 3 } }
+  domainId: nec.transformers
+  commonMistake: "45 A means you rounded down: 125% works out to 45.1 A, which EXCEEDS a 45 A device, so Note 1 takes you to 50 A."
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: numeric
+  difficulty: 6
+  stem: "A 30 kVA, three-phase, 480 V-primary transformer has primary-only protection. Work Table 450.3(B) at 125% carefully — the calculated value lands just above a standard rating. What standard breaker rating (A) does Note 1 permit?"
+  answer: { kind: numeric, value: 50, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "45.1 A is not '45 A' — the next standard rating at or above the calculated value is 50 A."
+    codePath: ["I = 30,000/(√3·480) = 36.08 A", "×1.25 = 45.1 A", "Note 1 + 240.6(A) → 50 A"]
+    steps:
+      - { text: "Primary FLC = 30,000 ÷ 831.4 = 36.08 A." }
+      - { text: "36.08 × 1.25 = 45.1 A — just over the 45 A standard rating." }
+      - { text: "Note 1 permits the next HIGHER standard size: 50 A." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 130
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m015
+  recompute: { calc: transformerPrimaryOCP, inputs: { kva: 15, volts: 480, phase: 1 } }
+  domainId: nec.transformers
+  commonMistake: "25 A means you started from a three-phase FLC (18.04 A) — this transformer is single-phase, so the FLC is 31.25 A."
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: numeric
+  difficulty: 5
+  stem: "A 15 kVA SINGLE-phase transformer with a 480 V primary has primary-only protection. Per Table 450.3(B) at 125% with Note 1, what standard breaker rating (A) is used?"
+  answer: { kind: numeric, value: 40, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Single-phase FLC (no √3), then 125% and the next standard size up."
+    codePath: ["I = 15,000/480 = 31.25 A", "×1.25 = 39.1 A", "Note 1 + 240.6(A) → 40 A"]
+    steps:
+      - { text: "Primary FLC = 15,000 ÷ 480 = 31.25 A (single-phase, no √3)." }
+      - { text: "31.25 × 1.25 = 39.1 A." }
+      - { text: "Next standard rating above 39.1 A is 40 A." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m016
+  recompute: { calc: transformerPrimaryOCP, inputs: { kva: 60, volts: 240, phase: 3 } }
+  domainId: nec.transformers
+  commonMistake: "175 A means you rounded 180.4 A down; the next standard rating UP is 200 A."
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: numeric
+  difficulty: 6
+  stem: "A 60 kVA, three-phase transformer with a 240 V delta primary is protected on the primary side only. Using Table 450.3(B) at 125% and Note 1, what standard overcurrent device rating (A) results?"
+  answer: { kind: numeric, value: 200, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Three-phase FLC at 240 V, then 125% and round up to a standard rating."
+    codePath: ["I = 60,000/(√3·240) = 144.3 A", "×1.25 = 180.4 A", "Note 1 + 240.6(A) → 200 A"]
+    steps:
+      - { text: "Primary FLC = 60,000 ÷ (1.732 × 240) = 144.3 A." }
+      - { text: "144.3 × 1.25 = 180.4 A — above the 175 A standard rating." }
+      - { text: "Note 1 permits the next size up: 200 A." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 130
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m017
+  recompute: { calc: transformerPrimaryOCP, inputs: { kva: 25, volts: 480, phase: 1 } }
+  domainId: nec.transformers
+  commonMistake: "60 A means you rounded 65.1 A down to the wrong side; the next standard size at or above 65.1 A is 70 A."
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: numeric
+  difficulty: 5
+  stem: "A 25 kVA, single-phase transformer with a 480 V primary has primary-only protection. Per Table 450.3(B) at 125% with Note 1, what standard fuse rating (A) protects the primary?"
+  answer: { kind: numeric, value: 70, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "125% of the single-phase primary FLC, rounded up to a standard rating."
+    codePath: ["I = 25,000/480 = 52.08 A", "×1.25 = 65.1 A", "Note 1 + 240.6(A) → 70 A"]
+    steps:
+      - { text: "Primary FLC = 25,000 ÷ 480 = 52.1 A." }
+      - { text: "52.1 × 1.25 = 65.1 A — not a standard rating." }
+      - { text: "Next standard size above 65.1 A is 70 A." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- Max primary OCP, auto 125% cell (FLC comfortably ≥9 A) -------------------
+- id: q-xfmr-m018
+  recompute: { calc: transformerPrimaryMaxOCP, inputs: { kva: 40, volts: 480, phase: 3 } }
+  domainId: nec.transformers
+  commonMistake: "60 A means you rounded 60.1 A down — the calculated value slightly exceeds 60, so Note 1 lands on 70 A."
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: numeric
+  difficulty: 6
+  stem: "A 40 kVA, three-phase, 480 V-primary transformer has primary-only protection. Its primary FLC is well above 9 A, so the 125% cell of Table 450.3(B) applies. What is the maximum standard breaker rating (A) permitted?"
+  answer: { kind: numeric, value: 70, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "125% of 48.1 A is 60.1 A — just over the 60 A standard rating, so Note 1 permits 70 A."
+    codePath: ["I = 40,000/(√3·480) = 48.11 A", "×1.25 = 60.1 A", "Note 1 + 240.6(A) → 70 A"]
+    steps:
+      - { text: "Primary FLC = 40,000 ÷ 831.4 = 48.11 A (≥9 A → 125% cell)." }
+      - { text: "48.11 × 1.25 = 60.1 A — a 60 A breaker would be under the calculated value." }
+      - { text: "Note 1 permits the next standard size up: 70 A." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 130
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m019
+  recompute: { calc: transformerPrimaryMaxOCP, inputs: { kva: 37.5, volts: 240, phase: 1 } }
+  domainId: nec.transformers
+  commonMistake: "175 A means you rounded 195.3 A down two sizes — the next standard rating at or above 195.3 A is 200 A."
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: numeric
+  difficulty: 5
+  stem: "A 37.5 kVA, single-phase transformer with a 240 V primary is protected on the primary only. Its FLC is far above 9 A, so the 125% cell of Table 450.3(B) governs. What maximum standard device rating (A) is permitted?"
+  answer: { kind: numeric, value: 200, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "156.25 A × 125% = 195.3 A, then Note 1 allows the next standard size."
+    codePath: ["I = 37,500/240 = 156.25 A", "×1.25 = 195.3 A", "Note 1 + 240.6(A) → 200 A"]
+    steps:
+      - { text: "Primary FLC = 37,500 ÷ 240 = 156.25 A." }
+      - { text: "156.25 × 1.25 = 195.3 A — not standard." }
+      - { text: "Next standard rating up is 200 A." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m020
+  recompute: { calc: transformerPrimaryMaxOCP, inputs: { kva: 15, volts: 208, phase: 3 } }
+  domainId: nec.transformers
+  commonMistake: "50 A means you rounded 52.05 A down; 240.6(A) has no 55 A rating, so Note 1 lands on 60 A."
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: numeric
+  difficulty: 6
+  stem: "A 15 kVA, three-phase transformer with a 208 V primary (primary FLC well above 9 A) has primary-only protection. Applying the 125% cell of Table 450.3(B) with Note 1, what is the maximum standard breaker rating (A)?"
+  answer: { kind: numeric, value: 60, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Three-phase FLC at 208 V, ×125%, then next standard size — remembering 240.6(A) skips 55."
+    codePath: ["I = 15,000/(√3·208) = 41.64 A", "×1.25 = 52.05 A", "Note 1 + 240.6(A) → 60 A"]
+    steps:
+      - { text: "Primary FLC = 15,000 ÷ (1.732 × 208) = 41.6 A." }
+      - { text: "41.6 × 1.25 = 52.05 A — above 50 A." }
+      - { text: "Standard ratings go 50 → 60; Note 1 permits 60 A." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 130
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- Which 450.3(B) cell applies (single-choice, FLC clearly in one band) -----
+- id: q-xfmr-m021
+  domainId: nec.transformers
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: single
+  difficulty: 5
+  stem: "A 45 kVA, three-phase, 480 V-primary transformer (primary FLC = 54.1 A) will have primary-only overcurrent protection. Which Table 450.3(B) treatment applies?"
+  options:
+    - id: a
+      text: "125% of primary FLC, with Note 1 permitting the next higher standard rating"
+      isCorrect: true
+    - id: b
+      text: "167% of primary FLC as a hard maximum"
+      distractorRationale: "The 167% cell applies only when primary FLC is between 2 A and 9 A. At 54.1 A the current is far above 9 A, so the 125% cell governs."
+    - id: c
+      text: "300% of primary FLC as a hard maximum"
+      distractorRationale: "300% is reserved for primary currents below 2 A — small control transformers, not a 45 kVA power unit."
+    - id: d
+      text: "250% of primary FLC, since the transformer is over 600 volt-amperes"
+      distractorRationale: "250% applies only when compliant SECONDARY protection is also provided; nothing in Table 450.3(B) keys off volt-amperes."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "With FLC of 9 A or more and primary-only protection, the 125% cell (with Note 1's round-up) applies."
+    codePath: ["Table 450.3(B) → ≥9 A: 125%", "Note 1"]
+    steps:
+      - { text: "The current bands are: <2 A → 300%; 2 to <9 A → 167%; ≥9 A → 125%." }
+      - { text: "54.1 A is clearly in the ≥9 A band, so 125% with the Note 1 round-up governs." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m022
+  domainId: nec.transformers
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: single
+  difficulty: 6
+  stem: "An 800 VA control transformer with a 480 V single-phase primary (primary FLC = 800 ÷ 480 = 1.67 A) has primary-only protection. Which Table 450.3(B) cell sets its maximum primary overcurrent device?"
+  options:
+    - id: a
+      text: "300% of primary FLC, taken as a maximum that may not be exceeded"
+      isCorrect: true
+    - id: b
+      text: "125% of primary FLC, rounded up to the next standard rating"
+      distractorRationale: "The 125% cell is for primary currents of 9 A or more. At 1.67 A the FLC is below the 2 A breakpoint, so the 300% cell governs."
+    - id: c
+      text: "167% of primary FLC, taken as a maximum"
+      distractorRationale: "The 167% cell covers currents from 2 A to less than 9 A. At 1.67 A the current is below 2 A, which puts it in the 300% cell."
+    - id: d
+      text: "300% of primary FLC, rounded up to the next standard rating"
+      distractorRationale: "The 300% product is a hard ceiling — Note 1's next-size-up allowance is written into the 125% cell only."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "FLC below 2 A → the 300% cell, and that product is a ceiling, not a round-up point."
+    codePath: ["I = 800/480 = 1.67 A", "Table 450.3(B) → <2 A: 300%"]
+    steps:
+      - { text: "1.67 A is below the 2 A breakpoint → 300% cell." }
+      - { text: "1.67 × 3.00 = 5.0 A maximum; the device may not exceed that value." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 110
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m023
+  domainId: nec.transformers
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: single
+  difficulty: 5
+  stem: "A 3 kVA, single-phase transformer with a 480 V primary (primary FLC = 3,000 ÷ 480 = 6.25 A) is protected on the primary only. Which Table 450.3(B) treatment applies?"
+  options:
+    - id: a
+      text: "167% of primary FLC, taken as a maximum that may not be exceeded"
+      isCorrect: true
+    - id: b
+      text: "125% of primary FLC, with the next standard size up permitted"
+      distractorRationale: "6.25 A is below the 9 A breakpoint, so the 125% cell — and its Note 1 round-up — does not apply here."
+    - id: c
+      text: "300% of primary FLC, because the transformer is under 5 kVA"
+      distractorRationale: "The bands are set by primary current in amperes, not kVA. 300% requires FLC below 2 A; 6.25 A is well above that."
+    - id: d
+      text: "167% of primary FLC, rounded up to the next standard rating"
+      distractorRationale: "The 167% product is a hard ceiling — the round-up allowance in Note 1 belongs to the 125% cell only."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "FLC in the 2 A to <9 A band → 167%, taken as a hard maximum."
+    codePath: ["I = 3,000/480 = 6.25 A", "Table 450.3(B) → 2 to <9 A: 167%"]
+    steps:
+      - { text: "6.25 A falls squarely between 2 A and 9 A → the 167% cell." }
+      - { text: "6.25 × 1.67 = 10.4 A maximum — no rounding up in this cell." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m024
+  domainId: nec.transformers
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: single
+  difficulty: 6
+  stem: "A 5 kVA, single-phase transformer with a 240 V primary (primary FLC = 5,000 ÷ 240 = 20.8 A) will have primary-only protection. The apprentice says 'small transformer, use 167%.' Which Table 450.3(B) cell actually applies?"
+  options:
+    - id: a
+      text: "125% of primary FLC with Note 1, because the FLC is 9 A or more"
+      isCorrect: true
+    - id: b
+      text: "167% of primary FLC, because the transformer is under 9 kVA"
+      distractorRationale: "The 9 in Table 450.3(B) is 9 AMPERES of primary current, not 9 kVA. At 20.8 A the FLC is well into the 125% band."
+    - id: c
+      text: "300% of primary FLC, because control transformers use the 300% row"
+      distractorRationale: "The 300% row is keyed to FLC below 2 A, not to how the transformer is used; 20.8 A is nowhere near that band."
+    - id: d
+      text: "250% of primary FLC, the default for single-phase units"
+      distractorRationale: "250% applies only when compliant secondary protection is also provided — phase count has nothing to do with it."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "The band is chosen by primary FLC in AMPERES — a small kVA can still land in the 125% cell."
+    codePath: ["I = 5,000/240 = 20.8 A", "Table 450.3(B) → ≥9 A: 125%", "Note 1"]
+    steps:
+      - { text: "Compute FLC first: 20.8 A." }
+      - { text: "20.8 A is at or above 9 A, so the 125% cell — with Note 1's round-up — governs." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 110
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-xfmr-m025
+  domainId: nec.transformers
+  skillIds: [nec.xfmr.ocp-sizing]
+  type: single
+  difficulty: 6
+  stem: "For a primary-only protected transformer with a primary FLC of 90.2 A, an electrician computes 90.2 × 1.25 = 112.8 A, which is not a standard rating in 240.6(A). Per Table 450.3(B) Note 1, what may the electrician install?"
+  options:
+    - id: a
+      text: "A 125 A device — the next standard rating above the calculated value is permitted"
+      isCorrect: true
+    - id: b
+      text: "A 110 A device — the calculated value must be rounded DOWN to a standard rating"
+      distractorRationale: "Note 1 explicitly permits the next HIGHER standard rating when 125% of FLC does not correspond to a standard size; rounding down is not required."
+    - id: c
+      text: "Only a nonstandard 112 A device — the calculated value may never be exceeded"
+      distractorRationale: "That ceiling behavior belongs to the 167% and 300% cells. In the 125% cell, Note 1 allows exceeding the calculated value by going to the next standard size."
+    - id: d
+      text: "Any device up to 250% of FLC, since the calculation came out nonstandard"
+      distractorRationale: "The 250% allowance requires compliant secondary protection — a nonstandard 125% result does not unlock it."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "In the 125% cell, Note 1 permits the next higher standard overcurrent device rating."
+    codePath: ["90.2 × 1.25 = 112.8 A", "Note 1 + 240.6(A) → 125 A"]
+    steps:
+      - { text: "112.8 A is not a standard rating; the standard ladder goes 110 → 125." }
+      - { text: "Note 1 permits the next size up, so a 125 A device is the maximum allowed." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 110
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."

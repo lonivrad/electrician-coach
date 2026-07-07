@@ -1,0 +1,596 @@
+# Overcurrent protection (Article 240 / 210.20 / 240.21) — MID tier (difficulty 5–6). 2020 NEC. DRAFT.
+# Two-step applied problems: 240.4(B) next-size-up from a stated ampacity, 240.4(D) lookups, mixed continuous/noncontinuous VA, 240.6(A) standard ratings, single-rule tap basics.
+
+# ---- Next-size-up from one stated ampacity (240.4(B)) ------------------------
+- id: q-ocp-m001
+  recompute: { calc: nextStandardSize, inputs: { value: 91 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you answered 90, you rounded DOWN — 240.4(B) permits the next standard size ABOVE 91 A when the circuit has no receptacles and the device is 800 A or less."
+  skillIds: [nec.ocp.next-size-up]
+  type: numeric
+  difficulty: 5
+  stem: "A feeder to a fixed rooftop HVAC unit uses conductors with a final allowable ampacity of 91 A. It serves an 82 A noncontinuous load and supplies no receptacle outlets. Per 240.4(B), what is the maximum standard OCPD rating (A) permitted?"
+  answer: { kind: numeric, value: 100, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "When the ampacity doesn't match a standard rating and the 240.4(B) conditions are met, the next standard size UP is permitted."
+    codePath: ["240.4(B)", "240.6(A) → next standard above 91 A = 100 A"]
+    steps:
+      - { text: "91 A falls between the standard ratings 90 A and 100 A.", ref: "240.6(A)" }
+      - { text: "No receptacles, load (82 A) ≤ ampacity, device ≤ 800 A → 240.4(B) conditions met.", ref: "240.4(B)" }
+      - { text: "Next standard size above 91 A is 100 A." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-ocp-m002
+  recompute: { calc: nextStandardSize, inputs: { value: 117 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you answered 110, you dropped to the standard size below the ampacity — 240.4(B) lets you go UP to 125 A here, not down."
+  skillIds: [nec.ocp.next-size-up]
+  type: numeric
+  difficulty: 5
+  stem: "A feeder to a fixed process heater has conductors with a stated allowable ampacity of 117 A and serves a 105 A noncontinuous load with no receptacle outlets. What is the maximum standard overcurrent device rating (A) permitted under 240.4(B)?"
+  answer: { kind: numeric, value: 125, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Ampacity between standard sizes → next size up is permitted when 240.4(B)'s conditions hold."
+    codePath: ["240.4(B)", "240.6(A) → 110, 125 bracket 117 A"]
+    steps:
+      - { text: "117 A is not a standard rating; the bracket is 110 A and 125 A.", ref: "240.6(A)" }
+      - { text: "Fixed equipment, no receptacles, device ≤ 800 A → next size up applies: 125 A.", ref: "240.4(B)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-ocp-m003
+  recompute: { calc: nextStandardSize, inputs: { value: 187 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you answered 175, you took the standard rating BELOW the ampacity — rounding down is only required when a 240.4(B) condition fails, and none fails here."
+  skillIds: [nec.ocp.next-size-up]
+  type: numeric
+  difficulty: 6
+  stem: "After all corrections, a feeder's conductors have a final allowable ampacity of 187 A. The feeder supplies a fixed 170 A noncontinuous load and no receptacle outlets. Per 240.4(B) and 240.6(A), what is the maximum standard OCPD rating (A) permitted to protect these conductors?"
+  answer: { kind: numeric, value: 200, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Check the 240.4(B) conditions first; when they pass, protection may round UP to the next standard rating."
+    codePath: ["240.4(B)", "240.6(A) → 175, 200 bracket 187 A"]
+    steps:
+      - { text: "187 A sits between the standard ratings 175 A and 200 A.", ref: "240.6(A)" }
+      - { text: "No receptacle outlets, load ≤ ampacity, device ≤ 800 A → all 240.4(B) conditions met.", ref: "240.4(B)" }
+      - { text: "Maximum standard device = 200 A." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-ocp-m004
+  recompute: { calc: nextStandardSize, inputs: { value: 52 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you answered 55, you invented a rating — 240.6(A) jumps from 50 A directly to 60 A; there is no standard 55 A device."
+  skillIds: [nec.ocp.next-size-up, nec.ocp.standard-ratings]
+  type: numeric
+  difficulty: 6
+  stem: "Conductors feeding a fixed piece of shop equipment have an allowable ampacity of 52 A; the noncontinuous load is 48 A and the circuit has no receptacle outlets. Applying 240.4(B), what is the maximum standard overcurrent device rating (A) permitted?"
+  answer: { kind: numeric, value: 60, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Next-size-up means the next rating that actually appears in the 240.6(A) list — after 50 A the list goes straight to 60 A."
+    codePath: ["240.4(B)", "240.6(A) → …45, 50, 60, 70…"]
+    steps:
+      - { text: "52 A is above 50 A; the next entry in the 240.6(A) list is 60 A (no 55 A rating exists).", ref: "240.6(A)" }
+      - { text: "240.4(B) conditions are met (no receptacles, load ≤ ampacity, ≤ 800 A) → 60 A is permitted.", ref: "240.4(B)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-ocp-m005
+  recompute: { calc: nextStandardSize, inputs: { value: 262 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you answered 275, you assumed a rating that isn't in 240.6(A) — the list jumps from 250 A to 300 A; if you answered 250, you rounded down without cause."
+  skillIds: [nec.ocp.next-size-up, nec.ocp.standard-ratings]
+  type: numeric
+  difficulty: 6
+  stem: "A feeder to fixed equipment has conductors with a final allowable ampacity of 262 A, a 240 A noncontinuous load, and no receptacle outlets. Per 240.4(B) and the 240.6(A) list, what is the maximum standard OCPD rating (A) permitted?"
+  answer: { kind: numeric, value: 300, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "The gaps between standard ratings widen above 250 A — the next rating above 262 A is 300 A, not an imagined 275 A."
+    codePath: ["240.4(B)", "240.6(A) → …225, 250, 300, 350…"]
+    steps:
+      - { text: "262 A exceeds 250 A; the next 240.6(A) entry is 300 A.", ref: "240.6(A)" }
+      - { text: "All 240.4(B) conditions are met, so 300 A is the maximum standard device.", ref: "240.4(B)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- 240.4(D) small-conductor lookups (Cu and Al) -----------------------------
+- id: q-ocp-m006
+  recompute: { calc: smallConductorMaxOCPD, inputs: { size: "14" } }
+  domainId: nec.overcurrent
+  commonMistake: "If you answered 20, you used the 14 AWG Cu 75°C table ampacity (20 A) as the breaker limit — 240.4(D) caps the DEVICE at 15 A regardless of that table value."
+  skillIds: [nec.ocp.small-conductor]
+  type: numeric
+  difficulty: 5
+  stem: "A 14 AWG THWN copper lighting circuit shows a 75°C table ampacity of 20 A, and the journeyman wants to land it on a 20 A breaker to match. Per 240.4(D), what maximum overcurrent device rating (A) is actually permitted for 14 AWG copper?"
+  answer: { kind: numeric, value: 15, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "For 14 AWG copper the 240.4(D) small-conductor cap — not the ampacity table — sets the maximum OCPD."
+    codePath: ["Table 310.16 → 14 Cu @75°C = 20 A (not controlling)", "240.4(D) → 14 AWG Cu = 15 A"]
+    steps:
+      - { text: "The table ampacity (20 A) tells you what the conductor can carry, not what breaker it may have.", ref: "Table 310.16" }
+      - { text: "240.4(D) caps the OCPD for 14 AWG copper at 15 A.", ref: "240.4(D)" }
+  trapIds: [actual-current-vs-table]
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-ocp-m007
+  recompute: { calc: smallConductorMaxOCPD, inputs: { size: "12" } }
+  domainId: nec.overcurrent
+  commonMistake: "If you answered 30, you read the 90°C column value for 12 AWG Cu (30 A) — the 240.4(D) cap of 20 A overrides the higher insulation-column ampacity."
+  skillIds: [nec.ocp.small-conductor]
+  type: numeric
+  difficulty: 5
+  stem: "A 12 AWG THHN copper branch circuit is run to a fixed appliance. The apprentice points at the 90°C column (30 A) and asks for a 30 A breaker. Per 240.4(D), what is the maximum overcurrent device rating (A) permitted for 12 AWG copper?"
+  answer: { kind: numeric, value: 20, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "The 90°C column is for derating math, and even then 240.4(D) caps 12 AWG copper at a 20 A device."
+    codePath: ["Table 310.16 → 12 Cu @90°C = 30 A (not a breaker rating)", "240.4(D) → 12 AWG Cu = 20 A"]
+    steps:
+      - { text: "The 30 A cell is the 90°C insulation ampacity used as a derating starting point — never a direct breaker size here.", ref: "Table 310.16" }
+      - { text: "240.4(D) limits the OCPD for 12 AWG copper to 20 A.", ref: "240.4(D)" }
+  trapIds: [table-column-selection, actual-current-vs-table]
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-ocp-m008
+  recompute: { calc: smallConductorMaxOCPD, inputs: { size: "10" } }
+  domainId: nec.overcurrent
+  commonMistake: "If you answered 35, you took the 10 AWG Cu 75°C table value — the 240.4(D) cap holds the breaker to 30 A even though the table shows more."
+  skillIds: [nec.ocp.small-conductor]
+  type: numeric
+  difficulty: 5
+  stem: "A 10 AWG THWN copper circuit to a fixed water heater has a 75°C table ampacity of 35 A. Per the small-conductor rule of 240.4(D), what is the maximum overcurrent device rating (A) permitted for this conductor?"
+  answer: { kind: numeric, value: 30, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "10 AWG copper is capped at a 30 A device by 240.4(D), independent of its higher table ampacity."
+    codePath: ["Table 310.16 → 10 Cu @75°C = 35 A (not controlling)", "240.4(D) → 10 AWG Cu = 30 A"]
+    steps:
+      - { text: "The 35 A table value does not unlock a 35 A breaker for 10 AWG copper.", ref: "Table 310.16" }
+      - { text: "240.4(D) caps the OCPD at 30 A.", ref: "240.4(D)" }
+  trapIds: [actual-current-vs-table]
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-ocp-m009
+  recompute: { calc: smallConductorMaxOCPD, inputs: { size: "12", material: "al" } }
+  domainId: nec.overcurrent
+  commonMistake: "If you answered 20, you applied the COPPER cap — the 240.4(D) limits are material-specific, and 12 AWG aluminum drops to 15 A."
+  skillIds: [nec.ocp.small-conductor]
+  type: numeric
+  difficulty: 6
+  stem: "A branch circuit in an agricultural building is wired with 12 AWG aluminum conductors. Per 240.4(D), what is the maximum overcurrent device rating (A) permitted for 12 AWG aluminum?"
+  answer: { kind: numeric, value: 15, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "240.4(D) lists separate caps by material — for 12 AWG, copper gets 20 A but aluminum/copper-clad aluminum only 15 A."
+    codePath: ["240.4(D) → 12 AWG Al = 15 A (Cu would be 20 A)"]
+    steps:
+      - { text: "Identify the material first: aluminum, not copper.", ref: "240.4(D)" }
+      - { text: "12 AWG aluminum is capped at a 15 A overcurrent device.", ref: "240.4(D)" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-ocp-m010
+  recompute: { calc: smallConductorMaxOCPD, inputs: { size: "10", material: "al" } }
+  domainId: nec.overcurrent
+  commonMistake: "If you answered 30, you used the copper limit for 10 AWG — aluminum sits one step lower at 25 A in 240.4(D)."
+  skillIds: [nec.ocp.small-conductor]
+  type: numeric
+  difficulty: 6
+  stem: "A well-pump circuit is re-pulled with 10 AWG aluminum XHHW conductors. The old copper circuit had a 30 A breaker, and the owner wants to keep it. Per 240.4(D), what is the maximum breaker rating (A) permitted on the new 10 AWG aluminum conductors?"
+  answer: { kind: numeric, value: 25, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Re-pulling in aluminum changes the 240.4(D) cap — 10 AWG aluminum is limited to 25 A, so the existing 30 A breaker can't stay."
+    codePath: ["240.4(D) → 10 AWG Al = 25 A (Cu would be 30 A)"]
+    steps:
+      - { text: "The 30 A habit is the 10 AWG COPPER cap.", ref: "240.4(D)" }
+      - { text: "10 AWG aluminum/copper-clad aluminum is capped at 25 A — the breaker must be changed.", ref: "240.4(D)" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- Mixed continuous + noncontinuous loads, VA given (210.20(A)/215.3) -------
+- id: q-ocp-m011
+  recompute: { calc: ocpdMixedLoad, inputs: { continuous: 30, noncontinuous: 22, standardize: 1 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you got 60 by summing 30 + 22 = 52 and standardizing, the arithmetic coincidentally lands right — but check your method: only the CONTINUOUS 30 A gets the 125% factor (37.5 + 22 = 59.5 A → 60 A)."
+  skillIds: [nec.ocp.standard-ratings]
+  type: numeric
+  difficulty: 5
+  stem: "A 240 V single-phase branch circuit supplies 7,200 VA of continuous lighting and 5,280 VA of noncontinuous load. Per 210.20(A), using a standard rating, what minimum OCPD (A) is required?"
+  answer: { kind: numeric, value: 60, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Convert VA to amperes at the circuit voltage, apply 125% only to the continuous portion, then take a standard rating."
+    codePath: ["7,200 ÷ 240 = 30 A; 5,280 ÷ 240 = 22 A", "210.20(A) → 30 × 1.25 + 22", "240.6(A)"]
+    steps:
+      - { text: "Continuous: 7,200 VA ÷ 240 V = 30 A. Noncontinuous: 5,280 VA ÷ 240 V = 22 A." }
+      - { text: "30 × 1.25 = 37.5 A; + 22 A = 59.5 A.", ref: "210.20(A)" }
+      - { text: "Next standard rating at or above 59.5 A is 60 A.", ref: "240.6(A)" }
+  trapIds: [continuous-load-125, next-size-up-rounding]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live. Recompute inputs are the amperes derived from the stated VA at 240 V."
+
+- id: q-ocp-m012
+  recompute: { calc: ocpdMixedLoad, inputs: { continuous: 20, noncontinuous: 12, standardize: 1 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you got 35, you summed 20 + 12 = 32 A and standardized without applying 125% to the continuous 20 A — the factor pushes the requirement to 37 A, which needs a 40 A device."
+  skillIds: [nec.ocp.standard-ratings]
+  type: numeric
+  difficulty: 5
+  stem: "A 120 V branch circuit carries 2,400 VA of continuous display lighting and 1,440 VA of noncontinuous load. Per 210.20(A), using a standard rating, what minimum OCPD (A) is required?"
+  answer: { kind: numeric, value: 40, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "VA ÷ volts first, then 125% on the continuous amperes only, then the standard-rating step."
+    codePath: ["2,400 ÷ 120 = 20 A; 1,440 ÷ 120 = 12 A", "210.20(A) → 20 × 1.25 + 12 = 37 A", "240.6(A) → 40 A"]
+    steps:
+      - { text: "Continuous: 2,400 VA ÷ 120 V = 20 A. Noncontinuous: 1,440 VA ÷ 120 V = 12 A." }
+      - { text: "20 × 1.25 = 25 A; + 12 A = 37 A.", ref: "210.20(A)" }
+      - { text: "37 A is not standard → next standard rating is 40 A.", ref: "240.6(A)" }
+  trapIds: [continuous-load-125, next-size-up-rounding]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live. Recompute inputs are the amperes derived from the stated VA at 120 V."
+
+- id: q-ocp-m013
+  recompute: { calc: ocpdMixedLoad, inputs: { continuous: 60, noncontinuous: 25, standardize: 1 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you answered 110, you rounded up needlessly — 60 × 1.25 + 25 = 100 A, which IS a standard rating, so the chain stops there."
+  skillIds: [nec.ocp.standard-ratings]
+  type: numeric
+  difficulty: 6
+  stem: "A 240 V single-phase feeder serves 14,400 VA of continuous lighting and 6,000 VA of noncontinuous load. Per 215.3, using a standard rating, what minimum OCPD (A) is required?"
+  answer: { kind: numeric, value: 100, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "When the 125%/100% sum lands exactly on a standard rating, that rating is the answer — no extra size-up."
+    codePath: ["14,400 ÷ 240 = 60 A; 6,000 ÷ 240 = 25 A", "215.3 → 60 × 1.25 + 25 = 100 A", "240.6(A) → 100 A is standard"]
+    steps:
+      - { text: "Continuous: 14,400 VA ÷ 240 V = 60 A. Noncontinuous: 6,000 VA ÷ 240 V = 25 A." }
+      - { text: "60 × 1.25 = 75 A; + 25 A = 100 A.", ref: "215.3" }
+      - { text: "100 A is a standard 240.6(A) rating → no further rounding.", ref: "240.6(A)" }
+  trapIds: [continuous-load-125, next-size-up-rounding]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live. Recompute inputs are the amperes derived from the stated VA at 240 V."
+
+- id: q-ocp-m014
+  recompute: { calc: ocpdMixedLoad, inputs: { continuous: 45, noncontinuous: 35, standardize: 1 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you got 90, you summed 45 + 35 = 80 and jumped a size — the 125% factor on the continuous 45 A gives 91.25 A, which pushes past 90 A to a 100 A device."
+  skillIds: [nec.ocp.standard-ratings]
+  type: numeric
+  difficulty: 6
+  stem: "A 240 V single-phase feeder supplies 10,800 VA of continuous refrigeration load and 8,400 VA of noncontinuous equipment. Per 215.3, using a standard rating, what minimum OCPD (A) is required?"
+  answer: { kind: numeric, value: 100, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Run the full 125% + 100% math before picking a size — the continuous factor can push you past the rating the raw sum suggests."
+    codePath: ["10,800 ÷ 240 = 45 A; 8,400 ÷ 240 = 35 A", "215.3 → 45 × 1.25 + 35 = 91.25 A", "240.6(A) → 100 A"]
+    steps:
+      - { text: "Continuous: 10,800 VA ÷ 240 V = 45 A. Noncontinuous: 8,400 VA ÷ 240 V = 35 A." }
+      - { text: "45 × 1.25 = 56.25 A; + 35 A = 91.25 A.", ref: "215.3" }
+      - { text: "91.25 A exceeds 90 A → next standard rating is 100 A.", ref: "240.6(A)" }
+  trapIds: [continuous-load-125, next-size-up-rounding]
+  timeTargetSec: 135
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live. Recompute inputs are the amperes derived from the stated VA at 240 V."
+
+- id: q-ocp-m015
+  recompute: { calc: ocpdMixedLoad, inputs: { continuous: 70, noncontinuous: 20, standardize: 1 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you got 90, you summed 70 + 20 = 90 without the 125% factor — the continuous portion alone requires 87.5 A, and the total 107.5 A calls for a 110 A device."
+  skillIds: [nec.ocp.standard-ratings]
+  type: numeric
+  difficulty: 6
+  stem: "A 240 V single-phase feeder serves 16,800 VA of continuous parking-garage lighting and 4,800 VA of noncontinuous load. Per 215.3, using a standard rating, what minimum OCPD (A) is required?"
+  answer: { kind: numeric, value: 110, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Only the continuous amperes get the 125% factor, but that factor alone can move the answer a full standard size."
+    codePath: ["16,800 ÷ 240 = 70 A; 4,800 ÷ 240 = 20 A", "215.3 → 70 × 1.25 + 20 = 107.5 A", "240.6(A) → 110 A"]
+    steps:
+      - { text: "Continuous: 16,800 VA ÷ 240 V = 70 A. Noncontinuous: 4,800 VA ÷ 240 V = 20 A." }
+      - { text: "70 × 1.25 = 87.5 A; + 20 A = 107.5 A.", ref: "215.3" }
+      - { text: "107.5 A is not standard → next standard rating is 110 A.", ref: "240.6(A)" }
+  trapIds: [continuous-load-125, next-size-up-rounding]
+  timeTargetSec: 135
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live. Recompute inputs are the amperes derived from the stated VA at 240 V."
+
+# ---- Continuous load at 125% (210.20(A)/215.3) --------------------------------
+- id: q-ocp-m016
+  recompute: { calc: continuousLoad, inputs: { current: 56 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you answered 56, you skipped the 125% continuous factor; if you answered 87.5, you divided the VA by 120 V instead of the stated 240 V."
+  skillIds: [nec.ocp.standard-ratings]
+  type: numeric
+  difficulty: 5
+  stem: "A 240 V single-phase circuit supplies 13,440 VA of parking-lot lighting that operates continuously. Per 210.20(A), what minimum computed OCPD value (A) is required before selecting a standard rating?"
+  answer: { kind: numeric, value: 70, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Convert VA to amperes at the circuit voltage, then multiply by 125% for a continuous load."
+    codePath: ["13,440 ÷ 240 = 56 A", "210.20(A) → 56 × 1.25 = 70 A"]
+    steps:
+      - { text: "13,440 VA ÷ 240 V = 56 A of continuous load." }
+      - { text: "56 A × 1.25 = 70 A computed minimum.", ref: "210.20(A)" }
+      - { text: "70 A happens to be a standard 240.6(A) rating, so the device selection lands there too." }
+  trapIds: [continuous-load-125, unit-or-phase-confusion]
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live. Recompute input is the 56 A derived from 13,440 VA at 240 V."
+
+- id: q-ocp-m017
+  recompute: { calc: continuousLoad, inputs: { current: 36 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you answered 36, you treated the heat-trace as noncontinuous — a load expected to run 3 hours or more is continuous and takes the 125% factor."
+  skillIds: [nec.ocp.standard-ratings]
+  type: numeric
+  difficulty: 5
+  stem: "A pipe heat-tracing circuit draws 36 A and runs for well over 3 hours at a time, making it a continuous load. Per 210.20(A), what minimum computed OCPD value (A) is required before choosing a standard rating?"
+  answer: { kind: numeric, value: 45, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Continuous load × 125% sets the computed minimum for the overcurrent device."
+    codePath: ["210.20(A) → 36 × 1.25 = 45 A"]
+    steps:
+      - { text: "The 3-hour-or-more expectation makes this load continuous by definition.", ref: "Article 100" }
+      - { text: "36 A × 1.25 = 45 A computed minimum; 45 A is itself a standard rating.", ref: "210.20(A)" }
+  trapIds: [continuous-load-125]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- Standard-rating singles (240.6(A)) ---------------------------------------
+- id: q-ocp-m018
+  domainId: nec.overcurrent
+  skillIds: [nec.ocp.standard-ratings]
+  type: single
+  difficulty: 5
+  stem: "A journeyman is checking a panel schedule against 240.6(A). Which of these breaker ratings is NOT a standard overcurrent device rating?"
+  options:
+    - { id: a, text: "45 A", distractorRationale: "45 A appears in the 240.6(A) list — it is a standard rating." }
+    - { id: b, text: "55 A", isCorrect: true }
+    - { id: c, text: "70 A", distractorRationale: "70 A is a standard 240.6(A) rating." }
+    - { id: d, text: "110 A", distractorRationale: "110 A is a standard 240.6(A) rating — often forgotten because it sits between the familiar 100 A and 125 A sizes." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "The 240.6(A) list runs …45, 50, 60, 70… — there is no 55 A standard rating."
+    codePath: ["240.6(A)"]
+    steps:
+      - { text: "45, 70, and 110 A all appear in the 240.6(A) list.", ref: "240.6(A)" }
+      - { text: "Between 50 A and 60 A there is no entry — 55 A is not a standard rating.", ref: "240.6(A)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-ocp-m019
+  domainId: nec.overcurrent
+  skillIds: [nec.ocp.standard-ratings]
+  type: single
+  difficulty: 5
+  stem: "Which of the following IS a standard overcurrent device rating listed in 240.6(A)?"
+  options:
+    - { id: a, text: "95 A", distractorRationale: "The list jumps from 90 A to 100 A — 95 A is not a standard rating." }
+    - { id: b, text: "105 A", distractorRationale: "There is no 105 A entry; the list goes 100, 110, 125." }
+    - { id: c, text: "110 A", isCorrect: true }
+    - { id: d, text: "130 A", distractorRationale: "The list goes 125 A then 150 A — 130 A is not standard." }
+  answer: { kind: single, optionId: c }
+  solution:
+    keyIdea: "110 A is the often-overlooked standard rating between 100 A and 125 A."
+    codePath: ["240.6(A) → …90, 100, 110, 125, 150…"]
+    steps:
+      - { text: "Of the four choices, only 110 A appears in the 240.6(A) list.", ref: "240.6(A)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-ocp-m020
+  domainId: nec.overcurrent
+  commonMistake: "The minimum device must be a rating that actually exists in 240.6(A) — 95 A looks like a tidy round-up but isn't on the list."
+  skillIds: [nec.ocp.standard-ratings]
+  type: single
+  difficulty: 5
+  stem: "A feeder calculation comes out to a required minimum of 92 A. What is the smallest STANDARD overcurrent device rating that satisfies this requirement?"
+  options:
+    - { id: a, text: "90 A", distractorRationale: "90 A is standard but falls BELOW the 92 A requirement — the device must be at least the computed minimum." }
+    - { id: b, text: "95 A", distractorRationale: "95 A is not a 240.6(A) standard rating; the list jumps from 90 A to 100 A." }
+    - { id: c, text: "100 A", isCorrect: true }
+    - { id: d, text: "110 A", distractorRationale: "110 A satisfies the requirement but is not the SMALLEST standard rating that does — 100 A also works." }
+  answer: { kind: single, optionId: c }
+  solution:
+    keyIdea: "Move up the 240.6(A) list to the first rating at or above the computed minimum."
+    codePath: ["240.6(A) → …80, 90, 100, 110…"]
+    steps:
+      - { text: "92 A exceeds 90 A, and 95 A does not exist in the list.", ref: "240.6(A)" }
+      - { text: "The first standard rating at or above 92 A is 100 A.", ref: "240.6(A)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 80
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-ocp-m021
+  domainId: nec.overcurrent
+  commonMistake: "Above 800 A the 240.6(A) list thins out fast — the next entry after 800 A is 1000 A; there is no 900 A standard rating."
+  skillIds: [nec.ocp.standard-ratings]
+  type: single
+  difficulty: 6
+  stem: "An engineer's one-line shows a '900 A' service disconnect. Checking 240.6(A), which statement about that rating is correct?"
+  options:
+    - { id: a, text: "900 A is not a standard rating — the list jumps from 800 A to 1000 A", isCorrect: true }
+    - { id: b, text: "900 A is a standard rating, listed between 800 A and 1000 A", distractorRationale: "No 900 A entry exists in 240.6(A) — the list moves from 800 A directly to 1000 A." }
+    - { id: c, text: "Any multiple of 100 A above 600 A is automatically a standard rating", distractorRationale: "240.6(A) is a fixed list, not a formula — 700 and 800 A appear, but 900 A does not." }
+    - { id: d, text: "Standard ratings stop at 800 A, so nothing larger can be listed", distractorRationale: "The list continues above 800 A (1000, 1200, 1600 A and beyond) — it simply skips 900 A." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "240.6(A) is a fixed list; above 800 A the entries are 1000, 1200, 1600 A and up — 900 A is absent."
+    codePath: ["240.6(A) → …700, 800, 1000, 1200…"]
+    steps:
+      - { text: "Scan the list around the target: 800 A is followed directly by 1000 A.", ref: "240.6(A)" }
+      - { text: "A '900 A' device is nonstandard; the design must use a listed rating (or a device permitted by 240.6(B)/(C))." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- Tap-conductor basics (240.21(B)) — one condition each --------------------
+- id: q-ocp-m022
+  domainId: nec.overcurrent
+  commonMistake: "The 10-ft rule's field-installation floor is 1/10 of the feeder device rating — the 1/3 fraction belongs to the 25-ft rule."
+  skillIds: [nec.ocp.tap-rules]
+  type: single
+  difficulty: 5
+  stem: "A 6-ft field-installed tap is made from a feeder protected by a 200 A breaker to feed a small panelboard, and all other 10-ft-rule conditions are met. Ignoring the calculated load, what minimum tap-conductor ampacity does 240.21(B)(1) require relative to the feeder device?"
+  options:
+    - { id: a, text: "20 A — not less than 1/10 of the 200 A device", isCorrect: true }
+    - { id: b, text: "66.7 A — not less than 1/3 of the 200 A device", distractorRationale: "The 1/3 fraction is the 25-ft rule (240.21(B)(2)); a tap of 10 ft or less uses the 1/10 floor for field installations." }
+    - { id: c, text: "200 A — equal to the feeder device rating", distractorRationale: "Requiring full feeder ampacity would defeat the tap allowance — 240.21(B)(1) permits much smaller conductors under its conditions." }
+    - { id: d, text: "100 A — not less than 1/2 of the 200 A device", distractorRationale: "There is no 1/2 fraction in the 240.21(B) tap rules — the floors are 1/10 (10-ft rule, field-installed) and 1/3 (25-ft rule)." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Under the 10-ft rule, field-installed tap conductors need ampacity of at least 1/10 of the feeder OCPD rating (and never less than the load)."
+    codePath: ["240.21(B)(1) → 200 ÷ 10 = 20 A"]
+    steps:
+      - { text: "Tap length 6 ft ≤ 10 ft → 240.21(B)(1) applies.", ref: "240.21(B)(1)" }
+      - { text: "Field installation → ampacity ≥ 1/10 × 200 A = 20 A.", ref: "240.21(B)(1)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-ocp-m023
+  domainId: nec.overcurrent
+  commonMistake: "A tap between 10 ft and 25 ft is judged under the 25-ft rule's 1/3 floor — not rejected for exceeding 10 ft, and not given the 10-ft rule's 1/10 floor."
+  skillIds: [nec.ocp.tap-rules]
+  type: single
+  difficulty: 6
+  stem: "An 18-ft tap is made from a feeder protected at 300 A, with the tap conductors protected from physical damage. Under the 25-ft tap rule of 240.21(B)(2), what is the minimum ampacity required for the tap conductors?"
+  options:
+    - { id: a, text: "100 A — not less than 1/3 of the 300 A device", isCorrect: true }
+    - { id: b, text: "30 A — not less than 1/10 of the 300 A device", distractorRationale: "1/10 is the 10-ft rule floor; a tap longer than 10 ft must meet the 25-ft rule's 1/3 minimum." }
+    - { id: c, text: "300 A — equal to the feeder device rating", distractorRationale: "Full feeder ampacity is not required — the 25-ft rule permits 1/3 of the device rating under its conditions." }
+    - { id: d, text: "150 A — not less than 1/2 of the 300 A device", distractorRationale: "No 1/2 fraction exists in 240.21(B); the 25-ft rule floor is 1/3 of the protecting device's rating." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "The 25-ft rule sets a hard ampacity floor of 1/3 of the feeder overcurrent device rating."
+    codePath: ["240.21(B)(2) → 300 ÷ 3 = 100 A"]
+    steps:
+      - { text: "18 ft is over 10 ft but not over 25 ft → 240.21(B)(2) applies.", ref: "240.21(B)(2)" }
+      - { text: "Minimum tap ampacity = 1/3 × 300 A = 100 A.", ref: "240.21(B)(2)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-ocp-m024
+  domainId: nec.overcurrent
+  commonMistake: "The 25-ft rule doesn't let the tap dead-end unprotected — it must land on a single OCPD (breaker or fuse set) rated no more than the tap-conductor ampacity."
+  skillIds: [nec.ocp.tap-rules]
+  type: single
+  difficulty: 6
+  stem: "A 15-ft feeder tap qualifies for the 25-ft rule on length, ampacity, and physical protection. How must the tap conductors TERMINATE to satisfy 240.21(B)(2)?"
+  options:
+    - { id: a, text: "In a single circuit breaker or single set of fuses rated no more than the tap-conductor ampacity", isCorrect: true }
+    - { id: b, text: "Directly on the panelboard bus, with protection provided by the upstream feeder breaker", distractorRationale: "The upstream feeder device does not protect the smaller tap conductors — 240.21(B)(2) requires the tap itself to end in a single OCPD sized to the tap ampacity." }
+    - { id: c, text: "In any number of branch-circuit breakers whose ratings total no more than the tap ampacity", distractorRationale: "Summing multiple device ratings is not permitted — the rule requires a SINGLE circuit breaker or single set of fuses." }
+    - { id: d, text: "In a single OCPD rated at the next standard size above the tap ampacity", distractorRationale: "Rounding up is backwards here — the terminating device must be rated NO MORE than the tap-conductor ampacity." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "The 25-ft rule pairs its 1/3 ampacity floor with a mandatory termination in one OCPD rated no more than the tap ampacity."
+    codePath: ["240.21(B)(2)"]
+    steps:
+      - { text: "Length, 1/3 ampacity, and physical protection are only part of the rule.", ref: "240.21(B)(2)" }
+      - { text: "The tap must terminate in a single circuit breaker or single set of fuses that does not exceed the tap-conductor ampacity.", ref: "240.21(B)(2)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- 240.4(B) condition check: multioutlet receptacle circuit -----------------
+- id: q-ocp-m025
+  domainId: nec.overcurrent
+  commonMistake: "Next-size-up dies at condition (1): a branch circuit supplying multiple receptacles for cord-and-plug loads must round the OCPD DOWN, not up."
+  skillIds: [nec.ocp.next-size-up]
+  type: single
+  difficulty: 6
+  stem: "A branch circuit supplying several general-use receptacles for cord-and-plug-connected loads ends up with a conductor ampacity of 27 A after adjustment. What is the maximum overcurrent device rating permitted?"
+  options:
+    - { id: a, text: "25 A", isCorrect: true }
+    - { id: b, text: "30 A", distractorRationale: "30 A is the 240.4(B) next size up — but that allowance is unavailable on a multioutlet branch circuit supplying receptacles for cord-and-plug loads, per 240.4(B)(1)." }
+    - { id: c, text: "27 A", distractorRationale: "27 A is the conductor ampacity, not a 240.6(A) standard device rating — the OCPD must be a standard rating." }
+    - { id: d, text: "20 A", distractorRationale: "Dropping two sizes is over-strict — the largest standard rating not exceeding 27 A is 25 A, which is fully compliant." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "When 240.4(B)(1) blocks next-size-up, the device must be the largest standard rating that does NOT exceed the conductor ampacity."
+    codePath: ["240.4(B)(1) → allowance unavailable for multioutlet receptacle circuits", "240.6(A) → largest standard rating ≤ 27 A is 25 A"]
+    steps:
+      - { text: "The circuit supplies multiple receptacles for cord-and-plug loads → 240.4(B) cannot be used.", ref: "240.4(B)(1)" }
+      - { text: "The device must not exceed the 27 A ampacity: the largest standard rating at or below it is 25 A.", ref: "240.6(A)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."

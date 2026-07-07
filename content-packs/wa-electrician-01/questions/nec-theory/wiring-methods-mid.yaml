@@ -1,0 +1,619 @@
+# Wiring methods (Chapter 3) — MID tier (difficulty 5–6). 2020 NEC. All DRAFT.
+# Burial-depth numerics are calculator-backed (burialDepth / Table 300.5); support,
+# method-permission, and 300.4 items are single-choice. SME-verify before live.
+
+# ---- Table 300.5 burial depth — one stated fact picks the column (numeric) ---
+- id: q-wm-m001
+  recompute: { calc: burialDepth, inputs: { method: directBurial } }
+  domainId: nec.wiring-methods
+  commonMistake: "If you got 18 in, you used the nonmetallic-raceway column — this cable is buried directly in the earth with no raceway at all."
+  skillIds: [nec.wm.burial-depth]
+  type: numeric
+  difficulty: 5
+  stem: "A 240 V feeder to a detached garage is run in direct-buried UF cable across the back lawn of a dwelling (general location, no driveway or slab). Per Table 300.5, what minimum cover (inches) is required?"
+  answer: { kind: numeric, value: 24, unit: "in", tolerance: 0 }
+  solution:
+    keyIdea: "No raceway is used, so the direct-burial column of Table 300.5 governs."
+    codePath: ["Table 300.5, Column 1 (direct-buried cable) → 24 in"]
+    steps:
+      - { text: "Identify the wiring method: UF cable buried directly in earth — Column 1.", ref: "Table 300.5" }
+      - { text: "General location, no reduced-cover conditions (240 V rules out the residential GFCI column)." }
+      - { text: "Minimum cover = 24 in.", ref: "Table 300.5, Column 1" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m002
+  recompute: { calc: burialDepth, inputs: { method: rmcImc } }
+  domainId: nec.wiring-methods
+  commonMistake: "If you got 18 in, you treated IMC like a nonmetallic raceway — the metal-conduit column allows the shallowest cover, 6 in."
+  skillIds: [nec.wm.burial-depth]
+  type: numeric
+  difficulty: 5
+  stem: "A 208 V branch circuit crosses a landscaped bed at an office building in intermediate metal conduit (IMC), a general location with no vehicular traffic. Per Table 300.5, what minimum cover (inches) is required?"
+  answer: { kind: numeric, value: 6, unit: "in", tolerance: 0 }
+  solution:
+    keyIdea: "RMC and IMC share the metal-conduit column, which permits the shallowest general cover."
+    codePath: ["Table 300.5, Column 2 (RMC/IMC) → 6 in"]
+    steps:
+      - { text: "Identify the wiring method: IMC — the RMC/IMC column.", ref: "Table 300.5" }
+      - { text: "General location, no special rows (no driveway, street, or slab)." }
+      - { text: "Minimum cover = 6 in.", ref: "Table 300.5, Column 2" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m003
+  recompute: { calc: burialDepth, inputs: { method: nonmetallicRaceway } }
+  domainId: nec.wiring-methods
+  commonMistake: "If you got 12 in, you reached for the reduced-cover column — it is limited to 120 V or less, and this circuit is 240 V."
+  skillIds: [nec.wm.burial-depth]
+  type: numeric
+  difficulty: 5
+  stem: "A 240 V, 30 A branch circuit to a dwelling's hot tub equipment runs in Schedule 40 PVC under a planting bed (general location). Per Table 300.5, what minimum cover (inches) is required?"
+  answer: { kind: numeric, value: 18, unit: "in", tolerance: 0 }
+  solution:
+    keyIdea: "PVC takes the nonmetallic-raceway column; 240 V disqualifies the reduced residential-GFCI column."
+    codePath: ["Table 300.5, Column 4 → not available (240 V)", "Table 300.5, Column 3 (nonmetallic raceway) → 18 in"]
+    steps:
+      - { text: "The reduced-cover column requires 120 V or less — a 240 V circuit fails that condition.", ref: "Table 300.5" }
+      - { text: "Schedule 40 PVC is a nonmetallic raceway → Column 3." }
+      - { text: "Minimum cover = 18 in.", ref: "Table 300.5, Column 3" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m004
+  recompute: { calc: burialDepth, inputs: { method: residentialGFCI } }
+  domainId: nec.wiring-methods
+  commonMistake: "If you got 24 in, you stopped at the direct-burial column without testing the circuit against the reduced-cover column — this one meets every condition."
+  skillIds: [nec.wm.burial-depth]
+  type: numeric
+  difficulty: 6
+  stem: "A 120 V, 15 A branch circuit to a dwelling's yard receptacle is run in direct-buried UF cable across the lawn. The circuit is protected by a GFCI breaker at the panel. Per Table 300.5, what minimum cover (inches) is permitted?"
+  answer: { kind: numeric, value: 12, unit: "in", tolerance: 0 }
+  solution:
+    keyIdea: "Residential branch circuit, 120 V, 15 A OCPD, GFCI protected — all reduced-cover conditions are met, so 12 in governs."
+    codePath: ["Table 300.5, Column 4 conditions → met", "Table 300.5, Column 4 → 12 in"]
+    steps:
+      - { text: "Test the reduced-cover column: residential, 120 V or less, 20 A or less, GFCI protection — a 15 A GFCI circuit at a dwelling satisfies all of them.", ref: "Table 300.5" }
+      - { text: "The qualifying circuit takes the 12 in reduced cover even though direct-buried cable would otherwise need 24 in." }
+      - { text: "Minimum cover = 12 in.", ref: "Table 300.5, Column 4" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 110
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m005
+  recompute: { calc: burialDepth, inputs: { method: directBurial } }
+  domainId: nec.wiring-methods
+  commonMistake: "If you got 12 in, you missed the occupancy condition — the reduced-cover column applies only to RESIDENTIAL branch circuits, and this is a retail store."
+  skillIds: [nec.wm.burial-depth]
+  type: numeric
+  difficulty: 6
+  stem: "A retail store adds a 120 V, 20 A GFCI-protected branch circuit to a lamp post, direct-buried in UF cable across the store's lawn (general location, no vehicles). Per Table 300.5, what minimum cover (inches) is required?"
+  answer: { kind: numeric, value: 24, unit: "in", tolerance: 0 }
+  solution:
+    keyIdea: "Voltage, OCPD, and GFCI all qualify, but the reduced-cover column is limited to residential branch circuits — a commercial occupancy falls back to the wiring-method column."
+    codePath: ["Table 300.5, Column 4 → fails (not residential)", "Table 300.5, Column 1 (direct burial) → 24 in"]
+    steps:
+      - { text: "Check the reduced-cover column: 120 V, 20 A, GFCI pass — but the circuit must serve a residential occupancy, and this is a retail store.", ref: "Table 300.5" }
+      - { text: "With the reduction unavailable, use the wiring-method column: direct-buried cable." }
+      - { text: "Minimum cover = 24 in.", ref: "Table 300.5, Column 1" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- NM cable support and securing (334.30) — single-rule scenarios ----------
+- id: q-wm-m006
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.support]
+  type: single
+  difficulty: 5
+  stem: "In new construction, NM cable is run along the sides of exposed joists, stapled every 4 ft, with the last staple 10 in from the metal box (with clamps) it enters. Per 334.30, this run is:"
+  options:
+    - { id: a, text: "Compliant — the intervals are within 4½ ft and the cable is secured within 12 in of the box", isCorrect: true }
+    - { id: b, text: "A violation — NM must be stapled every 3 ft", distractorRationale: "3 ft is not the NM interval; 334.30 allows intervals up to 4½ ft, so 4 ft spacing passes." }
+    - { id: c, text: "A violation — the last staple must be within 8 in of the box", distractorRationale: "The 8 in distance applies only at single-gang nonmetallic boxes WITHOUT clamps (314.17(C)); a box with clamps uses the general 12 in rule." }
+    - { id: d, text: "Compliant only if the staples are replaced with listed cable ties", distractorRationale: "Staples designed for the cable are an approved securing means; nothing in 334.30 prefers cable ties." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "334.30 sets two numbers: intervals not exceeding 4½ ft, and securing within 12 in of every box or fitting — this run meets both."
+    codePath: ["334.30 → intervals ≤ 4½ ft AND secured within 12 in of the box"]
+    steps:
+      - { text: "Interval check: staples every 4 ft ≤ 4½ ft — passes.", ref: "334.30" }
+      - { text: "Box check: last staple 10 in from the box ≤ 12 in — passes." }
+      - { text: "Both requirements met, so the run is compliant." }
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m007
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.support]
+  type: single
+  difficulty: 5
+  stem: "NM cable drops down a wall to a metal device box that has internal cable clamps. The nearest staple is 20 in above the box; the rest of the run is stapled every 4 ft. What does 334.30 say about this installation?"
+  options:
+    - { id: a, text: "Compliant — the 4 ft intervals satisfy the support rule", distractorRationale: "The interval rule passes, but securing within 12 in of every box is a separate requirement that the 20 in gap fails." }
+    - { id: b, text: "Violation — the cable must be secured within 12 in of the box", isCorrect: true }
+    - { id: c, text: "Violation — the cable must be secured within 3 ft of the box", distractorRationale: "3 ft is the raceway securing distance for EMT and PVC (358.30/352.30); NM cable uses 12 in." }
+    - { id: d, text: "Compliant — the box's internal clamps count as the securing point", distractorRationale: "The clamp grips the cable at the box, but 334.30 still requires an external securing point within 12 in of the box." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "NM must be secured within 12 in of every box, cabinet, or fitting; 20 in is a violation regardless of the field intervals."
+    codePath: ["334.30 → secured within 12 in of the box"]
+    steps:
+      - { text: "Field intervals of 4 ft satisfy the 4½ ft rule.", ref: "334.30" }
+      - { text: "At the box, the securing point must be within 12 in — 20 in fails." }
+      - { text: "Fix: add a staple within 12 in of the box." }
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m008
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.support]
+  type: single
+  difficulty: 5
+  stem: "Across an unfinished basement ceiling, NM cable is stapled to the bottom of a running board every 6 ft, and within 12 in of each box. Which statement about 334.30 is correct?"
+  options:
+    - { id: a, text: "Compliant — 6 ft is within the NM support limit", distractorRationale: "The NM interval limit is 4½ ft, not 6 ft; 6 ft is a PVC value (2½–3 in. trade sizes)." }
+    - { id: b, text: "Violation — NM must be secured at intervals not exceeding 4½ ft", isCorrect: true }
+    - { id: c, text: "Violation — NM may never be run across a basement ceiling", distractorRationale: "NM is permitted in dwellings' unfinished basements when properly supported and protected; the location is not the defect." }
+    - { id: d, text: "Compliant — securing near the boxes waives the interval requirement", distractorRationale: "The within-12-in-of-box rule and the 4½ ft interval rule are cumulative; meeting one never waives the other." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "334.30 caps NM securing intervals at 4½ ft; a uniform 6 ft spacing violates the rule even though the box securing is correct."
+    codePath: ["334.30 → intervals ≤ 4½ ft"]
+    steps:
+      - { text: "Box securing: within 12 in — passes.", ref: "334.30" }
+      - { text: "Interval: 6 ft exceeds the 4½ ft maximum — violation." }
+      - { text: "Fix: add staples so no interval exceeds 4½ ft." }
+  timeTargetSec: 85
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m009
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.support]
+  type: single
+  difficulty: 6
+  stem: "A horizontal run of NM cable passes through bored holes in wood studs spaced 16 in on center, with no staples anywhere in the field of the run (the cable is properly secured near its boxes). How does 334.30 treat the field of this run?"
+  options:
+    - { id: a, text: "It violates the 4½ ft rule — staples are required between the studs", distractorRationale: "334.30 states that cable run through holes in framing members is considered supported and secured; no field staples are needed." }
+    - { id: b, text: "It is compliant — cable run through framing holes is considered supported and secured", isCorrect: true }
+    - { id: c, text: "It is compliant only if a running board is added below the cable", distractorRationale: "Running boards are a technique for exposed work on surfaces, not a condition for framing-hole support." }
+    - { id: d, text: "It violates 300.4 — NM may not pass through bored holes", distractorRationale: "Bored holes are the standard NM route; 300.4 only adds edge-distance or plate protection, not a prohibition." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "334.30 expressly counts passage through framing holes as both support and securing, so a hole every 16 in more than satisfies the 4½ ft interval."
+    codePath: ["334.30 → cable through framing holes = supported and secured", "Holes every 16 in ≪ 4½ ft interval"]
+    steps:
+      - { text: "The support interval rule (4½ ft) applies to the field of the run.", ref: "334.30" }
+      - { text: "Cable installed through bored holes in framing is deemed supported and secured — the studs themselves are the support means." }
+      - { text: "Securing within 12 in of each box remains a separate requirement, which this run meets." }
+  timeTargetSec: 100
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m010
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.support, nec.wm.method-rules]
+  type: single
+  difficulty: 6
+  stem: "To fit a tight stud bay, an installer turns two-conductor (flat) NM cable on its edge and staples it that way every 4 ft. Per 334.30, this practice is:"
+  options:
+    - { id: a, text: "Permitted — orientation is not regulated as long as the intervals are met", distractorRationale: "334.30 regulates more than spacing: flat cables shall not be stapled on edge, because the staple crushes the conductors." }
+    - { id: b, text: "A violation — flat NM cables shall not be stapled on edge", isCorrect: true }
+    - { id: c, text: "Permitted if the staples are driven only hand-tight", distractorRationale: "Staple tension is not the issue; the on-edge orientation itself is prohibited for flat cables." }
+    - { id: d, text: "A violation — NM may only be secured with cable ties, never staples", distractorRationale: "Staples designed for the purpose are a standard securing means; the defect is the on-edge orientation, not the staple." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "334.30 prohibits stapling flat NM cables on edge — the fastener bears on the conductor edges instead of the broad face."
+    codePath: ["334.30 → flat cables shall not be stapled on edge"]
+    steps:
+      - { text: "The 4 ft intervals satisfy the spacing rule.", ref: "334.30" }
+      - { text: "But 334.30 separately prohibits stapling flat cables on edge — the orientation is the violation." }
+      - { text: "Fix: staple the cable on its flat face, or use listed stackers/straps that support it without deformation." }
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- EMT support (358.30) -----------------------------------------------------
+- id: q-wm-m011
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.support]
+  type: single
+  difficulty: 5
+  stem: "An exposed EMT run across a shop ceiling is strapped every 8 ft, with the first strap 2 ft from each box it enters. Per 358.30(A), this installation is:"
+  options:
+    - { id: a, text: "Compliant — intervals are within 10 ft and each box has a strap within 3 ft", isCorrect: true }
+    - { id: b, text: "A violation — EMT must be strapped every 4½ ft", distractorRationale: "4½ ft is the NM/AC cable interval; EMT's raceway interval is 10 ft." }
+    - { id: c, text: "A violation — the first strap must be within 12 in of each box", distractorRationale: "12 in is the cable securing distance at boxes; EMT uses 3 ft (358.30(A))." }
+    - { id: d, text: "Compliant only if the straps are two-hole type", distractorRationale: "358.30(A) requires secure fastening at the stated spacings; it does not dictate one-hole versus two-hole straps." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "358.30(A) is two tests — intervals not exceeding 10 ft and a fastening within 3 ft of each box or termination — and this run passes both."
+    codePath: ["358.30(A) → ≤ 10 ft intervals AND within 3 ft of each box"]
+    steps:
+      - { text: "Interval check: 8 ft ≤ 10 ft — passes.", ref: "358.30(A)" }
+      - { text: "Termination check: 2 ft ≤ 3 ft — passes." }
+      - { text: "Both clauses satisfied — compliant." }
+  timeTargetSec: 85
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m012
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.support]
+  type: single
+  difficulty: 6
+  stem: "A 42 ft exposed EMT run connects two junction boxes across a warehouse wall. The installer places a strap 3 ft from each box and wants to space the remaining field straps as far apart as 358.30(A) allows. What is the maximum spacing for those field straps?"
+  options:
+    - { id: a, text: "10 ft", isCorrect: true }
+    - { id: b, text: "4½ ft", distractorRationale: "4½ ft is the securing interval for NM and AC CABLE; EMT is a raceway with a 10 ft interval." }
+    - { id: c, text: "6 ft", distractorRationale: "6 ft is the Table 352.30 spacing for 2½–3 in. PVC, not an EMT value." }
+    - { id: d, text: "3 ft", distractorRationale: "3 ft is the required distance from each BOX, not the maximum interval along the run." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "358.30(A): once each box has a fastening within 3 ft, the run may be strapped at intervals not exceeding 10 ft."
+    codePath: ["358.30(A) → within 3 ft of each box, then intervals ≤ 10 ft"]
+    steps:
+      - { text: "The within-3-ft-of-box requirement is already met at both ends.", ref: "358.30(A)" }
+      - { text: "Between those points, EMT must be securely fastened at least every 10 ft." }
+      - { text: "Maximum field spacing = 10 ft." }
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- PVC support spacing (Table 352.30) — one stated size ---------------------
+- id: q-wm-m013
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.support]
+  type: single
+  difficulty: 5
+  stem: "An exposed run of ¾ in. trade size Schedule 40 PVC crosses a pump-house wall. Per Table 352.30, its supports may be spaced at intervals not exceeding:"
+  options:
+    - { id: a, text: "3 ft", isCorrect: true }
+    - { id: b, text: "5 ft", distractorRationale: "5 ft is the Table 352.30 row for 1¼–2 in. trade sizes; ¾ in. falls in the ½–1 in. row." }
+    - { id: c, text: "10 ft", distractorRationale: "10 ft is the EMT interval (358.30(A)); PVC is far more flexible and needs closer support." }
+    - { id: d, text: "4½ ft", distractorRationale: "4½ ft is the NM/AC cable securing interval, not a Table 352.30 value." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Table 352.30 scales with trade size; the ½–1 in. row limits support spacing to 3 ft."
+    codePath: ["Table 352.30, ½–1 in. row → 3 ft"]
+    steps:
+      - { text: "Enter Table 352.30 with the trade size: ¾ in. falls in the ½–1 in. row.", ref: "Table 352.30" }
+      - { text: "Maximum support spacing = 3 ft (also secure within 3 ft of each box or termination)." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 80
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m014
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.support]
+  type: single
+  difficulty: 6
+  stem: "A 1½ in. trade size rigid PVC conduit runs exposed along a mezzanine. The foreman tells the apprentice to strap it 'every 3 ft like all PVC.' Per Table 352.30, what is the actual maximum support spacing for this size?"
+  options:
+    - { id: a, text: "3 ft", distractorRationale: "3 ft is only the ½–1 in. row; Table 352.30 gives larger sizes longer spacing, and 1½ in. is in the 1¼–2 in. row." }
+    - { id: b, text: "5 ft", isCorrect: true }
+    - { id: c, text: "6 ft", distractorRationale: "6 ft belongs to the 2½–3 in. row — one row too high for a 1½ in. conduit." }
+    - { id: d, text: "10 ft", distractorRationale: "10 ft is the EMT interval; no rigid PVC size in Table 352.30 is permitted 10 ft spacing." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "There is no universal PVC spacing — Table 352.30 keys support to trade size, and 1¼–2 in. sizes get 5 ft."
+    codePath: ["Table 352.30, 1¼–2 in. row → 5 ft"]
+    steps:
+      - { text: "Find the right row: 1½ in. falls in the 1¼–2 in. band.", ref: "Table 352.30" }
+      - { text: "Maximum support spacing = 5 ft; the foreman's 3 ft is stricter than required but the Code maximum is 5 ft." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m015
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.support]
+  type: single
+  difficulty: 6
+  stem: "A 3 in. trade size Schedule 40 PVC feeder conduit is run exposed along a parking-garage ceiling. Per Table 352.30, its maximum support spacing is:"
+  options:
+    - { id: a, text: "6 ft", isCorrect: true }
+    - { id: b, text: "3 ft", distractorRationale: "3 ft is the ½–1 in. row; the table allows stiffer, larger sizes longer spacing." }
+    - { id: c, text: "5 ft", distractorRationale: "5 ft is the 1¼–2 in. row — a 3 in. conduit is in the next band up (2½–3 in.), which allows 6 ft." }
+    - { id: d, text: "10 ft", distractorRationale: "10 ft is the EMT interval; PVC never reaches 10 ft in Table 352.30 at these sizes." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Table 352.30's 2½–3 in. row allows 6 ft support spacing — larger PVC is stiffer and earns wider intervals."
+    codePath: ["Table 352.30, 2½–3 in. row → 6 ft"]
+    steps:
+      - { text: "Enter the table at 3 in.: the 2½–3 in. row applies.", ref: "Table 352.30" }
+      - { text: "Maximum support spacing = 6 ft, plus securing within 3 ft of each box or termination." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 85
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- Method permission — one stated condition ---------------------------------
+- id: q-wm-m016
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 6
+  stem: "A branch circuit must run exposed along the exterior wall of a building where it is exposed to rain (a wet location, not subject to severe physical damage). May EMT be used?"
+  options:
+    - { id: a, text: "Yes — EMT is permitted in wet locations, using fittings suitable for wet locations and wet-rated conductors", isCorrect: true }
+    - { id: b, text: "No — EMT is limited to dry indoor locations", distractorRationale: "358.10 permits EMT in wet locations; it is severe physical damage and certain corrosive conditions that restrict it, not rain." }
+    - { id: c, text: "Yes, and ordinary setscrew fittings and THHN conductors are fine as-is", distractorRationale: "The method is permitted, but the installation must use fittings suitable for wet locations and wet-rated insulation (e.g., THWN) — the raceway interior is a wet location per 300.9." }
+    - { id: d, text: "No — only rigid PVC may be installed outdoors", distractorRationale: "Several methods are permitted outdoors (EMT, RMC, IMC, PVC, and others); PVC has no outdoor monopoly." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "358.10 permits EMT in wet locations; the conditions travel with the location — raintight/wet-location fittings and wet-rated conductors inside."
+    codePath: ["358.10 → EMT permitted in wet locations", "300.9 → raceway interior in a wet location is wet", "310.10(C) → wet-rated insulation"]
+    steps:
+      - { text: "Method permission: EMT may be installed in wet locations (protected from corrosion as required).", ref: "358.10" }
+      - { text: "The raceway interior on the rain-exposed wall is itself a wet location, so conductors must be wet-rated.", ref: "300.9" }
+      - { text: "Use fittings suitable for wet locations at every coupling and connector." }
+  timeTargetSec: 110
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m017
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 5
+  stem: "A homeowner asks for NM-B cable to be run exposed along an outdoor fence line to a shed light, arguing it is 'just low along the fence.' Per Article 334, this is:"
+  options:
+    - { id: a, text: "Not permitted — outdoors exposed to weather is a wet location, and NM is not permitted in wet or damp locations", isCorrect: true }
+    - { id: b, text: "Permitted if the cable is kept at least 8 ft above grade", distractorRationale: "Height changes physical-damage exposure, not the wet-location classification — NM stays prohibited outdoors either way." }
+    - { id: c, text: "Permitted because NM-B has a moisture-resistant jacket", distractorRationale: "The PVC jacket does not make NM wet-rated; 334.12 prohibits the cable type in wet or damp locations regardless of jacket." }
+    - { id: d, text: "Not permitted — NM may never leave the interior of the panel's own room", distractorRationale: "NM can run throughout permitted dry locations of a dwelling; the restriction here is the wet outdoor location, not distance from the panel." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "One condition decides it: outdoors exposed to weather is a wet location, and 334.12 puts wet and damp locations on NM's prohibited list."
+    codePath: ["Outdoor exposure → wet location", "334.12 → NM not permitted in wet or damp locations"]
+    steps:
+      - { text: "Classify the location: exposed to weather along a fence = wet location." }
+      - { text: "NM cable is limited to dry locations; wet or damp locations are prohibited uses.", ref: "334.12" }
+      - { text: "Compliant alternatives: UF cable or wet-rated conductors in a raceway suitable for the location." }
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m018
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 5
+  stem: "A raceway must run exposed on the wet-side wall of a dairy wash-down room (a wet location, protected from physical damage). May Schedule 40 rigid PVC be used?"
+  options:
+    - { id: a, text: "Yes — rigid PVC is permitted in wet locations, with wet-rated conductors inside", isCorrect: true }
+    - { id: b, text: "No — PVC is limited to underground use", distractorRationale: "352.10 permits rigid PVC in many above-ground uses, including wet and corrosive locations; underground is only one of them." }
+    - { id: c, text: "Yes, but only if it is Schedule 80", distractorRationale: "Schedule 80 is required where the conduit is subject to physical damage — this wall is protected, so Schedule 40 is fine." }
+    - { id: d, text: "No — nonmetallic raceways cannot be used where water contacts the raceway", distractorRationale: "The opposite is true: PVC is corrosion-immune and expressly suited to wet locations; the conductors just have to be wet-rated." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "352.10 permits rigid PVC in wet locations; since the raceway interior is wet, the conductors must be wet-rated."
+    codePath: ["352.10 → PVC permitted in wet locations", "300.9/310.10(C) → wet-rated conductors inside"]
+    steps:
+      - { text: "Method permission: rigid PVC is identified for wet and corrosive locations.", ref: "352.10" }
+      - { text: "Protected from damage, Schedule 40 suffices; Schedule 80 is only for damage-prone areas." }
+      - { text: "Use wet-rated insulation (THWN, XHHW) inside the raceway.", ref: "310.10(C)" }
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m019
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 5
+  stem: "Conductors must be pulled through a raceway installed in a wet location. Which insulation type listed below is permitted there?"
+  options:
+    - { id: a, text: "THWN", isCorrect: true }
+    - { id: b, text: "THHN (not dual-rated)", distractorRationale: "Plain THHN is listed for dry and damp locations only; the W in a wet rating is exactly what it lacks." }
+    - { id: c, text: "Any 90°C conductor, since heat rating covers moisture", distractorRationale: "Temperature rating and moisture rating are independent listings — a 90°C dry-location conductor is still prohibited in wet locations." }
+    - { id: d, text: "Any conductor, provided the raceway joints are sealed watertight", distractorRationale: "The Code presumes water enters raceways in wet locations; sealing does not reclassify the interior, so the insulation itself must be wet-rated." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Wet locations require insulation listed for wet use — THWN, XHHW, or dual-rated THHN/THWN; the W is the wet listing."
+    codePath: ["310.10(C) → wet locations require listed wet-location insulation"]
+    steps:
+      - { text: "Classify: the raceway is in a wet location, so its interior is wet." }
+      - { text: "Only insulation listed for wet locations is permitted — THWN qualifies; plain THHN does not.", ref: "310.10(C)" }
+  timeTargetSec: 80
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m020
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 6
+  stem: "An installer wants to reuse leftover Type AC (armored) cable for an exposed run down an exterior wall that is exposed to rain. Per Article 320, this use is:"
+  options:
+    - { id: a, text: "Not permitted — Type AC is prohibited in damp or wet locations", isCorrect: true }
+    - { id: b, text: "Permitted — the interlocked steel armor is weatherproof", distractorRationale: "The spiral armor is not a watertight jacket; water tracks through it, which is why 320.12 prohibits AC in damp or wet locations." }
+    - { id: c, text: "Permitted if the run is GFCI protected", distractorRationale: "GFCI protection addresses shock, not the cable's listing — it cannot make a dry-location cable legal in a wet location." }
+    - { id: d, text: "Not permitted — Type AC may only be installed in raceways", distractorRationale: "AC cable is routinely installed exposed or fished without raceways in permitted dry locations; the defect here is the wet location." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "One condition decides it: the rain-exposed wall is a wet location, and 320.12 prohibits Type AC in damp or wet locations."
+    codePath: ["Exterior rain exposure → wet location", "320.12 → AC cable not permitted in damp or wet locations"]
+    steps:
+      - { text: "Classify the location: exposed to rain = wet." }
+      - { text: "Type AC's prohibited uses include damp or wet locations.", ref: "320.12" }
+      - { text: "Use a wet-location method instead (e.g., wet-rated conductors in EMT/PVC, or a cable listed for the location)." }
+  timeTargetSec: 95
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- 300.4 protection at framing — one framing detail --------------------------
+- id: q-wm-m021
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 5
+  stem: "NM cable passes through a bored hole in a wood stud, and the edge of the hole is 1 in. from the nearest edge of the stud. Per 300.4(A)(1), what is required?"
+  options:
+    - { id: a, text: "A steel plate at least 1/16 in. thick protecting the cable at that stud", isCorrect: true }
+    - { id: b, text: "Nothing — 1 in. of edge distance is sufficient", distractorRationale: "The required edge distance is 1¼ in.; at 1 in. the cable is within nail range and must be plated." }
+    - { id: c, text: "The hole must be re-bored dead center and the cable re-pulled", distractorRationale: "Re-boring is one cure, but the Code's stated remedy is a 1/16 in. steel plate (or bushing) — nothing requires abandoning the existing hole." }
+    - { id: d, text: "A listed grommet in the hole", distractorRationale: "Grommets are the METAL-framing remedy (300.4(B)); wood framing with a short edge distance takes a steel plate." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "300.4(A)(1): keep the hole edge at least 1¼ in. from the stud edge, or protect the cable with a steel plate at least 1/16 in. thick."
+    codePath: ["300.4(A)(1) → edge distance < 1¼ in. → 1/16 in. steel plate required"]
+    steps:
+      - { text: "Measure the edge distance: 1 in. < 1¼ in. — the cable is within reach of drywall screws and trim nails.", ref: "300.4(A)(1)" }
+      - { text: "Remedy: a steel plate or bushing at least 1/16 in. thick, covering the area of the wiring, at that framing member." }
+  timeTargetSec: 85
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m022
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 6
+  stem: "An inspector checks a bored hole in a 2×4 wood stud carrying NM cable and measures exactly 1¼ in. from the edge of the hole to each face of the stud. Per 300.4(A)(1), what protection is required at this stud?"
+  options:
+    - { id: a, text: "None — the 1¼ in. edge distance itself satisfies the rule", isCorrect: true }
+    - { id: b, text: "A 1/16 in. steel plate on each face of the stud", distractorRationale: "Plates are required only where the edge distance is LESS than 1¼ in.; meeting the setback is the alternative to plating." }
+    - { id: c, text: "A listed bushing in the bored hole", distractorRationale: "Bushings/grommets are the metal-stud remedy of 300.4(B); a compliant wood-stud hole needs nothing added." }
+    - { id: d, text: "The cable must be sleeved in EMT through the hole", distractorRationale: "No raceway sleeve is required through wood framing — the setback (or a plate) is the entire requirement." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "300.4(A)(1) is an either/or: at least 1¼ in. of edge distance OR a 1/16 in. steel plate. Exactly 1¼ in. meets the setback, so no plate is needed."
+    codePath: ["300.4(A)(1) → edge distance ≥ 1¼ in. → no additional protection"]
+    steps:
+      - { text: "The rule requires the hole edge to be not less than 1¼ in. from the nearest edge of the wood member.", ref: "300.4(A)(1)" }
+      - { text: "Exactly 1¼ in. satisfies 'not less than' — the setback alone protects the cable, and no plate is required." }
+  timeTargetSec: 90
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m023
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 6
+  stem: "Rather than bore holes, a framer cuts a shallow notch across the face of several wood studs and the electrician lays NM cable in the notches. Per 300.4(A)(2), what does laying cable in a notch require?"
+  options:
+    - { id: a, text: "A steel plate at least 1/16 in. thick covering the cable at each notch, before the wall finish is applied", isCorrect: true }
+    - { id: b, text: "Nothing, provided the notch keeps the cable 1¼ in. from the stud edge", distractorRationale: "A notch opens onto the stud face, so the 1¼ in. setback logic of bored holes cannot be met — notched cable must be plated." }
+    - { id: c, text: "Notching is prohibited; the cable must be re-routed through bored holes", distractorRationale: "300.4(A)(2) permits cables laid in notches when protected by a 1/16 in. steel plate (framing rules in building codes still limit notch size)." }
+    - { id: d, text: "A listed grommet lining each notch", distractorRationale: "Grommets protect cable at METAL-framing openings (300.4(B)); notched wood framing takes a steel plate." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "300.4(A)(2): cable laid in notches in wood studs must be protected by a steel plate at least 1/16 in. thick installed before the finish is applied."
+    codePath: ["300.4(A)(2) → notched framing → 1/16 in. steel plate over the cable"]
+    steps:
+      - { text: "A notch exposes the cable at the stud face where drywall screws and trim nails land.", ref: "300.4(A)(2)" }
+      - { text: "Protection: a steel plate at least 1/16 in. thick covering the wiring at each notch, installed before the building finish." }
+  timeTargetSec: 95
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+- id: q-wm-m024
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.method-rules]
+  type: single
+  difficulty: 5
+  stem: "An apprentice must plate a stud where an NM cable's bored hole is too close to the edge. Per 300.4(A)(1), the protective steel plate must be at least how thick?"
+  options:
+    - { id: a, text: "1/16 in.", isCorrect: true }
+    - { id: b, text: "1/32 in.", distractorRationale: "1/32 in. is thinner than the Code minimum; a nail can drive through it — 300.4 requires at least 1/16 in." }
+    - { id: c, text: "1/8 in.", distractorRationale: "1/8 in. certainly works, but the stated MINIMUM in 300.4(A)(1) is 1/16 in." }
+    - { id: d, text: "1/4 in.", distractorRationale: "1/4 in. plate is far beyond the requirement; the Code minimum is 1/16 in." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "The 300.4 steel plate (or bushing) must be at least 1/16 in. thick and cover the area of the wiring."
+    codePath: ["300.4(A)(1) → steel plate ≥ 1/16 in. thick"]
+    steps:
+      - { text: "Where the 1¼ in. edge distance cannot be met, the cable is protected by a steel plate or bushing.", ref: "300.4(A)(1)" }
+      - { text: "Minimum plate thickness = 1/16 in., appropriate length and width to cover the wiring area." }
+  timeTargetSec: 75
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
+
+# ---- Table 300.5 mechanics ------------------------------------------------------
+- id: q-wm-m025
+  domainId: nec.wiring-methods
+  skillIds: [nec.wm.burial-depth]
+  type: single
+  difficulty: 6
+  stem: "A crew buries a 2 in. PVC conduit requiring 18 in. of cover. Per the definition used by Table 300.5, from which points is that 18 in. measured?"
+  options:
+    - { id: a, text: "From the top surface of the conduit to the finished grade surface", isCorrect: true }
+    - { id: b, text: "From the bottom of the trench to the finished grade surface", distractorRationale: "Measuring from the trench bottom would count the conduit's own diameter as cover; cover starts at the TOP of the buried raceway." }
+    - { id: c, text: "From the centerline of the conduit to the finished grade surface", distractorRationale: "Table 300.5's note defines cover from the top surface of the wiring method, not its centerline." }
+    - { id: d, text: "From the top of the conduit to the bottom of the topsoil layer", distractorRationale: "Cover runs all the way to the top surface of finished grade (or concrete, or similar cover), not to a soil-layer boundary." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "'Cover' in Table 300.5 is the shortest distance between the top surface of the buried cable/raceway and the top surface of finished grade."
+    codePath: ["Table 300.5, Note 1 (definition of cover) → top of raceway to finished grade"]
+    steps:
+      - { text: "Cover is defined as the shortest distance from the top surface of the buried wiring method to the finished grade (or concrete or similar) above it.", ref: "Table 300.5, Note 1" }
+      - { text: "So an 18 in. cover requirement for 2 in. conduit needs a trench at least 20 in. deep to the trench bottom." }
+  timeTargetSec: 95
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft mid-tier question; SME-verify before live."
