@@ -175,8 +175,8 @@ function checkHygiene(q: Question, err: (c: string, m: string) => void) {
   if (!q.stem || q.stem.trim() === "") err("hy.stem", `Question "${id}" has an empty stem.`);
   if (!Array.isArray(q.skillIds) || q.skillIds.length === 0)
     err("hy.skills", `Question "${id}" must list at least one skillId.`);
-  if (typeof q.difficulty !== "number" || q.difficulty < 1 || q.difficulty > 5)
-    err("hy.difficulty", `Question "${id}" difficulty must be 1..5 (got ${q.difficulty}).`);
+  if (typeof q.difficulty !== "number" || q.difficulty < 1 || q.difficulty > 10)
+    err("hy.difficulty", `Question "${id}" difficulty must be 1..10 (got ${q.difficulty}).`);
   if (!Array.isArray(q.modes) || q.modes.length === 0)
     err("hy.modes", `Question "${id}" must list at least one mode.`);
   if (typeof q.timeTargetSec !== "number" || q.timeTargetSec <= 0)

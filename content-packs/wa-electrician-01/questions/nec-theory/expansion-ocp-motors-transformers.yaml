@@ -51,7 +51,7 @@
   commonMistake: "If you got 64, you forgot to multiply the continuous load by 125%."
   skillIds: [nec.ocp.next-size-up]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "A 64 A continuous load terminates on 75°C lugs. What minimum standard overcurrent device rating (A) is required at 125% of the continuous load?"
   answer: { kind: numeric, value: 80, unit: "A", tolerance: 0 }
   solution:
@@ -117,7 +117,7 @@
   commonMistake: "If you got 44, you forgot to take 125% of the largest motor before adding the others."
   skillIds: [nec.motor.conductor-125]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "A feeder supplies two three-phase motors with table FLCs of 28 A and 16 A. Per 430.24, the feeder conductor ampacity must be at least 125% of the largest motor FLC plus the sum of the other FLCs. What minimum feeder ampacity (A) is required?"
   answer: { kind: numeric, value: 51, unit: "A", tolerance: 0 }
   solution:
@@ -160,7 +160,7 @@
   commonMistake: "If you got a lower number, you forgot the 125% factor or didn't round up to the next standard size."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "A 45 kVA, three-phase transformer (600 V or less) has a 480 V primary (primary FLC ≈ 54.1 A) with ONLY primary-side overcurrent protection. Table 450.3(B) permits up to 125% of primary current, and where that value isn't a standard rating the next higher standard size is allowed. What is the maximum standard primary overcurrent device (A)?"
   answer: { kind: numeric, value: 70, unit: "A", tolerance: 0 }
   solution:

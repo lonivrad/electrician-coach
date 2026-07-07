@@ -8,7 +8,7 @@
   commonMistake: "If you got 90.2 A, you computed the PRIMARY current (480 V side). If you got 360.6 A, you dropped the √3."
   skillIds: [nec.xfmr.secondary]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 75 kVA three-phase transformer steps 480 V delta down to 208Y/120 V to feed a shop panelboard. Before landing the secondary conductors, the foreman asks for the full-load SECONDARY line current (A). What do you tell him?"
   answer: { kind: numeric, value: 208.18, unit: "A", tolerance: 0.5 }
   solution:
@@ -31,7 +31,7 @@
   commonMistake: "If you got 54.1 A, you applied √3 to a SINGLE-phase transformer. If you got 187.5 A, you used the 240 V secondary."
   skillIds: [nec.xfmr.secondary]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 45 kVA SINGLE-phase transformer, 480 V primary / 240 V secondary, serves a welding shop. To size the primary conductors you first need the full-load PRIMARY current (A). What is it?"
   answer: { kind: numeric, value: 93.75, unit: "A", tolerance: 0.5 }
   solution:
@@ -54,7 +54,7 @@
   commonMistake: "180.4 A is the primary (480 V) current; 721.2 A means you forgot √3 on the secondary."
   skillIds: [nec.xfmr.secondary]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "You are terminating a 150 kVA, three-phase, 480 V – 208Y/120 V transformer. The plans list a primary current of 180.4 A. The secondary feeds a 208 V distribution panel, and you must verify the secondary conductor ampacity against the full-load SECONDARY line current (A). Compute it."
   answer: { kind: numeric, value: 416.36, unit: "A", tolerance: 1.0 }
   solution:
@@ -76,7 +76,7 @@
   commonMistake: "78.1 A means you dropped the √3; 104.1 A means you used the 208 V secondary voltage."
   skillIds: [nec.xfmr.secondary]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 37.5 kVA, three-phase, 480 V – 208Y/120 V dry-type transformer is being added for a mezzanine panel. What full-load PRIMARY line current (A) do you use as the starting point for the primary OCPD calculation?"
   answer: { kind: numeric, value: 45.11, unit: "A", tolerance: 0.5 }
   solution:
@@ -98,7 +98,7 @@
   commonMistake: "312.3 A is the 208 V SECONDARY current; 234.4 A means you dropped the √3 on the primary."
   skillIds: [nec.xfmr.secondary]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 112.5 kVA, three-phase, 480 V – 208Y/120 V transformer will get primary-only protection, so everything hinges on the primary FLC. The apprentice hands you 312.3 A from his calculator. Compute the correct full-load PRIMARY line current (A) yourself."
   answer: { kind: numeric, value: 135.32, unit: "A", tolerance: 0.5 }
   solution:
@@ -121,7 +121,7 @@
   commonMistake: "If you got 67.7 A (or 70 A), you used the 125% primary-only cell — with compliant secondary protection the primary may go to 250%."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 45 kVA, three-phase, 480 V-primary transformer feeds a panelboard whose main breaker protects the secondary at not more than 125% of secondary FLC. Per Table 450.3(B) with secondary protection provided, what is the MAXIMUM calculated value (A) the primary overcurrent device rating may not exceed (250% of primary FLC, before selecting a device)?"
   answer: { kind: numeric, value: 135.33, unit: "A", tolerance: 1.0 }
   solution:
@@ -144,7 +144,7 @@
   commonMistake: "156.25 A (→175 A) is the primary-ONLY 125% path; with secondary protection the ceiling is 250% of primary FLC."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 30 kVA, single-phase transformer with a 240 V primary supplies a panel that already has compliant secondary overcurrent protection (≤125% of secondary FLC). Using the Table 450.3(B) row for primary AND secondary protection, what maximum value (A) may the primary overcurrent device not exceed (250% of primary FLC)?"
   answer: { kind: numeric, value: 312.5, unit: "A", tolerance: 1.0 }
   solution:
@@ -167,7 +167,7 @@
   commonMistake: "If you got 150 A you rounded 169.2 A DOWN; Note 1 permits the next size UP. If you got 390 A, you used the 208 V secondary current."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 112.5 kVA, three-phase, 480 V – 208Y/120 V transformer has NO secondary overcurrent device — the primary breaker is the only protection. Per Table 450.3(B) at 125% with Note 1, what standard breaker rating (A) protects the primary?"
   answer: { kind: numeric, value: 175, unit: "A", tolerance: 0 }
   solution:
@@ -191,7 +191,7 @@
   commonMistake: "1.95 A means you stopped at 125%; the <2 A row of Table 450.3(B) permits up to 300%, and it is a hard ceiling — no rounding up."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 750 VA control transformer (480 V single-phase primary) inside an industrial control panel has primary-only protection. Its primary FLC is under 2 A, so the standard 125% cell does NOT apply. What is the MAXIMUM fuse ampere value (A) permitted by Table 450.3(B)?"
   answer: { kind: numeric, value: 4.68, unit: "A", tolerance: 0.1 }
   solution:
@@ -214,7 +214,7 @@
   commonMistake: "6.24 A means you used 300% — but 2.08 A is NOT less than 2 A, so the 167% cell governs."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 1 kVA, single-phase control transformer with a 480 V primary is protected on the primary only. Check its FLC against the Table 450.3(B) current breakpoints carefully, then give the MAXIMUM primary fuse value (A) permitted."
   answer: { kind: numeric, value: 3.47, unit: "A", tolerance: 0.1 }
   solution:
@@ -236,7 +236,7 @@
   commonMistake: "15 A means you rounded up to a standard size — the 167% product is a ceiling; Note 1's round-up applies only to the 125% cell."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 2 kVA, single-phase transformer with a 240 V primary gets primary-only protection. Its primary FLC lands in the 2–9 A row of Table 450.3(B). What is the maximum fuse value (A) permitted — before anyone reaches for a standard 15 A fuse?"
   answer: { kind: numeric, value: 13.91, unit: "A", tolerance: 0.1 }
   solution:
@@ -258,7 +258,7 @@
   commonMistake: "15 A means you ran 125% (9.0 A) and rounded up to a standard size — wrong cell AND a round-up the table doesn't allow here."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 6 kVA, three-phase, 480 V transformer feeding instrumentation loads has primary-only protection. Its primary line current falls between 2 A and 9 A. Per Table 450.3(B), what maximum overcurrent device value (A) is permitted on the primary?"
   answer: { kind: numeric, value: 12.06, unit: "A", tolerance: 0.1 }
   solution:
@@ -281,7 +281,7 @@
   commonMistake: "10.83 A means you used 300% — 3.61 A is not below 2 A. Small kVA does not automatically mean the 300% row."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 3 kVA, three-phase, 480 V transformer (primary-only protection) looks 'tiny,' and the apprentice reaches for the 300% rule. Compute the primary FLC, pick the correct Table 450.3(B) current band, and give the maximum device value (A) permitted."
   answer: { kind: numeric, value: 6.03, unit: "A", tolerance: 0.1 }
   solution:
@@ -303,7 +303,7 @@
   commonMistake: "37.6 A is the calculated value, not a device; 35 A is rounding DOWN. Note 1 permits the next size UP: 40 A."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 25 kVA, three-phase, 480 V transformer has primary-only protection. Its primary FLC exceeds 9 A, so the 125% cell of Table 450.3(B) applies. What standard breaker rating (A) is the maximum permitted?"
   answer: { kind: numeric, value: 40, unit: "A", tolerance: 0 }
   solution:
@@ -326,7 +326,7 @@
   commonMistake: "15 A means you took 125% (7.5 A) and jumped to the next standard size — but at 6.01 A FLC the 167% ceiling governs, and no round-up is allowed."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 5 kVA, three-phase, 480 V transformer for a small machine cell is protected on the primary only. Determine which Table 450.3(B) current band its primary FLC falls in, then state the maximum primary device value (A) permitted."
   answer: { kind: numeric, value: 10.04, unit: "A", tolerance: 0.1 }
   solution:
@@ -349,7 +349,7 @@
   commonMistake: "250 A is rounding 260.4 A DOWN; Note 1 permits the next standard size UP, 300 A. And 130.2 A means you halved for 'two hots' — kVA/V already gives line current."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 50 kVA, single-phase transformer with a 240 V primary has primary-only protection. Applying the 125% cell of Table 450.3(B) with Note 1, what standard rating (A) is the maximum primary overcurrent device?"
   answer: { kind: numeric, value: 300, unit: "A", tolerance: 0 }
   solution:
@@ -372,7 +372,7 @@
   commonMistake: "9.39 A means you used 300% — 3.13 A is above the 2 A breakpoint, so 167% is the correct multiplier."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 1.5 kVA, single-phase, 480 V-primary transformer feeds panel controls and is protected on the primary only. The kVA is small, but the Table 450.3(B) band is set by the primary FLC. What is the maximum primary fuse value (A) permitted?"
   answer: { kind: numeric, value: 5.23, unit: "A", tolerance: 0.1 }
   solution:
@@ -394,7 +394,7 @@
   commonMistake: "3.02 A means you used 167% — at 1.81 A the FLC is below 2 A, so the 300% row applies."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 500 VA, single-phase transformer with a 277 V primary supplies a low-voltage lighting controller and has primary-only protection. Locate its primary FLC on the Table 450.3(B) breakpoints and give the maximum primary fuse value (A) permitted."
   answer: { kind: numeric, value: 5.43, unit: "A", tolerance: 0.1 }
   solution:
@@ -415,7 +415,7 @@
   domainId: nec.transformers
   skillIds: [nec.xfmr.ocp-sizing]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: "A 4.5 kVA, single-phase transformer with a 480 V primary (primary FLC = 4,500 ÷ 480 = 9.38 A) will have primary-only protection. Which Table 450.3(B) treatment applies to sizing its primary overcurrent device?"
   options:
     - id: a
@@ -449,7 +449,7 @@
   domainId: nec.transformers
   skillIds: [nec.xfmr.ocp-sizing]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: "A 2 kVA, single-phase, 240 V-primary transformer (primary FLC = 8.33 A) has primary-only protection. 167% of FLC works out to 13.9 A, and the smallest fuse on the truck is 15 A. May the installer use the 15 A fuse under Table 450.3(B)?"
   options:
     - id: a
@@ -483,7 +483,7 @@
   domainId: nec.transformers
   skillIds: [nec.xfmr.ocp-sizing]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: "A 75 kVA, three-phase, 480 V – 208Y/120 V transformer supplies a panelboard whose main breaker limits the secondary to not more than 125% of secondary FLC. Under Table 450.3(B), which limit now applies to the PRIMARY overcurrent device?"
   options:
     - id: a
@@ -517,7 +517,7 @@
   domainId: nec.transformers
   skillIds: [nec.xfmr.secondary]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: "A journeyman sizes the primary breaker of a 480 V – 208Y/120 V transformer per Table 450.3(B) and declares the secondary conductors to the panelboard 'already protected by the primary device.' What is wrong with that reasoning?"
   options:
     - id: a
@@ -551,7 +551,7 @@
   domainId: nec.transformers
   skillIds: [nec.xfmr.ocp-sizing]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: "For a 75 kVA, three-phase, 480 V – 208Y/120 V transformer with primary-only protection, an electrician calculates 208.2 A × 1.25 = 260.2 A and selects a 300 A primary breaker. The correct answer is a 125 A breaker. What single mistake produced the 300 A figure?"
   options:
     - id: a

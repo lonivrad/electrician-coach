@@ -8,7 +8,7 @@
   commonMistake: "If you got 3.75 V, you dropped the factor of 2 — a single-phase circuit drops voltage on the way out AND back."
   skillIds: [nec.theory.ohms-law, nec.theory.power]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: >-
     A 9,600 W resistance heater (unity power factor) is fed at 240 V single-phase
     through 8 AWG copper (16,510 cmil), 120 ft one-way. Using K = 12.9, estimate
@@ -34,7 +34,7 @@
   commonMistake: "If you got 6.49 V, you used the single-phase factor of 2 — three-phase uses √3 (1.732)."
   skillIds: [nec.theory.three-phase]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: >-
     A 208 V three-phase feeder carries 60 A per line on 4 AWG copper (41,740 cmil),
     175 ft one-way. Using K = 12.9, estimate the line-to-line voltage drop (V).
@@ -58,7 +58,7 @@
   commonMistake: "If you got 5.90 V, you computed I = P/V = 30 A and ignored the power factor — at pf 0.75 the circuit must carry 40 A to deliver 7,200 W."
   skillIds: [nec.theory.power, nec.theory.ohms-law]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: >-
     A single-phase 240 V load consumes 7,200 W of real power at a power factor of
     0.75. It is wired with 6 AWG copper (26,240 cmil), 200 ft one-way. Using
@@ -83,7 +83,7 @@
   commonMistake: "If you got 2.20 V, you used the copper K of 12.9 — aluminum has higher resistivity (K ≈ 21.2)."
   skillIds: [nec.theory.three-phase, nec.theory.ohms-law]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: >-
     A 208 V three-phase feeder is run in 1/0 AWG ALUMINUM (105,600 cmil), 260 ft
     one-way, carrying 40 A per line. Using K = 21.2 for aluminum, estimate the
@@ -109,7 +109,7 @@
   commonMistake: "kcmil means THOUSANDS of circular mils — 250 kcmil = 250,000 cmil, not 250."
   skillIds: [nec.theory.three-phase]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: >-
     A 480 V three-phase feeder uses 250 kcmil copper conductors, 300 ft one-way,
     carrying 200 A per line. Using K = 12.9, estimate the voltage drop (V).
@@ -132,7 +132,7 @@
   commonMistake: "First convert VA to line current with the √3 factor: I = VA/(√3·V) = 24 A — dividing by 208 alone gives 41.6 A and a wildly high drop."
   skillIds: [nec.theory.three-phase, nec.theory.power]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: >-
     A balanced 8,646 VA three-phase load is served at 208 V through 10 AWG copper
     (10,380 cmil), 150 ft one-way. Using K = 12.9, estimate the voltage drop (V).
@@ -156,7 +156,7 @@
   domainId: nec.theory-general
   skillIds: [nec.theory.ohms-law]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: >-
     A 120 V single-phase branch circuit carries 16 A on 12 AWG copper (6,530 cmil),
     90 ft one-way. Using K = 12.9, the voltage drop is what percent of nominal
@@ -184,7 +184,7 @@
   domainId: nec.theory-general
   skillIds: [nec.theory.ohms-law]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: >-
     A 240 V single-phase circuit carries 50 A, 180 ft one-way, copper (K = 12.9).
     To keep the voltage drop at or under 3% of nominal, what is the minimum
@@ -213,7 +213,7 @@
   domainId: nec.theory-general
   skillIds: [nec.theory.three-phase]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: >-
     A 480 V three-phase feeder carries 100 A per line, 250 ft one-way, copper
     (K = 12.9). To limit voltage drop to 2% of nominal, what is the minimum
@@ -245,7 +245,7 @@
   commonMistake: "If you got 6,240, that is the APPARENT power in VA — a wattmeter reads real power, V·I·pf."
   skillIds: [nec.theory.power]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: >-
     A clamp meter reads 26 A on a 240 V single-phase circuit and a power-quality
     meter shows a power factor of 0.82. How much REAL power (W) is the load
@@ -268,7 +268,7 @@
   domainId: nec.theory-general
   skillIds: [nec.theory.three-phase, nec.theory.power]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: >-
     A three-phase 480 V feeder must deliver 60 kW of REAL power to a load with a
     power factor of 0.80. What line current must the conductors carry?
@@ -298,7 +298,7 @@
   commonMistake: "Use the 480 V LINE voltage with √3 — mixing the 277 V line-to-neutral value into √3·V·I double-counts the phase relationship."
   skillIds: [nec.theory.three-phase]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: >-
     A balanced load on a 480Y/277 V three-phase system draws 52 A per line at a
     power factor of 0.88. What is the total real power (W)? (Use the correct
@@ -323,7 +323,7 @@
   domainId: nec.theory-general
   skillIds: [nec.theory.power, nec.theory.three-phase]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: >-
     A facility's connected three-phase load totals 45 kW of real power at an
     overall power factor of 0.85. A standby generator is rated in kVA. Ignoring
@@ -354,7 +354,7 @@
   commonMistake: "If you answered 8,646, you reported the apparent power (VA) the meter already showed — the question asks for watts, which requires multiplying by the pf."
   skillIds: [nec.theory.three-phase, nec.theory.power]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: >-
     A power-quality meter on a 208 V three-phase circuit shows 24 A per line,
     8,646 VA apparent power, and a power factor of 0.65. What REAL power (W) is
@@ -379,7 +379,7 @@
   commonMistake: "A wattmeter responds to real power only — 208 × 30 = 6,240 is the VA, not the watt reading."
   skillIds: [nec.theory.power]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: >-
     A single-phase 208 V load draws 30 A at a power factor of 0.70. What would a
     wattmeter connected to this load read (W)?
@@ -402,7 +402,7 @@
   domainId: nec.theory-general
   skillIds: [nec.theory.power]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: >-
     A single-phase 240 V motor delivers 10 hp (7,460 W) at the shaft. Its
     efficiency is 88% and its power factor is 0.85. What input current does it
@@ -433,7 +433,7 @@
   commonMistake: "Reduce the parallel pair FIRST (60∥30 = 20 Ω); adding all three in series (118 Ω) gives about 2 A."
   skillIds: [nec.theory.ohms-law]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: >-
     A 240 V source feeds a 60 Ω resistor in parallel with a 30 Ω resistor; that
     combination is in series with a 28 Ω resistor. What total current (A) does
@@ -458,7 +458,7 @@
   commonMistake: "Don't ignore the conductor resistance — the 4 Ω of wire is in series with the 20 Ω parallel bank, so the source sees 24 Ω, not 20."
   skillIds: [nec.theory.ohms-law]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: >-
     A 240 V source feeds a remote load through conductors with a combined 4 Ω of
     resistance. At the load, a 60 Ω heater is in parallel with a series string of
@@ -482,7 +482,7 @@
   domainId: nec.theory-general
   skillIds: [nec.theory.ohms-law]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: >-
     A 240 V source feeds a load bank through conductors totaling 2 Ω of
     resistance. The bank consists of a 24 Ω resistor in parallel with an 8 Ω
@@ -510,7 +510,7 @@
   domainId: nec.theory-general
   skillIds: [nec.theory.ohms-law]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: >-
     A 120 V source feeds a 20 Ω resistor in series with a parallel pair: 30 Ω and
     60 Ω. What current flows through the 60 Ω resistor?
@@ -539,7 +539,7 @@
   domainId: nec.theory-general
   skillIds: [nec.theory.three-phase]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: >-
     On a 208Y/120 V wye system, each of three balanced line-to-neutral loads
     draws 20 A. What current flows in each LINE conductor?
@@ -566,7 +566,7 @@
   domainId: nec.theory-general
   skillIds: [nec.theory.three-phase]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: >-
     A balanced delta-connected heater bank on a 480 V system draws 30 A through
     each phase winding. What current do the LINE conductors feeding the bank
@@ -597,7 +597,7 @@
   commonMistake: "The ratio compares CIRCULAR-MIL areas (52,620 ÷ 26,240), not AWG numbers — '6 to 3' is not a ratio of 2 by gauge arithmetic, it just happens to double the area."
   skillIds: [nec.theory.ohms-law]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: >-
     To control voltage drop, a feeder's copper circuit conductors are upsized from
     6 AWG (26,240 cmil) to 3 AWG (52,620 cmil). Per 250.122(B), the equipment
@@ -622,7 +622,7 @@
   commonMistake: "Divide areas, not gauge numbers: 16,510 ÷ 6,530 — going two even sizes (12→8) roughly 2.5× the area, it does not simply double."
   skillIds: [nec.theory.ohms-law]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: >-
     A long 20 A branch circuit is upsized from 12 AWG (6,530 cmil) to 8 AWG
     (16,510 cmil) copper for voltage drop. By what circular-mil ratio must the

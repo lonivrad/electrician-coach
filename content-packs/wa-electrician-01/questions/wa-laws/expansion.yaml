@@ -79,7 +79,7 @@
   domainId: wa.licensing
   skillIds: [wa.lic.certificate-types]
   type: single
-  difficulty: 4
+  difficulty: 5
   stem: "A certified journeyman wants to begin contracting for electrical work directly under his own business name. Beyond his certificate of competency, what does Washington law require before he can contract for that work?"
   options:
     - { id: a, text: "A valid electrical contractor license (with a qualifying electrical administrator)", isCorrect: true }
@@ -220,7 +220,7 @@
   domainId: wa.inspections
   skillIds: [wa.insp.corrections]
   type: single
-  difficulty: 4
+  difficulty: 5
   stem: "A contractor concealed rough-in wiring before it was inspected. Under Washington rules, what is the likely consequence?"
   options:
     - { id: a, text: "The work may have to be made accessible again for inspection, and a correction or penalty may apply", isCorrect: true }
@@ -313,7 +313,7 @@
   domainId: wa.admin-rules
   skillIds: [wa.admin.scope-of-work]
   type: single
-  difficulty: 4
+  difficulty: 5
   stem: "On a project, a general contractor's uncertified laborer performs branch-circuit wiring because 'the electrician was busy.' Under Washington law, which best describes this?"
   options:
     - { id: a, text: "A violation — electrical work must be done by certified individuals or supervised registered trainees", isCorrect: true }
@@ -407,7 +407,7 @@
   domainId: wa.enforcement
   skillIds: [wa.enf.infractions]
   type: single
-  difficulty: 4
+  difficulty: 5
   stem: "A contractor receives a citation and civil penalty from L&I for unpermitted work and disagrees with it. What is the general recourse?"
   options:
     - { id: a, text: "Request an appeal / administrative hearing within the required time period", isCorrect: true }

@@ -66,15 +66,15 @@ function q(id: string, domainId: string, difficulty: number): Question {
 }
 
 describe("targetDifficulty", () => {
-  it("maps mastery 0..1 onto difficulty 1..5", () => {
+  it("maps mastery 0..1 onto difficulty 1..10", () => {
     expect(targetDifficulty(0, 0)).toBe(1);
-    expect(targetDifficulty(1, 0)).toBe(5);
-    expect(targetDifficulty(0.5, 0)).toBe(3);
+    expect(targetDifficulty(1, 0)).toBe(10);
+    expect(targetDifficulty(0.5, 0)).toBe(5.5);
   });
   it("applies and clamps the difficulty bias", () => {
-    expect(targetDifficulty(1, 2)).toBe(5); // clamped high
+    expect(targetDifficulty(1, 2)).toBe(10); // clamped high
     expect(targetDifficulty(0, -3)).toBe(1); // clamped low
-    expect(targetDifficulty(0.5, 1)).toBe(4);
+    expect(targetDifficulty(0.5, 1)).toBe(6.5);
   });
 });
 

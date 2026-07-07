@@ -29,7 +29,7 @@
   commonMistake: "If you got 44, you used the meter reading directly and forgot the 125% continuous-load factor."
   skillIds: [nec.ampacity.table-lookup]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "A clamp meter reads 44 A on a feeder supplying a continuous load, with conductors terminating on 75°C lugs. Before any temperature/fill derating, what minimum conductor ampacity (from the 75°C column) must be provided for this continuous load? (amps)"
   answer: { kind: numeric, value: 55, unit: "A", tolerance: 0 }
   solution:
@@ -51,7 +51,7 @@
   commonMistake: "If you got a lower number, you sized the clamp and device on the 14 AWG instead of the largest conductor (12 AWG)."
   skillIds: [nec.box.conductor-count, nec.box.device-clamp-allowance, nec.box.largest-conductor]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "A box contains three 12 AWG and four 14 AWG insulated circuit conductors, one or more internal cable clamps, and one single-pole switch wired with 12 AWG. Volume allowances: 12 AWG = 2.25 in³, 14 AWG = 2.00 in³. What minimum box volume (in³) is required?"
   answer: { kind: numeric, value: 21.5, unit: "in³", tolerance: 0.01 }
   solution:

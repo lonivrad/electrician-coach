@@ -97,7 +97,7 @@
   domainId: nec.wiring-methods
   skillIds: [nec.wm.method-rules]
   type: single
-  difficulty: 4
+  difficulty: 5
   stem: "In a metal wireway, the total cross-sectional area of all contained conductors at any cross section must not exceed what percentage of the interior cross-sectional area of the wireway?"
   options:
     - { id: a, text: "20%", isCorrect: true }

@@ -9,7 +9,7 @@
   commonMistake: "If you got 9, you rounded 8.59 up — the Chapter 9 Table 1 note permits rounding up only when the decimal is 0.8 or larger."
   skillIds: [nec.conduit.same-size]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A feeder pull uses 1 AWG THHN conductors in a full-length run of 2 in. EMT. Using the Chapter 9 area method, what is the maximum number of 1 AWG THHN conductors permitted at the 40% fill limit? (conductors)"
   answer: { kind: numeric, value: 8, unit: "conductors", tolerance: 0 }
   solution:
@@ -32,7 +32,7 @@
   commonMistake: "If you got 2, you truncated 2.84 — a decimal of 0.8 or larger rounds UP per the Chapter 9 Table 1 note. If you got 4 or 5, you used the Schedule 40 area instead of Schedule 80."
   skillIds: [nec.conduit.same-size]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "Parallel service risers are run in 2 in. Schedule 80 PVC. How many 3/0 AWG THHN conductors are permitted in each raceway at the 40% fill limit? (conductors)"
   answer: { kind: numeric, value: 3, unit: "conductors", tolerance: 0 }
   solution:
@@ -55,7 +55,7 @@
   commonMistake: "If you got 15, you read the Schedule 40 row of Table 4 (0.832 in²) instead of Schedule 80 (0.495 in²) — the wall thickness nearly halves the usable area."
   skillIds: [nec.conduit.same-size]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "An exterior run exposed to physical damage is changed from Schedule 40 to 1 in. Schedule 80 PVC. How many 10 AWG THHN conductors are now permitted at the 40% fill limit? (conductors)"
   answer: { kind: numeric, value: 9, unit: "conductors", tolerance: 0 }
   solution:
@@ -78,7 +78,7 @@
   commonMistake: "If you got 10, you truncated 10.80 — the decimal is exactly at the 0.8 threshold, so the Table 1 note permits rounding up. If you got 10 via EMT, you also used the wrong Table 4 row (EMT = 2.036 in² vs IMC = 2.225 in²)."
   skillIds: [nec.conduit.same-size]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A pump-house feeder uses 4 AWG THHN conductors in 1-1/2 in. intermediate metal conduit (IMC). What is the maximum number permitted at the 40% fill limit? (conductors)"
   answer: { kind: numeric, value: 11, unit: "conductors", tolerance: 0 }
   solution:
@@ -101,7 +101,7 @@
   commonMistake: "If you got 83, you truncated 83.96 — with a decimal of 0.96 the Table 1 note requires rounding up. (Ampacity adjustment for that many conductors is a separate 310.15 problem, not a fill problem.)"
   skillIds: [nec.conduit.same-size]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A control-wiring homerun packs 14 AWG THHN conductors into 1-1/2 in. EMT. Ignoring ampacity adjustment, what is the maximum number of 14 AWG THHN conductors permitted at the 40% fill limit? (conductors)"
   answer: { kind: numeric, value: 84, unit: "conductors", tolerance: 0 }
   solution:
@@ -125,7 +125,7 @@
   commonMistake: "If you got 26, you used the 40% full-run limit — a raceway not exceeding 24 in. between enclosures is a nipple and may be filled to 60% (Ch.9 Note 4). If you got 38, you truncated 38.98 instead of rounding up."
   skillIds: [nec.conduit.same-size, nec.conduit.percent-fill]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "An 18 in. length of 1 in. EMT connects two adjacent panel enclosures. How many 12 AWG THHN conductors are permitted through this nipple? (conductors)"
   answer: { kind: numeric, value: 39, unit: "conductors", tolerance: 0 }
   solution:
@@ -148,7 +148,7 @@
   commonMistake: "If you got 5, you used the 40% limit instead of the 60% nipple allowance. If you got 14, you used the Schedule 40 area (0.508 in²) instead of Schedule 80 (0.297 in²)."
   skillIds: [nec.conduit.same-size, nec.conduit.percent-fill]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 12 in. Schedule 80 PVC nipple (3/4 in. trade size) joins a meter base to a disconnect. How many 10 AWG THHN conductors are permitted through the nipple? (conductors)"
   answer: { kind: numeric, value: 8, unit: "conductors", tolerance: 0 }
   solution:
@@ -171,7 +171,7 @@
   commonMistake: "If you got 9, you rounded 8.74 up — 0.74 is below the 0.8 threshold, so you must round DOWN even in a nipple."
   skillIds: [nec.conduit.same-size, nec.conduit.percent-fill]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 6 in. nipple of 3/4 in. EMT connects a gutter to a panelboard. How many 8 AWG THHN conductors are permitted through it at the nipple fill limit? (conductors)"
   answer: { kind: numeric, value: 8, unit: "conductors", tolerance: 0 }
   solution:
@@ -195,7 +195,7 @@
   commonMistake: "If you got 0, you applied the 40% (>2 conductors) column — a raceway containing only ONE conductor may be filled to 53% (Ch.9 Table 1)."
   skillIds: [nec.conduit.same-size, nec.conduit.percent-fill]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A single 4/0 AWG THHN conductor is sleeved by itself in 1-1/4 in. Schedule 80 PVC for physical protection. Applying the one-conductor fill limit of Chapter 9 Table 1, how many 4/0 THHN conductors are permitted in this sleeve? (conductors)"
   answer: { kind: numeric, value: 1, unit: "conductors", tolerance: 0 }
   solution:
@@ -218,7 +218,7 @@
   commonMistake: "If you got 1, you truncated 1.82 — the 0.8 round-up note applies even in the 31% two-conductor column. If you got 2 by using 40%, you used the wrong Table 1 row for two conductors."
   skillIds: [nec.conduit.same-size, nec.conduit.percent-fill]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "Exactly two 4/0 AWG THHN conductors of a 240 V circuit are pulled into 2 in. Schedule 80 PVC. Applying the two-conductor fill limit of Chapter 9 Table 1, what is the maximum number of 4/0 THHN conductors permitted? (conductors)"
   answer: { kind: numeric, value: 2, unit: "conductors", tolerance: 0 }
   solution:
@@ -243,7 +243,7 @@
   commonMistake: "If you got 0.8037 in², you forgot the 6 AWG equipment grounding conductor — EVERY conductor occupies fill area, including the EGC."
   skillIds: [nec.conduit.mixed-size]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 200 A feeder is pulled as three 3/0 AWG THHN phase conductors plus one 6 AWG THHN equipment grounding conductor. What total conductor cross-sectional area must be counted against the raceway fill? (in²)"
   answer: { kind: numeric, value: 0.8544, unit: "in²", tolerance: 0.001 }
   solution:
@@ -267,7 +267,7 @@
   commonMistake: "If you got 0.742 in², you dropped the 8 AWG EGC; if you got 0.6612, you used the 1 AWG area (0.1562) instead of 1/0 (0.1855)."
   skillIds: [nec.conduit.mixed-size]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 3-phase, 4-wire feeder uses four 1/0 AWG THHN conductors with one 8 AWG THHN equipment grounding conductor. What total conductor area counts toward the conduit fill? (in²)"
   answer: { kind: numeric, value: 0.7786, unit: "in²", tolerance: 0.001 }
   solution:
@@ -291,7 +291,7 @@
   commonMistake: "If you got 0.9711 in², you left out the 4 AWG EGC. Annex C cannot be used here at all — the conductors are not all the same size."
   skillIds: [nec.conduit.mixed-size]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "An IMC feeder run contains three 4/0 AWG THHN ungrounded conductors and one 4 AWG THHN equipment grounding conductor. What total conductor area must be compared against 40% of the Table 4 raceway area? (in²)"
   answer: { kind: numeric, value: 1.0535, unit: "in²", tolerance: 0.001 }
   solution:
@@ -318,7 +318,7 @@
   commonMistake: "If your total forced a 1-1/4 in. EMT, you likely mis-multiplied a count; 0.3062 in² fits within 40% of 1 in. EMT (0.3456 in²)."
   skillIds: [nec.conduit.mixed-size]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A multi-circuit homerun combines eight 12 AWG, six 10 AWG, and two 8 AWG THHN conductors in one raceway. What total conductor cross-sectional area counts toward the fill? (in²)"
   answer: { kind: numeric, value: 0.3062, unit: "in²", tolerance: 0.001 }
   solution:
@@ -341,7 +341,7 @@
   commonMistake: "The same 0.3981 in² fits 1-1/4 in. EMT (0.5984 in² usable) but NOT 1-1/4 in. Schedule 80 PVC (0.3408 in² usable) — the raceway type changes the answer to the follow-up sizing question."
   skillIds: [nec.conduit.mixed-size]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A subpanel feeder uses three 2 AWG THHN conductors and one 6 AWG THHN equipment grounding conductor. What total conductor area must be compared to the 40% column of Chapter 9 Table 4 when sizing the raceway? (in²)"
   answer: { kind: numeric, value: 0.3981, unit: "in²", tolerance: 0.001 }
   solution:
@@ -365,7 +365,7 @@
   commonMistake: "If you rejected 1-1/2 in. EMT in the follow-up check, you applied 40% — a raceway ≤ 24 in. between enclosures is a nipple and may be filled to 60%."
   skillIds: [nec.conduit.mixed-size, nec.conduit.percent-fill]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 20 in. EMT nipple between a CT cabinet and a disconnect carries three 4/0 AWG THHN conductors and one 2 AWG THHN grounded conductor. What total conductor area must be compared to the nipple fill limit? (in²)"
   answer: { kind: numeric, value: 1.0869, unit: "in²", tolerance: 0.001 }
   solution:
@@ -387,7 +387,7 @@
   domainId: nec.conduit-fill
   skillIds: [nec.conduit.mixed-size, nec.conduit.percent-fill]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: "A full-length EMT run (about 60 ft) will contain three 3/0 AWG THHN conductors and one 6 AWG THHN equipment grounding conductor (total conductor area 0.8544 in²). What is the minimum EMT trade size?"
   options:
     - id: a
@@ -421,7 +421,7 @@
   domainId: nec.conduit-fill
   skillIds: [nec.conduit.mixed-size]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: "An underground service lateral subject to physical damage uses Schedule 80 PVC with four 2 AWG THHN conductors and one 8 AWG THHN equipment grounding conductor (total area 0.4998 in²). What is the minimum Schedule 80 PVC trade size for this full-length run?"
   options:
     - id: a
@@ -455,7 +455,7 @@
   domainId: nec.conduit-fill
   skillIds: [nec.conduit.mixed-size]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: "A lighting-control raceway (full-length EMT) will carry eight 14 AWG THHN and four 12 AWG THHN conductors (total area 0.1308 in²). What is the minimum EMT trade size?"
   options:
     - id: a
@@ -490,7 +490,7 @@
   domainId: nec.conduit-fill
   skillIds: [nec.conduit.percent-fill, nec.conduit.mixed-size]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: "A 26 in. length of EMT between two enclosures will contain 10 AWG and 6 AWG THHN conductors together. Which procedure correctly determines whether the raceway is adequately sized?"
   options:
     - id: a
@@ -524,7 +524,7 @@
   domainId: nec.conduit-fill
   skillIds: [nec.conduit.percent-fill]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: "A full-length conduit contains two 6 AWG THHN circuit conductors plus one 10 AWG THHN equipment grounding conductor. Which Chapter 9 Table 1 fill limit applies?"
   options:
     - id: a
@@ -558,7 +558,7 @@
   domainId: nec.conduit-fill
   skillIds: [nec.conduit.percent-fill]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: "A conduit body-to-panel connection uses a raceway measuring exactly 24 in. between the enclosures. Which statement about its conductor fill is correct?"
   options:
     - id: a

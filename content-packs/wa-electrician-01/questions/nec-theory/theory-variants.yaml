@@ -244,7 +244,7 @@
   commonMistake: "Three-phase voltage drop uses √3, not 2."
   skillIds: [nec.theory.three-phase]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "Estimate the voltage drop (V) on a three-phase circuit: 6 AWG copper (26,240 cmil), 40 A, 150 ft one-way, K = 12.9."
   answer: { kind: numeric, value: 5.11, unit: "V", tolerance: 0.15 }
   solution:

@@ -10,7 +10,7 @@
   commonMistake: "Below 2 A the ceiling is 300% — not the 125% used for 9 A and up."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "A 0.5 kVA, single-phase, 480 V control transformer has primary-only protection and a primary current under 2 A. Per Table 450.3(B), what is the maximum primary overcurrent device rating (A)?"
   answer: { kind: numeric, value: 3.13, unit: "A", tolerance: 0.05 }
   solution:
@@ -32,7 +32,7 @@
   commonMistake: "From 2 A up to 9 A the ceiling is 167%, not 125%."
   skillIds: [nec.xfmr.ocp-sizing]
   type: numeric
-  difficulty: 4
+  difficulty: 5
   stem: "A 3 kVA, single-phase, 480 V transformer has primary-only protection (primary current between 2 A and 9 A). Per Table 450.3(B), what is the maximum primary overcurrent device rating (A)?"
   answer: { kind: numeric, value: 10.44, unit: "A", tolerance: 0.05 }
   solution:

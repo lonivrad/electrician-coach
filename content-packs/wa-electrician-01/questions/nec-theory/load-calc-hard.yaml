@@ -9,7 +9,7 @@
   commonMistake: "If you got 29,484, you skipped the 12 laundry circuits — 220.52(B) puts 1,500 VA per unit into the same bucket as general lighting before Table 220.42 is applied."
   skillIds: [nec.load.general-lighting, nec.load.demand-factor]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 12-unit apartment building has dwelling units of 840 ft² each. Each unit gets the required two 20 A small-appliance circuits and one laundry circuit. Using the standard method, what is the demand (VA) for the combined general-lighting, small-appliance, and laundry load after applying the Table 220.42 factors?"
   answer: { kind: numeric, value: 31434, unit: "VA", tolerance: 1 }
   solution:
@@ -33,7 +33,7 @@
   commonMistake: "If you got 81,750, you kept applying 35% past 120,000 VA — Table 220.42 drops to 25% for everything over 120,000 VA."
   skillIds: [nec.load.general-lighting, nec.load.demand-factor]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 40-unit apartment building has 900 ft² dwelling units, each with the two required small-appliance circuits. Laundry facilities are provided in a common room, so no laundry circuit is installed in the units. Using the standard method, what is the Table 220.42 demand (VA) for the combined general-lighting and small-appliance load? (The common laundry equipment is added separately.)"
   answer: { kind: numeric, value: 70950, unit: "VA", tolerance: 1 }
   solution:
@@ -57,7 +57,7 @@
   commonMistake: "If you got 55,500, you carried the 35% factor all the way through — only the portion from 3,001 to 120,000 VA gets 35%; the 33,000 VA above that is at 25%."
   skillIds: [nec.load.general-lighting, nec.load.demand-factor]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A 20-unit apartment building has 1,050 ft² units, each with two small-appliance circuits and one laundry circuit. Using the standard method, compute the Table 220.42 demand (VA) for the combined general-lighting, small-appliance, and laundry load."
   answer: { kind: numeric, value: 52200, unit: "VA", tolerance: 1 }
   solution:
@@ -81,7 +81,7 @@
   commonMistake: "If you got 22,050, you applied 35% to the entire 63,000 VA — the first 3,000 VA stays at 100%."
   skillIds: [nec.load.general-lighting, nec.load.demand-factor]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "An 8-unit apartment building has 1,125 ft² dwelling units, each with the required two small-appliance circuits and one laundry circuit. Using the standard method, what is the Table 220.42 demand (VA) for the combined general-lighting, small-appliance, and laundry load?"
   answer: { kind: numeric, value: 24000, unit: "VA", tolerance: 1 }
   solution:
@@ -104,7 +104,7 @@
   commonMistake: "If you got 10,200, you included the garage and open porch — 220.12 floor area excludes open porches, garages, and unfinished spaces not adaptable for future use."
   skillIds: [nec.load.general-lighting]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A dwelling measures 3,400 ft² using outside dimensions, which includes a 480 ft² attached garage and a 120 ft² open porch; the rest is habitable space. What general-lighting load (VA) is used at 3 VA/ft²?"
   answer: { kind: numeric, value: 8400, unit: "VA", tolerance: 1 }
   solution:
@@ -125,7 +125,7 @@
   commonMistake: "If you got 6,045, you counted only two small-appliance circuits — 220.52(A) counts EACH installed 20 A small-appliance circuit at 1,500 VA, and this kitchen has three."
   skillIds: [nec.load.general-lighting, nec.load.demand-factor]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 2,400 ft² dwelling was wired with three 20 A small-appliance branch circuits (one more than the minimum) and one laundry circuit. Using the standard method, what is the Table 220.42 demand (VA) for the combined general-lighting, small-appliance, and laundry load?"
   answer: { kind: numeric, value: 6570, unit: "VA", tolerance: 1 }
   solution:
@@ -148,7 +148,7 @@
   commonMistake: "If you got 4,096 or similar, you used one floor only — a two-story dwelling counts the area of both habitable floors."
   skillIds: [nec.load.general-lighting, nec.load.demand-factor]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A two-story dwelling measures 28 ft × 50 ft per floor (both floors habitable, no garage). It has the two required small-appliance circuits and one laundry circuit. Using the standard method, what is the Table 220.42 demand (VA) for the general-lighting, small-appliance, and laundry load?"
   answer: { kind: numeric, value: 6465, unit: "VA", tolerance: 1 }
   solution:
@@ -171,7 +171,7 @@
   commonMistake: "If you got 52,700, you used 35% on everything above 3,000 VA — the slice above 120,000 VA drops to 25%."
   skillIds: [nec.load.demand-factor]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "The combined general-lighting, small-appliance, and laundry connected load for an apartment building totals 145,000 VA. Applying the Table 220.42 demand factors, what is the demand (VA)?"
   answer: { kind: numeric, value: 50200, unit: "VA", tolerance: 1 }
   solution:
@@ -196,7 +196,7 @@
   commonMistake: "If you got 69, you added the nameplates; if you got 48, you used the one-range 8 kW value six times — Column C is read once at the total number of ranges on the feeder."
   skillIds: [nec.load.demand-factor]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A feeder in a 6-unit apartment building supplies one 11.5 kW household electric range in each unit. Using Table 220.55 Column C, what range demand (kW) is used for the feeder calculation?"
   answer: { kind: numeric, value: 21, unit: "kW", tolerance: 0 }
   solution:
@@ -218,7 +218,7 @@
   commonMistake: "If you tried Column B, note it stops at 8¾ kW appliances — a 9 kW range falls to Column C, which is read at the number of appliances."
   skillIds: [nec.load.demand-factor]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "A service supplies eight dwelling units, each with a 9 kW household electric range. Which Table 220.55 column applies, and what is the resulting range demand (kW)?"
   answer: { kind: numeric, value: 23, unit: "kW", tolerance: 0 }
   solution:
@@ -240,7 +240,7 @@
   commonMistake: "If you got 120, you summed the nameplates — with ten 12 kW ranges the Column C demand is a small fraction of the connected load."
   skillIds: [nec.load.demand-factor]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A 10-unit apartment building has one 12 kW range per unit, all supplied by the same service. Using Table 220.55 Column C, what total range demand (kW) goes into the service calculation?"
   answer: { kind: numeric, value: 25, unit: "kW", tolerance: 0 }
   solution:
@@ -264,7 +264,7 @@
   commonMistake: "If you got 23.05, you took the 9 kW heat at 65% (5.85 kVA) — 220.82(C) uses the LARGER of the A/C at 100% or the central heat at 65%, which is the 7 kVA air conditioner here."
   skillIds: [nec.load.dwelling-optional]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "Optional method (220.82): a dwelling's general loads per 220.82(B) total 28 kVA. The dwelling has a 7 kVA air-conditioning load and 9 kW of central electric space heating. What is the total calculated demand (kVA)?"
   answer: { kind: numeric, value: 24.2, unit: "kVA", tolerance: 0.05 }
   solution:
@@ -287,7 +287,7 @@
   commonMistake: "If you got 26.8, you added the 8 kVA A/C — here the central heat at 65% (14 × 0.65 = 9.1 kVA) is larger, so the heat governs and the A/C is dropped as noncoincident."
   skillIds: [nec.load.dwelling-optional]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "Optional method (220.82): a dwelling's general loads total 32 kVA. It has an 8 kVA air conditioner and 14 kW of central electric space heating. What is the total calculated demand (kVA)?"
   answer: { kind: numeric, value: 27.9, unit: "kVA", tolerance: 0.05 }
   solution:
@@ -310,7 +310,7 @@
   commonMistake: "If you got 23.2, you used the 8 kW Column C range demand — 220.82(B)(3) takes the range at its 12 kW NAMEPLATE before the 40% factor; Column C belongs to the standard method."
   skillIds: [nec.load.dwelling-optional, nec.load.general-lighting]
   type: numeric
-  difficulty: 5
+  difficulty: 8
   stem: "Optional method (220.82) for a 2,000 ft² dwelling with two small-appliance circuits, one laundry circuit, a 12 kW range, a 5 kW dryer, and a 4.5 kW water heater. HVAC is a 6 kVA air conditioner and 8 kW of central electric heat. What is the total calculated demand (kVA)?"
   answer: { kind: numeric, value: 24.8, unit: "kVA", tolerance: 0.05 }
   solution:
@@ -335,7 +335,7 @@
   commonMistake: "If you got 33.2, you also discounted the HVAC at 40% — the 220.82(C) heating/air-conditioning load is added at its selected value AFTER the 100%/40% treatment of the general loads."
   skillIds: [nec.load.dwelling-optional]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "Optional method (220.82): a large dwelling's general loads per 220.82(B) total 48 kVA, and the governing heating/air-conditioning load per 220.82(C) is 10 kVA. What is the total calculated demand (kVA)?"
   answer: { kind: numeric, value: 35.2, unit: "kVA", tolerance: 0.05 }
   solution:
@@ -359,7 +359,7 @@
   commonMistake: "If you got 18,000, you sized at 100% — store lighting operating 3 hours or more is continuous, so the minimum feeder capacity is 125% of the load."
   skillIds: [nec.load.service-size]
   type: numeric
-  difficulty: 4
+  difficulty: 7
   stem: "A retail store's general lighting load is 18,000 VA and operates continuously during business hours (more than 3 hours). What minimum volt-ampere capacity must the feeder be sized for to serve this lighting load?"
   answer: { kind: numeric, value: 22500, unit: "VA", tolerance: 1 }
   solution:
@@ -381,7 +381,7 @@
   domainId: nec.load-calc
   skillIds: [nec.load.dwelling-optional, nec.load.demand-factor]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: "A 2,400 ft² dwelling has two small-appliance circuits, one laundry circuit, a 12 kW range, a 5 kW dryer, a 4.5 kW water heater, and a 5 kVA air conditioner (no electric heat). Comparing the standard method (Part III) with the optional method (220.82), which statement is correct?"
   options:
     - id: a
@@ -417,7 +417,7 @@
   domainId: nec.load-calc
   skillIds: [nec.load.demand-factor]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: "In a standard-method service calculation for an apartment building, an apprentice adds the general lighting, small-appliance, laundry, AND all range nameplates into one total, then applies the Table 220.42 factors to that grand total. What is wrong with this approach?"
   options:
     - id: a
@@ -450,7 +450,7 @@
   domainId: nec.load-calc
   skillIds: [nec.load.dwelling-optional]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: "Under the optional method (220.82), a dwelling has 10 kW of central electric space heating and a 6 kVA air-conditioning load. What value is included in the calculation for heating and air conditioning?"
   options:
     - id: a
@@ -483,7 +483,7 @@
   domainId: nec.load-calc
   skillIds: [nec.load.dwelling-optional, nec.load.service-size]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: "Which of the following dwellings is NOT permitted to be calculated using the optional method of 220.82?"
   options:
     - id: a
@@ -515,7 +515,7 @@
   domainId: nec.load-calc
   skillIds: [nec.load.dwelling-optional, nec.load.demand-factor]
   type: single
-  difficulty: 4
+  difficulty: 7
   stem: "A 12 kW household range appears in both a standard-method and an optional-method calculation for the same dwelling. Which statement correctly contrasts how the range is counted BEFORE any final factors are applied?"
   options:
     - id: a
@@ -548,7 +548,7 @@
   domainId: nec.load-calc
   skillIds: [nec.load.demand-factor, nec.load.service-size]
   type: single
-  difficulty: 5
+  difficulty: 8
   stem: "In a standard-method dwelling service calculation, a single 12 kW range carries an 8 kW demand from Table 220.55 Column C. For sizing the service NEUTRAL, what range load is used?"
   options:
     - id: a
