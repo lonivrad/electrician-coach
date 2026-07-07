@@ -1,0 +1,588 @@
+# Conduit fill (Chapter 9) — HARD tier (difficulty 4–5). 2020 NEC. All DRAFT.
+# Mixed-size area method, PVC80 vs EMT column traps, 60% nipple fill, 53%/31% overrides,
+# and the Table 1 Note round-up-at-0.8 edge. Calculator-backed; SME-verify before live.
+
+# ---- Same-size max counts with rounding and column traps ---------------------
+- id: q-cond-h001
+  recompute: { calc: conduitMaxSameSize, inputs: { raceway: "EMT", tradeSize: "2", size: "1" } }
+  domainId: nec.conduit-fill
+  commonMistake: "If you got 9, you rounded 8.59 up — the Chapter 9 Table 1 note permits rounding up only when the decimal is 0.8 or larger."
+  skillIds: [nec.conduit.same-size]
+  type: numeric
+  difficulty: 4
+  stem: "A feeder pull uses 1 AWG THHN conductors in a full-length run of 2 in. EMT. Using the Chapter 9 area method, what is the maximum number of 1 AWG THHN conductors permitted at the 40% fill limit? (conductors)"
+  answer: { kind: numeric, value: 8, unit: "conductors", tolerance: 0 }
+  solution:
+    keyIdea: "40% of the Table 4 EMT area divided by the Table 5 conductor area; round DOWN unless the decimal is ≥ 0.8."
+    codePath: ["Ch.9 Table 4 (2 in. EMT = 3.356 in²)", "Ch.9 Table 5 (1 THHN = 0.1562 in²)", "Ch.9 Table 1 Note"]
+    steps:
+      - { text: "Usable area: 3.356 × 0.40 = 1.3424 in².", ref: "Ch.9 Table 4" }
+      - { text: "1.3424 ÷ 0.1562 = 8.59 conductors.", ref: "Ch.9 Table 5" }
+      - { text: "Decimal 0.59 is less than 0.8, so round down → 8.", ref: "Ch.9 Table 1 Note" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h002
+  recompute: { calc: conduitMaxSameSize, inputs: { raceway: "PVC80", tradeSize: "2", size: "3/0" } }
+  domainId: nec.conduit-fill
+  commonMistake: "If you got 2, you truncated 2.84 — a decimal of 0.8 or larger rounds UP per the Chapter 9 Table 1 note. If you got 4 or 5, you used the Schedule 40 area instead of Schedule 80."
+  skillIds: [nec.conduit.same-size]
+  type: numeric
+  difficulty: 5
+  stem: "Parallel service risers are run in 2 in. Schedule 80 PVC. How many 3/0 AWG THHN conductors are permitted in each raceway at the 40% fill limit? (conductors)"
+  answer: { kind: numeric, value: 3, unit: "conductors", tolerance: 0 }
+  solution:
+    keyIdea: "Schedule 80 has a much smaller internal area than Schedule 40, and the 0.84 decimal triggers the Table 1 round-up."
+    codePath: ["Ch.9 Table 4 (2 in. PVC-80 = 1.905 in²)", "Ch.9 Table 5 (3/0 THHN = 0.2679 in²)", "Ch.9 Table 1 Note"]
+    steps:
+      - { text: "Usable area: 1.905 × 0.40 = 0.762 in².", ref: "Ch.9 Table 4" }
+      - { text: "0.762 ÷ 0.2679 = 2.84 conductors.", ref: "Ch.9 Table 5" }
+      - { text: "Decimal 0.84 ≥ 0.8 → round up to 3.", ref: "Ch.9 Table 1 Note" }
+  trapIds: [table-column-selection, next-size-up-rounding]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h003
+  recompute: { calc: conduitMaxSameSize, inputs: { raceway: "PVC80", tradeSize: "1", size: "10" } }
+  domainId: nec.conduit-fill
+  commonMistake: "If you got 15, you read the Schedule 40 row of Table 4 (0.832 in²) instead of Schedule 80 (0.495 in²) — the wall thickness nearly halves the usable area."
+  skillIds: [nec.conduit.same-size]
+  type: numeric
+  difficulty: 4
+  stem: "An exterior run exposed to physical damage is changed from Schedule 40 to 1 in. Schedule 80 PVC. How many 10 AWG THHN conductors are now permitted at the 40% fill limit? (conductors)"
+  answer: { kind: numeric, value: 9, unit: "conductors", tolerance: 0 }
+  solution:
+    keyIdea: "Schedule 80's thicker wall shrinks the Table 4 internal area; never reuse the Schedule 40 figure."
+    codePath: ["Ch.9 Table 4 (1 in. PVC-80 = 0.495 in²)", "Ch.9 Table 5 (10 THHN = 0.0211 in²)"]
+    steps:
+      - { text: "Usable area: 0.495 × 0.40 = 0.198 in².", ref: "Ch.9 Table 4" }
+      - { text: "0.198 ÷ 0.0211 = 9.38 → round down to 9.", ref: "Ch.9 Table 1 Note" }
+      - { text: "Compare: Schedule 40 would have allowed 0.3328 ÷ 0.0211 = 15." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h004
+  recompute: { calc: conduitMaxSameSize, inputs: { raceway: "IMC", tradeSize: "1-1/2", size: "4" } }
+  domainId: nec.conduit-fill
+  commonMistake: "If you got 10, you truncated 10.80 — the decimal is exactly at the 0.8 threshold, so the Table 1 note permits rounding up. If you got 10 via EMT, you also used the wrong Table 4 row (EMT = 2.036 in² vs IMC = 2.225 in²)."
+  skillIds: [nec.conduit.same-size]
+  type: numeric
+  difficulty: 5
+  stem: "A pump-house feeder uses 4 AWG THHN conductors in 1-1/2 in. intermediate metal conduit (IMC). What is the maximum number permitted at the 40% fill limit? (conductors)"
+  answer: { kind: numeric, value: 11, unit: "conductors", tolerance: 0 }
+  solution:
+    keyIdea: "IMC has its own (larger) Table 4 area, and 10.80 sits exactly on the 0.8 round-up threshold."
+    codePath: ["Ch.9 Table 4 (1-1/2 in. IMC = 2.225 in²)", "Ch.9 Table 5 (4 THHN = 0.0824 in²)", "Ch.9 Table 1 Note"]
+    steps:
+      - { text: "Usable area: 2.225 × 0.40 = 0.89 in².", ref: "Ch.9 Table 4" }
+      - { text: "0.89 ÷ 0.0824 = 10.80 conductors.", ref: "Ch.9 Table 5" }
+      - { text: "Decimal 0.80 meets the ≥ 0.8 threshold → round up to 11.", ref: "Ch.9 Table 1 Note" }
+  trapIds: [table-column-selection, next-size-up-rounding]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h005
+  recompute: { calc: conduitMaxSameSize, inputs: { raceway: "EMT", tradeSize: "1-1/2", size: "14" } }
+  domainId: nec.conduit-fill
+  commonMistake: "If you got 83, you truncated 83.96 — with a decimal of 0.96 the Table 1 note requires rounding up. (Ampacity adjustment for that many conductors is a separate 310.15 problem, not a fill problem.)"
+  skillIds: [nec.conduit.same-size]
+  type: numeric
+  difficulty: 4
+  stem: "A control-wiring homerun packs 14 AWG THHN conductors into 1-1/2 in. EMT. Ignoring ampacity adjustment, what is the maximum number of 14 AWG THHN conductors permitted at the 40% fill limit? (conductors)"
+  answer: { kind: numeric, value: 84, unit: "conductors", tolerance: 0 }
+  solution:
+    keyIdea: "Fill and ampacity adjustment are separate checks; the fill math alone ends with a ≥ 0.8 round-up."
+    codePath: ["Ch.9 Table 4 (1-1/2 in. EMT = 2.036 in²)", "Ch.9 Table 5 (14 THHN = 0.0097 in²)", "Ch.9 Table 1 Note"]
+    steps:
+      - { text: "Usable area: 2.036 × 0.40 = 0.8144 in².", ref: "Ch.9 Table 4" }
+      - { text: "0.8144 ÷ 0.0097 = 83.96 conductors.", ref: "Ch.9 Table 5" }
+      - { text: "Decimal 0.96 ≥ 0.8 → round up to 84.", ref: "Ch.9 Table 1 Note" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- 60% nipple fill ---------------------------------------------------------
+- id: q-cond-h006
+  recompute: { calc: conduitMaxSameSize, inputs: { raceway: "EMT", tradeSize: "1", size: "12", fillPercent: 60 } }
+  domainId: nec.conduit-fill
+  commonMistake: "If you got 26, you used the 40% full-run limit — a raceway not exceeding 24 in. between enclosures is a nipple and may be filled to 60% (Ch.9 Note 4). If you got 38, you truncated 38.98 instead of rounding up."
+  skillIds: [nec.conduit.same-size, nec.conduit.percent-fill]
+  type: numeric
+  difficulty: 5
+  stem: "An 18 in. length of 1 in. EMT connects two adjacent panel enclosures. How many 12 AWG THHN conductors are permitted through this nipple? (conductors)"
+  answer: { kind: numeric, value: 39, unit: "conductors", tolerance: 0 }
+  solution:
+    keyIdea: "A raceway ≤ 24 in. between enclosures is a nipple: 60% fill applies, then the 0.8 round-up note."
+    codePath: ["Ch.9 Notes to Tables, Note 4 (nipple = 60%)", "Ch.9 Table 4 (1 in. EMT = 0.864 in²)", "Ch.9 Table 5 (12 THHN = 0.0133 in²)", "Ch.9 Table 1 Note"]
+    steps:
+      - { text: "18 in. ≤ 24 in. → nipple, 60% fill permitted.", ref: "Ch.9 Note 4" }
+      - { text: "Usable area: 0.864 × 0.60 = 0.5184 in².", ref: "Ch.9 Table 4" }
+      - { text: "0.5184 ÷ 0.0133 = 38.98; decimal 0.98 ≥ 0.8 → round up to 39.", ref: "Ch.9 Table 1 Note" }
+  trapIds: [table-column-selection, next-size-up-rounding]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h007
+  recompute: { calc: conduitMaxSameSize, inputs: { raceway: "PVC80", tradeSize: "3/4", size: "10", fillPercent: 60 } }
+  domainId: nec.conduit-fill
+  commonMistake: "If you got 5, you used the 40% limit instead of the 60% nipple allowance. If you got 14, you used the Schedule 40 area (0.508 in²) instead of Schedule 80 (0.297 in²)."
+  skillIds: [nec.conduit.same-size, nec.conduit.percent-fill]
+  type: numeric
+  difficulty: 4
+  stem: "A 12 in. Schedule 80 PVC nipple (3/4 in. trade size) joins a meter base to a disconnect. How many 10 AWG THHN conductors are permitted through the nipple? (conductors)"
+  answer: { kind: numeric, value: 8, unit: "conductors", tolerance: 0 }
+  solution:
+    keyIdea: "Two overrides stack: the 60% nipple allowance AND the smaller Schedule 80 internal area."
+    codePath: ["Ch.9 Note 4 (nipple = 60%)", "Ch.9 Table 4 (3/4 in. PVC-80 = 0.297 in²)", "Ch.9 Table 5 (10 THHN = 0.0211 in²)"]
+    steps:
+      - { text: "12 in. ≤ 24 in. → nipple, 60% fill.", ref: "Ch.9 Note 4" }
+      - { text: "Usable area: 0.297 × 0.60 = 0.1782 in².", ref: "Ch.9 Table 4" }
+      - { text: "0.1782 ÷ 0.0211 = 8.45 → round down to 8.", ref: "Ch.9 Table 1 Note" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h008
+  recompute: { calc: conduitMaxSameSize, inputs: { raceway: "EMT", tradeSize: "3/4", size: "8", fillPercent: 60 } }
+  domainId: nec.conduit-fill
+  commonMistake: "If you got 9, you rounded 8.74 up — 0.74 is below the 0.8 threshold, so you must round DOWN even in a nipple."
+  skillIds: [nec.conduit.same-size, nec.conduit.percent-fill]
+  type: numeric
+  difficulty: 4
+  stem: "A 6 in. nipple of 3/4 in. EMT connects a gutter to a panelboard. How many 8 AWG THHN conductors are permitted through it at the nipple fill limit? (conductors)"
+  answer: { kind: numeric, value: 8, unit: "conductors", tolerance: 0 }
+  solution:
+    keyIdea: "The 60% nipple allowance still ends with the standard rounding rule: down unless the decimal is ≥ 0.8."
+    codePath: ["Ch.9 Note 4 (nipple = 60%)", "Ch.9 Table 4 (3/4 in. EMT = 0.533 in²)", "Ch.9 Table 5 (8 THHN = 0.0366 in²)", "Ch.9 Table 1 Note"]
+    steps:
+      - { text: "Usable area: 0.533 × 0.60 = 0.3198 in².", ref: "Ch.9 Table 4" }
+      - { text: "0.3198 ÷ 0.0366 = 8.74 conductors.", ref: "Ch.9 Table 5" }
+      - { text: "Decimal 0.74 < 0.8 → round down to 8.", ref: "Ch.9 Table 1 Note" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- 53% / 31% fill overrides -------------------------------------------------
+- id: q-cond-h009
+  recompute: { calc: conduitMaxSameSize, inputs: { raceway: "PVC80", tradeSize: "1-1/4", size: "4/0", fillPercent: 53 } }
+  domainId: nec.conduit-fill
+  commonMistake: "If you got 0, you applied the 40% (>2 conductors) column — a raceway containing only ONE conductor may be filled to 53% (Ch.9 Table 1)."
+  skillIds: [nec.conduit.same-size, nec.conduit.percent-fill]
+  type: numeric
+  difficulty: 4
+  stem: "A single 4/0 AWG THHN conductor is sleeved by itself in 1-1/4 in. Schedule 80 PVC for physical protection. Applying the one-conductor fill limit of Chapter 9 Table 1, how many 4/0 THHN conductors are permitted in this sleeve? (conductors)"
+  answer: { kind: numeric, value: 1, unit: "conductors", tolerance: 0 }
+  solution:
+    keyIdea: "One conductor gets 53% of the raceway area — and only 53% of Schedule 80's small bore fits exactly one 4/0."
+    codePath: ["Ch.9 Table 1 (1 conductor = 53%)", "Ch.9 Table 4 (1-1/4 in. PVC-80 = 0.852 in²)", "Ch.9 Table 5 (4/0 THHN = 0.3237 in²)"]
+    steps:
+      - { text: "Usable area: 0.852 × 0.53 = 0.4516 in².", ref: "Ch.9 Table 1" }
+      - { text: "0.4516 ÷ 0.3237 = 1.40 → round down to 1.", ref: "Ch.9 Table 1 Note" }
+      - { text: "At 40% the sleeve would fail (0.3408 in² usable vs 0.3237 in² used barely passes for one, but the correct column is 53%)." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h010
+  recompute: { calc: conduitMaxSameSize, inputs: { raceway: "PVC80", tradeSize: "2", size: "4/0", fillPercent: 31 } }
+  domainId: nec.conduit-fill
+  commonMistake: "If you got 1, you truncated 1.82 — the 0.8 round-up note applies even in the 31% two-conductor column. If you got 2 by using 40%, you used the wrong Table 1 row for two conductors."
+  skillIds: [nec.conduit.same-size, nec.conduit.percent-fill]
+  type: numeric
+  difficulty: 5
+  stem: "Exactly two 4/0 AWG THHN conductors of a 240 V circuit are pulled into 2 in. Schedule 80 PVC. Applying the two-conductor fill limit of Chapter 9 Table 1, what is the maximum number of 4/0 THHN conductors permitted? (conductors)"
+  answer: { kind: numeric, value: 2, unit: "conductors", tolerance: 0 }
+  solution:
+    keyIdea: "Two conductors use the 31% column, and 1.82 rounds up to 2 under the ≥ 0.8 note — the installation just complies."
+    codePath: ["Ch.9 Table 1 (2 conductors = 31%)", "Ch.9 Table 4 (2 in. PVC-80 = 1.905 in²)", "Ch.9 Table 5 (4/0 THHN = 0.3237 in²)", "Ch.9 Table 1 Note"]
+    steps:
+      - { text: "Usable area: 1.905 × 0.31 = 0.5906 in².", ref: "Ch.9 Table 1" }
+      - { text: "0.5906 ÷ 0.3237 = 1.82 conductors.", ref: "Ch.9 Table 5" }
+      - { text: "Decimal 0.82 ≥ 0.8 → round up to 2; the two-conductor pull is permitted.", ref: "Ch.9 Table 1 Note" }
+  trapIds: [table-column-selection, next-size-up-rounding]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Mixed-size fills: total area used (then compare to 40% of Table 4) -------
+- id: q-cond-h011
+  recompute:
+    { calc: conduitAreaUsed, inputs: { conductors: [{ size: "3/0", count: 3 }, { size: "6", count: 1 }] } }
+  domainId: nec.conduit-fill
+  commonMistake: "If you got 0.8037 in², you forgot the 6 AWG equipment grounding conductor — EVERY conductor occupies fill area, including the EGC."
+  skillIds: [nec.conduit.mixed-size]
+  type: numeric
+  difficulty: 4
+  stem: "A 200 A feeder is pulled as three 3/0 AWG THHN phase conductors plus one 6 AWG THHN equipment grounding conductor. What total conductor cross-sectional area must be counted against the raceway fill? (in²)"
+  answer: { kind: numeric, value: 0.8544, unit: "in²", tolerance: 0.001 }
+  solution:
+    keyIdea: "Mixed sizes require summing every conductor's Table 5 area — EGC included — before comparing to 40% of Table 4."
+    codePath: ["Ch.9 Table 5 (3/0 THHN = 0.2679, 6 THHN = 0.0507)", "Ch.9 Table 4 (compare to 40%)"]
+    steps:
+      - { text: "3 × 0.2679 = 0.8037 in² for the phase conductors.", ref: "Ch.9 Table 5" }
+      - { text: "Add the EGC: 0.8037 + 0.0507 = 0.8544 in²." }
+      - { text: "Check: 1-1/2 in. EMT gives 2.036 × 0.40 = 0.8144 in² — too small; 2 in. EMT (1.3424 in²) is the minimum.", ref: "Ch.9 Table 4" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h012
+  recompute:
+    { calc: conduitAreaUsed, inputs: { conductors: [{ size: "1/0", count: 4 }, { size: "8", count: 1 }] } }
+  domainId: nec.conduit-fill
+  commonMistake: "If you got 0.742 in², you dropped the 8 AWG EGC; if you got 0.6612, you used the 1 AWG area (0.1562) instead of 1/0 (0.1855)."
+  skillIds: [nec.conduit.mixed-size]
+  type: numeric
+  difficulty: 4
+  stem: "A 3-phase, 4-wire feeder uses four 1/0 AWG THHN conductors with one 8 AWG THHN equipment grounding conductor. What total conductor area counts toward the conduit fill? (in²)"
+  answer: { kind: numeric, value: 0.7786, unit: "in²", tolerance: 0.001 }
+  solution:
+    keyIdea: "Sum every Table 5 area — and read the 1/0 row, not the 1 AWG row."
+    codePath: ["Ch.9 Table 5 (1/0 THHN = 0.1855, 8 THHN = 0.0366)", "Ch.9 Table 4 (compare to 40%)"]
+    steps:
+      - { text: "4 × 0.1855 = 0.742 in².", ref: "Ch.9 Table 5" }
+      - { text: "0.742 + 0.0366 = 0.7786 in² total." }
+      - { text: "Check: 1-1/2 in. EMT usable area is 2.036 × 0.40 = 0.8144 in² ≥ 0.7786 — the smallest EMT that works.", ref: "Ch.9 Table 4" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h013
+  recompute:
+    { calc: conduitAreaUsed, inputs: { conductors: [{ size: "4/0", count: 3 }, { size: "4", count: 1 }] } }
+  domainId: nec.conduit-fill
+  commonMistake: "If you got 0.9711 in², you left out the 4 AWG EGC. Annex C cannot be used here at all — the conductors are not all the same size."
+  skillIds: [nec.conduit.mixed-size]
+  type: numeric
+  difficulty: 4
+  stem: "An IMC feeder run contains three 4/0 AWG THHN ungrounded conductors and one 4 AWG THHN equipment grounding conductor. What total conductor area must be compared against 40% of the Table 4 raceway area? (in²)"
+  answer: { kind: numeric, value: 1.0535, unit: "in²", tolerance: 0.001 }
+  solution:
+    keyIdea: "Mixed sizes force the Table 5 + Table 4 area method; the EGC pushes the total past the 1-1/2 in. IMC limit."
+    codePath: ["Ch.9 Table 5 (4/0 THHN = 0.3237, 4 THHN = 0.0824)", "Ch.9 Table 4 (IMC 40%)"]
+    steps:
+      - { text: "3 × 0.3237 = 0.9711 in².", ref: "Ch.9 Table 5" }
+      - { text: "0.9711 + 0.0824 = 1.0535 in² total." }
+      - { text: "Check: 1-1/2 in. IMC gives 2.225 × 0.40 = 0.89 in² — too small; 2 in. IMC (3.63 × 0.40 = 1.452 in²) is the minimum.", ref: "Ch.9 Table 4" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h014
+  recompute:
+    {
+      calc: conduitAreaUsed,
+      inputs: { conductors: [{ size: "12", count: 8 }, { size: "10", count: 6 }, { size: "8", count: 2 }] },
+    }
+  domainId: nec.conduit-fill
+  commonMistake: "If your total forced a 1-1/4 in. EMT, you likely mis-multiplied a count; 0.3062 in² fits within 40% of 1 in. EMT (0.3456 in²)."
+  skillIds: [nec.conduit.mixed-size]
+  type: numeric
+  difficulty: 4
+  stem: "A multi-circuit homerun combines eight 12 AWG, six 10 AWG, and two 8 AWG THHN conductors in one raceway. What total conductor cross-sectional area counts toward the fill? (in²)"
+  answer: { kind: numeric, value: 0.3062, unit: "in²", tolerance: 0.001 }
+  solution:
+    keyIdea: "Three size groups: multiply each Table 5 area by its count, then sum."
+    codePath: ["Ch.9 Table 5 (12 = 0.0133, 10 = 0.0211, 8 = 0.0366)", "Ch.9 Table 4 (compare to 40%)"]
+    steps:
+      - { text: "8 × 0.0133 = 0.1064; 6 × 0.0211 = 0.1266; 2 × 0.0366 = 0.0732.", ref: "Ch.9 Table 5" }
+      - { text: "Sum: 0.1064 + 0.1266 + 0.0732 = 0.3062 in²." }
+      - { text: "Check: 1 in. EMT usable area 0.864 × 0.40 = 0.3456 in² ≥ 0.3062 (3/4 in. at 0.2132 in² fails).", ref: "Ch.9 Table 4" }
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h015
+  recompute:
+    { calc: conduitAreaUsed, inputs: { conductors: [{ size: "2", count: 3 }, { size: "6", count: 1 }] } }
+  domainId: nec.conduit-fill
+  commonMistake: "The same 0.3981 in² fits 1-1/4 in. EMT (0.5984 in² usable) but NOT 1-1/4 in. Schedule 80 PVC (0.3408 in² usable) — the raceway type changes the answer to the follow-up sizing question."
+  skillIds: [nec.conduit.mixed-size]
+  type: numeric
+  difficulty: 5
+  stem: "A subpanel feeder uses three 2 AWG THHN conductors and one 6 AWG THHN equipment grounding conductor. What total conductor area must be compared to the 40% column of Chapter 9 Table 4 when sizing the raceway? (in²)"
+  answer: { kind: numeric, value: 0.3981, unit: "in²", tolerance: 0.001 }
+  solution:
+    keyIdea: "The conductor area is raceway-independent — but the minimum trade size then depends heavily on raceway type (EMT vs Schedule 80 PVC)."
+    codePath: ["Ch.9 Table 5 (2 THHN = 0.1158, 6 THHN = 0.0507)", "Ch.9 Table 4 (EMT vs PVC-80 rows)"]
+    steps:
+      - { text: "3 × 0.1158 + 1 × 0.0507 = 0.3474 + 0.0507 = 0.3981 in².", ref: "Ch.9 Table 5" }
+      - { text: "In EMT: 1-1/4 in. gives 1.496 × 0.40 = 0.5984 in² — passes.", ref: "Ch.9 Table 4" }
+      - { text: "In Schedule 80 PVC: 1-1/4 in. gives only 0.852 × 0.40 = 0.3408 in² — fails; 1-1/2 in. (0.4672 in²) is required.", ref: "Ch.9 Table 4" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h016
+  recompute:
+    { calc: conduitAreaUsed, inputs: { conductors: [{ size: "4/0", count: 3 }, { size: "2", count: 1 }] } }
+  domainId: nec.conduit-fill
+  commonMistake: "If you rejected 1-1/2 in. EMT in the follow-up check, you applied 40% — a raceway ≤ 24 in. between enclosures is a nipple and may be filled to 60%."
+  skillIds: [nec.conduit.mixed-size, nec.conduit.percent-fill]
+  type: numeric
+  difficulty: 5
+  stem: "A 20 in. EMT nipple between a CT cabinet and a disconnect carries three 4/0 AWG THHN conductors and one 2 AWG THHN grounded conductor. What total conductor area must be compared to the nipple fill limit? (in²)"
+  answer: { kind: numeric, value: 1.0869, unit: "in²", tolerance: 0.001 }
+  solution:
+    keyIdea: "Compute the Table 5 area sum as usual, then compare to 60% (not 40%) because the raceway is a nipple."
+    codePath: ["Ch.9 Table 5 (4/0 = 0.3237, 2 = 0.1158)", "Ch.9 Note 4 (nipple = 60%)", "Ch.9 Table 4"]
+    steps:
+      - { text: "3 × 0.3237 + 1 × 0.1158 = 0.9711 + 0.1158 = 1.0869 in².", ref: "Ch.9 Table 5" }
+      - { text: "20 in. ≤ 24 in. → nipple, 60% fill applies.", ref: "Ch.9 Note 4" }
+      - { text: "1-1/2 in. EMT at 60%: 2.036 × 0.60 = 1.2216 in² ≥ 1.0869 — passes; at 40% (0.8144 in²) it would fail.", ref: "Ch.9 Table 4" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Minimum trade size (single-choice, mixed sizes) ---------------------------
+- id: q-cond-h017
+  domainId: nec.conduit-fill
+  skillIds: [nec.conduit.mixed-size, nec.conduit.percent-fill]
+  type: single
+  difficulty: 5
+  stem: "A full-length EMT run (about 60 ft) will contain three 3/0 AWG THHN conductors and one 6 AWG THHN equipment grounding conductor (total conductor area 0.8544 in²). What is the minimum EMT trade size?"
+  options:
+    - id: a
+      text: "1 in."
+      distractorRationale: "Compares the 0.8544 in² conductor area to the FULL internal area of 1 in. EMT (0.864 in²) instead of its 40% usable area (0.3456 in²)."
+    - id: b
+      text: "1-1/4 in."
+      distractorRationale: "Applies the 60% nipple allowance (1.496 × 0.60 = 0.8976 in²) to a 60 ft run — the nipple rule only covers raceways not exceeding 24 in."
+    - id: c
+      text: "1-1/2 in."
+      distractorRationale: "Omits the 6 AWG EGC: 0.8037 in² would squeak under the 1-1/2 in. limit of 0.8144 in², but the EGC counts toward fill."
+    - id: d
+      text: "2 in."
+      isCorrect: true
+  answer: { kind: single, optionId: d }
+  solution:
+    keyIdea: "Every conductor (EGC included) counts, and a full-length run gets only 40% of Table 4."
+    codePath: ["Ch.9 Table 5 (sum = 0.8544 in²)", "Ch.9 Table 4 (EMT × 40%)", "Ch.9 Table 1"]
+    steps:
+      - { text: "Total area: 3 × 0.2679 + 0.0507 = 0.8544 in².", ref: "Ch.9 Table 5" }
+      - { text: "1-1/2 in. EMT: 2.036 × 0.40 = 0.8144 in² < 0.8544 — fails.", ref: "Ch.9 Table 4" }
+      - { text: "2 in. EMT: 3.356 × 0.40 = 1.3424 in² ≥ 0.8544 — minimum trade size is 2 in.", ref: "Ch.9 Table 4" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h018
+  domainId: nec.conduit-fill
+  skillIds: [nec.conduit.mixed-size]
+  type: single
+  difficulty: 5
+  stem: "An underground service lateral subject to physical damage uses Schedule 80 PVC with four 2 AWG THHN conductors and one 8 AWG THHN equipment grounding conductor (total area 0.4998 in²). What is the minimum Schedule 80 PVC trade size for this full-length run?"
+  options:
+    - id: a
+      text: "1 in."
+      distractorRationale: "Sums only one phase conductor plus the EGC (0.1158 + 0.0366 = 0.1524 in²) against 40% of 1 in. PVC-80 (0.198 in²) — all five conductors must be counted."
+    - id: b
+      text: "1-1/4 in."
+      distractorRationale: "Reads the Schedule 40 row of Table 4 (1.453 × 0.40 = 0.5812 in²); Schedule 80's 1-1/4 in. usable area is only 0.3408 in²."
+    - id: c
+      text: "1-1/2 in."
+      distractorRationale: "Omits the 8 AWG EGC: 0.4632 in² would just fit the 1-1/2 in. PVC-80 limit of 0.4672 in², but the EGC counts toward fill."
+    - id: d
+      text: "2 in."
+      isCorrect: true
+  answer: { kind: single, optionId: d }
+  solution:
+    keyIdea: "Schedule 80's thick wall shrinks every Table 4 area — a fill that fits Schedule 40 at 1-1/4 in. needs 2 in. in Schedule 80."
+    codePath: ["Ch.9 Table 5 (2 = 0.1158, 8 = 0.0366)", "Ch.9 Table 4 (PVC-80 row × 40%)"]
+    steps:
+      - { text: "Total area: 4 × 0.1158 + 0.0366 = 0.4998 in².", ref: "Ch.9 Table 5" }
+      - { text: "1-1/2 in. PVC-80: 1.168 × 0.40 = 0.4672 in² < 0.4998 — fails.", ref: "Ch.9 Table 4" }
+      - { text: "2 in. PVC-80: 1.905 × 0.40 = 0.762 in² ≥ 0.4998 — minimum trade size is 2 in.", ref: "Ch.9 Table 4" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h019
+  domainId: nec.conduit-fill
+  skillIds: [nec.conduit.mixed-size]
+  type: single
+  difficulty: 4
+  stem: "A lighting-control raceway (full-length EMT) will carry eight 14 AWG THHN and four 12 AWG THHN conductors (total area 0.1308 in²). What is the minimum EMT trade size?"
+  options:
+    - id: a
+      text: "1/2 in."
+      distractorRationale: "Treats all twelve conductors as 14 AWG (12 × 0.0097 = 0.1164 in² ≤ 0.1216 in²) — the four 12 AWG conductors push the true total past the 1/2 in. limit."
+    - id: b
+      text: "3/4 in."
+      isCorrect: true
+    - id: c
+      text: "1 in."
+      distractorRationale: "Reads the PVC Schedule 80 column of Table 4 (3/4 in. = 0.1188 in² usable, fails) instead of the EMT column (0.2132 in², passes)."
+    - id: d
+      text: "1-1/4 in."
+      distractorRationale: "Jumps a size 'to be safe' — the question asks the code-minimum trade size, and 3/4 in. EMT already satisfies the 40% limit."
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Mixed sizes bar Annex C; sum Table 5 areas and test each EMT size at 40%."
+    codePath: ["Ch.9 Table 5 (14 = 0.0097, 12 = 0.0133)", "Ch.9 Table 4 (EMT × 40%)"]
+    steps:
+      - { text: "Total area: 8 × 0.0097 + 4 × 0.0133 = 0.0776 + 0.0532 = 0.1308 in².", ref: "Ch.9 Table 5" }
+      - { text: "1/2 in. EMT: 0.304 × 0.40 = 0.1216 in² < 0.1308 — fails.", ref: "Ch.9 Table 4" }
+      - { text: "3/4 in. EMT: 0.533 × 0.40 = 0.2132 in² ≥ 0.1308 — minimum is 3/4 in.", ref: "Ch.9 Table 4" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Which-rule / procedure questions ------------------------------------------
+- id: q-cond-h020
+  domainId: nec.conduit-fill
+  skillIds: [nec.conduit.percent-fill, nec.conduit.mixed-size]
+  type: single
+  difficulty: 4
+  stem: "A 26 in. length of EMT between two enclosures will contain 10 AWG and 6 AWG THHN conductors together. Which procedure correctly determines whether the raceway is adequately sized?"
+  options:
+    - id: a
+      text: "Look up the count for the larger conductor size in Annex C Table C.1."
+      distractorRationale: "Annex C tables apply only when ALL conductors in the raceway are the same size and insulation type."
+    - id: b
+      text: "Sum the Chapter 9 Table 5 conductor areas and compare to 60% of the Table 4 internal area."
+      distractorRationale: "The 60% allowance is for nipples not exceeding 24 in.; at 26 in. this raceway must meet the standard limit."
+    - id: c
+      text: "Sum the Chapter 9 Table 5 conductor areas and compare to 40% of the Table 4 internal area."
+      isCorrect: true
+    - id: d
+      text: "Compare the conductor areas to 31% of the Table 4 internal area because only two conductor sizes are present."
+      distractorRationale: "The 31% row applies to exactly two CONDUCTORS in the raceway, not two conductor sizes."
+  answer: { kind: single, optionId: c }
+  solution:
+    keyIdea: "Mixed sizes force the area method, and at 26 in. the raceway misses the 24 in. nipple allowance."
+    codePath: ["Ch.9 Table 1 (>2 conductors = 40%)", "Ch.9 Table 5 + Table 4", "Ch.9 Note 4 (nipple ≤ 24 in.)"]
+    steps:
+      - { text: "Different sizes in one raceway → Annex C is unavailable; use Table 5 areas." }
+      - { text: "26 in. > 24 in. → not a nipple, so the 60% allowance does not apply.", ref: "Ch.9 Note 4" }
+      - { text: "More than two conductors → compare the area sum to 40% of the Table 4 area.", ref: "Ch.9 Table 1" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h021
+  domainId: nec.conduit-fill
+  skillIds: [nec.conduit.percent-fill]
+  type: single
+  difficulty: 4
+  stem: "A full-length conduit contains two 6 AWG THHN circuit conductors plus one 10 AWG THHN equipment grounding conductor. Which Chapter 9 Table 1 fill limit applies?"
+  options:
+    - id: a
+      text: "31%, because the circuit has two current-carrying conductors."
+      distractorRationale: "Table 1 counts ALL conductors occupying the raceway — the EGC included — not just current-carrying conductors; three conductors are present."
+    - id: b
+      text: "40%, because three conductors occupy the raceway."
+      isCorrect: true
+    - id: c
+      text: "53%, because the conductors form a single circuit."
+      distractorRationale: "The 53% row is for a raceway containing exactly ONE conductor, not one circuit."
+    - id: d
+      text: "60%, because grounding conductors are excluded from fill."
+      distractorRationale: "60% is the nipple allowance for raceways ≤ 24 in.; EGCs are never excluded from conduit fill calculations."
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Conduit fill counts physical conductors, unlike 310.15 adjustment which counts current-carrying conductors."
+    codePath: ["Ch.9 Table 1", "Ch.9 Notes to Tables"]
+    steps:
+      - { text: "Count every conductor in the raceway: 2 circuit conductors + 1 EGC = 3." }
+      - { text: "More than two conductors → 40% fill limit.", ref: "Ch.9 Table 1" }
+      - { text: "Contrast: the EGC would NOT count for ampacity adjustment under 310.15(C)(1), which is a separate rule." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-cond-h022
+  domainId: nec.conduit-fill
+  skillIds: [nec.conduit.percent-fill]
+  type: single
+  difficulty: 4
+  stem: "A conduit body-to-panel connection uses a raceway measuring exactly 24 in. between the enclosures. Which statement about its conductor fill is correct?"
+  options:
+    - id: a
+      text: "It qualifies as a nipple, so 60% fill is permitted."
+      isCorrect: true
+    - id: b
+      text: "It must meet 40% fill because a nipple must be LESS than 24 in."
+      distractorRationale: "The nipple allowance applies to raceways NOT EXCEEDING 24 in. — exactly 24 in. still qualifies."
+    - id: c
+      text: "It qualifies for 60% fill only if all conductors are the same size."
+      distractorRationale: "The 60% nipple allowance has no same-size condition; mixed sizes simply use the area method against 60% of Table 4."
+    - id: d
+      text: "It is limited to 53% fill because it connects only two enclosures."
+      distractorRationale: "53% is the one-conductor row of Table 1; the number of enclosures is irrelevant to the fill percentage."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "The nipple threshold is 'not exceeding 24 in.' — the boundary length itself qualifies for 60% fill."
+    codePath: ["Ch.9 Notes to Tables, Note 4", "Ch.9 Table 1"]
+    steps:
+      - { text: "24 in. ≤ 24 in. → the raceway is a nipple.", ref: "Ch.9 Note 4" }
+      - { text: "Nipples may be filled to 60% of the Table 4 internal area, and 310.15(C)(1) adjustment factors need not be applied." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."

@@ -1,0 +1,577 @@
+# Overcurrent protection (Article 240 / 210.20 / 240.21) — HARD tier (difficulty 4–5). 2020 NEC. DRAFT.
+# Multi-step chains: derating → 240.4(D) cap → 240.4(B) next-size-up (permitted vs forbidden), mixed loads, tap rules.
+
+# ---- Derating chains feeding an OCPD decision -------------------------------
+- id: q-ocp-h001
+  recompute: { calc: ampacityDerating, inputs: { size: "10", tempColumn: 90, ambientC: 50, ccc: 8 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you got 32.8, you applied the ambient correction but skipped the 8-conductor adjustment; if you got 28, you started from the 75°C column instead of the 90°C insulation rating."
+  skillIds: [nec.ocp.small-conductor]
+  type: numeric
+  difficulty: 4
+  stem: "Eight current-carrying 10 AWG THHN/THWN-2 copper conductors share one EMT run through a 50°C boiler room. Before you can pick the branch breaker, what is the corrected and adjusted ampacity (A) of each conductor?"
+  answer: { kind: numeric, value: 22.96, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Start from the 90°C cell for derating, then multiply BOTH the ambient correction and the >3 CCC adjustment."
+    codePath: ["Table 310.16 → 10 AWG Cu @90°C = 40 A", "Table 310.15(B)(1) → 50°C @90°C col = 0.82", "Table 310.15(C)(1) → 8 CCC = 0.70"]
+    steps:
+      - { text: "10 AWG Cu, 90°C column = 40 A.", ref: "Table 310.16" }
+      - { text: "Ambient 50°C, 90°C conductor → 0.82: 40 × 0.82 = 32.8 A.", ref: "Table 310.15(B)(1)" }
+      - { text: "8 current-carrying conductors → 0.70: 32.8 × 0.70 = 22.96 A.", ref: "Table 310.15(C)(1)" }
+      - { text: "This 22.96 A — not the 240.4(D) 30 A cap — is what the breaker choice must start from." }
+  trapIds: [adjusted-vs-corrected-ampacity, table-column-selection]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h002
+  domainId: nec.overcurrent
+  commonMistake: "240.4(D) is a CEILING (30 A for 10 AWG Cu), not the answer — once derating drops the ampacity below the cap, you size from the derated value and may round up per 240.4(B)."
+  skillIds: [nec.ocp.small-conductor, nec.ocp.next-size-up]
+  type: single
+  difficulty: 5
+  stem: "The 10 AWG THHN/THWN-2 copper conductors above (8 CCC in one raceway, 50°C ambient, 75°C terminations) end up with a corrected/adjusted ampacity of 22.96 A. They feed a fixed 22 A noncontinuous load — not a multioutlet receptacle circuit. What is the maximum standard breaker permitted?"
+  options:
+    - { id: a, text: "20 A", distractorRationale: "Rounding down is not required here: 240.4(B) permits the next standard size above 22.96 A because the circuit is not a multioutlet receptacle circuit and the result stays under the 240.4(D) cap." }
+    - { id: b, text: "25 A", isCorrect: true }
+    - { id: c, text: "30 A", distractorRationale: "This applies the 240.4(D) cap as the rating without checking the derated ampacity — 30 A would leave the conductor protected above its 22.96 A ampacity with no 240.4(B) basis." }
+    - { id: d, text: "35 A", distractorRationale: "This is 40 × 0.82 = 32.8 A rounded up — the 8-conductor adjustment factor (0.70) was skipped." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Derated ampacity governs when it is BELOW the 240.4(D) cap; next-size-up is then permitted as long as the result does not exceed the cap."
+    codePath: ["310.15 → 22.96 A", "240.4(B) → next standard size", "240.6(A) → 25 A", "240.4(D) → 30 A ceiling (not exceeded)"]
+    steps:
+      - { text: "Corrected/adjusted ampacity = 22.96 A; load (22 A) does not exceed it." }
+      - { text: "22.96 A matches no standard rating; conditions of 240.4(B) are met → next standard size.", ref: "240.4(B)" }
+      - { text: "Next standard size above 22.96 A is 25 A.", ref: "240.6(A)" }
+      - { text: "25 A ≤ the 30 A small-conductor ceiling for 10 AWG Cu → 25 A stands.", ref: "240.4(D)" }
+  trapIds: [next-size-up-rounding, adjusted-vs-corrected-ampacity]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h003
+  recompute: { calc: smallConductorMaxOCPD, inputs: { size: "10" } }
+  domainId: nec.overcurrent
+  commonMistake: "If you got 40 you used the 90°C table cell; if you got 35 you corrected 40 × 0.96 and rounded — 240.4(D) overrides both when the derated ampacity is still above 30 A."
+  skillIds: [nec.ocp.small-conductor]
+  type: numeric
+  difficulty: 4
+  stem: "A 10 AWG THHN copper circuit runs with only 3 current-carrying conductors through a 35°C attic, so its corrected 90°C ampacity works out to 38.4 A — comfortably high. It supplies a fixed noncontinuous load. What is the maximum overcurrent device rating (A) actually permitted for this conductor?"
+  answer: { kind: numeric, value: 30, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "When derating leaves the ampacity ABOVE the small-conductor cap, 240.4(D) — not the derated value — sets the maximum OCPD."
+    codePath: ["Table 310.16 + 310.15(B)(1) → 40 × 0.96 = 38.4 A", "240.4(D) → 10 AWG Cu capped at 30 A"]
+    steps:
+      - { text: "Corrected ampacity: 40 × 0.96 = 38.4 A — the conductor could carry more than 30 A." }
+      - { text: "240.4(D) still caps the OCPD for 10 AWG copper at 30 A unless a listed exception (240.4(E)/(G)) applies.", ref: "240.4(D)" }
+      - { text: "Maximum device = 30 A; the higher derated ampacity does not unlock a larger breaker." }
+  trapIds: [next-size-up-rounding, actual-current-vs-table]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h004
+  recompute: { calc: smallConductorMaxOCPD, inputs: { size: "12", material: "al" } }
+  domainId: nec.overcurrent
+  commonMistake: "If you got 20 A you used the copper limit — the aluminum 240.4(D) caps are one step lower (12 AWG Al = 15 A)."
+  skillIds: [nec.ocp.small-conductor]
+  type: numeric
+  difficulty: 4
+  stem: "A remodel uses 12 AWG aluminum MC cable for a lighting circuit. The apprentice notes 12 AWG is 'a 20-amp wire' and lands it on a 20 A breaker. Per 240.4(D), what is the maximum breaker rating (A) actually permitted for 12 AWG aluminum?"
+  answer: { kind: numeric, value: 15, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "The 240.4(D) small-conductor caps are material-specific; aluminum limits sit below the familiar copper values."
+    codePath: ["240.4(D) → 12 AWG Al = 15 A (Cu would be 20 A)"]
+    steps:
+      - { text: "The '12 AWG = 20 A' habit is a COPPER rule.", ref: "240.4(D)" }
+      - { text: "12 AWG aluminum / copper-clad aluminum is capped at 15 A.", ref: "240.4(D)" }
+  trapIds: [table-column-selection]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h005
+  recompute: { calc: ampacityDerating, inputs: { size: "3/0", tempColumn: 90, ambientC: 35, ccc: 6, terminationColumn: 75 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you got 200 you jumped straight to the 75°C termination value; if you got 216 you applied the correction but skipped the 6-conductor adjustment."
+  skillIds: [nec.ocp.next-size-up]
+  type: numeric
+  difficulty: 4
+  stem: "A feeder uses 3/0 THHN/THWN-2 copper in a raceway with 6 current-carrying conductors, passing through a 35°C mechanical space. Breaker and panel terminations are rated 75°C. Before selecting the feeder OCPD, what is the final allowable ampacity (A) of each 3/0 conductor?"
+  answer: { kind: numeric, value: 172.8, unit: "A", tolerance: 1.0 }
+  solution:
+    keyIdea: "Derate from the 90°C column, then compare against the 75°C termination value and take the LOWER."
+    codePath: ["Table 310.16 → 3/0 Cu @90°C = 225 A", "0.96 × 0.80 factors", "110.14(C) → 75°C cap = 200 A"]
+    steps:
+      - { text: "3/0 Cu at 90°C = 225 A.", ref: "Table 310.16" }
+      - { text: "35°C ambient → 0.96; 6 CCC → 0.80: 225 × 0.96 × 0.80 = 172.8 A.", ref: "310.15" }
+      - { text: "75°C termination cap = 200 A; 172.8 < 200, so the derated value governs.", ref: "110.14(C)" }
+  trapIds: [termination-temp-limit, adjusted-vs-corrected-ampacity]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h006
+  recompute: { calc: nextStandardSize, inputs: { value: 141.96 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you got 175 you protected at the 75°C table value (175 A) without derating; if you got 125 you rounded the 141.96 A result DOWN — 240.4(B) permits the next size UP here."
+  skillIds: [nec.ocp.next-size-up]
+  type: numeric
+  difficulty: 5
+  stem: "A 2/0 THHN/THWN-2 copper feeder shares a raceway with 4 current-carrying conductors through a 40°C space; terminations are 75°C. It supplies a 130 A noncontinuous load with no receptacle outlets. Working the full chain — derate, check terminations, then apply 240.4(B) — what is the maximum standard OCPD rating (A) permitted?"
+  answer: { kind: numeric, value: 150, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "The OCPD is chosen from the FINAL derated ampacity, and 240.4(B) then permits the next standard size up because all three conditions are met."
+    codePath: ["Table 310.16 → 2/0 Cu @90°C = 195 A", "195 × 0.91 × 0.80 = 141.96 A", "110.14(C) → 175 A cap (not binding)", "240.4(B) + 240.6(A) → 150 A"]
+    steps:
+      - { text: "2/0 Cu at 90°C = 195 A; 40°C → 0.91; 4 CCC → 0.80: 195 × 0.91 × 0.80 = 141.96 A.", ref: "310.15" }
+      - { text: "75°C termination value 175 A is higher, so 141.96 A governs.", ref: "110.14(C)" }
+      - { text: "Load 130 A ≤ 141.96 A; no receptacles; result ≤ 800 A → 240.4(B) conditions met.", ref: "240.4(B)" }
+      - { text: "Next standard size above 141.96 A is 150 A.", ref: "240.6(A)" }
+  trapIds: [next-size-up-rounding, termination-temp-limit, adjusted-vs-corrected-ampacity]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live. Recompute covers the final 240.6(A) step; intermediate 141.96 A derives from Tables 310.16/310.15 as shown in steps."
+
+# ---- Mixed continuous / noncontinuous chains ---------------------------------
+- id: q-ocp-h007
+  recompute: { calc: ocpdMixedLoad, inputs: { continuous: 52, noncontinuous: 27, standardize: 1 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you got 80, you added 52 + 27 = 79 and standardized without the 125% factor on the continuous portion."
+  skillIds: [nec.ocp.standard-ratings]
+  type: numeric
+  difficulty: 4
+  stem: "A retail feeder carries 52 A of show-window lighting that runs all business day (continuous) plus 27 A of noncontinuous receptacle load. Per 210.20(A)/215.3, using a standard rating, what minimum OCPD (A) is required?"
+  answer: { kind: numeric, value: 100, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Only the continuous portion is multiplied by 125%; the sum is then taken to a standard rating."
+    codePath: ["215.3 / 210.20(A)", "240.6(A)"]
+    steps:
+      - { text: "52 × 1.25 = 65 A; + 27 A = 92 A.", ref: "215.3" }
+      - { text: "92 A is not standard → next standard size is 100 A.", ref: "240.6(A)" }
+  trapIds: [continuous-load-125, next-size-up-rounding]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h008
+  recompute: { calc: ocpdMixedLoad, inputs: { continuous: 88, noncontinuous: 45, standardize: 1 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you got 150, you summed 88 + 45 = 133 and standardized — the 125% factor on the 88 A continuous load pushes the requirement past 150 A."
+  skillIds: [nec.ocp.standard-ratings]
+  type: numeric
+  difficulty: 5
+  stem: "A commercial kitchen feeder serves 88 A of continuous refrigeration load and 45 A of noncontinuous mixed equipment. The foreman has a 150 A breaker on the truck and asks if it's big enough. Per 215.3/210.20(A), what is the minimum standard OCPD rating (A) that actually complies?"
+  answer: { kind: numeric, value: 175, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "The 125% continuous factor can push the requirement past an 'obviously fine' breaker — compute before answering the foreman."
+    codePath: ["215.3 / 210.20(A)", "240.6(A)"]
+    steps:
+      - { text: "88 × 1.25 = 110 A; + 45 A = 155 A.", ref: "215.3" }
+      - { text: "155 A exceeds 150 A, so the truck-stock breaker fails; next standard size is 175 A.", ref: "240.6(A)" }
+  trapIds: [continuous-load-125, next-size-up-rounding]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h009
+  recompute: { calc: continuousLoad, inputs: { current: 96 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you answered 96, you skipped the 125% continuous factor; note the 120 A result is NOT itself a standard rating — the standard-size step comes next."
+  skillIds: [nec.ocp.standard-ratings]
+  type: numeric
+  difficulty: 4
+  stem: "A parking-garage EV charging bank draws 96 A and, by definition, is a continuous load. Before selecting a standard rating, what minimum computed OCPD value (A) does 210.20(A) require?"
+  answer: { kind: numeric, value: 120, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Continuous load × 125% gives the computed minimum; standardizing is a separate, second step."
+    codePath: ["210.20(A) → 96 × 1.25", "240.6(A) (next step, not asked here)"]
+    steps:
+      - { text: "96 A × 1.25 = 120 A computed minimum.", ref: "210.20(A)" }
+      - { text: "120 A is not a 240.6(A) standard rating — the device selected must be the next standard size (125 A)." }
+  trapIds: [continuous-load-125]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h010
+  recompute: { calc: ocpdMixedLoad, inputs: { continuous: 76, noncontinuous: 30, standardize: 1 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you got 150, you rounded up unnecessarily — 125 A is already a standard rating, so no next-size-up step applies."
+  skillIds: [nec.ocp.standard-ratings]
+  type: numeric
+  difficulty: 4
+  stem: "An office-floor feeder supplies 76 A of continuous lighting and 30 A of noncontinuous load. Using a standard rating per 215.3 and 240.6(A), what minimum OCPD (A) is required?"
+  answer: { kind: numeric, value: 125, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "When the 125%/100% sum LANDS on a standard rating, that rating is the answer — don't reflexively jump another size."
+    codePath: ["215.3 / 210.20(A)", "240.6(A)"]
+    steps:
+      - { text: "76 × 1.25 = 95 A; + 30 A = 125 A.", ref: "215.3" }
+      - { text: "125 A is a standard 240.6(A) rating → the chain ends there.", ref: "240.6(A)" }
+  trapIds: [continuous-load-125, next-size-up-rounding]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h011
+  recompute: { calc: ampacityDerating, inputs: { size: "1/0", material: "al", tempColumn: 90, ambientC: 45, ccc: 4, terminationColumn: 75 } }
+  domainId: nec.overcurrent
+  commonMistake: "If you got 118.32, you used the COPPER 1/0 row (170 A @90°C) — the scenario switched to aluminum; if you got 120, you jumped to the 75°C aluminum termination value without derating."
+  skillIds: [nec.ocp.next-size-up]
+  type: numeric
+  difficulty: 5
+  stem: "Mid-project, the feeder conductors are value-engineered from copper to 1/0 AWG ALUMINUM XHHW-2 (90°C). Four current-carrying conductors share the raceway through a 45°C penthouse; terminations are 75°C. What is the final allowable ampacity (A) each 1/0 aluminum conductor brings to the breaker-sizing step?"
+  answer: { kind: numeric, value: 93.96, unit: "A", tolerance: 1.0 }
+  solution:
+    keyIdea: "The material switch moves you to the aluminum ampacity rows before any correction, adjustment, or termination check."
+    codePath: ["Table 310.16 (Al) → 1/0 @90°C = 135 A", "0.87 × 0.80 factors", "110.14(C) → 75°C Al cap = 120 A"]
+    steps:
+      - { text: "1/0 aluminum at 90°C = 135 A (not the copper 170 A).", ref: "Table 310.16" }
+      - { text: "45°C → 0.87; 4 CCC → 0.80: 135 × 0.87 × 0.80 = 93.96 A.", ref: "310.15" }
+      - { text: "75°C aluminum termination value 120 A is higher, so 93.96 A governs.", ref: "110.14(C)" }
+  trapIds: [table-column-selection, termination-temp-limit, adjusted-vs-corrected-ampacity]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- 240.4(B) permitted vs FORBIDDEN ----------------------------------------
+- id: q-ocp-h012
+  domainId: nec.overcurrent
+  commonMistake: "Above 800 A the next-size-up allowance disappears: the conductor ampacity must be at least the device rating, so you round the DEVICE down, never the protection up."
+  skillIds: [nec.ocp.next-size-up, nec.ocp.standard-ratings]
+  type: single
+  difficulty: 5
+  stem: "Parallel service-lateral conductors have a combined allowable ampacity of 830 A and supply a 780 A noncontinuous load. The engineer pencils in a 1000 A main. What is the maximum standard overcurrent device rating actually permitted to protect these conductors?"
+  options:
+    - { id: a, text: "800 A", isCorrect: true }
+    - { id: b, text: "1000 A", distractorRationale: "This applies the 240.4(B) next-size-up allowance, which is only available where the device does not exceed 800 A — above that, the ampacity must be at least the device rating." }
+    - { id: c, text: "830 A", distractorRationale: "830 A is the conductor ampacity, not a standard 240.6(A) device rating; the device must be a standard (or listed adjustable) rating not exceeding the ampacity." }
+    - { id: d, text: "900 A", distractorRationale: "900 A is not a standard rating in 240.6(A) — the list jumps from 800 A to 1000 A." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Over 800 A, 240.4(C) flips the rule: conductor ampacity ≥ device rating, so the device rounds DOWN to 800 A."
+    codePath: ["240.4(B) → allowance limited to devices ≤ 800 A", "240.4(C) → ampacity ≥ rating above 800 A", "240.6(A) → 800 A is the largest standard rating ≤ 830 A"]
+    steps:
+      - { text: "Next standard size above 830 A would be 1000 A — but 1000 > 800, so 240.4(B) cannot be used.", ref: "240.4(B)" }
+      - { text: "For a device over 800 A, the conductor ampacity (830 A) must be ≥ the device rating — 1000 A fails.", ref: "240.4(C)" }
+      - { text: "Largest standard rating not exceeding 830 A is 800 A.", ref: "240.6(A)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h013
+  domainId: nec.overcurrent
+  skillIds: [nec.ocp.next-size-up]
+  type: single
+  difficulty: 4
+  stem: "Four circuits each have a conductor ampacity that falls between standard OCPD ratings. For which one is the 240.4(B) next-size-up allowance NOT available?"
+  options:
+    - { id: a, text: "A feeder to fixed electric space heating, conductor ampacity 96 A", distractorRationale: "A feeder to fixed equipment has no cord-and-plug receptacle outlets, so 240.4(B) is available (next size 100 A)." }
+    - { id: b, text: "A branch circuit supplying multiple general-use receptacles, conductor ampacity 27 A", isCorrect: true }
+    - { id: c, text: "A feeder to a single fixed appliance, conductor ampacity 57 A", distractorRationale: "A dedicated feeder to fixed equipment meets the 240.4(B) conditions (next size 60 A)." }
+    - { id: d, text: "An 8 AWG copper circuit to fixed equipment with a derated ampacity of 44 A", distractorRationale: "8 AWG is above the 240.4(D) small-conductor sizes, and fixed equipment has no receptacle outlets — next size 45 A is permitted." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "240.4(B)(1) bars next-size-up on multioutlet branch circuits supplying receptacles for cord-and-plug-connected portable loads."
+    codePath: ["240.4(B)(1)–(3)"]
+    steps:
+      - { text: "The allowance requires: no multioutlet receptacle circuit, ampacity not matching a standard rating, and a device ≤ 800 A.", ref: "240.4(B)" }
+      - { text: "Only the multiple-receptacle branch circuit fails a condition — its OCPD must round DOWN.", ref: "240.4(B)(1)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h014
+  domainId: nec.overcurrent
+  commonMistake: "Above 800 A there is no rounding in either direction on the protection side — the CONDUCTOR must rise to meet the device."
+  skillIds: [nec.ocp.standard-ratings, nec.ocp.next-size-up]
+  type: single
+  difficulty: 4
+  stem: "A switchboard main is specified as a 1200 A circuit breaker. Under 240.4(C), what is the minimum allowable ampacity of the feeder conductors it protects?"
+  options:
+    - { id: a, text: "1200 A", isCorrect: true }
+    - { id: b, text: "1000 A", distractorRationale: "This treats the next standard rating BELOW the device as acceptable — 240.4(C) requires the ampacity to be at least the device rating, with no next-size-up allowance." }
+    - { id: c, text: "1500 A", distractorRationale: "This applies a 125% factor that belongs to continuous-load sizing (215.3), not to the 240.4(C) ampacity-vs-device comparison." }
+    - { id: d, text: "960 A", distractorRationale: "This is 80% of the device rating — an inverted continuous-load factor; no such reduction exists in 240.4(C)." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "For devices over 800 A, the conductor ampacity must be greater than or equal to the device rating — full stop."
+    codePath: ["240.4(C)"]
+    steps:
+      - { text: "1200 A > 800 A, so 240.4(B) is off the table.", ref: "240.4(B)" }
+      - { text: "The conductors must have an allowable ampacity of at least 1200 A.", ref: "240.4(C)" }
+  trapIds: [next-size-up-rounding, continuous-load-125]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h015
+  domainId: nec.overcurrent
+  commonMistake: "Both 240.4(B) and 240.4(D) are in play here: next-size-up is fine, but only up to the small-conductor ceiling."
+  skillIds: [nec.ocp.small-conductor, nec.ocp.next-size-up]
+  type: single
+  difficulty: 5
+  stem: "A 12 AWG THHN/THWN-2 copper circuit runs with 9 current-carrying conductors through a 40°C ceiling space (75°C terminations) and feeds a fixed 18 A noncontinuous load with no receptacles. Its corrected and adjusted ampacity computes to 19.11 A. What is the maximum standard breaker permitted?"
+  options:
+    - { id: a, text: "15 A", distractorRationale: "This rounds down on the assumption that small conductors can never use 240.4(B) — the allowance applies as long as the result does not exceed the 240.4(D) cap, and 20 A equals the cap exactly." }
+    - { id: b, text: "20 A", isCorrect: true }
+    - { id: c, text: "25 A", distractorRationale: "This is the 75°C table value used as the limit with no derating and no 240.4(D) check — 25 A exceeds the 20 A cap for 12 AWG Cu." }
+    - { id: d, text: "30 A", distractorRationale: "This is the raw 90°C table cell (30 A) with derating and the small-conductor cap both ignored." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Next-size-up from the derated ampacity is permitted, and here it lands exactly on the 240.4(D) ceiling."
+    codePath: ["Table 310.16 → 12 Cu @90°C = 30 A", "30 × 0.91 × 0.70 = 19.11 A", "240.4(B) + 240.6(A) → 20 A", "240.4(D) → 20 A cap (met, not exceeded)"]
+    steps:
+      - { text: "Derated ampacity: 30 × 0.91 (40°C) × 0.70 (9 CCC) = 19.11 A; load 18 A fits.", ref: "310.15" }
+      - { text: "Next standard size above 19.11 A is 20 A.", ref: "240.4(B)" }
+      - { text: "20 A does not exceed the 240.4(D) cap for 12 AWG Cu → 20 A is the maximum.", ref: "240.4(D)" }
+  trapIds: [next-size-up-rounding, adjusted-vs-corrected-ampacity, termination-temp-limit]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h016
+  domainId: nec.overcurrent
+  commonMistake: "When the next standard size ABOVE the derated ampacity would exceed the 240.4(D) cap, the cap wins and the breaker drops to the cap value."
+  skillIds: [nec.ocp.small-conductor, nec.ocp.next-size-up]
+  type: single
+  difficulty: 5
+  stem: "A 14 AWG THHN/THWN-2 copper control-power circuit shares a raceway with 5 current-carrying conductors through a 45°C area and supplies a fixed 14 A noncontinuous load. Its corrected and adjusted ampacity computes to 17.4 A. What is the maximum standard breaker permitted?"
+  options:
+    - { id: a, text: "20 A", distractorRationale: "20 A is the 240.4(B) next size above 17.4 A, but it exceeds the 15 A small-conductor cap for 14 AWG Cu — 240.4(B) cannot carry you past 240.4(D)." }
+    - { id: b, text: "15 A", isCorrect: true }
+    - { id: c, text: "25 A", distractorRationale: "This is the raw 90°C table cell for 14 AWG Cu with derating and the 240.4(D) cap both ignored." }
+    - { id: d, text: "30 A", distractorRationale: "This confuses 14 AWG with the 10 AWG copper cap (30 A) from 240.4(D)." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "240.4(B) can round up only within the 240.4(D) ceiling — here the ceiling (15 A) is below the would-be next size (20 A)."
+    codePath: ["Table 310.16 → 14 Cu @90°C = 25 A", "25 × 0.87 × 0.80 = 17.4 A", "240.4(B) would give 20 A", "240.4(D) → 15 A ceiling governs"]
+    steps:
+      - { text: "Derated ampacity: 25 × 0.87 (45°C) × 0.80 (5 CCC) = 17.4 A; the 14 A load fits.", ref: "310.15" }
+      - { text: "Next standard size above 17.4 A is 20 A — but 240.4(D) caps 14 AWG Cu at 15 A.", ref: "240.4(D)" }
+      - { text: "Maximum breaker = 15 A; 17.4 A ampacity still exceeds the 15 A device, so the install works.", ref: "240.4(D)" }
+  trapIds: [next-size-up-rounding, adjusted-vs-corrected-ampacity]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h017
+  domainId: nec.overcurrent
+  skillIds: [nec.ocp.small-conductor]
+  type: single
+  difficulty: 4
+  stem: "An inspector walks a panel schedule. Which conductor/breaker pairing is a 240.4(D) violation (no 240.4(E)/(G) application applies)?"
+  options:
+    - { id: a, text: "14 AWG copper on a 20 A breaker", isCorrect: true }
+    - { id: b, text: "12 AWG aluminum on a 15 A breaker", distractorRationale: "15 A is exactly the 240.4(D) limit for 12 AWG aluminum — compliant." }
+    - { id: c, text: "10 AWG copper on a 30 A breaker", distractorRationale: "30 A is exactly the 240.4(D) limit for 10 AWG copper — compliant." }
+    - { id: d, text: "12 AWG copper on a 20 A breaker", distractorRationale: "20 A is exactly the 240.4(D) limit for 12 AWG copper — compliant." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Each small-conductor size/material has a hard OCPD ceiling; 14 AWG copper tops out at 15 A."
+    codePath: ["240.4(D) → 14 Cu = 15 A; 12 Cu = 20 A / 12 Al = 15 A; 10 Cu = 30 A"]
+    steps:
+      - { text: "14 AWG copper is capped at 15 A — a 20 A breaker violates 240.4(D).", ref: "240.4(D)" }
+      - { text: "The other three pairings each sit exactly AT their cap, which is permitted." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Tap rules (240.21) ------------------------------------------------------
+- id: q-ocp-h018
+  domainId: nec.overcurrent
+  commonMistake: "The 1/10 fraction belongs to the 10-ft rule; 1/3 belongs to the 25-ft rule — mixing them is the classic tap error."
+  skillIds: [nec.ocp.tap-rules]
+  type: single
+  difficulty: 4
+  stem: "In an existing plant, an 8-ft field-installed tap is made from a feeder protected by a 400 A breaker to supply a panelboard, meeting all the enclosure and termination conditions of the 10-ft rule. What is the minimum ampacity the tap conductors must have relative to the feeder OCPD (assume the calculated load is smaller)?"
+  options:
+    - { id: a, text: "40 A — not less than 1/10 of the 400 A device", isCorrect: true }
+    - { id: b, text: "133 1/3 A — not less than 1/3 of the 400 A device", distractorRationale: "The 1/3 fraction is the 25-ft rule (240.21(B)(2)); this 8-ft tap qualifies for the 10-ft rule's 1/10 minimum for field installations." }
+    - { id: c, text: "400 A — equal to the feeder device", distractorRationale: "Requiring full feeder ampacity would erase the tap allowance entirely; the tap rules exist to permit smaller conductors under defined conditions." }
+    - { id: d, text: "100 A — not less than 1/4 of the 400 A device", distractorRationale: "There is no 1/4 fraction in the 240.21(B) tap rules — it is 1/10 (10 ft, field-installed) or 1/3 (25 ft)." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Under the 10-ft rule, field-installed tap conductors need ampacity ≥ the load AND ≥ 1/10 of the feeder OCPD."
+    codePath: ["240.21(B)(1) → 10-ft tap, 1/10 of device rating for field installations", "400 ÷ 10 = 40 A"]
+    steps:
+      - { text: "Tap ≤ 10 ft and conditions met → 240.21(B)(1) applies.", ref: "240.21(B)(1)" }
+      - { text: "Field-installed: ampacity ≥ 1/10 × 400 A = 40 A, and never less than the calculated load.", ref: "240.21(B)(1)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h019
+  domainId: nec.overcurrent
+  skillIds: [nec.ocp.tap-rules]
+  type: single
+  difficulty: 4
+  stem: "A 22-ft tap is run from a feeder protected at 600 A to a fused disconnect, with the conductors protected from physical damage. Under the 25-ft tap rule, what is the minimum ampacity required for the tap conductors, and how must they terminate?"
+  options:
+    - { id: a, text: "200 A minimum, terminating in a single OCPD rated no more than the tap ampacity", isCorrect: true }
+    - { id: b, text: "60 A minimum, terminating in a single OCPD", distractorRationale: "60 A is 1/10 of 600 A — the 10-ft rule fraction. A tap over 10 ft must satisfy the 25-ft rule's 1/3 minimum." }
+    - { id: c, text: "600 A minimum, with no termination requirement", distractorRationale: "Full feeder ampacity is not required; the 25-ft rule permits 1/3 — but it adds the single-OCPD termination condition this option drops." }
+    - { id: d, text: "300 A minimum, terminating in up to two OCPDs", distractorRationale: "There is no 1/2 fraction and no two-device allowance — 240.21(B)(2) requires 1/3 of the device rating and termination in a SINGLE set of overcurrent devices." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "The 25-ft rule pairs a 1/3-of-device ampacity floor with a mandatory single-OCPD termination sized to the tap."
+    codePath: ["240.21(B)(2) → 1/3 × 600 A = 200 A + single OCPD ≤ tap ampacity"]
+    steps:
+      - { text: "Tap is over 10 ft but ≤ 25 ft → 240.21(B)(2).", ref: "240.21(B)(2)" }
+      - { text: "Minimum ampacity = 600 ÷ 3 = 200 A." }
+      - { text: "The tap must end in a single circuit breaker or set of fuses rated no more than the tap-conductor ampacity.", ref: "240.21(B)(2)" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h020
+  domainId: nec.overcurrent
+  commonMistake: "Judge a tap against the rule its LENGTH selects — a 20-ft tap is evaluated under the 25-ft rule, not rejected for exceeding 10 ft."
+  skillIds: [nec.ocp.tap-rules]
+  type: single
+  difficulty: 5
+  stem: "A 20-ft tap from a feeder protected at 400 A uses conductors with a 135 A allowable ampacity, is protected from physical damage, and terminates in a single 125 A circuit breaker. Which statement is correct?"
+  options:
+    - { id: a, text: "Compliant — it satisfies the 25-ft rule: ampacity ≥ 1/3 of 400 A and it terminates in a single OCPD not exceeding 135 A", isCorrect: true }
+    - { id: b, text: "Not compliant — a tap longer than 10 ft is not permitted without overcurrent protection at the tap point", distractorRationale: "The 10-ft rule is not the only tap allowance; 240.21(B)(2) permits taps up to 25 ft under its own conditions, which this installation meets." }
+    - { id: c, text: "Not compliant — tap conductors must have an ampacity of at least 400 A to match the feeder device", distractorRationale: "That would nullify the tap rules; 240.21(B)(2) requires only 1/3 of the device rating (133 1/3 A), and 135 A satisfies it." }
+    - { id: d, text: "Not compliant — the terminating breaker should be 150 A, the next standard size above 135 A", distractorRationale: "Next-size-up has no place here: 240.21(B)(2) requires the terminating device to be rated NO MORE than the tap ampacity, so 150 A would itself create a violation." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Work the 25-ft checklist: length ≤ 25 ft, ampacity ≥ 1/3 of the device, protected from damage, single OCPD ≤ tap ampacity."
+    codePath: ["240.21(B)(2)", "400 ÷ 3 = 133.33 A ≤ 135 A", "125 A device ≤ 135 A tap ampacity"]
+    steps:
+      - { text: "20 ft ≤ 25 ft → evaluate under 240.21(B)(2), not the 10-ft rule.", ref: "240.21(B)(2)" }
+      - { text: "1/3 × 400 A = 133 1/3 A; the 135 A conductors qualify." }
+      - { text: "The single 125 A breaker does not exceed the 135 A tap ampacity → compliant." }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h021
+  domainId: nec.overcurrent
+  commonMistake: "240.21 opens by prohibiting the 240.4(B) next-size-up allowance for tap conductors — the tap ampacity minimums are hard floors."
+  skillIds: [nec.ocp.tap-rules, nec.ocp.next-size-up]
+  type: single
+  difficulty: 5
+  stem: "A 25-ft tap from a feeder protected at 450 A needs a minimum tap-conductor ampacity of 150 A (1/3 of 450 A). The journeyman proposes conductors with a derated ampacity of 140 A, arguing 'next-size-up gets me there.' Which statement is correct?"
+  options:
+    - { id: a, text: "Not permitted — 240.21 prohibits applying the 240.4(B) next-size-up allowance to tap conductors, so the ampacity must be at least 150 A", isCorrect: true }
+    - { id: b, text: "Permitted — 240.4(B) allows the next standard size up whenever the ampacity does not match a standard rating", distractorRationale: "240.21 expressly withholds the 240.4(B) allowance from tap conductors; the 1/3 minimum must be met by actual ampacity." }
+    - { id: c, text: "Permitted — as long as the calculated load is 140 A or less, the tap ampacity is adequate", distractorRationale: "Meeting the load is necessary but not sufficient: the 1/3-of-device floor (150 A) applies regardless of how small the load is." }
+    - { id: d, text: "Not permitted — tap conductors must always match the full 450 A feeder protection", distractorRationale: "Over-strict: the 25-ft rule allows 1/3 of the device rating (150 A); full feeder ampacity is not required." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Tap minimums are absolute floors — no rounding up from a lower ampacity via 240.4(B)."
+    codePath: ["240.21 (opening text) → 240.4(B) not permitted for tap conductors", "240.21(B)(2) → ≥ 1/3 × 450 A = 150 A"]
+    steps:
+      - { text: "Required tap ampacity: 450 ÷ 3 = 150 A.", ref: "240.21(B)(2)" }
+      - { text: "140 A < 150 A, and 240.21 bars using next-size-up to bridge the gap — larger conductors are required.", ref: "240.21" }
+  trapIds: [next-size-up-rounding]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Which-rule-first ordering & max-vs-min ----------------------------------
+- id: q-ocp-h022
+  domainId: nec.overcurrent
+  skillIds: [nec.ocp.next-size-up, nec.ocp.small-conductor]
+  type: single
+  difficulty: 4
+  stem: "You are sizing the conductor and breaker for a continuous load in a hot, crowded raceway using 90°C-insulated small copper conductors with 75°C terminations. Which sequence of checks is correct?"
+  options:
+    - { id: a, text: "Load × 125% → derate from the 90°C column → cap at the 75°C termination value → check the 240.4(D) small-conductor ceiling → select the OCPD, using 240.4(B) next-size-up only if its conditions are met", isCorrect: true }
+    - { id: b, text: "Load × 125% → derate from the 75°C column → apply 240.4(B) → then check 240.4(D)", distractorRationale: "Derating starts from the insulation rating (90°C column); and selecting a next-size-up device before checking 240.4(D) can land you above the small-conductor ceiling." }
+    - { id: c, text: "Derate from the 90°C column → load × 125% of the derated value → select the OCPD", distractorRationale: "The 125% factor applies to the LOAD to set the required minimum, not as a multiplier on the derated ampacity — and the 110.14(C)/240.4(D) checks are missing." }
+    - { id: d, text: "Cap at the 75°C termination value first → derate that value → select the OCPD with next-size-up always allowed", distractorRationale: "Correction/adjustment start from the 90°C insulation value, with the 75°C termination applied as a separate cap on the result; and next-size-up is conditional, never automatic." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Requirement (125% load) → derated ampacity (90°C basis) → termination cap → 240.4(D) ceiling → conditional 240.4(B)."
+    codePath: ["210.19/210.20 → 125% continuous", "310.15 from Table 310.16 90°C column", "110.14(C)", "240.4(D)", "240.4(B)/240.6(A)"]
+    steps:
+      - { text: "Compute the required ampacity: continuous load × 125% (plus any noncontinuous at 100%).", ref: "210.19(A)" }
+      - { text: "Derate the 90°C table value by ambient correction and CCC adjustment; then take the lower of that and the 75°C termination value.", ref: "110.14(C)" }
+      - { text: "Check the 240.4(D) ceiling for small conductors, then pick the device — next-size-up only if 240.4(B)'s conditions hold.", ref: "240.4(D)" }
+  trapIds: [continuous-load-125, termination-temp-limit, next-size-up-rounding]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-ocp-h023
+  domainId: nec.overcurrent
+  commonMistake: "The 125%-continuous calculation gives the MINIMUM device; the conductor ampacity gives the MAXIMUM — and when the ampacity IS a standard rating, there is no next-size-up beyond it."
+  skillIds: [nec.ocp.standard-ratings, nec.ocp.next-size-up]
+  type: single
+  difficulty: 5
+  stem: "A feeder serves 50 A of continuous load and 25 A of noncontinuous load using 3 AWG copper conductors at 75°C (allowable ampacity 100 A, no derating required). The minimum OCPD works out to 90 A. What is the MAXIMUM standard rating permitted for this feeder's overcurrent device?"
+  options:
+    - { id: a, text: "90 A", distractorRationale: "90 A is the MINIMUM from 125% × 50 + 25 = 87.5 A standardized — the question asks how large the device may go while still protecting the 100 A conductors." }
+    - { id: b, text: "100 A", isCorrect: true }
+    - { id: c, text: "110 A", distractorRationale: "Next-size-up applies only when the ampacity does NOT correspond to a standard rating; 100 A is itself standard, so the device cannot exceed it." }
+    - { id: d, text: "125 A", distractorRationale: "This rounds up twice — from 100 A conductor ampacity past 110 A — with no code basis; protection may never exceed a standard-matching ampacity." }
+  answer: { kind: single, optionId: b }
+  solution:
+    keyIdea: "Anything from the 90 A minimum up to the conductors' 100 A ampacity is legal; 100 A being a standard rating closes the next-size-up door."
+    codePath: ["215.3 → minimum 90 A", "240.4 → device ≤ conductor ampacity", "240.4(B) → inapplicable when ampacity = standard rating"]
+    steps:
+      - { text: "Minimum: 50 × 1.25 + 25 = 87.5 A → 90 A standard.", ref: "215.3" }
+      - { text: "Maximum: conductors are protected at their 100 A ampacity.", ref: "240.4" }
+      - { text: "100 A is a standard 240.6(A) rating, so 240.4(B) cannot justify 110 A.", ref: "240.4(B)" }
+  trapIds: [continuous-load-125, next-size-up-rounding]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."

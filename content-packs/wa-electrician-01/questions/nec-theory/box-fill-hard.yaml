@@ -1,0 +1,613 @@
+# Box fill (314.16) — HARD tier (difficulty 4–5). 2020 NEC. All DRAFT; SME-verify before live.
+# All numeric answers generated/verified against the boxFill calculator and Table 314.16(B) allowances.
+
+- id: q-box-h001
+  recompute: { calc: boxFill, inputs: { conductors: { "12": 4, "14": 3 }, clampSize: "12", deviceCount: 1, deviceSize: "12", egcSize: "12" } }
+  domainId: nec.box-fill
+  commonMistake: "If you got 23.5, you counted the yoke at 14 AWG. The receptacle has a 12 AWG conductor landed on it, so the yoke counts as 2 × 2.25 in³, not 2 × 2.00 in³."
+  skillIds: [nec.box.largest-conductor, nec.box.device-clamp-allowance, nec.box.egc-allowance]
+  type: numeric
+  difficulty: 4
+  stem: "A device box contains four 12 AWG and three 14 AWG insulated circuit conductors, internal cable clamps, and one duplex receptacle that has both 12 AWG and 14 AWG conductors terminated on it. The equipment grounding conductors are all 12 AWG. What minimum box volume (in³) does 314.16(B) require?"
+  answer: { kind: numeric, value: 24.0, unit: "in³", tolerance: 0.01 }
+  solution:
+    keyIdea: "The yoke counts as two allowances of the LARGEST conductor connected to it — 12 AWG here, even though 14 AWG also lands on it."
+    codePath: ["314.16(B)(1) conductors", "314.16(B)(2) clamps", "314.16(B)(4) device yoke", "314.16(B)(5) EGC", "Table 314.16(B)"]
+    steps:
+      - { text: "Circuit conductors: 4 × 2.25 + 3 × 2.00 = 9.00 + 6.00 = 15.00 in³.", ref: "Table 314.16(B)" }
+      - { text: "All internal clamps together = one allowance at the largest conductor in the box: 2.25 in³.", ref: "314.16(B)(2)" }
+      - { text: "Receptacle yoke = 2 allowances at the largest conductor CONNECTED TO IT (12 AWG): 2 × 2.25 = 4.50 in³.", ref: "314.16(B)(4)" }
+      - { text: "All EGCs together = one allowance at the largest EGC (12 AWG): 2.25 in³.", ref: "314.16(B)(5)" }
+      - { text: "Total = 15.00 + 2.25 + 4.50 + 2.25 = 24.00 in³." }
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h002
+  recompute: { calc: boxFill, inputs: { conductors: { "10": 2, "12": 5 }, clampSize: "10", deviceCount: 1, deviceSize: "12", egcSize: "12" } }
+  domainId: nec.box-fill
+  commonMistake: "If you got 26.0, you counted the yoke at 10 AWG. The 10 AWG only passes through looped and unbroken — it never lands on the device, so the yoke counts at 12 AWG. If you got 23.0, you counted the looped 10 AWG once; its loop is at least twice the 300.14 minimum, so it counts twice."
+  skillIds: [nec.box.largest-conductor, nec.box.conductor-count, nec.box.device-clamp-allowance]
+  type: numeric
+  difficulty: 5
+  stem: "A box with internal cable clamps contains: one 10 AWG conductor that passes through unbroken with a loop longer than twice the minimum free-conductor length of 300.14; five 12 AWG circuit conductors that are spliced or terminate on a receptacle in the box; and 12 AWG equipment grounding conductors. The receptacle has only 12 AWG conductors landed on it. What minimum box volume (in³) is required?"
+  answer: { kind: numeric, value: 25.5, unit: "in³", tolerance: 0.01 }
+  solution:
+    keyIdea: "A looped unbroken conductor with a loop ≥ 2× the 300.14 length counts TWICE; the yoke counts at the largest conductor connected to it (12 AWG), not the largest in the box."
+    codePath: ["314.16(B)(1) looped-conductor rule", "314.16(B)(2)", "314.16(B)(4)", "314.16(B)(5)", "Table 314.16(B)"]
+    steps:
+      - { text: "Looped unbroken 10 AWG (loop ≥ 2 × 300.14 length) = 2 allowances: 2 × 2.50 = 5.00 in³.", ref: "314.16(B)(1)" }
+      - { text: "12 AWG circuit conductors: 5 × 2.25 = 11.25 in³." }
+      - { text: "Clamps = one allowance at the largest conductor in the box (10 AWG): 2.50 in³.", ref: "314.16(B)(2)" }
+      - { text: "Yoke = 2 × largest conductor connected to it (12 AWG): 4.50 in³.", ref: "314.16(B)(4)" }
+      - { text: "All EGCs = one 12 AWG allowance: 2.25 in³.", ref: "314.16(B)(5)" }
+      - { text: "Total = 5.00 + 11.25 + 2.50 + 4.50 + 2.25 = 25.50 in³." }
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h003
+  recompute: { calc: boxFill, inputs: { conductors: { "12": 6 }, clampSize: "12", deviceCount: 1, deviceSize: "12", egcSize: "12" } }
+  domainId: nec.box-fill
+  commonMistake: "If you got 29.25, you counted the three pigtails. Conductors that originate AND terminate inside the box (pigtails) are not counted at all."
+  skillIds: [nec.box.conductor-count, nec.box.device-clamp-allowance, nec.box.egc-allowance]
+  type: numeric
+  difficulty: 4
+  stem: "Three 12/2 w/ground NM cables enter a box through internal clamps. All circuit conductors are spliced, and three 12 AWG pigtails run from the splices to a single receptacle. What minimum box volume (in³) does 314.16(B) require?"
+  answer: { kind: numeric, value: 22.5, unit: "in³", tolerance: 0.01 }
+  solution:
+    keyIdea: "Pigtails (conductors that originate and end inside the box) are never counted; count only the conductors entering the box plus the clamp, yoke, and EGC allowances."
+    codePath: ["314.16(B)(1) — no allowance for conductors originating and ending in the box", "314.16(B)(2)", "314.16(B)(4)", "314.16(B)(5)"]
+    steps:
+      - { text: "Circuit conductors entering: 3 cables × 2 = 6 × 2.25 = 13.50 in³.", ref: "Table 314.16(B)" }
+      - { text: "Pigtails = 0 allowances.", ref: "314.16(B)(1)" }
+      - { text: "Clamps = one 12 AWG allowance: 2.25 in³." }
+      - { text: "Receptacle yoke = 2 × 2.25 = 4.50 in³." }
+      - { text: "All three EGCs = one 12 AWG allowance: 2.25 in³." }
+      - { text: "Total = 13.50 + 2.25 + 4.50 + 2.25 = 22.50 in³." }
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h004
+  recompute: { calc: boxFill, inputs: { conductors: { "12": 6, "14": 2 }, clampSize: "12", deviceCount: 2, deviceSize: "12", egcSize: "12" } }
+  domainId: nec.box-fill
+  commonMistake: "If you got 30.5, you counted the switch yoke at 14 AWG. The switch also has the 12 AWG feed landed on it, so BOTH yokes count at 12 AWG (2 × 2.25 each)."
+  skillIds: [nec.box.largest-conductor, nec.box.device-clamp-allowance, nec.box.egc-allowance]
+  type: numeric
+  difficulty: 5
+  stem: "A two-gang box with internal cable clamps contains six 12 AWG conductors and two 14 AWG switch-leg conductors. One yoke holds a receptacle with only 12 AWG landed on it; the other holds a switch with a 12 AWG feed and a 14 AWG switch leg landed on it. Equipment grounding conductors are all 12 AWG. What minimum box volume (in³) is required?"
+  answer: { kind: numeric, value: 31.0, unit: "in³", tolerance: 0.01 }
+  solution:
+    keyIdea: "EACH yoke gets its own double allowance, sized by the largest conductor connected to that yoke — the 12 AWG feed makes the switch yoke a 12 AWG yoke despite the 14 AWG leg."
+    codePath: ["314.16(B)(1)", "314.16(B)(2)", "314.16(B)(4) per yoke", "314.16(B)(5)", "Table 314.16(B)"]
+    steps:
+      - { text: "Conductors: 6 × 2.25 + 2 × 2.00 = 13.50 + 4.00 = 17.50 in³." }
+      - { text: "Clamps = one 12 AWG allowance: 2.25 in³." }
+      - { text: "Receptacle yoke: 2 × 2.25 = 4.50 in³ (largest connected = 12 AWG)." }
+      - { text: "Switch yoke: 12 AWG feed lands on it, so 2 × 2.25 = 4.50 in³ — not 2 × 2.00.", ref: "314.16(B)(4)" }
+      - { text: "All EGCs = one 12 AWG allowance: 2.25 in³." }
+      - { text: "Total = 17.50 + 2.25 + 4.50 + 4.50 + 2.25 = 31.00 in³." }
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h005
+  domainId: nec.box-fill
+  skillIds: [nec.box.conductor-count, nec.box.device-clamp-allowance, nec.box.egc-allowance]
+  type: single
+  difficulty: 5
+  stem: "A single-gang box marked 21.0 in³ contains three 12/2 w/ground NM cables secured by internal clamps. All six circuit conductors are spliced, three 12 AWG pigtails feed one duplex receptacle, and the three 12 AWG EGCs are joined. Is this installation permitted under 314.16?"
+  options:
+    - id: a
+      text: "No — the required fill is 22.5 in³, which exceeds the 21.0 in³ box."
+      isCorrect: true
+    - id: b
+      text: "Yes — the required fill is 20.25 in³, which fits in the 21.0 in³ box."
+      distractorRationale: "This is the total with the clamp allowance forgotten (13.5 + 4.5 + 2.25 = 20.25). Internal clamps add one allowance of the largest conductor."
+    - id: c
+      text: "Yes — only the six circuit conductors count, so 13.5 in³ fits easily."
+      distractorRationale: "Clamps (1 allowance), the yoke (2 allowances), and the EGCs (1 allowance) must all be added under 314.16(B)(2), (4), and (5)."
+    - id: d
+      text: "No — the required fill is 29.25 in³ because the pigtails also count."
+      distractorRationale: "Pigtails originate and terminate inside the box and are not counted; adding 3 × 2.25 for them inflates the total from 22.5 to 29.25."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Total all allowances (conductors + clamps + yoke + EGCs, no pigtails), then compare to the marked box volume."
+    codePath: ["314.16(A) box volume ≥ 314.16(B) fill", "314.16(B)(1)-(5)", "Table 314.16(B)"]
+    steps:
+      - { text: "Conductors: 6 × 2.25 = 13.50 in³; pigtails not counted.", ref: "314.16(B)(1)" }
+      - { text: "Clamps 2.25 + yoke 2 × 2.25 = 4.50 + EGCs 2.25 = 9.00 in³." }
+      - { text: "Required = 22.50 in³ > 21.0 in³ marked volume → not permitted; a larger box is required.", ref: "314.16(A)" }
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h006
+  domainId: nec.box-fill
+  skillIds: [nec.box.largest-conductor, nec.box.device-clamp-allowance]
+  type: single
+  difficulty: 4
+  stem: "A single-pole switch on one yoke has a 12 AWG feed and a 14 AWG switch leg terminated on it. In the box-fill calculation, what volume allowance does this yoke contribute?"
+  options:
+    - id: a
+      text: "4.50 in³ (2 × 2.25 in³)"
+      isCorrect: true
+    - id: b
+      text: "4.00 in³ (2 × 2.00 in³)"
+      distractorRationale: "Uses the 14 AWG switch leg instead of the largest conductor connected to the yoke. 314.16(B)(4) requires the 12 AWG allowance."
+    - id: c
+      text: "2.25 in³ (a single 12 AWG allowance)"
+      distractorRationale: "A device yoke counts as a DOUBLE volume allowance, not a single one."
+    - id: d
+      text: "8.50 in³ (2 × 2.25 plus 2 × 2.00, one double allowance per size)"
+      distractorRationale: "The yoke gets one double allowance total, based only on the largest conductor connected — not a double allowance for each conductor size on it."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "One double allowance per yoke, sized by the largest conductor connected to that yoke."
+    codePath: ["314.16(B)(4)", "Table 314.16(B) → 12 AWG = 2.25 in³"]
+    steps:
+      - { text: "Largest conductor connected to the yoke is 12 AWG.", ref: "314.16(B)(4)" }
+      - { text: "Allowance = 2 × 2.25 = 4.50 in³." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h007
+  recompute: { calc: boxFill, inputs: { conductors: { "6": 4, "8": 3 }, clampSize: "6", egcSize: "8" } }
+  domainId: nec.box-fill
+  commonMistake: "If you got 35.0, you based the clamp allowance on 8 AWG. The clamp allowance uses the LARGEST conductor in the box — 6 AWG (5.0 in³)."
+  skillIds: [nec.box.conductor-count, nec.box.device-clamp-allowance, nec.box.largest-conductor]
+  type: numeric
+  difficulty: 4
+  stem: "A junction box with internal cable clamps contains four 6 AWG and three 8 AWG insulated conductors, all spliced, plus 8 AWG equipment grounding conductors. There are no devices. What minimum box volume (in³) is required?"
+  answer: { kind: numeric, value: 37.0, unit: "in³", tolerance: 0.01 }
+  solution:
+    keyIdea: "The clamp allowance is one allowance at the largest conductor in the box (6 AWG); the EGC allowance is one allowance at the largest EGC (8 AWG)."
+    codePath: ["314.16(B)(1)", "314.16(B)(2)", "314.16(B)(5)", "Table 314.16(B) → 6 AWG = 5.0, 8 AWG = 3.0"]
+    steps:
+      - { text: "Conductors: 4 × 5.0 + 3 × 3.0 = 20.0 + 9.0 = 29.0 in³." }
+      - { text: "Clamps = one 6 AWG allowance = 5.0 in³ (largest conductor in the box).", ref: "314.16(B)(2)" }
+      - { text: "All EGCs = one 8 AWG allowance = 3.0 in³ (largest EGC).", ref: "314.16(B)(5)" }
+      - { text: "Total = 29.0 + 5.0 + 3.0 = 37.0 in³." }
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h008
+  recompute: { calc: boxFill, inputs: { conductors: { "12": 7 }, clampSize: "12", egcSize: "12" } }
+  domainId: nec.box-fill
+  commonMistake: "If you got 13.5, you skipped the three unbroken pass-through conductors. A conductor passing through without splice or termination still counts as one allowance (its loop here is short, so it does not double)."
+  skillIds: [nec.box.conductor-count, nec.box.egc-allowance]
+  type: numeric
+  difficulty: 4
+  stem: "A pull point uses a box with internal clamps. One 12/3 w/ground cable passes straight through with its three circuit conductors unbroken (no splices, loops shorter than twice the 300.14 minimum). Two 12/2 w/ground cables enter and have all four circuit conductors spliced. All EGCs are 12 AWG and are joined in the box. No devices are installed. What minimum box volume (in³) is required?"
+  answer: { kind: numeric, value: 20.25, unit: "in³", tolerance: 0.01 }
+  solution:
+    keyIdea: "Unbroken conductors passing through the box each count once — they are not free even though they are not spliced."
+    codePath: ["314.16(B)(1)", "314.16(B)(2)", "314.16(B)(5)", "Table 314.16(B)"]
+    steps:
+      - { text: "Pass-through unbroken conductors: 3 × 2.25 = 6.75 in³ (one allowance each; loop < 2 × 300.14 length).", ref: "314.16(B)(1)" }
+      - { text: "Spliced conductors: 4 × 2.25 = 9.00 in³." }
+      - { text: "Clamps = 2.25 in³; all EGCs = 2.25 in³." }
+      - { text: "Total = 6.75 + 9.00 + 2.25 + 2.25 = 20.25 in³." }
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h009
+  domainId: nec.box-fill
+  skillIds: [nec.box.egc-allowance, nec.box.largest-conductor]
+  type: single
+  difficulty: 5
+  stem: "A box contains 10 AWG circuit conductors, a device yoke with only 12 AWG conductors landed on it, internal clamps, and equipment grounding conductors of 12 AWG and 10 AWG. Which statement correctly assigns the allowance sizes?"
+  options:
+    - id: a
+      text: "Clamps count at 10 AWG (largest in box), the yoke at 12 AWG (largest connected to it), and all EGCs together at 10 AWG (largest EGC)."
+      isCorrect: true
+    - id: b
+      text: "Clamps, yoke, and EGCs all count at 10 AWG because 10 AWG is the largest conductor in the box."
+      distractorRationale: "Only the clamp allowance keys off the largest conductor in the box. The yoke uses the largest conductor connected to that yoke — 12 AWG here."
+    - id: c
+      text: "Clamps count at 10 AWG, the yoke at 12 AWG, and each EGC counts separately at its own size."
+      distractorRationale: "All EGCs together contribute a single allowance based on the largest EGC — they are never counted one-by-one under 314.16(B)(5)."
+    - id: d
+      text: "Clamps count at 12 AWG because clamps grip the cables that are terminated, and the yoke at 10 AWG."
+      distractorRationale: "This reverses both rules: clamps use the largest conductor in the box (10 AWG); the yoke uses the largest conductor connected to it (12 AWG)."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Three different 'largest conductor' bases: clamps → largest in box; yoke → largest connected to that yoke; EGCs → largest EGC, one allowance total."
+    codePath: ["314.16(B)(2)", "314.16(B)(4)", "314.16(B)(5)"]
+    steps:
+      - { text: "Clamp fill: single allowance, largest conductor present in the box (10 AWG).", ref: "314.16(B)(2)" }
+      - { text: "Device fill: double allowance per yoke, largest conductor connected to that yoke (12 AWG).", ref: "314.16(B)(4)" }
+      - { text: "EGC fill: single allowance for all EGCs, based on the largest EGC (10 AWG).", ref: "314.16(B)(5)" }
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h010
+  domainId: nec.box-fill
+  skillIds: [nec.box.conductor-count]
+  type: single
+  difficulty: 4
+  stem: "A luminaire with a domed canopy is mounted on a ceiling box. Four 18 AWG fixture wires and the luminaire's equipment grounding conductor enter the box from the canopy. Under the exception to 314.16(B)(1), how are these five conductors treated in the box-fill calculation?"
+  options:
+    - id: a
+      text: "All five may be omitted from the calculation."
+      isCorrect: true
+    - id: b
+      text: "The four fixture wires count at 1.5 in³ each; only the EGC may be omitted."
+      distractorRationale: "The exception permits omitting up to four fixture wires smaller than 14 AWG AND the EGC when they enter from a domed luminaire canopy — the fixture wires are covered too."
+    - id: c
+      text: "All five must be counted because every conductor entering a box requires an allowance."
+      distractorRationale: "This ignores the 314.16(B)(1) exception for luminaire wires and an EGC entering from a domed canopy (or similar shape) that provides equivalent space."
+    - id: d
+      text: "They may be omitted only if the box is larger than 18 in³."
+      distractorRationale: "The exception depends on the domed canopy providing the space, not on any minimum box volume."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "The 314.16(B)(1) exception lets an EGC and up to four fixture wires smaller than 14 AWG be omitted when they enter from a domed luminaire canopy."
+    codePath: ["314.16(B)(1) Exception"]
+    steps:
+      - { text: "Conditions met: domed canopy, ≤ 4 fixture wires smaller than 14 AWG, plus the EGC.", ref: "314.16(B)(1) Exception" }
+      - { text: "All five conductors are omitted from the fill calculation." }
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h011
+  recompute: { calc: boxFill, inputs: { conductors: { "14": 4, "18": 2 }, egcSize: "14" } }
+  domainId: nec.box-fill
+  commonMistake: "If you got 10.0, you omitted the two 18 AWG fixture wires. The domed-canopy exception does not apply to a flat-cover fixture, so the fixture wires count at 1.5 in³ each."
+  skillIds: [nec.box.conductor-count, nec.box.egc-allowance]
+  type: numeric
+  difficulty: 4
+  stem: "A ceiling box (no internal clamps, no device yoke) contains four 14 AWG circuit conductors and two 18 AWG fixture wires from a flat-canopy luminaire that does NOT qualify for the 314.16(B)(1) exception. All equipment grounding conductors are 14 AWG. What minimum box volume (in³) is required?"
+  answer: { kind: numeric, value: 13.0, unit: "in³", tolerance: 0.01 }
+  solution:
+    keyIdea: "Fixture wires that don't meet the domed-canopy exception count at their own Table 314.16(B) allowance (18 AWG = 1.5 in³)."
+    codePath: ["314.16(B)(1)", "314.16(B)(5)", "Table 314.16(B) → 14 AWG = 2.0, 18 AWG = 1.5"]
+    steps:
+      - { text: "14 AWG conductors: 4 × 2.00 = 8.00 in³." }
+      - { text: "18 AWG fixture wires: 2 × 1.50 = 3.00 in³ (exception does not apply).", ref: "314.16(B)(1)" }
+      - { text: "All EGCs = one 14 AWG allowance = 2.00 in³." }
+      - { text: "Total = 8.00 + 3.00 + 2.00 = 13.00 in³." }
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h012
+  recompute: { calc: boxFill, inputs: { conductors: { "12": 5, "14": 4 }, clampSize: "12", deviceCount: 1, deviceSize: "12", egcSize: "14" } }
+  domainId: nec.box-fill
+  commonMistake: "If you got 28.25, you sized the EGC allowance at 12 AWG. Here every EGC is 14 AWG, so the single EGC allowance is 2.0 in³ — the EGC allowance keys off the largest EGC, not the largest circuit conductor."
+  skillIds: [nec.box.largest-conductor, nec.box.egc-allowance, nec.box.device-clamp-allowance]
+  type: numeric
+  difficulty: 5
+  stem: "A box with internal cable clamps contains five 12 AWG and four 14 AWG circuit conductors and one switch whose yoke has a 12 AWG conductor landed on it. All equipment grounding conductors in the box are 14 AWG. What minimum box volume (in³) does 314.16(B) require?"
+  answer: { kind: numeric, value: 28.0, unit: "in³", tolerance: 0.01 }
+  solution:
+    keyIdea: "Each allowance has its own basis: clamps and yoke follow the 12 AWG, but the EGC allowance follows the largest EGC — 14 AWG."
+    codePath: ["314.16(B)(1)", "314.16(B)(2)", "314.16(B)(4)", "314.16(B)(5)", "Table 314.16(B)"]
+    steps:
+      - { text: "Conductors: 5 × 2.25 + 4 × 2.00 = 11.25 + 8.00 = 19.25 in³." }
+      - { text: "Clamps = one 12 AWG allowance = 2.25 in³ (largest in box)." }
+      - { text: "Switch yoke = 2 × 2.25 = 4.50 in³ (12 AWG connected)." }
+      - { text: "All EGCs = one 14 AWG allowance = 2.00 in³ (largest EGC is 14 AWG).", ref: "314.16(B)(5)" }
+      - { text: "Total = 19.25 + 2.25 + 4.50 + 2.00 = 28.00 in³." }
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h013
+  domainId: nec.box-fill
+  skillIds: [nec.box.conductor-count]
+  type: single
+  difficulty: 4
+  stem: "A 12 AWG conductor enters a box and leaves it unbroken — no splice and no termination — with only a short loop inside (less than twice the minimum free-conductor length of 300.14). How many volume allowances does this conductor contribute?"
+  options:
+    - id: a
+      text: "One allowance (2.25 in³)"
+      isCorrect: true
+    - id: b
+      text: "Zero — it is not spliced or terminated, so it doesn't count."
+      distractorRationale: "Every conductor that runs through the box counts at least once under 314.16(B)(1); only pigtails (originating and ending inside) are excluded."
+    - id: c
+      text: "Two allowances (4.5 in³)"
+      distractorRationale: "The double count applies only when the unbroken loop is at least twice the minimum free-conductor length of 300.14 — this loop is shorter."
+    - id: d
+      text: "Two allowances, but only if the box also contains a device."
+      distractorRationale: "The looped-conductor double count depends only on the loop length versus 300.14 — devices are irrelevant to it."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Pass-through unbroken = one allowance; it doubles only when the loop is ≥ twice the 300.14 minimum length."
+    codePath: ["314.16(B)(1)", "300.14"]
+    steps:
+      - { text: "Conductor runs through the box → counts once.", ref: "314.16(B)(1)" }
+      - { text: "Loop < 2 × 300.14 minimum, so the two-allowance rule does not apply." }
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h014
+  domainId: nec.box-fill
+  skillIds: [nec.box.egc-allowance, nec.box.device-clamp-allowance]
+  type: single
+  difficulty: 5
+  stem: "A box marked 18.0 in³ contains six 12 AWG circuit conductors (all spliced), internal cable clamps, and three 12 AWG equipment grounding conductors joined together. No devices are installed. Does this installation comply with 314.16?"
+  options:
+    - id: a
+      text: "Yes — the required fill is exactly 18.0 in³, and fill equal to the marked volume is permitted."
+      isCorrect: true
+    - id: b
+      text: "No — the required fill is 22.5 in³ because each of the three EGCs takes its own allowance."
+      distractorRationale: "All EGCs together contribute ONE allowance (2.25 in³), not one each; counting them separately adds a phantom 4.5 in³."
+    - id: c
+      text: "No — the calculated fill equals the box volume, and the box must always be larger than the calculated fill."
+      distractorRationale: "314.16 requires the box volume to be NOT LESS THAN the total fill; equal is compliant. There is no next-size-up rule for boxes."
+    - id: d
+      text: "Yes — only the six circuit conductors count (13.5 in³); clamps and EGCs never add volume."
+      distractorRationale: "Internal clamps add one allowance and the EGCs add one allowance; the compliant total is 18.0 in³, not 13.5 in³."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Fill = 18.0 in³ (6 × 2.25 + clamp 2.25 + one EGC allowance 2.25); a box volume equal to the required fill complies."
+    codePath: ["314.16(B)(1)", "314.16(B)(2)", "314.16(B)(5)", "314.16(A)"]
+    steps:
+      - { text: "Conductors: 6 × 2.25 = 13.50 in³." }
+      - { text: "Clamps = 2.25 in³; all three EGCs = one allowance = 2.25 in³." }
+      - { text: "Total = 18.00 in³ = marked volume → compliant (volume must be ≥ fill).", ref: "314.16(A)" }
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h015
+  recompute: { calc: boxFill, inputs: { conductors: { "12": 8 }, clampSize: "12", deviceCount: 3, deviceSize: "12", egcSize: "12" } }
+  domainId: nec.box-fill
+  commonMistake: "If you got 27.0, you counted only one double allowance for the three switches. EACH yoke gets its own 2× allowance: 3 × 2 × 2.25 = 13.5 in³."
+  skillIds: [nec.box.device-clamp-allowance, nec.box.conductor-count, nec.box.egc-allowance]
+  type: numeric
+  difficulty: 4
+  stem: "A three-gang box with internal cable clamps contains eight 12 AWG circuit conductors and three single-pole switches, each on its own yoke with 12 AWG conductors landed on it. Equipment grounding conductors are all 12 AWG. What minimum box volume (in³) is required?"
+  answer: { kind: numeric, value: 36.0, unit: "in³", tolerance: 0.01 }
+  solution:
+    keyIdea: "Device fill is per yoke: three yokes = three double allowances, while clamps and EGCs each stay at one allowance total."
+    codePath: ["314.16(B)(1)", "314.16(B)(2)", "314.16(B)(4)", "314.16(B)(5)"]
+    steps:
+      - { text: "Conductors: 8 × 2.25 = 18.00 in³." }
+      - { text: "Clamps = one allowance = 2.25 in³." }
+      - { text: "Three yokes: 3 × 2 × 2.25 = 13.50 in³.", ref: "314.16(B)(4)" }
+      - { text: "All EGCs = one allowance = 2.25 in³." }
+      - { text: "Total = 18.00 + 2.25 + 13.50 + 2.25 = 36.00 in³." }
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h016
+  domainId: nec.box-fill
+  skillIds: [nec.box.conductor-count]
+  type: single
+  difficulty: 4
+  stem: "Which of the following items in a box MUST be assigned a volume allowance under 314.16(B)?"
+  options:
+    - id: a
+      text: "A 12 AWG conductor passing through unbroken with a 30 in. loop where 300.14 requires 6 in. of free conductor."
+      isCorrect: true
+    - id: b
+      text: "A 12 AWG pigtail from a splice to a receptacle."
+      distractorRationale: "Conductors that originate and terminate within the box (pigtails) are excluded from the count by 314.16(B)(1)."
+    - id: c
+      text: "Wire connectors (wirenuts) on the splices."
+      distractorRationale: "Small fittings such as wire connectors, locknuts, and bushings are not counted in box fill."
+    - id: d
+      text: "A cable connector with its clamping mechanism outside the box."
+      distractorRationale: "314.16(B)(2) exempts clamp assemblies located outside the box; only internal clamps take an allowance."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "A long-looped unbroken conductor not only counts — it counts twice when the loop is at least twice the 300.14 minimum."
+    codePath: ["314.16(B)(1)", "314.16(B)(2)", "300.14"]
+    steps:
+      - { text: "30 in. loop ≥ 2 × 6 in. minimum → the conductor counts (as two allowances).", ref: "314.16(B)(1)" }
+      - { text: "Pigtails, wirenuts, and external clamps are all excluded from the count." }
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h017
+  recompute: { calc: boxFill, inputs: { conductors: { "10": 4, "12": 2 }, clampSize: "10", deviceCount: 1, deviceSize: "12", egcSize: "10" } }
+  domainId: nec.box-fill
+  commonMistake: "If you got 24.5, you counted the receptacle yoke at 10 AWG because 10 AWG is the largest conductor in the box. The yoke allowance uses the largest conductor CONNECTED TO THE YOKE — only 12 AWG lands on the receptacle."
+  skillIds: [nec.box.largest-conductor, nec.box.device-clamp-allowance, nec.box.egc-allowance]
+  type: numeric
+  difficulty: 5
+  stem: "A box with internal cable clamps contains four 10 AWG feeder conductors that are spliced through, two 12 AWG conductors serving a receptacle, and equipment grounding conductors of 10 AWG and 12 AWG. Only the 12 AWG conductors are landed on the receptacle yoke. What minimum box volume (in³) does 314.16(B) require?"
+  answer: { kind: numeric, value: 24.0, unit: "in³", tolerance: 0.01 }
+  solution:
+    keyIdea: "The yoke counts at 12 AWG (largest connected to it); the clamps count at 10 AWG (largest in box); the EGCs count once at 10 AWG (largest EGC)."
+    codePath: ["314.16(B)(1)", "314.16(B)(2)", "314.16(B)(4)", "314.16(B)(5)", "Table 314.16(B)"]
+    steps:
+      - { text: "Conductors: 4 × 2.50 + 2 × 2.25 = 10.00 + 4.50 = 14.50 in³." }
+      - { text: "Clamps = one 10 AWG allowance = 2.50 in³." }
+      - { text: "Receptacle yoke = 2 × 2.25 = 4.50 in³ — only 12 AWG is connected to it.", ref: "314.16(B)(4)" }
+      - { text: "All EGCs = one 10 AWG allowance = 2.50 in³ (largest EGC)." }
+      - { text: "Total = 14.50 + 2.50 + 4.50 + 2.50 = 24.00 in³." }
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h018
+  recompute: { calc: boxFill, inputs: { conductors: { "12": 4, "10": 2 }, clampSize: "10", egcSize: "10" } }
+  domainId: nec.box-fill
+  commonMistake: "If you got 18.75, you sized the EGC allowance at 12 AWG. With both 12 AWG and 10 AWG EGCs present, the single EGC allowance is based on the LARGEST EGC (10 AWG = 2.5 in³)."
+  skillIds: [nec.box.egc-allowance, nec.box.largest-conductor]
+  type: numeric
+  difficulty: 4
+  stem: "A splice box with internal cable clamps contains four 12 AWG and two 10 AWG circuit conductors, plus equipment grounding conductors of both 12 AWG and 10 AWG joined together. There are no devices. What minimum box volume (in³) is required?"
+  answer: { kind: numeric, value: 19.0, unit: "in³", tolerance: 0.01 }
+  solution:
+    keyIdea: "One EGC allowance for all EGCs, sized by the largest EGC in the box (10 AWG)."
+    codePath: ["314.16(B)(1)", "314.16(B)(2)", "314.16(B)(5)", "Table 314.16(B)"]
+    steps:
+      - { text: "Conductors: 4 × 2.25 + 2 × 2.50 = 9.00 + 5.00 = 14.00 in³." }
+      - { text: "Clamps = one 10 AWG allowance = 2.50 in³ (largest conductor in box)." }
+      - { text: "All EGCs = one 10 AWG allowance = 2.50 in³ (largest EGC present).", ref: "314.16(B)(5)" }
+      - { text: "Total = 14.00 + 2.50 + 2.50 = 19.00 in³." }
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h019
+  domainId: nec.box-fill
+  skillIds: [nec.box.largest-conductor, nec.box.device-clamp-allowance]
+  type: single
+  difficulty: 5
+  stem: "An installer plans to use a box marked 22.5 in³ for this arrangement: four 10 AWG conductors spliced through, two 12 AWG conductors landed on a receptacle, internal cable clamps, and 10 AWG plus 12 AWG equipment grounding conductors. Is the 22.5 in³ box acceptable?"
+  options:
+    - id: a
+      text: "No — the required fill is 24.0 in³, so the box is 1.5 in³ too small."
+      isCorrect: true
+    - id: b
+      text: "Yes — the required fill is 21.5 in³, which fits."
+      distractorRationale: "This total omits the internal clamp allowance (one 10 AWG allowance, 2.5 in³). With it, the fill is 24.0 in³."
+    - id: c
+      text: "No — the required fill is 24.5 in³ because the yoke counts at 10 AWG, the largest conductor in the box."
+      distractorRationale: "The conclusion happens to be 'no', but the fill is wrong: the yoke counts at the largest conductor CONNECTED to it (12 AWG → 4.5 in³), giving 24.0, not 24.5. On an exam the exact fill matters."
+    - id: d
+      text: "Yes — 19.5 in³, because the EGCs share one allowance with the clamps."
+      distractorRationale: "Clamps and EGCs are separate categories: one allowance for all clamps (314.16(B)(2)) PLUS one allowance for all EGCs (314.16(B)(5))."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Work every allowance category on its own basis, total it, then compare against the marked volume."
+    codePath: ["314.16(B)(1)-(5)", "314.16(A)", "Table 314.16(B)"]
+    steps:
+      - { text: "Conductors: 4 × 2.50 + 2 × 2.25 = 14.50 in³." }
+      - { text: "Clamps 2.50 (largest in box) + yoke 2 × 2.25 = 4.50 (largest connected) + EGCs 2.50 (largest EGC) = 9.50 in³." }
+      - { text: "Required = 24.00 in³ > 22.5 in³ marked → box too small.", ref: "314.16(A)" }
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h020
+  domainId: nec.box-fill
+  skillIds: [nec.box.device-clamp-allowance, nec.box.largest-conductor]
+  type: single
+  difficulty: 4
+  stem: "Four NM cables enter a box through four separate internal cable clamps. The box contains 10 AWG and 14 AWG conductors. What clamp allowance is required in the fill calculation?"
+  options:
+    - id: a
+      text: "One allowance of 2.5 in³ (a single allowance based on the largest conductor in the box)."
+      isCorrect: true
+    - id: b
+      text: "Four allowances of 2.5 in³ each (one per clamp)."
+      distractorRationale: "314.16(B)(2) assigns a SINGLE allowance no matter how many internal clamps the box contains."
+    - id: c
+      text: "One allowance of 2.0 in³, based on the smallest conductor."
+      distractorRationale: "The clamp allowance is based on the LARGEST conductor in the box (10 AWG = 2.5 in³), not the smallest."
+    - id: d
+      text: "No allowance — clamps are fittings and fittings are never counted."
+      distractorRationale: "Fittings like locknuts and bushings aren't counted, but internal cable clamps specifically take one allowance under 314.16(B)(2)."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Any number of internal clamps = exactly one allowance, at the largest conductor in the box."
+    codePath: ["314.16(B)(2)", "Table 314.16(B) → 10 AWG = 2.5 in³"]
+    steps:
+      - { text: "Internal clamps present → add one allowance total.", ref: "314.16(B)(2)" }
+      - { text: "Largest conductor in the box is 10 AWG → 2.5 in³." }
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h021
+  recompute: { calc: boxFill, inputs: { conductors: { "12": 9, "14": 2 }, clampSize: "12", deviceCount: 2, deviceSize: "12", egcSize: "12" } }
+  domainId: nec.box-fill
+  commonMistake: "If you got 42.25, you counted the two pigtails and gave each EGC its own allowance. Pigtails count zero, and all EGCs share one 2.25 in³ allowance."
+  skillIds: [nec.box.conductor-count, nec.box.device-clamp-allowance, nec.box.egc-allowance, nec.box.largest-conductor]
+  type: numeric
+  difficulty: 5
+  stem: "A kitchen two-gang box with internal cable clamps contains nine 12 AWG circuit conductors and two 14 AWG switch-leg conductors. Two devices are installed: a receptacle with 12 AWG landed on it, and a switch with a 12 AWG feed plus a 14 AWG leg landed on it. Two 12 AWG pigtails run from splices to the devices, and all equipment grounding conductors are 12 AWG. What minimum box volume (in³) is required?"
+  answer: { kind: numeric, value: 37.75, unit: "in³", tolerance: 0.01 }
+  solution:
+    keyIdea: "Ignore the pigtails, take each yoke at the largest conductor connected to it (both 12 AWG), and give clamps and EGCs one allowance each."
+    codePath: ["314.16(B)(1)-(5)", "Table 314.16(B)"]
+    steps:
+      - { text: "Conductors: 9 × 2.25 + 2 × 2.00 = 20.25 + 4.00 = 24.25 in³ (pigtails = 0)." }
+      - { text: "Clamps = one 12 AWG allowance = 2.25 in³." }
+      - { text: "Two yokes, both with 12 AWG connected: 2 × 2 × 2.25 = 9.00 in³.", ref: "314.16(B)(4)" }
+      - { text: "All EGCs = one 12 AWG allowance = 2.25 in³." }
+      - { text: "Total = 24.25 + 2.25 + 9.00 + 2.25 = 37.75 in³." }
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-box-h022
+  domainId: nec.box-fill
+  skillIds: [nec.box.conductor-count]
+  type: single
+  difficulty: 4
+  stem: "During a fill calculation for a crowded device box, an apprentice adds one allowance for each of the three 12 AWG pigtails connecting the splices to the receptacle. What is the correct treatment of those pigtails?"
+  options:
+    - id: a
+      text: "They count as zero allowances — conductors that originate and terminate inside the box are excluded."
+      isCorrect: true
+    - id: b
+      text: "One allowance each, like any other conductor in the box."
+      distractorRationale: "314.16(B)(1) counts conductors that ORIGINATE OUTSIDE the box; a pigtail begins at a splice and ends at the device, both inside, so it is excluded."
+    - id: c
+      text: "Half an allowance each, since they are shorter than the conductors entering the box."
+      distractorRationale: "There is no half-allowance concept in 314.16(B); conductors either count in whole allowances or not at all."
+    - id: d
+      text: "Zero allowances, but only when the pigtails are shorter than 6 in."
+      distractorRationale: "The exclusion has no length condition — pigtails of any length are uncounted (300.14 governs minimum free length, not fill)."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Pigtails never add fill; they exist entirely within the box."
+    codePath: ["314.16(B)(1)"]
+    steps:
+      - { text: "A conductor with no part leaving the box takes no volume allowance, regardless of length.", ref: "314.16(B)(1)" }
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."

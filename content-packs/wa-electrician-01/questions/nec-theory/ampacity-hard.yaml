@@ -1,0 +1,612 @@
+# Conductor ampacity — HARD tier (difficulty 4–5). Full chains: base → correction × adjustment
+# → 110.14(C) termination cap → OCPD/load compare. 2020 NEC. All DRAFT; SME-verify before live.
+
+# ---- Full derating chains, cap does NOT bind --------------------------------
+- id: q-amp-h001
+  recompute: { calc: ampacityDerating, inputs: { size: "1", tempColumn: 90, ambientC: 43, ccc: 8, terminationColumn: 75 } }
+  domainId: nec.ampacity
+  commonMistake: "If you got 84.9, you derated off the 75°C column (0.82 factor) instead of starting from the 90°C column with its own 0.87 factor."
+  skillIds: [nec.ampacity.combined, nec.ampacity.termination-limit]
+  type: numeric
+  difficulty: 5
+  stem: "A 1 AWG THHN copper feeder runs through a mechanical room with a 43°C ambient in a raceway carrying 8 current-carrying conductors, and lands on 75°C-rated lugs. What ampacity (A) may this conductor be used at?"
+  answer: { kind: numeric, value: 88.3, unit: "A", tolerance: 1.0 }
+  solution:
+    keyIdea: "Derate from the 90°C column, then confirm the result against the 75°C termination value — the lower governs."
+    codePath: ["Table 310.16 → 1 AWG Cu 90°C = 145 A", "Table 310.15(B)(1) → 41–45°C, 90°C → 0.87", "Table 310.15(C)(1) → 7–9 CCC → 0.70", "110.14(C) → 75°C cap = 130 A"]
+    steps:
+      - { text: "Base ampacity from the 90°C column: 145 A.", ref: "Table 310.16" }
+      - { text: "Ambient 43°C → 0.87; eight CCC → 0.70.", ref: "310.15(B)(1), 310.15(C)(1)" }
+      - { text: "145 × 0.87 × 0.70 = 88.3 A." }
+      - { text: "88.3 A ≤ 130 A (75°C termination), so 88.3 A governs.", ref: "110.14(C)" }
+  trapIds: [adjusted-vs-corrected-ampacity, termination-temp-limit]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h002
+  recompute: { calc: ampacityDerating, inputs: { material: "al", size: "4/0", tempColumn: 90, ambientC: 47, ccc: 4, terminationColumn: 75 } }
+  domainId: nec.ampacity
+  commonMistake: "If you got about 170.6, you used the COPPER 4/0 base of 260 A — this feeder is aluminum (205 A at 90°C)."
+  skillIds: [nec.ampacity.combined, nec.ampacity.termination-limit]
+  type: numeric
+  difficulty: 5
+  stem: "A 4/0 XHHW-2 ALUMINUM feeder shares a rooftop raceway with 4 current-carrying conductors where the design ambient is 47°C, terminating on 75°C equipment. What is the usable ampacity (A)?"
+  answer: { kind: numeric, value: 134.48, unit: "A", tolerance: 1.0 }
+  solution:
+    keyIdea: "Use the aluminum side of Table 310.16, then apply both factors before checking the termination."
+    codePath: ["Table 310.16 → 4/0 Al 90°C = 205 A", "310.15(B)(1) → 46–50°C, 90°C → 0.82", "310.15(C)(1) → 4–6 CCC → 0.80", "110.14(C) → 75°C Al cap = 180 A"]
+    steps:
+      - { text: "4/0 aluminum, 90°C column = 205 A (not the copper 260 A).", ref: "Table 310.16" }
+      - { text: "205 × 0.82 × 0.80 = 134.5 A." }
+      - { text: "134.5 A ≤ 180 A (75°C aluminum value), so the derated value governs.", ref: "110.14(C)" }
+  trapIds: [table-column-selection, adjusted-vs-corrected-ampacity]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h003
+  recompute: { calc: ampacityDerating, inputs: { size: "2/0", tempColumn: 90, ambientC: 36, ccc: 4, terminationColumn: 75 } }
+  domainId: nec.ampacity
+  commonMistake: "If you got 175, you jumped straight to the 75°C termination value and skipped the derating math entirely — derating can drive the result below the termination cap."
+  skillIds: [nec.ampacity.combined, nec.ampacity.termination-limit]
+  type: numeric
+  difficulty: 4
+  stem: "A 2/0 THHN copper feeder runs with one other 3-wire circuit (4 current-carrying conductors total) through an attic with a 36°C design ambient, landing on 75°C breaker lugs. What ampacity (A) governs?"
+  answer: { kind: numeric, value: 141.96, unit: "A", tolerance: 1.5 }
+  solution:
+    keyIdea: "Both the derated 90°C value and the 75°C termination value must be checked — the lower one wins."
+    codePath: ["Table 310.16 → 2/0 Cu 90°C = 195 A", "310.15(B)(1) → 36–40°C, 90°C → 0.91", "310.15(C)(1) → 4–6 CCC → 0.80", "110.14(C) → 75°C cap = 175 A"]
+    steps:
+      - { text: "195 × 0.91 × 0.80 = 141.96 A." }
+      - { text: "141.96 A < 175 A, so the derated value governs.", ref: "110.14(C)" }
+  trapIds: [adjusted-vs-corrected-ampacity, termination-temp-limit]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Chains where the termination cap BINDS ---------------------------------
+- id: q-amp-h004
+  recompute: { calc: ampacityDerating, inputs: { size: "1/0", tempColumn: 90, ambientC: 25, terminationColumn: 75 } }
+  domainId: nec.ampacity
+  commonMistake: "If you got 176.8, you applied the cold-ambient correction (1.04) and stopped — the 75°C termination value of 150 A still caps the final answer."
+  skillIds: [nec.ampacity.termination-limit, nec.ampacity.temp-correction]
+  type: numeric
+  difficulty: 5
+  stem: "A 1/0 THHN copper conductor runs alone (3 current-carrying conductors) through a space held at 25°C, landing on standard 75°C lugs. Applying Table 310.15(B)(1), what ampacity (A) may the conductor actually be used at?"
+  answer: { kind: numeric, value: 150, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "A below-30°C ambient RAISES the corrected ampacity, but 110.14(C) still caps the result at the termination-column value."
+    codePath: ["Table 310.16 → 1/0 Cu 90°C = 170 A", "310.15(B)(1) → 21–25°C, 90°C → 1.04", "110.14(C) → 75°C cap = 150 A"]
+    steps:
+      - { text: "170 × 1.04 = 176.8 A corrected — correction factors above 1.00 are real.", ref: "310.15(B)(1)" }
+      - { text: "The 75°C termination limits the usable ampacity to 150 A.", ref: "110.14(C)" }
+      - { text: "min(176.8, 150) = 150 A." }
+  trapIds: [termination-temp-limit, adjusted-vs-corrected-ampacity]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h005
+  recompute: { calc: ampacityDerating, inputs: { material: "al", size: "1/0", tempColumn: 90, ccc: 4, terminationColumn: 60 } }
+  domainId: nec.ampacity
+  commonMistake: "If you got 108, you finished the derating but ignored the 60°C termination — unmarked terminations on this old equipment cap the conductor at the 60°C column value."
+  skillIds: [nec.ampacity.termination-limit, nec.ampacity.fill-adjustment]
+  type: numeric
+  difficulty: 5
+  stem: "A 1/0 XHHW-2 ALUMINUM feeder (90°C insulation) shares a raceway with 4 current-carrying conductors at normal ambient. It terminates in legacy equipment whose terminations carry no temperature marking and the circuit is not over 100 A. What ampacity (A) governs?"
+  answer: { kind: numeric, value: 100, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Unmarked terminations on a ≤100 A circuit default to the 60°C column — that cap can override a favorable derating result."
+    codePath: ["Table 310.16 → 1/0 Al 90°C = 135 A", "310.15(C)(1) → 4–6 CCC → 0.80", "110.14(C)(1)(a) → 60°C Al cap = 100 A"]
+    steps:
+      - { text: "Derate from the 90°C column: 135 × 0.80 = 108 A." }
+      - { text: "Unmarked terminations, circuit ≤100 A → 60°C column applies: 1/0 Al = 100 A.", ref: "110.14(C)(1)(a)" }
+      - { text: "min(108, 100) = 100 A." }
+  trapIds: [termination-temp-limit]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h006
+  recompute: { calc: ampacityDerating, inputs: { size: "10", tempColumn: 90, ccc: 6, terminationColumn: 60 } }
+  domainId: nec.ampacity
+  commonMistake: "If you got 32, you derated correctly off the 90°C column but forgot that NM cable's final ampacity may never exceed the 60°C value (334.80)."
+  skillIds: [nec.ampacity.termination-limit, nec.ampacity.fill-adjustment]
+  type: numeric
+  difficulty: 5
+  stem: "Three 10/2 NM cables (6 current-carrying 10 AWG copper conductors) are bundled through the same bored holes for more than 24 in. at normal ambient. NM cable has 90°C conductors, but its ampacity is limited to the 60°C rating. What is the final allowable ampacity (A) of each conductor?"
+  answer: { kind: numeric, value: 30, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "For NM cable you may derate FROM the 90°C column, but the final answer can never exceed the 60°C value."
+    codePath: ["Table 310.16 → 10 AWG Cu 90°C = 40 A", "310.15(C)(1) → 4–6 CCC → 0.80", "334.80 / 110.14(C) → 60°C cap = 30 A"]
+    steps:
+      - { text: "Bundled >24 in. → adjustment applies: 40 × 0.80 = 32 A.", ref: "310.15(C)(1)" }
+      - { text: "NM cable final ampacity is capped at the 60°C column: 10 AWG = 30 A.", ref: "334.80" }
+      - { text: "min(32, 30) = 30 A." }
+  trapIds: [termination-temp-limit, adjusted-vs-corrected-ampacity]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Ambients that hit unusual correction rows ------------------------------
+- id: q-amp-h007
+  recompute: { calc: ampacityDerating, inputs: { size: "6", tempColumn: 75, ambientC: 55 } }
+  domainId: nec.ampacity
+  commonMistake: "If you got 49.4, you pulled the 0.76 factor from the 90°C column — THWN is a 75°C insulation, so you must use the 75°C correction column (0.67)."
+  skillIds: [nec.ampacity.temp-correction]
+  type: numeric
+  difficulty: 4
+  stem: "A 6 AWG THWN copper conductor (75°C insulation) passes through a boiler room with a 55°C design ambient, 3 current-carrying conductors. What is the corrected ampacity (A)?"
+  answer: { kind: numeric, value: 43.55, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "The correction column must match the INSULATION rating — 75°C insulation means the 75°C correction column."
+    codePath: ["Table 310.16 → 6 AWG Cu 75°C = 65 A", "310.15(B)(1) → 51–55°C, 75°C → 0.67"]
+    steps:
+      - { text: "THWN is 75°C insulation → base 65 A.", ref: "Table 310.16" }
+      - { text: "55°C ambient, 75°C column → 0.67 (not the 90°C column's 0.76).", ref: "310.15(B)(1)" }
+      - { text: "65 × 0.67 = 43.55 A." }
+  trapIds: [table-column-selection, adjusted-vs-corrected-ampacity]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h008
+  recompute: { calc: ampacityDerating, inputs: { size: "2", tempColumn: 90, ambientC: 46, ccc: 6, terminationColumn: 75 } }
+  domainId: nec.ampacity
+  commonMistake: "If you got 90.5, you used the 41–45°C row (0.87) — a 46°C ambient falls in the 46–50°C row (0.82). One degree changes the row."
+  skillIds: [nec.ampacity.combined, nec.ampacity.termination-limit]
+  type: numeric
+  difficulty: 5
+  stem: "A 2 AWG THHN copper feeder shares a raceway with 6 current-carrying conductors across a roof where the adjusted design ambient is 46°C, landing on 75°C terminations. What ampacity (A) governs?"
+  answer: { kind: numeric, value: 85.28, unit: "A", tolerance: 1.0 }
+  solution:
+    keyIdea: "Pick the correction row by the ambient's exact bracket — 46°C is in the 46–50°C row, not 41–45°C."
+    codePath: ["Table 310.16 → 2 AWG Cu 90°C = 130 A", "310.15(B)(1) → 46–50°C, 90°C → 0.82", "310.15(C)(1) → 4–6 CCC → 0.80", "110.14(C) → 75°C cap = 115 A"]
+    steps:
+      - { text: "130 × 0.82 × 0.80 = 85.28 A." }
+      - { text: "85.28 A < 115 A (75°C cap), so the derated value governs.", ref: "110.14(C)" }
+  trapIds: [adjusted-vs-corrected-ampacity]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h009
+  recompute: { calc: ampacityDerating, inputs: { size: "8", tempColumn: 90, ambientC: 62, ccc: 4, terminationColumn: 75 } }
+  domainId: nec.ampacity
+  commonMistake: "If you got 31.2, you used the 56–60°C row (0.71) — 62°C falls in the 61–65°C row (0.65). Note a 75°C conductor would take 0.47 here; the 90°C insulation is what keeps this circuit viable."
+  skillIds: [nec.ampacity.combined]
+  type: numeric
+  difficulty: 5
+  stem: "An 8 AWG THHN copper circuit (90°C insulation) crosses a rooftop where the design ambient works out to 62°C, in a raceway with 4 current-carrying conductors, terminating on 75°C lugs. What ampacity (A) governs?"
+  answer: { kind: numeric, value: 28.6, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Extreme ambients push you into deep correction rows — 61–65°C on the 90°C column is 0.65."
+    codePath: ["Table 310.16 → 8 AWG Cu 90°C = 55 A", "310.15(B)(1) → 61–65°C, 90°C → 0.65", "310.15(C)(1) → 4–6 CCC → 0.80", "110.14(C) → 75°C cap = 50 A"]
+    steps:
+      - { text: "55 × 0.65 = 35.75 A corrected." }
+      - { text: "35.75 × 0.80 = 28.6 A adjusted." }
+      - { text: "28.6 A < 50 A (75°C cap) — derated value governs.", ref: "110.14(C)" }
+  trapIds: [adjusted-vs-corrected-ampacity]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h010
+  recompute: { calc: ampacityDerating, inputs: { material: "al", size: "3/0", tempColumn: 90, ambientC: 41, ccc: 6, terminationColumn: 75 } }
+  domainId: nec.ampacity
+  commonMistake: "If you got 156.6, you used the copper 3/0 base (225 A) — the feeder is aluminum, base 175 A at 90°C."
+  skillIds: [nec.ampacity.combined, nec.ampacity.termination-limit]
+  type: numeric
+  difficulty: 4
+  stem: "A 3/0 XHHW-2 ALUMINUM feeder runs with 6 current-carrying conductors through a 41°C-ambient chase and lands on 75°C-rated equipment. What ampacity (A) governs?"
+  answer: { kind: numeric, value: 121.8, unit: "A", tolerance: 1.5 }
+  solution:
+    keyIdea: "Aluminum base × both derating factors, then check the termination cap."
+    codePath: ["Table 310.16 → 3/0 Al 90°C = 175 A", "310.15(B)(1) → 41–45°C, 90°C → 0.87", "310.15(C)(1) → 4–6 CCC → 0.80", "110.14(C) → 75°C Al cap = 155 A"]
+    steps:
+      - { text: "175 × 0.87 × 0.80 = 121.8 A." }
+      - { text: "121.8 A < 155 A (75°C aluminum value), so the derated value governs.", ref: "110.14(C)" }
+  trapIds: [table-column-selection, adjusted-vs-corrected-ampacity]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Continuous load in the sizing chain ------------------------------------
+- id: q-amp-h011
+  recompute: { calc: continuousLoad, inputs: { current: 42 } }
+  domainId: nec.ampacity
+  commonMistake: "If you got 47.5, you multiplied the 38 A clamp reading by 125% — sizing uses the DESIGN continuous load (42 A), not what the meter happens to read today."
+  skillIds: [nec.ampacity.combined]
+  type: numeric
+  difficulty: 4
+  stem: "An EV charging circuit has a design continuous load of 42 A. During commissioning a clamp meter reads 38 A on the phase conductor. Per 210.19(A)(1), what minimum conductor ampacity (A) is required before any correction or adjustment factors are considered?"
+  answer: { kind: numeric, value: 52.5, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "Continuous loads are sized at 125% of the DESIGN load — the meter reading is surplus information."
+    codePath: ["210.19(A)(1) → 125% of continuous load", "42 A × 1.25"]
+    steps:
+      - { text: "The 38 A reading is a snapshot, not the design load — discard it.", ref: "210.19(A)(1)" }
+      - { text: "42 × 1.25 = 52.5 A minimum conductor ampacity." }
+  trapIds: [continuous-load-125, meter-reading-vs-ampacity]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h012
+  recompute: { calc: continuousLoad, inputs: { current: 52 } }
+  domainId: nec.ampacity
+  commonMistake: "If you got 52, you skipped the 125% continuous multiplier — heat-trace running 3 hours or more is a continuous load."
+  skillIds: [nec.ampacity.combined]
+  type: numeric
+  difficulty: 4
+  stem: "A pipe heat-trace circuit draws 52 A and operates continuously through the winter (well over 3 hours at a time). It lands on 75°C terminations in a 30°C space. Before applying Table 310.16, what minimum ampacity (A) must the branch-circuit conductors have per 210.19(A)(1)?"
+  answer: { kind: numeric, value: 65, unit: "A", tolerance: 0.5 }
+  solution:
+    keyIdea: "A load at maximum current for 3 hours or more is continuous — conductors are sized at 125% of it."
+    codePath: ["Article 100 (continuous load)", "210.19(A)(1) → 52 A × 1.25"]
+    steps:
+      - { text: "52 A × 1.25 = 65 A minimum conductor ampacity.", ref: "210.19(A)(1)" }
+      - { text: "Then a conductor with at least 65 A at the 75°C column would be selected (6 AWG Cu = 65 A).", ref: "Table 310.16" }
+  trapIds: [continuous-load-125]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Chains ending at the OCPD (240.6 / 240.4(B)) ---------------------------
+- id: q-amp-h013
+  recompute: { calc: nextStandardSize, inputs: { value: 83.72 } }
+  domainId: nec.ampacity
+  commonMistake: "If you answered 80, you rounded DOWN — 240.4(B) permits the next standard size UP when the derated ampacity (83.7 A) doesn't match a standard rating and the other conditions are met."
+  skillIds: [nec.ampacity.combined, nec.ampacity.termination-limit]
+  type: numeric
+  difficulty: 5
+  stem: "A 3 AWG THHN copper feeder (90°C, base 115 A) runs with 4 current-carrying conductors in a 38°C ambient and lands on 75°C lugs (75°C value 100 A). The derated ampacity works out to 115 × 0.91 × 0.80 = 83.7 A, the load is noncontinuous and under 80 A, and the circuit is not a multi-outlet branch circuit. Per 240.4(B) and 240.6(A), what is the maximum standard OCPD rating (A)?"
+  answer: { kind: numeric, value: 90, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "After the full derating chain, 240.4(B) allows rounding UP to the next standard OCPD (≤800 A) when conditions are met."
+    codePath: ["Table 310.16 + 310.15 → 83.7 A derated", "110.14(C) → 100 A cap (not binding)", "240.4(B) → next size up", "240.6(A) → 90 A"]
+    steps:
+      - { text: "Derated ampacity: 115 × 0.91 × 0.80 = 83.7 A; below the 100 A termination cap, so it governs." }
+      - { text: "83.7 A is not a standard rating; conditions of 240.4(B) are met.", ref: "240.4(B)" }
+      - { text: "Next standard size above 83.7 A is 90 A.", ref: "240.6(A)" }
+  trapIds: [next-size-up-rounding, adjusted-vs-corrected-ampacity]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h014
+  recompute: { calc: nextStandardSize, inputs: { value: 55 } }
+  domainId: nec.ampacity
+  commonMistake: "If you answered 55, you stopped at 44 × 1.25 = 55 A — but 55 A is NOT a 240.6(A) standard rating; the next standard size is 60 A."
+  skillIds: [nec.ampacity.combined]
+  type: numeric
+  difficulty: 5
+  stem: "A branch circuit serves a 44 A continuous process load. Per 210.20(A), the OCPD must be rated at least 125% of the continuous load. What is the minimum standard OCPD rating (A) per 240.6(A) that satisfies this?"
+  answer: { kind: numeric, value: 60, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "44 × 1.25 = 55 A, and 55 A is not a standard rating — you must go to the next standard size, 60 A."
+    codePath: ["210.20(A) → 44 × 1.25 = 55 A minimum", "240.6(A) → standard ratings ... 45, 50, 60 ..."]
+    steps:
+      - { text: "Minimum OCPD = 44 × 1.25 = 55 A.", ref: "210.20(A)" }
+      - { text: "240.6(A) lists 50 A and 60 A but no 55 A — the smallest standard rating ≥ 55 A is 60 A.", ref: "240.6(A)" }
+  trapIds: [continuous-load-125, next-size-up-rounding]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h015
+  recompute: { calc: nextStandardSize, inputs: { value: 98.4 } }
+  domainId: nec.ampacity
+  commonMistake: "If you got 110 or higher, check your base — 2/0 ALUMINUM at 90°C is 150 A, not the copper 195 A."
+  skillIds: [nec.ampacity.combined, nec.ampacity.termination-limit]
+  type: numeric
+  difficulty: 4
+  stem: "A 2/0 XHHW-2 ALUMINUM feeder (90°C, base 150 A) runs with 6 current-carrying conductors in a 46°C ambient (0.82 × 0.80 applies) to 75°C terminations (135 A, not limiting). The derated ampacity is 150 × 0.82 × 0.80 = 98.4 A, the load is 95 A noncontinuous, and 240.4(B) conditions are met. What is the maximum standard OCPD rating (A)?"
+  answer: { kind: numeric, value: 100, unit: "A", tolerance: 0 }
+  solution:
+    keyIdea: "Finish the aluminum derating chain, then round up to the next standard OCPD under 240.4(B)."
+    codePath: ["Table 310.16 → 2/0 Al 90°C = 150 A", "310.15 → 0.82 × 0.80 → 98.4 A", "240.4(B) + 240.6(A) → 100 A"]
+    steps:
+      - { text: "150 × 0.82 × 0.80 = 98.4 A derated; below the 135 A termination cap." }
+      - { text: "98.4 A is not standard; the next standard size up is 100 A, and the 95 A load still fits.", ref: "240.4(B), 240.6(A)" }
+  trapIds: [next-size-up-rounding, table-column-selection]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Which-rule / ordering (single-choice) ----------------------------------
+- id: q-amp-h016
+  domainId: nec.ampacity
+  skillIds: [nec.ampacity.combined, nec.ampacity.termination-limit]
+  type: single
+  difficulty: 5
+  stem: "A 90°C-insulated copper conductor needs correction (high ambient) AND adjustment (raceway fill), and terminates on 75°C lugs. Which sequence correctly determines the ampacity that may be used?"
+  options:
+    - id: a
+      text: "Start from the 90°C column, multiply by both the correction and adjustment factors, then use the lower of that result and the 75°C column value."
+      isCorrect: true
+    - id: b
+      text: "Start from the 75°C column, multiply by both factors, and use that result."
+      distractorRationale: "Derating may start from the conductor's insulation column (90°C) — starting from 75°C throws away headroom the code allows and uses the wrong correction factors."
+    - id: c
+      text: "Take the 75°C column value first, then multiply it by the 90°C-column correction and adjustment factors."
+      distractorRationale: "This mixes columns: it applies 90°C-column factors to a 75°C base. The cap is a comparison at the END, not a starting value to derate."
+    - id: d
+      text: "Start from the 90°C column, multiply by both factors, then use the HIGHER of that result and the 75°C column value."
+      distractorRationale: "Taking the higher value defeats the purpose — both derating and the termination limit are ceilings, so the LOWER result always governs."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Derate from the insulation column; the termination-column value is a final cap compared at the end — lower governs."
+    codePath: ["310.15(B)(1), 310.15(C)(1) applied to the 90°C base", "110.14(C) final comparison"]
+    steps:
+      - { text: "The 90°C column may be used as the starting point for correction and adjustment because the insulation is rated 90°C.", ref: "110.14(C)" }
+      - { text: "After derating, compare with the 75°C column value; the lower of the two is the usable ampacity." }
+  trapIds: [termination-temp-limit, adjusted-vs-corrected-ampacity]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h017
+  domainId: nec.ampacity
+  skillIds: [nec.ampacity.termination-limit, nec.ampacity.table-lookup]
+  type: single
+  difficulty: 5
+  stem: "A 60 A circuit lands in a disconnect whose terminations carry no temperature rating, and the equipment is not listed for higher-rated conductors. The conductors are 6 AWG THHN copper. Which Table 310.16 column sets the conductor's usable ampacity at these terminations?"
+  options:
+    - id: a
+      text: "The 60°C column (55 A), because unmarked terminations on circuits rated 100 A or less default to 60°C."
+      isCorrect: true
+    - id: b
+      text: "The 75°C column (65 A), because most modern equipment is 75°C-rated."
+      distractorRationale: "\"Most equipment is 75°C\" is a field habit, not code — without a marking or listing, 110.14(C)(1)(a) forces the 60°C column for circuits ≤100 A."
+    - id: c
+      text: "The 90°C column (75 A), because THHN is 90°C insulation."
+      distractorRationale: "The insulation rating sets the derating starting point, never the termination rating — the weakest link at the lug governs."
+    - id: d
+      text: "Either 60°C or 75°C, at the installer's discretion."
+      distractorRationale: "110.14(C) is not discretionary — with no marking and no listing, the 60°C column is mandatory for this circuit."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Circuits ≤100 A with unmarked, unlisted terminations default to the 60°C column regardless of insulation."
+    codePath: ["110.14(C)(1)(a)", "Table 310.16 → 6 AWG Cu 60°C = 55 A"]
+    steps:
+      - { text: "No temperature marking and no listing for higher-rated conductors → 60°C column applies.", ref: "110.14(C)(1)(a)" }
+      - { text: "6 AWG copper at 60°C = 55 A usable at these terminations.", ref: "Table 310.16" }
+  trapIds: [termination-temp-limit, table-column-selection]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h018
+  domainId: nec.ampacity
+  skillIds: [nec.ampacity.temp-correction]
+  type: single
+  difficulty: 4
+  stem: "A raceway runs through a space with a design ambient of exactly 30°C. The conductors are 90°C-insulated. What correction factor from Table 310.15(B)(1) applies?"
+  options:
+    - id: a
+      text: "1.00 — 30°C is the table's reference ambient, so no correction is needed."
+      isCorrect: true
+    - id: b
+      text: "0.96 — 30°C falls in the 31–35°C row."
+      distractorRationale: "The 31–35°C row starts ABOVE 30°C; exactly 30°C is still the 26–30°C row (factor 1.00). Off-by-one row selection is the classic error here."
+    - id: c
+      text: "1.04 — 30°C gets the below-ambient bonus."
+      distractorRationale: "1.04 is the 21–25°C row. The bonus applies only when the ambient is BELOW the 26–30°C reference band."
+    - id: d
+      text: "No factor exists; interpolation between rows is required."
+      distractorRationale: "Table 310.15(B)(1) rows are bands, not points — every ambient in a band takes that band's factor with no interpolation."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Table 310.15(B)(1) is banded — 30°C sits at the top of the reference band, factor 1.00."
+    codePath: ["Table 310.15(B)(1) → 26–30°C row → 1.00"]
+    steps:
+      - { text: "30°C is the basis ambient of Table 310.16; the 26–30°C row gives 1.00.", ref: "310.15(B)(1)" }
+      - { text: "Only ambients of 31°C and above (or 25°C and below) change the factor." }
+  trapIds: [adjusted-vs-corrected-ampacity]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h019
+  domainId: nec.ampacity
+  skillIds: [nec.ampacity.fill-adjustment]
+  type: single
+  difficulty: 4
+  stem: "One raceway contains two 3-phase, 4-wire wye branch circuits. Circuit 1 feeds electric-discharge lighting (a nonlinear load); circuit 2 feeds resistance heating (linear, balanced). Equipment grounding conductors are also present. How many current-carrying conductors are counted for Table 310.15(C)(1)?"
+  options:
+    - id: a
+      text: "7 — circuit 1 counts its neutral (nonlinear load, harmonic current), circuit 2's balanced neutral does not, and EGCs never count."
+      isCorrect: true
+    - id: b
+      text: "8 — every conductor except the EGCs counts."
+      distractorRationale: "A wye neutral carrying only unbalanced current from balanced linear loads is NOT counted (310.15(E)) — circuit 2's neutral drops out."
+    - id: c
+      text: "6 — neutrals never count as current-carrying conductors."
+      distractorRationale: "A wye neutral serving a load that is mostly nonlinear DOES count because it carries harmonic current even when the phases are balanced (310.15(E)(3))."
+    - id: d
+      text: "9 — all conductors in the raceway count, including EGCs."
+      distractorRationale: "Equipment grounding conductors carry current only during faults and are never counted for adjustment (310.15(E))."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Count phases always, neutrals only when they actually carry current (unbalance or harmonics), EGCs never."
+    codePath: ["310.15(E) → neutral counting rules", "310.15(C)(1) → adjustment by CCC count"]
+    steps:
+      - { text: "Circuit 1: 3 phases + neutral (nonlinear load → harmonic current on the neutral) = 4.", ref: "310.15(E)(3)" }
+      - { text: "Circuit 2: 3 phases; the balanced-linear-load wye neutral is excluded = 3.", ref: "310.15(E)(1)" }
+      - { text: "EGCs are not current-carrying. Total = 7 → 7–9 row → 0.70 adjustment.", ref: "310.15(C)(1)" }
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h020
+  domainId: nec.ampacity
+  skillIds: [nec.ampacity.table-lookup, nec.ampacity.termination-limit]
+  type: single
+  difficulty: 5
+  stem: "A 100 A feeder was designed with 3 AWG copper (75°C column, 100 A). To cut cost, the contractor switches to aluminum, keeping 75°C terminations and no derating. What is the SMALLEST aluminum conductor from Table 310.16 that still provides 100 A?"
+  options:
+    - id: a
+      text: "3 AWG aluminum"
+      distractorRationale: "Same-size substitution: 3 AWG aluminum is only 75 A at 75°C — aluminum always needs a larger size than copper for the same ampacity."
+    - id: b
+      text: "2 AWG aluminum"
+      distractorRationale: "One trade size up feels safe, but 2 AWG aluminum is 90 A at 75°C — still short of 100 A."
+    - id: c
+      text: "1 AWG aluminum"
+      isCorrect: true
+    - id: d
+      text: "1/0 AWG aluminum"
+      distractorRationale: "1/0 aluminum (120 A) works but is not the SMALLEST size that reaches 100 A — 1 AWG already provides exactly 100 A."
+  answer: { kind: single, optionId: c }
+  solution:
+    keyIdea: "Re-enter Table 310.16 on the aluminum side and find the first size whose 75°C value is ≥100 A."
+    codePath: ["Table 310.16 (Al) → 3 AWG=75, 2 AWG=90, 1 AWG=100 at 75°C"]
+    steps:
+      - { text: "Aluminum 75°C values: 3 AWG = 75 A, 2 AWG = 90 A, 1 AWG = 100 A.", ref: "Table 310.16" }
+      - { text: "1 AWG aluminum is the smallest size meeting 100 A at 75°C terminations." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h021
+  domainId: nec.ampacity
+  skillIds: [nec.ampacity.combined]
+  type: single
+  difficulty: 5
+  stem: "A feeder serves a 40 A continuous load and requires derating for conduit fill. Which statement correctly describes how the 125% continuous factor and the derating factors interact under 210.19(A)(1)?"
+  options:
+    - id: a
+      text: "The conductor's Table 310.16 ampacity (before derating) must be at least 50 A, AND its derated ampacity must be at least 40 A — the conductor must satisfy both checks."
+      isCorrect: true
+    - id: b
+      text: "The derated ampacity itself must be at least 50 A (125% of the load)."
+      distractorRationale: "Over-applying 125% to the derated value double-penalizes the conductor — the code requires the derated (adjusted/corrected) ampacity to cover 100% of the load, not 125%."
+    - id: c
+      text: "The 125% factor applies only to the overcurrent device; conductors are sized at 100% of the load."
+      distractorRationale: "210.19(A)(1) applies the 125% continuous factor to CONDUCTOR sizing too, not just to the OCPD in 210.20(A)."
+    - id: d
+      text: "Only one check applies: whichever of the two calculations gives the smaller conductor."
+      distractorRationale: "Picking the smaller result inverts the rule — the conductor must pass BOTH tests, so the more demanding one governs."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Two independent tests: table ampacity ≥ 125% of continuous load, and derated ampacity ≥ 100% of the load — the worse case sets the size."
+    codePath: ["210.19(A)(1)(a) → 125% before adjustment", "210.19(A)(1)(b) → derated ampacity ≥ load"]
+    steps:
+      - { text: "Test 1: allowable ampacity before derating ≥ 40 × 1.25 = 50 A.", ref: "210.19(A)(1)" }
+      - { text: "Test 2: ampacity after correction/adjustment ≥ 40 A." }
+      - { text: "The conductor must satisfy both; whichever test demands the larger conductor governs." }
+  trapIds: [continuous-load-125, adjusted-vs-corrected-ampacity]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h022
+  domainId: nec.ampacity
+  skillIds: [nec.ampacity.temp-correction, nec.ampacity.termination-limit]
+  type: single
+  difficulty: 4
+  stem: "Conductors pass through a walk-in freezer where the ambient is 10°C. The engineer wants to take credit for the cold ambient to increase the circuit's capacity. Which statement is correct?"
+  options:
+    - id: a
+      text: "The corrected ampacity may exceed the Table 310.16 value (factor above 1.00), but the terminations at each end still cap the final usable ampacity."
+      isCorrect: true
+    - id: b
+      text: "Correction factors can only reduce ampacity; anything above 1.00 is a misprint."
+      distractorRationale: "Table 310.15(B)(1) genuinely lists factors above 1.00 for ambients below 26°C — cold ambients add real capacity to the conductor itself."
+    - id: c
+      text: "The corrected ampacity may be used directly for OCPD sizing with no other limit."
+      distractorRationale: "This skips 110.14(C) — the lugs sit in equipment at room temperature, and the termination-column value still caps the answer."
+    - id: d
+      text: "No credit is allowed because part of the run is outside the freezer."
+      distractorRationale: "This confuses the concept: where a run passes through different ambients, 310.15(A)(2) governs which segment's ampacity applies — it does not flatly prohibit the credit."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Cold-ambient correction can raise ampacity above the table value, but 110.14(C) termination limits always apply."
+    codePath: ["Table 310.15(B)(1) → ≤10°C, factors > 1.00", "110.14(C) termination cap", "310.15(A)(2) for mixed ambients"]
+    steps:
+      - { text: "At 10°C the 90°C-column factor is 1.15 — a real increase.", ref: "310.15(B)(1)" }
+      - { text: "The equipment terminations still limit the final ampacity to the 60/75°C column value.", ref: "110.14(C)" }
+  trapIds: [termination-temp-limit]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-amp-h023
+  domainId: nec.ampacity
+  skillIds: [nec.ampacity.temp-correction, nec.ampacity.table-lookup]
+  type: single
+  difficulty: 4
+  stem: "A designer proposes running TW (60°C) copper conductors through a boiler-room ceiling space with a 58°C design ambient. Per Table 310.15(B)(1), what is the consequence?"
+  options:
+    - id: a
+      text: "The 60°C conductor is not permitted at all — the table gives no 60°C correction factor above 55°C ambient."
+      isCorrect: true
+    - id: b
+      text: "Apply the 0.41 factor from the 51–55°C row."
+      distractorRationale: "That row stops at 55°C; a 58°C ambient falls in the 56–60°C band, where the 60°C column is blank — you cannot borrow the previous row."
+    - id: c
+      text: "Apply the 0.58 factor from the 75°C column."
+      distractorRationale: "Reading across to the 75°C column requires a 75°C-insulated conductor — TW is 60°C insulation and cannot use another column's factor."
+    - id: d
+      text: "No correction is needed because the boiler runs intermittently."
+      distractorRationale: "Correction is based on the design ambient of the space, not the duty cycle of what heats it."
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "When the ambient approaches the insulation rating, the correction column goes blank — the conductor simply cannot be used there."
+    codePath: ["Table 310.15(B)(1) → 56–60°C row, 60°C column = (none)"]
+    steps:
+      - { text: "At 56–60°C ambient the 60°C column has no factor: a 60°C conductor has essentially no capacity left.", ref: "310.15(B)(1)" }
+      - { text: "The fix is higher-rated insulation (THWN 75°C → 0.58, or THHN 90°C → 0.71 at this ambient)." }
+  trapIds: [table-column-selection]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."

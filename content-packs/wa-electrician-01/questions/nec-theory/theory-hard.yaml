@@ -1,0 +1,641 @@
+# Electrical theory — HARD tier (difficulty 4–5). Multi-step chains: VD → percent,
+# apparent-vs-real power, 3φ line/phase, series-parallel. All DRAFT; K=12.9 Cu / 21.2 Al.
+
+# ---- Voltage-drop chains (numeric: ask the drop in volts) --------------------
+- id: q-thry-h001
+  recompute: { calc: voltageDrop, inputs: { phase: 1, k: 12.9, current: 40, oneWayFt: 120, size: "8" } }
+  domainId: nec.theory-general
+  commonMistake: "If you got 3.75 V, you dropped the factor of 2 — a single-phase circuit drops voltage on the way out AND back."
+  skillIds: [nec.theory.ohms-law, nec.theory.power]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    A 9,600 W resistance heater (unity power factor) is fed at 240 V single-phase
+    through 8 AWG copper (16,510 cmil), 120 ft one-way. Using K = 12.9, estimate
+    the voltage drop (V) at the heater.
+  answer: { kind: numeric, value: 7.5, unit: "V", tolerance: 0.15 }
+  solution:
+    keyIdea: "Derive the current from the load first, then VD = 2·K·I·D / cmil."
+    codePath: ["I = P/V (resistive load)", "VD = 2·K·I·D/cmil", "Ch.9 Table 8 (8 AWG = 16,510 cmil)"]
+    steps:
+      - { text: "Load current: 9,600 W ÷ 240 V = 40 A (pf = 1, so W = VA)." }
+      - { text: "VD = 2 × 12.9 × 40 × 120 ÷ 16,510 = 123,840 ÷ 16,510 = 7.50 V." }
+      - { text: "Sanity check: 7.5 V is 3.1% of 240 V — above the 3% recommendation." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h002
+  recompute: { calc: voltageDrop, inputs: { phase: 3, k: 12.9, current: 60, oneWayFt: 175, size: "4" } }
+  domainId: nec.theory-general
+  commonMistake: "If you got 6.49 V, you used the single-phase factor of 2 — three-phase uses √3 (1.732)."
+  skillIds: [nec.theory.three-phase]
+  type: numeric
+  difficulty: 4
+  stem: >-
+    A 208 V three-phase feeder carries 60 A per line on 4 AWG copper (41,740 cmil),
+    175 ft one-way. Using K = 12.9, estimate the line-to-line voltage drop (V).
+  answer: { kind: numeric, value: 5.62, unit: "V", tolerance: 0.15 }
+  solution:
+    keyIdea: "Three-phase voltage drop uses √3, not 2: VD = √3·K·I·D / cmil."
+    codePath: ["VD = √3·K·I·D/cmil", "Ch.9 Table 8 (4 AWG = 41,740 cmil)"]
+    steps:
+      - { text: "1.732 × 12.9 × 60 × 175 = 234,606." }
+      - { text: "234,606 ÷ 41,740 = 5.62 V." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h003
+  recompute: { calc: voltageDrop, inputs: { phase: 1, k: 12.9, current: 40, oneWayFt: 200, size: "6" } }
+  domainId: nec.theory-general
+  commonMistake: "If you got 5.90 V, you computed I = P/V = 30 A and ignored the power factor — at pf 0.75 the circuit must carry 40 A to deliver 7,200 W."
+  skillIds: [nec.theory.power, nec.theory.ohms-law]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    A single-phase 240 V load consumes 7,200 W of real power at a power factor of
+    0.75. It is wired with 6 AWG copper (26,240 cmil), 200 ft one-way. Using
+    K = 12.9, estimate the voltage drop (V).
+  answer: { kind: numeric, value: 7.87, unit: "V", tolerance: 0.15 }
+  solution:
+    keyIdea: "The conductor carries the FULL current I = P/(V·pf), not P/V — then apply the VD formula."
+    codePath: ["I = P/(V·pf)", "VD = 2·K·I·D/cmil", "Ch.9 Table 8 (6 AWG = 26,240 cmil)"]
+    steps:
+      - { text: "Line current: 7,200 ÷ (240 × 0.75) = 7,200 ÷ 180 = 40 A." }
+      - { text: "VD = 2 × 12.9 × 40 × 200 ÷ 26,240 = 206,400 ÷ 26,240 = 7.87 V." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h004
+  recompute: { calc: voltageDrop, inputs: { phase: 3, k: 21.2, current: 40, oneWayFt: 260, size: "1/0" } }
+  domainId: nec.theory-general
+  commonMistake: "If you got 2.20 V, you used the copper K of 12.9 — aluminum has higher resistivity (K ≈ 21.2)."
+  skillIds: [nec.theory.three-phase, nec.theory.ohms-law]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    A 208 V three-phase feeder is run in 1/0 AWG ALUMINUM (105,600 cmil), 260 ft
+    one-way, carrying 40 A per line. Using K = 21.2 for aluminum, estimate the
+    voltage drop (V).
+  answer: { kind: numeric, value: 3.62, unit: "V", tolerance: 0.15 }
+  solution:
+    keyIdea: "Material changes K: aluminum uses ≈21.2, not the copper 12.9; three-phase still uses √3."
+    codePath: ["VD = √3·K·I·D/cmil (K_al ≈ 21.2)", "Ch.9 Table 8 (1/0 AWG = 105,600 cmil)"]
+    steps:
+      - { text: "1.732 × 21.2 × 40 × 260 = 381,883." }
+      - { text: "381,883 ÷ 105,600 = 3.62 V." }
+      - { text: "As a percent of 208 V: 3.62 ÷ 208 = 1.7% — acceptable." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h005
+  recompute: { calc: voltageDrop, inputs: { phase: 3, k: 12.9, current: 200, oneWayFt: 300, cmil: 250000 } }
+  domainId: nec.theory-general
+  commonMistake: "kcmil means THOUSANDS of circular mils — 250 kcmil = 250,000 cmil, not 250."
+  skillIds: [nec.theory.three-phase]
+  type: numeric
+  difficulty: 4
+  stem: >-
+    A 480 V three-phase feeder uses 250 kcmil copper conductors, 300 ft one-way,
+    carrying 200 A per line. Using K = 12.9, estimate the voltage drop (V).
+  answer: { kind: numeric, value: 5.36, unit: "V", tolerance: 0.15 }
+  solution:
+    keyIdea: "Convert kcmil to circular mils (×1,000) before dividing."
+    codePath: ["VD = √3·K·I·D/cmil", "250 kcmil = 250,000 cmil"]
+    steps:
+      - { text: "1.732 × 12.9 × 200 × 300 = 1,340,607." }
+      - { text: "1,340,607 ÷ 250,000 = 5.36 V (about 1.1% of 480 V)." }
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h022
+  recompute: { calc: voltageDrop, inputs: { phase: 3, k: 12.9, current: 24, oneWayFt: 150, size: "10" } }
+  domainId: nec.theory-general
+  commonMistake: "First convert VA to line current with the √3 factor: I = VA/(√3·V) = 24 A — dividing by 208 alone gives 41.6 A and a wildly high drop."
+  skillIds: [nec.theory.three-phase, nec.theory.power]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    A balanced 8,646 VA three-phase load is served at 208 V through 10 AWG copper
+    (10,380 cmil), 150 ft one-way. Using K = 12.9, estimate the voltage drop (V).
+  answer: { kind: numeric, value: 7.75, unit: "V", tolerance: 0.15 }
+  solution:
+    keyIdea: "Chain: line current from VA and √3·V first, then the three-phase VD formula."
+    codePath: ["I = VA/(√3·V)", "VD = √3·K·I·D/cmil", "Ch.9 Table 8 (10 AWG = 10,380 cmil)"]
+    steps:
+      - { text: "Line current: 8,646 ÷ (1.732 × 208) = 8,646 ÷ 360.3 = 24 A." }
+      - { text: "VD = 1.732 × 12.9 × 24 × 150 ÷ 10,380 = 80,436 ÷ 10,380 = 7.75 V." }
+      - { text: "That is 3.7% of 208 V — this run should be upsized." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Voltage drop: percent / minimum-size (single-choice) --------------------
+- id: q-thry-h016
+  domainId: nec.theory-general
+  skillIds: [nec.theory.ohms-law]
+  type: single
+  difficulty: 5
+  stem: >-
+    A 120 V single-phase branch circuit carries 16 A on 12 AWG copper (6,530 cmil),
+    90 ft one-way. Using K = 12.9, the voltage drop is what percent of nominal
+    voltage?
+  options:
+    - { id: a, text: "≈ 4.7%", isCorrect: true }
+    - { id: b, text: "≈ 2.4%", distractorRationale: "That drops the factor of 2 — single-phase current flows out and back, so both conductor lengths drop voltage." }
+    - { id: c, text: "≈ 9.5%", distractorRationale: "That doubles the length to 180 ft AND keeps the factor of 2 — the 2 already accounts for the return conductor; use the one-way distance." }
+    - { id: d, text: "≈ 3.0%", distractorRationale: "3% is the informational-note RECOMMENDATION for branch circuits, not the computed value for this run." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Compute VD = 2·K·I·D/cmil, then divide by the nominal voltage."
+    codePath: ["VD = 2·K·I·D/cmil", "%VD = VD/Vnominal", "210.19(A) Informational Note (3% guide)"]
+    steps:
+      - { text: "VD = 2 × 12.9 × 16 × 90 ÷ 6,530 = 37,152 ÷ 6,530 = 5.69 V." }
+      - { text: "Percent: 5.69 ÷ 120 = 0.0474 → ≈ 4.7% — above the 3% recommendation." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h017
+  domainId: nec.theory-general
+  skillIds: [nec.theory.ohms-law]
+  type: single
+  difficulty: 5
+  stem: >-
+    A 240 V single-phase circuit carries 50 A, 180 ft one-way, copper (K = 12.9).
+    To keep the voltage drop at or under 3% of nominal, what is the minimum
+    conductor size (by circular-mil area, Ch. 9 Table 8)?
+  options:
+    - { id: a, text: "8 AWG (16,510 cmil)", distractorRationale: "That solves cmil = K·I·D/VD without the factor of 2 (16,125 cmil) — the return conductor also drops voltage." }
+    - { id: b, text: "6 AWG (26,240 cmil)", distractorRationale: "26,240 cmil is BELOW the required 32,250 cmil — a minimum means you round UP to the next size, never down." }
+    - { id: c, text: "4 AWG (41,740 cmil)", isCorrect: true }
+    - { id: d, text: "2 AWG (66,360 cmil)", distractorRationale: "That uses the 360 ft round-trip length together with the factor of 2 — double-counting the return path (64,500 cmil)." }
+  answer: { kind: single, optionId: c }
+  solution:
+    keyIdea: "Solve the VD formula for cmil, then pick the next STANDARD size at or above it."
+    codePath: ["VDmax = 3% × 240 = 7.2 V", "cmil = 2·K·I·D/VD", "Ch.9 Table 8"]
+    steps:
+      - { text: "Allowable drop: 0.03 × 240 = 7.2 V." }
+      - { text: "Required cmil = 2 × 12.9 × 50 × 180 ÷ 7.2 = 232,200 ÷ 7.2 = 32,250 cmil." }
+      - { text: "6 AWG (26,240) is too small; 4 AWG (41,740) is the first size ≥ 32,250 cmil." }
+  trapIds: [unit-or-phase-confusion, next-size-up-rounding]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h018
+  domainId: nec.theory-general
+  skillIds: [nec.theory.three-phase]
+  type: single
+  difficulty: 4
+  stem: >-
+    A 480 V three-phase feeder carries 100 A per line, 250 ft one-way, copper
+    (K = 12.9). To limit voltage drop to 2% of nominal, what is the minimum
+    conductor size (Ch. 9 Table 8 circular mils)?
+  options:
+    - { id: a, text: "4 AWG (41,740 cmil)", distractorRationale: "That uses a 3% limit (14.4 V → 38,791 cmil) — the question specifies 2% for this feeder." }
+    - { id: b, text: "3 AWG (52,620 cmil)", distractorRationale: "52,620 cmil is below the required 58,186 cmil — you rounded DOWN; a minimum requires the next size up." }
+    - { id: c, text: "2 AWG (66,360 cmil)", isCorrect: true }
+    - { id: d, text: "1 AWG (83,690 cmil)", distractorRationale: "That uses the single-phase factor of 2 instead of √3 (67,188 cmil required) — three-phase drops less for the same current." }
+  answer: { kind: single, optionId: c }
+  solution:
+    keyIdea: "Three-phase: cmil = √3·K·I·D / VDmax, then round UP to a standard size."
+    codePath: ["VDmax = 2% × 480 = 9.6 V", "cmil = √3·K·I·D/VD", "Ch.9 Table 8"]
+    steps:
+      - { text: "Allowable drop: 0.02 × 480 = 9.6 V." }
+      - { text: "Required cmil = 1.732 × 12.9 × 100 × 250 ÷ 9.6 = 558,586 ÷ 9.6 = 58,186 cmil." }
+      - { text: "3 AWG (52,620) falls short; 2 AWG (66,360) is the first size that qualifies." }
+  trapIds: [unit-or-phase-confusion, next-size-up-rounding]
+  timeTargetSec: 240
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Power factor: apparent vs real (numeric + single) -----------------------
+- id: q-thry-h006
+  recompute: { calc: power1ph, inputs: { volts: 240, amps: 26, pf: 0.82 } }
+  domainId: nec.theory-general
+  commonMistake: "If you got 6,240, that is the APPARENT power in VA — a wattmeter reads real power, V·I·pf."
+  skillIds: [nec.theory.power]
+  type: numeric
+  difficulty: 4
+  stem: >-
+    A clamp meter reads 26 A on a 240 V single-phase circuit and a power-quality
+    meter shows a power factor of 0.82. How much REAL power (W) is the load
+    consuming?
+  answer: { kind: numeric, value: 5116.8, unit: "W", tolerance: 5 }
+  solution:
+    keyIdea: "V × I gives volt-amperes; only V × I × pf is watts."
+    codePath: ["S = V·I = 6,240 VA", "P = S·pf"]
+    steps:
+      - { text: "Apparent power: 240 × 26 = 6,240 VA." }
+      - { text: "Real power: 6,240 × 0.82 = 5,117 W." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h007
+  domainId: nec.theory-general
+  skillIds: [nec.theory.three-phase, nec.theory.power]
+  type: single
+  difficulty: 5
+  stem: >-
+    A three-phase 480 V feeder must deliver 60 kW of REAL power to a load with a
+    power factor of 0.80. What line current must the conductors carry?
+  options:
+    - { id: a, text: "≈ 90 A", isCorrect: true }
+    - { id: b, text: "≈ 72 A", distractorRationale: "That divides 60,000 by √3·V only — treating the 60 kW as if it were kVA. Real power must be divided by the pf to get the current actually flowing." }
+    - { id: c, text: "≈ 156 A", distractorRationale: "That is the single-phase result 60,000 ÷ (480 × 0.8) — a three-phase feeder splits the power across three lines via the √3 factor." }
+    - { id: d, text: "≈ 125 A", distractorRationale: "That is 60,000 ÷ 480 — it ignores both the √3 factor and the power factor." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Conductors carry the APPARENT-power current: I = P / (√3·V·pf) — low pf means MORE amps for the same watts."
+    codePath: ["P = √3·V·I·pf, solved for I"]
+    steps:
+      - { text: "I = 60,000 ÷ (1.732 × 480 × 0.80)." }
+      - { text: "Denominator: 1.732 × 480 = 831.4; × 0.80 = 665.1." }
+      - { text: "I = 60,000 ÷ 665.1 ≈ 90.2 A." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h008
+  recompute: { calc: power3ph, inputs: { volts: 480, amps: 52, pf: 0.88 } }
+  domainId: nec.theory-general
+  commonMistake: "Use the 480 V LINE voltage with √3 — mixing the 277 V line-to-neutral value into √3·V·I double-counts the phase relationship."
+  skillIds: [nec.theory.three-phase]
+  type: numeric
+  difficulty: 4
+  stem: >-
+    A balanced load on a 480Y/277 V three-phase system draws 52 A per line at a
+    power factor of 0.88. What is the total real power (W)? (Use the correct
+    voltage — the system presents both 480 V line-to-line and 277 V
+    line-to-neutral.)
+  answer: { kind: numeric, value: 38044, unit: "W", tolerance: 50 }
+  solution:
+    keyIdea: "P = √3 × V(line-to-line) × I(line) × pf; the √3 already accounts for the line/phase relationship."
+    codePath: ["P = √3·VLL·IL·pf"]
+    steps:
+      - { text: "1.732 × 480 × 52 = 43,232 VA." }
+      - { text: "× 0.88 = 38,044 W (≈ 38 kW)." }
+      - { text: "Equivalent check: 3 × 277 × 52 × 0.88 gives the same result." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h009
+  domainId: nec.theory-general
+  skillIds: [nec.theory.power, nec.theory.three-phase]
+  type: single
+  difficulty: 5
+  stem: >-
+    A facility's connected three-phase load totals 45 kW of real power at an
+    overall power factor of 0.85. A standby generator is rated in kVA. Ignoring
+    growth and starting loads, what is the minimum generator kVA that can serve
+    this load?
+  options:
+    - { id: a, text: "≈ 52.9 kVA", isCorrect: true }
+    - { id: b, text: "45 kVA", distractorRationale: "That assumes kW = kVA — true only at unity power factor. At pf 0.85 the generator must supply more apparent power than the real power consumed." }
+    - { id: c, text: "≈ 38.3 kVA", distractorRationale: "That MULTIPLIES 45 by 0.85. kVA is kW DIVIDED by pf; apparent power is always ≥ real power." }
+    - { id: d, text: "≈ 77.9 kVA", distractorRationale: "That multiplies by √3 — the √3 belongs inside the current formula, not the kW↔kVA conversion, which is pf alone." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "kVA = kW ÷ pf — generators and transformers are limited by apparent power, not watts."
+    codePath: ["S = P / pf"]
+    steps:
+      - { text: "S = 45 ÷ 0.85 = 52.94 kVA." }
+      - { text: "The next standard generator size at or above 52.9 kVA would be selected." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h010
+  recompute: { calc: power3ph, inputs: { volts: 208, amps: 24, pf: 0.65 } }
+  domainId: nec.theory-general
+  commonMistake: "If you answered 8,646, you reported the apparent power (VA) the meter already showed — the question asks for watts, which requires multiplying by the pf."
+  skillIds: [nec.theory.three-phase, nec.theory.power]
+  type: numeric
+  difficulty: 4
+  stem: >-
+    A power-quality meter on a 208 V three-phase circuit shows 24 A per line,
+    8,646 VA apparent power, and a power factor of 0.65. What REAL power (W) is
+    being consumed?
+  answer: { kind: numeric, value: 5620, unit: "W", tolerance: 10 }
+  solution:
+    keyIdea: "P = S × pf: the wattage is the apparent power scaled by the power factor."
+    codePath: ["S = √3·V·I = 8,646 VA", "P = S·pf"]
+    steps:
+      - { text: "Confirm S: 1.732 × 208 × 24 = 8,646 VA (matches the meter)." }
+      - { text: "P = 8,646 × 0.65 = 5,620 W." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h021
+  recompute: { calc: power1ph, inputs: { volts: 208, amps: 30, pf: 0.7 } }
+  domainId: nec.theory-general
+  commonMistake: "A wattmeter responds to real power only — 208 × 30 = 6,240 is the VA, not the watt reading."
+  skillIds: [nec.theory.power]
+  type: numeric
+  difficulty: 4
+  stem: >-
+    A single-phase 208 V load draws 30 A at a power factor of 0.70. What would a
+    wattmeter connected to this load read (W)?
+  answer: { kind: numeric, value: 4368, unit: "W", tolerance: 5 }
+  solution:
+    keyIdea: "Wattmeters read P = V·I·pf, not V·I."
+    codePath: ["P = V·I·pf"]
+    steps:
+      - { text: "208 × 30 = 6,240 VA apparent." }
+      - { text: "6,240 × 0.70 = 4,368 W real." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Efficiency chains (single-choice) ---------------------------------------
+- id: q-thry-h011
+  domainId: nec.theory-general
+  skillIds: [nec.theory.power]
+  type: single
+  difficulty: 5
+  stem: >-
+    A single-phase 240 V motor delivers 10 hp (7,460 W) at the shaft. Its
+    efficiency is 88% and its power factor is 0.85. What input current does it
+    draw from the line?
+  options:
+    - { id: a, text: "≈ 41.6 A", isCorrect: true }
+    - { id: b, text: "≈ 36.6 A", distractorRationale: "That skips efficiency — 7,460 W is the OUTPUT; the motor must draw 7,460 ÷ 0.88 = 8,477 W of input real power." }
+    - { id: c, text: "≈ 35.3 A", distractorRationale: "That skips the power factor — real watts divided by volts alone understates the current; conductors carry the apparent-power current." }
+    - { id: d, text: "≈ 31.1 A", distractorRationale: "That is 7,460 ÷ 240 — it ignores BOTH efficiency and power factor, the two losses stacked in this problem." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Chain output → input watts via efficiency, then input watts → amps via V·pf."
+    codePath: ["Pin = Pout / eff", "I = Pin / (V·pf)"]
+    steps:
+      - { text: "Input power: 7,460 ÷ 0.88 = 8,477 W." }
+      - { text: "Current: 8,477 ÷ (240 × 0.85) = 8,477 ÷ 204 = 41.6 A." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Series-parallel resistance (numeric via ohmsCurrent + single) -----------
+- id: q-thry-h012
+  recompute: { calc: ohmsCurrent, inputs: { volts: 240, ohms: 48 } }
+  domainId: nec.theory-general
+  commonMistake: "Reduce the parallel pair FIRST (60∥30 = 20 Ω); adding all three in series (118 Ω) gives about 2 A."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 4
+  stem: >-
+    A 240 V source feeds a 60 Ω resistor in parallel with a 30 Ω resistor; that
+    combination is in series with a 28 Ω resistor. What total current (A) does
+    the source supply?
+  answer: { kind: numeric, value: 5, unit: "A", tolerance: 0.05 }
+  solution:
+    keyIdea: "Collapse the parallel branch to one equivalent, add the series element, then apply I = V/R."
+    codePath: ["Rparallel = product/sum", "Rtotal = Rp + Rseries", "I = V/R"]
+    steps:
+      - { text: "60 ∥ 30 = (60 × 30) ÷ (60 + 30) = 20 Ω." }
+      - { text: "Total: 20 + 28 = 48 Ω." }
+      - { text: "I = 240 ÷ 48 = 5 A." }
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h013
+  recompute: { calc: ohmsCurrent, inputs: { volts: 240, ohms: 24 } }
+  domainId: nec.theory-general
+  commonMistake: "Don't ignore the conductor resistance — the 4 Ω of wire is in series with the 20 Ω parallel bank, so the source sees 24 Ω, not 20."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    A 240 V source feeds a remote load through conductors with a combined 4 Ω of
+    resistance. At the load, a 60 Ω heater is in parallel with a series string of
+    a 10 Ω and a 20 Ω element. What total current (A) flows from the source?
+  answer: { kind: numeric, value: 10, unit: "A", tolerance: 0.05 }
+  solution:
+    keyIdea: "Build the network from the inside out: series inside a branch, then parallel, then the line resistance in series."
+    codePath: ["branch = 10 + 20 = 30 Ω", "60 ∥ 30 = 20 Ω", "Rtotal = 20 + 4", "I = V/R"]
+    steps:
+      - { text: "Series branch: 10 + 20 = 30 Ω." }
+      - { text: "Parallel bank: 60 ∥ 30 = (60 × 30) ÷ 90 = 20 Ω." }
+      - { text: "Add the 4 Ω conductor resistance: 24 Ω total." }
+      - { text: "I = 240 ÷ 24 = 10 A." }
+  timeTargetSec: 210
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h014
+  domainId: nec.theory-general
+  skillIds: [nec.theory.ohms-law]
+  type: single
+  difficulty: 4
+  stem: >-
+    A 240 V source feeds a load bank through conductors totaling 2 Ω of
+    resistance. The bank consists of a 24 Ω resistor in parallel with an 8 Ω
+    resistor. What voltage appears ACROSS the load bank?
+  options:
+    - { id: a, text: "180 V", isCorrect: true }
+    - { id: b, text: "240 V", distractorRationale: "That ignores the conductor resistance — the 2 Ω of wire drops voltage before the bank, exactly like a voltage-drop problem." }
+    - { id: c, text: "60 V", distractorRationale: "60 V is the drop ACROSS THE CONDUCTORS (30 A × 2 Ω) — the question asks for what is left at the load." }
+    - { id: d, text: "226 V", distractorRationale: "That adds 24 + 8 = 32 Ω as if the bank were in series; parallel resistances combine to LESS than the smallest branch (6 Ω here)." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "The circuit is a voltage divider: line resistance and load bank split the source voltage in proportion to their resistance."
+    codePath: ["24 ∥ 8 = 6 Ω", "Rtotal = 8 Ω", "I = V/R", "Vload = I·Rbank"]
+    steps:
+      - { text: "Bank: 24 ∥ 8 = (24 × 8) ÷ 32 = 6 Ω." }
+      - { text: "Total: 6 + 2 = 8 Ω → I = 240 ÷ 8 = 30 A." }
+      - { text: "Load voltage: 30 × 6 = 180 V (the wire eats 60 V)." }
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h015
+  domainId: nec.theory-general
+  skillIds: [nec.theory.ohms-law]
+  type: single
+  difficulty: 4
+  stem: >-
+    A 120 V source feeds a 20 Ω resistor in series with a parallel pair: 30 Ω and
+    60 Ω. What current flows through the 60 Ω resistor?
+  options:
+    - { id: a, text: "1 A", isCorrect: true }
+    - { id: b, text: "2 A", distractorRationale: "2 A is either the 30 Ω branch current or 120 ÷ 60 — the 60 Ω resistor does NOT see the full 120 V; the series 20 Ω drops 60 V first." }
+    - { id: c, text: "3 A", distractorRationale: "3 A is the TOTAL source current; it splits between the two parallel branches in inverse proportion to their resistance." }
+    - { id: d, text: "6 A", distractorRationale: "That is 120 ÷ 20 — applying the full source voltage to the series resistor alone instead of solving the whole network." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Find the parallel-bank voltage first; branch current = bank voltage ÷ branch resistance."
+    codePath: ["30 ∥ 60 = 20 Ω", "I total = 120/40 = 3 A", "Vbank = 3 × 20 = 60 V", "I60 = 60/60"]
+    steps:
+      - { text: "Bank: 30 ∥ 60 = 20 Ω; total R = 20 + 20 = 40 Ω." }
+      - { text: "Total current: 120 ÷ 40 = 3 A." }
+      - { text: "Bank voltage: 3 × 20 = 60 V." }
+      - { text: "Through the 60 Ω branch: 60 ÷ 60 = 1 A (the other 2 A takes the 30 Ω path)." }
+  timeTargetSec: 180
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- 3φ line vs phase relationships (single-choice) ---------------------------
+- id: q-thry-h023
+  domainId: nec.theory-general
+  skillIds: [nec.theory.three-phase]
+  type: single
+  difficulty: 4
+  stem: >-
+    On a 208Y/120 V wye system, each of three balanced line-to-neutral loads
+    draws 20 A. What current flows in each LINE conductor?
+  options:
+    - { id: a, text: "20 A", isCorrect: true }
+    - { id: b, text: "34.6 A", distractorRationale: "That multiplies by √3 — in a WYE connection, line current EQUALS phase current; it is the voltages (208 vs 120) that differ by √3." }
+    - { id: c, text: "11.5 A", distractorRationale: "That divides by √3 — the √3 divider applies to converting 208 V line-to-line down to 120 V line-to-neutral, not to the current." }
+    - { id: d, text: "60 A", distractorRationale: "That sums the three phase currents — balanced phase currents are 120° apart and do NOT add arithmetically in any conductor." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Wye: I(line) = I(phase); V(line) = √3 × V(phase). The √3 lives on the voltage side."
+    codePath: ["Wye relationships: IL = Iφ, VLL = √3·VLN"]
+    steps:
+      - { text: "Each load is line-to-neutral, so its 20 A flows directly in its line conductor." }
+      - { text: "Check the voltage side: 120 × 1.732 = 208 V — that is where √3 appears in a wye." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 120
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h024
+  domainId: nec.theory-general
+  skillIds: [nec.theory.three-phase]
+  type: single
+  difficulty: 5
+  stem: >-
+    A balanced delta-connected heater bank on a 480 V system draws 30 A through
+    each phase winding. What current do the LINE conductors feeding the bank
+    carry?
+  options:
+    - { id: a, text: "≈ 52 A", isCorrect: true }
+    - { id: b, text: "30 A", distractorRationale: "That applies the WYE rule (line = phase current). In a DELTA, each line conductor feeds two windings, so line current = √3 × phase current." }
+    - { id: c, text: "≈ 17.3 A", distractorRationale: "That divides by √3 instead of multiplying — line current in a delta is always LARGER than the winding current." }
+    - { id: d, text: "90 A", distractorRationale: "That adds two winding currents arithmetically (or triples one) — the two winding currents at each line terminal are 120° apart, so they combine to √3×, not 2× or 3×." }
+  answer: { kind: single, optionId: a }
+  solution:
+    keyIdea: "Delta: I(line) = √3 × I(phase); V(line) = V(phase). The √3 lives on the current side — the mirror of a wye."
+    codePath: ["Delta relationships: IL = √3·Iφ, VLL = Vφ"]
+    steps:
+      - { text: "Each line terminal joins two windings whose currents are 120° apart." }
+      - { text: "Vector sum: 30 × 1.732 ≈ 52 A per line conductor." }
+  trapIds: [unit-or-phase-confusion]
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+# ---- Circular-mil ratios (250.122(B) proportional upsize) ---------------------
+- id: q-thry-h019
+  recompute: { calc: cmilRatio, inputs: { newSize: "3", origSize: "6" } }
+  domainId: nec.theory-general
+  commonMistake: "The ratio compares CIRCULAR-MIL areas (52,620 ÷ 26,240), not AWG numbers — '6 to 3' is not a ratio of 2 by gauge arithmetic, it just happens to double the area."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 5
+  stem: >-
+    To control voltage drop, a feeder's copper circuit conductors are upsized from
+    6 AWG (26,240 cmil) to 3 AWG (52,620 cmil). Per 250.122(B), the equipment
+    grounding conductor must be increased by at least the same ratio of
+    circular-mil areas. What is that ratio?
+  answer: { kind: numeric, value: 2.01, unit: "ratio", tolerance: 0.02 }
+  solution:
+    keyIdea: "250.122(B): EGC upsizing is proportional to the circular-mil ratio of the ungrounded conductors."
+    codePath: ["250.122(B)", "Ch.9 Table 8 (3 AWG = 52,620; 6 AWG = 26,240)"]
+    steps:
+      - { text: "Ratio = 52,620 ÷ 26,240 = 2.01.", ref: "250.122(B)" }
+      - { text: "The EGC's cmil area must be multiplied by at least 2.01, then rounded up to a standard size." }
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
+
+- id: q-thry-h020
+  recompute: { calc: cmilRatio, inputs: { newSize: "8", origSize: "12" } }
+  domainId: nec.theory-general
+  commonMistake: "Divide areas, not gauge numbers: 16,510 ÷ 6,530 — going two even sizes (12→8) roughly 2.5× the area, it does not simply double."
+  skillIds: [nec.theory.ohms-law]
+  type: numeric
+  difficulty: 4
+  stem: >-
+    A long 20 A branch circuit is upsized from 12 AWG (6,530 cmil) to 8 AWG
+    (16,510 cmil) copper for voltage drop. By what circular-mil ratio must the
+    equipment grounding conductor be increased per 250.122(B)?
+  answer: { kind: numeric, value: 2.53, unit: "ratio", tolerance: 0.02 }
+  solution:
+    keyIdea: "The upsize ratio is new cmil ÷ original cmil from Ch. 9 Table 8."
+    codePath: ["250.122(B)", "Ch.9 Table 8 (8 AWG = 16,510; 12 AWG = 6,530)"]
+    steps:
+      - { text: "Ratio = 16,510 ÷ 6,530 = 2.53.", ref: "250.122(B)" }
+      - { text: "Apply 2.53 to the EGC's cmil area and round up to the next standard conductor." }
+  timeTargetSec: 150
+  modes: [diagnostic, board, overtrain]
+  status: draft
+  version: 1
+  note: "Draft hard-tier question; SME-verify before live."
