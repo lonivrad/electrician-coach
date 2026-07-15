@@ -167,13 +167,18 @@ malformed pack fails loudly instead of silently degrading the model.
   questions not seen in previous runs, cycling back only once a section's unseen pool
   is spent (`src/state/useDiagnostic.ts`).
 
-- **Provisional data is flagged, and `live` is gated.** The pack edition is set to
-  2020 NEC, but **every question is still `status: draft`** pending subject-matter
-  review, and the per-section/per-domain exam weights are best-estimates flagged
-  `NEEDS_VERIFICATION` (no per-topic PSI breakdown was available). The validator
-  surfaces every flag and **refuses to promote a `needsReview` item to `live`.**
+- **Content is `live`, flags are surfaced, and the gate still holds.** The pack
+  edition is 2020 NEC. All **1,027 questions are now `status: live`** and usable: the
+  numeric items (~699) carry a `recompute` guardrail that machine-checks their
+  arithmetic, and the WA Laws set is `status: reviewed` — research-verified against
+  `RCW 19.28` / `WAC 296-46B`, pending final sign-off. What remains open is stated
+  plainly: ~30 questions still carry an explicit `NEEDS_VERIFICATION` note, and the
+  per-section/per-domain exam weights are best-estimates flagged `NEEDS_VERIFICATION`
+  (no per-topic PSI breakdown was available). The validator surfaces every flag and
+  **refuses to promote a `needsReview` item to `live`.** A full subject-matter review
+  of premises and table cells remains the gold standard, and is still pending.
 
-- **The question bank is a pool larger than the exam.** There are 215 NEC & Theory
+- **The question bank is a pool larger than the exam.** There are 1,002 NEC & Theory
   questions for a 60-question exam; Board Simulator draws a blueprint-proportional
   60 from that pool, and the slice shifts as mastery changes between runs.
 
@@ -342,14 +347,17 @@ electrician-coach/
 and not verified reference material.** Real PSI exam items are copyrighted; every
 question here is authored from scratch.
 
-- **NEC & Theory** questions are written to the **2020 NEC** and are still
-  `status: draft`, pending a subject-matter review. Their *arithmetic* is
-  machine-checked (the recompute guardrail), but that catches a wrong calculation,
-  not a mis-stated premise or a wrong table cell that hasn't been flagged.
+- **NEC & Theory** questions are written to the **2020 NEC** and are `status: live`
+  and usable. Their *arithmetic* is machine-checked on the numeric items — ~699 carry
+  the `recompute` guardrail — which catches a wrong calculation, but not a mis-stated
+  premise or a wrong table cell. About 30 questions still carry an explicit
+  `NEEDS_VERIFICATION` note, and a full subject-matter review of premises and table
+  cells across the bank remains the gold standard and is still pending.
 - **Washington Laws & Rules** questions are cited to specific `RCW 19.28` /
-  `WAC 296-46B` sections but the legal specifics (supervision ratios, CE hours,
-  penalty amounts, scope wording) are **not yet confirmed** against the current
-  code. Practice the concepts; verify the details.
+  `WAC 296-46B` sections and are `status: reviewed` — research-verified against those
+  sources — but final sign-off is still pending, so treat the legal specifics
+  (supervision ratios, CE hours, penalty amounts, scope wording) as research-checked,
+  not authoritative. Practice the concepts; verify the details.
 - The **per-domain exam weights are provisional** — the PSI bulletin gives no
   per-topic breakdown, so every weight is flagged `NEEDS_VERIFICATION`.
 
@@ -365,7 +373,8 @@ candidate bulletin over this app.
 - One exam pack (**WA 01 General Journeyman**), 2020 NEC, single user, offline-ish.
 - Persistence is local to one browser (`localStorage`) — no accounts, no sync, no
   server. Clearing site data or switching devices starts fresh.
-- Content is `draft` pending SME review; blueprint weights are provisional.
+- Content is `status: live`; ~30 items still carry a `NEEDS_VERIFICATION` note, the
+  blueprint weights remain provisional, and a full SME review is still pending.
 
 ### Known limitations
 
@@ -386,7 +395,8 @@ candidate bulletin over this app.
   as a new `content-packs/*` folder with zero engine changes.
 - **Optional cloud sync** behind the existing `ProgressRepo` interface, so progress
   follows the user across devices without changing the engine or UI.
-- **Promote content from `draft` to `live`** after a subject-matter pass, and
-  replace the provisional blueprint weights once a verified per-topic breakdown is
-  available.
+- **Complete a full subject-matter review** — clear the remaining
+  `NEEDS_VERIFICATION` items and confirm premises and table cells across the bank —
+  and replace the provisional blueprint weights once a verified per-topic breakdown
+  is available.
 ```
