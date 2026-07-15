@@ -178,7 +178,7 @@ malformed pack fails loudly instead of silently degrading the model.
   **refuses to promote a `needsReview` item to `live`.** A full subject-matter review
   of premises and table cells remains the gold standard, and is still pending.
 
-- **The question bank is a pool larger than the exam.** There are 215 NEC & Theory
+- **The question bank is a pool larger than the exam.** There are 1,002 NEC & Theory
   questions for a 60-question exam; Board Simulator draws a blueprint-proportional
   60 from that pool, and the slice shifts as mastery changes between runs.
 
